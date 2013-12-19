@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--
+ Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+
+ Licensed under the Apache License, Version 2.0 (the "License"); you may
+ not use this file except in compliance with the License. You may obtain
+ a copy of the License at
+
+ 	http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ License for the specific language governing permissions and limitations
+ under the License.
+-->
+<html id="ng-app" ng-app="storyboard">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <title>Storyboard</title>
+
+    <!-- Google's Ajax Crawling: https://developers.google.com/webmasters/ajax-crawling -->
+    <meta name="fragment" content="!">
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="styles/bootstrap.css">
+
+    <!-- build:css(bower_components) /styles/libs.css -->
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <!-- endbuild -->
+
+    <!-- build:js(bower_components) /js/libs.js -->
+    <script src="jquery/jquery.js"></script>
+    <script src="angular/angular.js"></script>
+    <script src="angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="angular-resource/angular-resource.js"></script>
+    <script src="angular-mocks/angular-mocks.js"></script>
+    <script src="angular-cookies/angular-cookies.js"></script>
+    <script src="angular-sanitize/angular-sanitize.js"></script>
+
+    <script src="bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbuild -->
+
+    <link rel="stylesheet" href="styles/theme.css">
+
+    <script src="js/storyboard.js"></script>
+    <script src="js/templates.js"></script>
+</head>
+<body>
+<header class="navbar navbar-inverse navbar-fixed-top"
+        ng-include src="'app/templates/header.html'">
+</header>
+<div ui-view></div>
+<footer class="container" ng-include src="'app/templates/footer.html'">
+</footer>
+</body>
+</html>

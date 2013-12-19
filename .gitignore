@@ -1,0 +1,10 @@
+.build
+.local
+node_modules
+bower_components
+dist
+npm-debug.log
+*.iml
+.idea
+reports
+cover
