@@ -40,10 +40,10 @@ module.exports = function (grunt) {
     'use strict';
 
     var dir = {
-        source : './src',
-        test : './test',
-        output : './dist',
-        report : './reports',
+        source: './src',
+        test: './test',
+        output: './dist',
+        report: './reports',
         bower: './bower_components'
     };
 
@@ -120,19 +120,17 @@ module.exports = function (grunt) {
          */
         recess: {
             options: {
-                compile: true
-            },
-            bootstrap: {
-                src: [
-                    dir.bower + '/bootstrap/less/bootstrap.less'
+                includePath: [
+                    dir.bower + '/bootstrap/less/',
+                    dir.bower + '/font-awesome/less/'
                 ],
-                dest: dir.output + '/styles/bootstrap.css'
+                compile: true
             },
             theme: {
                 src: [
-                    dir.source + '/styles/**/*.less'
+                    dir.source + '/styles/main.less'
                 ],
-                dest: dir.output + '/styles/theme.css'
+                dest: dir.output + '/styles/main.css'
             }
         },
 
@@ -357,7 +355,7 @@ module.exports = function (grunt) {
                 files: [
                     dir.source + '/styles/**/*.less'
                 ],
-                tasks: ['recess:bootstrap', 'recess:theme']
+                tasks: ['recess:theme']
             },
             copy: {
                 files: [
