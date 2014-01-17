@@ -51,8 +51,9 @@ angular.module('sb.services')
              * Handle a fail response.
              */
             responseError: function (response) {
+
                 if (!!response) {
-                    sendEvent(response.status, response.body);
+                    sendEvent(response.status, response.data);
                 }
 
                 return $q.reject(response);

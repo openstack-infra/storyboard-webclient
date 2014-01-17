@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -15,11 +15,17 @@
  */
 
 /**
- * The Storyboard Services module contains all of the necessary API resources
- * used by the storyboard client. Its resources are available via injection to
- * any module that declares it as a dependency.
+ * The angular resource abstraction that allows us to search, access, and
+ * modify users.
  *
+ * @see storyboardApiSignature
  * @author Michael Krotscheck
  */
-angular.module('sb.services', ['ngResource', 'ngCookies', 'ngMock',
-    'ui.router']);
+angular.module('sb.services').factory('User',
+    function ($resource, storyboardApiBase, storyboardApiSignature) {
+        'use strict';
+
+        return $resource(storyboardApiBase + '/users/:id',
+            {id: '@id'},
+            storyboardApiSignature);
+    });

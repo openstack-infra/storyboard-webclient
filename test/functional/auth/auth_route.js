@@ -25,6 +25,5 @@ describe('Storyboard Login Routes', function () {
     it('should redirect /auth/provider to /auth/provider/list', function () {
         browser.get('http://localhost:9000/#!/auth/provider');
         expect(browser.getCurrentUrl()).toContain('#!/auth/provider/list');
-
     });
 });

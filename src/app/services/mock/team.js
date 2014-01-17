@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -15,11 +15,20 @@
  */
 
 /**
- * The Storyboard Services module contains all of the necessary API resources
- * used by the storyboard client. Its resources are available via injection to
- * any module that declares it as a dependency.
- *
- * @author Michael Krotscheck
+ * Mock resource responses for the Team resource.
  */
-angular.module('sb.services', ['ngResource', 'ngCookies', 'ngMock',
-    'ui.router']);
+
+angular.module('sb.services')
+    .run(function (mock) {
+        'use strict';
+
+        var team = [
+        ];
+
+        mock.api('/api/v1/teams',
+            '/api/v1/teams/:id',
+            'id',
+            team);
+    }
+)
+;
