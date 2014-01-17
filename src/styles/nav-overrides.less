@@ -15,19 +15,19 @@
  */
 
 /**
- * This is our main CSS theme file, which serves to link together all of our
- * CSS/LESS dependencies and ensure they all go through minification/processing.
- * Note that this is the only LESS file that is compiled - if you want a
- * a specific stylesheet to be included, it must be linked here.
+ * Overrides for the navbar, to create a navbar-input-group that allows
+ * pretty concatenation of form elements in a navbar.
  */
-// Library inclusions
-@import './bootstrap.less';
-@import './font-awesome.less';
-// Custom variable overrides
-@import './bootstrap_variable_overrides.less';
-@import './nav-overrides.less';
-// Add our own custom icon font.
-@import './custom_font_icons.less';
-// Module specific styles
-@import './body.less';
-@import './auth.less';
+.navbar-input-group {
+    font-size: 0px; /*removes whitespace between button and input*/
+}
+
+.navbar-input-group input {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.navbar-input-group .btn {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-left: 0px;
+}

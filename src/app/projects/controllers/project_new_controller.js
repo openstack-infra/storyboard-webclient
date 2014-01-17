@@ -13,21 +13,27 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
 /**
- * This is our main CSS theme file, which serves to link together all of our
- * CSS/LESS dependencies and ensure they all go through minification/processing.
- * Note that this is the only LESS file that is compiled - if you want a
- * a specific stylesheet to be included, it must be linked here.
+ *
  */
-// Library inclusions
-@import './bootstrap.less';
-@import './font-awesome.less';
-// Custom variable overrides
-@import './bootstrap_variable_overrides.less';
-@import './nav-overrides.less';
-// Add our own custom icon font.
-@import './custom_font_icons.less';
-// Module specific styles
-@import './body.less';
-@import './auth.less';
+angular.module('sb.projects').controller('ProjectNewController',
+    function ($scope, $state, Project) {
+        'use strict';
+
+        $scope.newProject = new Project();
+        $scope.isCreating = false;
+        $scope.error = {};
+
+        $scope.createProject = function () {
+
+            $scope.newProject.$create(
+                function () {
+                    $state.go('project.list');
+                },
+                function (error) {
+                    $scope.isCreating = false;
+                    $scope.error = error;
+                }
+            );
+        };
+    });

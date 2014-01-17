@@ -16,30 +16,44 @@
 
 /**
  * Mock resource responses for the AuthProvider resource.
- *
- * @author Michael Krotscheck
  */
 
 angular.module('sb.services')
-    .run(function ($httpBackend, $injector) {
+    .run(function (mock) {
         'use strict';
-        $httpBackend = $injector.get('$httpBackend');
 
         var authProviders = [
             {
-                'id': 1,
+                'id': 0,
                 'type': 'openid',
                 'title': 'OpenID',
-                'url': 'https://www.google.com/prediscovered' +
-                    '/redirection/url',
+                'url': 'https://login.launchpad.net/+openid',
                 'params': {
-                    'list': 'of',
-                    'additional': 'parameters',
-                    'required': 'for.this.provider'
+                    'openid.ns': 'http://specs.openid.net/auth/2.0',
+                    'openid.claimed_id': 'http://specs.openid.net/auth' +
+                        '/2.0/identifier_select',
+                    'openid.identity': 'http://specs.openid.net/auth' +
+                        '/2.0/identifier_select',
+//                    'openid.return_to': 'https://review.openstack.org/
+// openid?gerrit.mode=SIGN_IN&gerrit.token=%2Fq%2Fstatus%3Aopen%2Cn%2Cz',
+//                    'openid.realm': 'https://review.openstack.org/',
+                    'openid.assoc_handle': '{HMAC-SHA256}{52c79079}{z+v4vA==}',
+                    'openid.mode': 'checkid_setup',
+                    'openid.ns.sreg': 'http://openid.net/sreg/1.0',
+                    'openid.sreg.required': 'fullname,email',
+                    'openid.ns.ext2': 'http://openid.net/srv/ax/1.0',
+                    'openid.ext2.mode': 'fetch_request',
+                    'openid.ext2.type.FirstName': 'http://schema.openid.net/' +
+                        'namePerson/first',
+                    'openid.ext2.type.LastName': 'http://schema.openid.net/' +
+                        'namePerson/last',
+                    'openid.ext2.type.Email': 'http://schema.openid.net/' +
+                        'contact/email',
+                    'openid.ext2.required': 'FirstName,LastName,Email'
                 }
             },
             {
-                'id': 2,
+                'id': 1,
                 'type': 'openid_connect',
                 'title': 'OpenID Connect',
                 'url': 'https://www.google.com/prediscovered' +
@@ -51,7 +65,7 @@ angular.module('sb.services')
                 }
             },
             {
-                'id': 3,
+                'id': 2,
                 'type': 'ldap',
                 'title': 'LDAP',
                 'url': 'https://www.google.com/prediscovered' +
@@ -64,20 +78,9 @@ angular.module('sb.services')
             }
         ];
 
-        $httpBackend.when('GET', '/api/v1/auth/provider')
-            .respond(
-            {
-                total: 1,
-                offset: 0,
-                limit: 10,
-                results: authProviders
-            }
-        );
+        mock.api('/api/v1/auth/provider',
+            '/api/v1/auth/provider/:id',
+            'id',
+            authProviders);
 
-        $httpBackend.when('GET', '/api/v1/auth/provider/1')
-            .respond(authProviders[0]);
-        $httpBackend.when('GET', '/api/v1/auth/provider/2')
-            .respond(authProviders[1]);
-        $httpBackend.when('GET', '/api/v1/auth/provider/3')
-            .respond(authProviders[2]);
     });

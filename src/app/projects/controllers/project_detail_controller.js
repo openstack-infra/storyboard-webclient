@@ -13,17 +13,12 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+/**
+ *
+ */
+angular.module('sb.projects').controller('ProjectDetailController',
+    function ($scope, project) {
+        'use strict';
 
-describe('Storyboard Login Routes', function () {
-    'use strict';
-
-    it('should redirect /auth to /auth/provider/list', function () {
-        browser.get('http://localhost:9000/#!/auth');
-        expect(browser.getCurrentUrl()).toContain('#!/auth/provider/list');
+        $scope.project = project;
     });
-
-    it('should redirect /auth/provider to /auth/provider/list', function () {
-        browser.get('http://localhost:9000/#!/auth/provider');
-        expect(browser.getCurrentUrl()).toContain('#!/auth/provider/list');
-    });
-});

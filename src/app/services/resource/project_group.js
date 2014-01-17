@@ -15,19 +15,36 @@
  */
 
 /**
- * This resource exposes authorization providers to our angularjs environment,
- * allowing us to manage & control them. It's also used during the
- * authorization/login process to determine how we're going to allow users to
- * log in to storyboard.
+ * The angular resource abstraction that allows us to access projects groups.
  *
+ * @see storyboardApiSignature
  * @author Michael Krotscheck
  */
-
-angular.module('sb.services').factory('AuthProvider',
+angular.module('sb.services').factory('ProjectGroup',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/auth/provider/:id',
+        return $resource(storyboardApiBase + '/project_groups/:id',
             {id: '@id'},
             storyboardApiSignature);
     });
+
+
+/*
+ This is initial commit adding pecan/wsme framework.
+ Example operations are:
+ * GET /v1/project_groups
+ * GET /v1/project_groups/<group_name>
+
+ * GET /v1/projects
+ * GET /v1/projects/<project_name>
+
+ * GET /v1/teams
+ * GET /v1/teams/<team_name>
+ * POST /v1/teams
+
+ * GET /v1/users
+ * GET /v1/users/<username>
+ * POST /v1/users
+ * PUT /v1/users/<username>
+ */
