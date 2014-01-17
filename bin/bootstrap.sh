@@ -19,9 +19,18 @@ rm -fr $workspace_path/.local/
 rm -fr $workspace_path/.build/
 
 # Create our working directories
-mkdir -p $workspace_path/.local/
+mkdir -p $workspace_path/.local/bin/
 mkdir -p $workspace_path/.build/
 mkdir -p ~/.cache/storyboard
+
+# If we have npm already, there is no need to download/compile
+if hash npm 2>/dev/null; then
+    exit 0
+fi
+
+if hash nodejs 2>/dev/null && ! hash node 2>/dev/null; then
+    ln -s `which nodejs` $workspace_path/.local/bin/node
+fi
 
 # Download the source if we don't have it already.
 if [ ! -f $node_archive_path ]; then
