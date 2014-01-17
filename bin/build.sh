@@ -5,15 +5,8 @@
 VDISPLAY=99
 DIMENSIONS='1280x1024x24'
 XVFB=/usr/bin/Xvfb
-BIN_DIR="$( cd "$( dirname "$0" )" && pwd )"
-WORKSPACE="$(dirname "$BIN_DIR")"
 
-# Add our new bin directory to the PATH
-echo "Adding $WORKSPACE/.local/bin to PATH"
-export PATH=$WORKSPACE/.local/bin:$PATH
-echo "Adding $WORKSPACE/node_modules/.bin to PATH"
-export PATH=$WORKSPACE/node_modules/.bin:$PATH
-
+source $(dirname $0)/setenv.sh
 cd $WORKSPACE;
 
 echo "Installing build dependencies"

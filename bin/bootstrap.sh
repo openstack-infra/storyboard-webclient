@@ -19,9 +19,22 @@ rm -fr $workspace_path/.local/
 rm -fr $workspace_path/.build/
 
 # Create our working directories
-mkdir -p $workspace_path/.local/
+mkdir -p $workspace_path/.local/bin/
 mkdir -p $workspace_path/.build/
 mkdir -p ~/.cache/storyboard
+
+if hash nodejs 2>/dev/null && ! hash node 2>/dev/null; then
+    ln -s `which nodejs` $workspace_path/.local/bin/node
+fi
+
+# If we have npm already, there is no need to download/compile
+if hash npm 2>/dev/null; then
+    # Also, it needs to be new enough - that is, newer than v1 or v1.2
+    # or v1.2.18. This could almost certainly be improved in some way
+    if test "$( npm --version | awk -F'.' ' ( $1 > 1 || ( $1 == 1 && $2 > 2 ) || ( $1 == 1 && $2 == 2 && $3 >= 18 ) ) ' )" ; then
+        exit 0
+    fi
+fi
 
 # Download the source if we don't have it already.
 if [ ! -f $node_archive_path ]; then
