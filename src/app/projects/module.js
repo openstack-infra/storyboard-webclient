@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -17,10 +17,8 @@
 /**
  * The Storyboard project submodule handles most activity surrounding the
  * creation and management of projects.
- *
- * @author Michael Krotscheck
  */
-angular.module('sb.projects', ['ui.router', 'sb.services'])
+angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
@@ -36,6 +34,22 @@ angular.module('sb.projects', ['ui.router', 'sb.services'])
             })
             .state('project.list', {
                 url: '/list',
-                templateUrl: 'app/templates/project/provider.html'
+                templateUrl: 'app/templates/project/list.html',
+                controller: 'ProjectListController'
+            })
+            .state('project.edit', {
+                url: '/{id:[0-9]+}/edit',
+                templateUrl: 'app/templates/project/edit.html',
+                controller: 'ProjectDetailController'
+            })
+            .state('project.detail', {
+                url: '/{id:[0-9]+}',
+                templateUrl: 'app/templates/project/detail.html',
+                controller: 'ProjectDetailController'
+            })
+            .state('project.new', {
+                url: '/new',
+                templateUrl: 'app/templates/project/new.html',
+                controller: 'ProjectNewController'
             });
     });

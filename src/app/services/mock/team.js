@@ -15,19 +15,20 @@
  */
 
 /**
- * This is our main CSS theme file, which serves to link together all of our
- * CSS/LESS dependencies and ensure they all go through minification/processing.
- * Note that this is the only LESS file that is compiled - if you want a
- * a specific stylesheet to be included, it must be linked here.
+ * Mock resource responses for the Team resource.
  */
-// Library inclusions
-@import './bootstrap.less';
-@import './font-awesome.less';
-// Custom variable overrides
-@import './bootstrap_variable_overrides.less';
-@import './bootstrap_addons.less';
-// Add our own custom icon font.
-@import './custom_font_icons.less';
-// Module specific styles
-@import './body.less';
-@import './auth.less';
+
+angular.module('sb.services')
+    .run(function (mock) {
+        'use strict';
+
+        var team = [
+        ];
+
+        mock.api('/api/v1/teams',
+            '/api/v1/teams/:id',
+            'id',
+            team);
+    }
+)
+;

@@ -15,19 +15,16 @@
  */
 
 /**
- * This resource exposes authorization providers to our angularjs environment,
- * allowing us to manage & control them. It's also used during the
- * authorization/login process to determine how we're going to allow users to
- * log in to storyboard.
+ * The angular resource abstraction that allows us to create and modify tasks.
  *
+ * @see storyboardApiSignature
  * @author Michael Krotscheck
  */
-
-angular.module('sb.services').factory('AuthProvider',
+angular.module('sb.services').factory('Task',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/auth/provider/:id',
+        return $resource(storyboardApiBase + '/tasks/:id',
             {id: '@id'},
             storyboardApiSignature);
     });
