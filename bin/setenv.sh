@@ -1,6 +1,12 @@
 #!/bin/bash
 
-BIN_DIR="$( cd "$( dirname "$0" )" && pwd )"
+if [ "$0" = "bash" ]; then
+    # We're sourcing things
+    BIN_DIR=$(pwd)/bin
+else
+    BIN_DIR="$( cd "$( dirname "$thisscript" )" && pwd )"
+fi
+
 WORKSPACE="$(dirname "$BIN_DIR")"
 
 # Add our new bin directory to the PATH
