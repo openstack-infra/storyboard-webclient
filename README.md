@@ -1,7 +1,7 @@
 storyboard-webclient
 ====================
 
-A PoC WebClient for the OpenStack Storyboard project.
+A WebClient for the OpenStack Storyboard project.
 
 ### Prerequisites: Quick build/CI
 
@@ -13,16 +13,38 @@ A PoC WebClient for the OpenStack Storyboard project.
 
 ### Prerequisites: Dev
 
-* NodeJS 0.10.24 or newer
-* Grunt 0.4.2
-* bower 1.2.8
+* tox
 
-### Command reference:
+### Use tox:
 
-**Bootstrap & build the CI environment**
+**Run the test suite**
 
-* `./bin/bootstrap.sh`
-* `./bin/build.sh`
+* `tox -enode test`
+
+**Run a local development server**
+
+* `tox -enode server`
+
+**Package the distro**
+
+* `tox -enode build`
+
+### For development.
+
+**Create the virtualenv**
+
+* `tox -enode build`
+
+**Activate the virtualenv**
+
+* `source .tox/node/bin/activate`
+
+**Update/refresh the javascript build and runtime dependencies**
+
+* `npm prune`
+* `npm install`
+* `bower prune`
+* `bower install`
 
 **Run a local development server**
 
