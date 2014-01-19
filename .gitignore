@@ -8,3 +8,4 @@ npm-debug.log
 .idea
 reports
 cover
+.tox
