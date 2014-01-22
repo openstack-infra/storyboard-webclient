@@ -21,5 +21,4 @@
  *
  * @author Michael Krotscheck
  */
-angular.module('sb.services', ['ngResource', 'ngCookies', 'ngMock',
-    'ui.router']);
+angular.module('sb.services', ['ngResource', 'ngCookies']);

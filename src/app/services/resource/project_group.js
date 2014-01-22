@@ -28,23 +28,3 @@ angular.module('sb.services').factory('ProjectGroup',
             {id: '@id'},
             storyboardApiSignature);
     });
-
-
-/*
- This is initial commit adding pecan/wsme framework.
- Example operations are:
- * GET /v1/project_groups
- * GET /v1/project_groups/<group_name>
-
- * GET /v1/projects
- * GET /v1/projects/<project_name>
-
- * GET /v1/teams
- * GET /v1/teams/<team_name>
- * POST /v1/teams
-
- * GET /v1/users
- * GET /v1/users/<username>
- * POST /v1/users
- * PUT /v1/users/<username>
- */
