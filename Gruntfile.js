@@ -34,6 +34,7 @@ var mountFolder = function (connect, dir) {
     'use strict';
     return connect.static(require('path').resolve(dir));
 };
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 
 
 module.exports = function (grunt) {
@@ -405,12 +406,21 @@ module.exports = function (grunt) {
                 port: 9000,
                 hostname: 'localhost'
             },
+            proxies: [
+                {
+                    context: '/v1',
+                    host: 'localhost',
+                    port: 8080,
+                    https: false
+                }
+            ],
             livereload: {
                 options: {
                     middleware: function (connect) {
                         return [
                             lrSnippet,
-                            mountFolder(connect, dir.output)
+                            mountFolder(connect, dir.output),
+                            proxySnippet
                         ];
                     }
                 }
@@ -420,7 +430,8 @@ module.exports = function (grunt) {
                     keepalive: true,
                     middleware: function (connect) {
                         return [
-                            mountFolder(connect, dir.output)
+                            mountFolder(connect, dir.output),
+                            proxySnippet
                         ];
                     }
                 }
@@ -429,7 +440,8 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
-                            mountFolder(connect, dir.output)
+                            mountFolder(connect, dir.output),
+                            proxySnippet
                         ];
                     }
                 }
@@ -524,6 +536,7 @@ module.exports = function (grunt) {
         'compile',
         'package',
         'open',
+        'configureProxies:server',
         'connect:dist'
     ]);
 
@@ -535,6 +548,7 @@ module.exports = function (grunt) {
     grunt.registerTask('server', [
         'clean',
         'compile',
+        'configureProxies:server',
         'connect:livereload',
         'open',
         'watch'
