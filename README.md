@@ -39,6 +39,8 @@ A WebClient for the OpenStack Storyboard project.
 
 * `source .tox/node/bin/activate`
 
+#### Within the virtual environment, you have the following options
+
 **Update/refresh the javascript build and runtime dependencies**
 
 * `npm prune`
@@ -57,3 +59,19 @@ A WebClient for the OpenStack Storyboard project.
 **Package the distro**
 
 `grunt build`
+
+**Bootstrap your database**
+
+`./bin/api.sh create-db`
+
+**Migrate the database**
+
+`./bin/api.sh migrate-db`
+
+**Start the API**
+
+`./bin/api.sh start`
+
+**Stop the API**
+
+`./bin/api.sh stop`
