@@ -19,25 +19,29 @@ A WebClient for the OpenStack Storyboard project.
 
 **Run the test suite**
 
-* `tox -enode test`
+* `tox -egrunt test`
 
 **Run a local development server**
 
-* `tox -enode server`
+* `tox -egrunt server`
 
 **Package the distro**
 
-* `tox -enode build`
+* `tox -egrunt build`
 
 ### For development.
 
 **Create the virtualenv**
 
-* `tox -enode build`
+* `tox -egrunt build`
+
+**Run a local development server without the API**
+
+* `tox -egrunt_no_api server`
 
 **Activate the virtualenv**
 
-* `source .tox/node/bin/activate`
+* `source .tox/grunt/bin/activate`
 
 #### Within the virtual environment, you have the following options
 
