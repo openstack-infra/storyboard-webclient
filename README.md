@@ -19,25 +19,29 @@ A WebClient for the OpenStack Storyboard project.
 
 **Run the test suite**
 
-* `tox -enode test`
+* `tox -evenv test`
 
 **Run a local development server**
 
-* `tox -enode server`
+* `tox -evenv server`
 
 **Package the distro**
 
-* `tox -enode build`
+* `tox -evenv build`
 
 ### For development.
 
 **Create the virtualenv**
 
-* `tox -enode build`
+* `tox -evenv build`
+
+**Run a local development server without the API**
+
+* `tox -eno_api server`
 
 **Activate the virtualenv**
 
-* `source .tox/node/bin/activate`
+* `source .tox/venv/bin/activate`
 
 #### Within the virtual environment, you have the following options
 
@@ -74,4 +78,4 @@ A WebClient for the OpenStack Storyboard project.
 
 **Stop the API**
 
-`./bin/api.sh stop`
+`./bin/api.sh stop-evenv`
