@@ -40,14 +40,7 @@ angular.module('sb.services')
             },
             'search': {
                 method: 'GET',
-                isArray: true,
-                transformResponse: function (data) {
-                    if (data.error) {
-                        return data;
-                    } else {
-                        return data.results;
-                    }
-                }
+                isArray: true
             }
         };
     }
