@@ -49,5 +49,5 @@ angular.module('sb.services')
 
         // Neither of those work, so default to something sane on the current
         // domain
-        $provide.constant(propertyName, '/v1');
+        $provide.constant(propertyName, '/api/v1');
     });
