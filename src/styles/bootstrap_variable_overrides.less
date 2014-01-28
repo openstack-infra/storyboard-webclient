@@ -19,11 +19,12 @@
 // #999
 @gray-lighter: lighten(#000, 93.5%);
 // #eee
+@white: #FFFFFF;
 
 // Brand colors
 // -------------------------
 
-@brand-primary: #428bca;
+@brand-primary: #C43422;
 @brand-success: #5cb85c;
 @brand-warning: #f0ad4e;
 @brand-danger: #d9534f;
@@ -39,7 +40,7 @@
 // -------------------------
 
 @link-color: @brand-primary;
-@link-hover-color: darken(@link-color, 15%);
+@link-hover-color: lighten(@link-color, 10%);
 
 // Typography
 // -------------------------
@@ -241,11 +242,11 @@
 // -------------------------
 
 // Basics of a navbar
-@navbar-height: 50px;
+@navbar-height: 40px;
 @navbar-margin-bottom: @line-height-computed;
 @navbar-default-color: #777;
 @navbar-default-bg: #f8f8f8;
-@navbar-default-border: darken(@navbar-default-bg, 6.5%);
+@navbar-default-border: @gray-lighter;
 @navbar-border-radius: @border-radius-base;
 @navbar-padding-horizontal: floor(@grid-gutter-width / 2);
 @navbar-padding-vertical: ((@navbar-height - @line-height-computed) / 2);
@@ -260,8 +261,8 @@
 @navbar-default-link-disabled-bg: transparent;
 
 // Navbar brand label
-@navbar-default-brand-color: @navbar-default-link-color;
-@navbar-default-brand-hover-color: darken(@navbar-default-link-color, 10%);
+@navbar-default-brand-color: @brand-primary;
+@navbar-default-brand-hover-color: lighten(@brand-primary, 10%);
 @navbar-default-brand-hover-bg: transparent;
 
 // Navbar toggle
