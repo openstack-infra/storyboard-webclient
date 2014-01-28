@@ -408,10 +408,13 @@ module.exports = function (grunt) {
             },
             proxies: [
                 {
-                    context: '/v1',
+                    context: '/api/v1',
                     host: 'localhost',
                     port: 8080,
-                    https: false
+                    https: false,
+                    rewrite: {
+                        '^/api/v1': '/v1'
+                    }
                 }
             ],
             livereload: {
