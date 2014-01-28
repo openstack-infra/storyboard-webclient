@@ -21,23 +21,23 @@
 describe('storyboardApiBase', function () {
     'use strict';
 
-    it('should default to /v1', function () {
+    it('should default to /api/v1', function () {
         module('sb.services');
 
         inject(function (storyboardApiBase) {
-            expect(storyboardApiBase).toEqual('/v1');
+            expect(storyboardApiBase).toEqual('/api/v1');
         });
     });
 
     it('should detect a value in window.ENV', function () {
         window.ENV = {
-            storyboardApiBase: 'https://localhost:8080/v1'
+            storyboardApiBase: 'https://localhost:8080/api/v1'
         };
 
         module('sb.services');
 
         inject(function (storyboardApiBase) {
-            expect(storyboardApiBase).toEqual('https://localhost:8080/v1');
+            expect(storyboardApiBase).toEqual('https://localhost:8080/api/v1');
         });
 
         delete window.ENV;
