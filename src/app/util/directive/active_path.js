@@ -30,13 +30,18 @@ angular.module('sb.util').directive('activePath',
                 var activePath = attrs.activePath;
 
                 function setActivePath() {
-                    var isActive = activePath === $location.path();
-                    element.toggleClass('active', isActive);
+                    var path = $location.path();
+                    var isMatchedPath = path.match(activePath) !== null;
+
+                    element.toggleClass('active', isMatchedPath);
                 }
 
-                $scope.$on('$destroy',
-                    $rootScope.$on('$stateChangeSuccess', setActivePath)
-                );
+                // This is angularjs magic, the return method from any $on
+                // binding will return a function that will disconnect
+                // that binding.
+                var disconnectBinding =
+                    $rootScope.$on('$stateChangeSuccess', setActivePath);
+                $scope.$on('$destroy', disconnectBinding);
 
                 // INIT
                 setActivePath();

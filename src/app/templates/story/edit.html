@@ -15,33 +15,33 @@
   -->
 <div class="row">
     <div class="col-xs-12">
-        <form class="form-horizontal" role="form" name="projectForm">
+        <form class="form-horizontal" role="form" name="storyForm">
             <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">
-                    Project Name:
+                <label for="title" class="col-sm-2 control-label">
+                    Title:
                 </label>
 
                 <div class="col-sm-10">
-                    <input id="name"
+                    <input id="title"
                            type="text"
                            class="form-control"
-                           ng-model="project.name"
+                           ng-model="story.title"
                            required
-                           placeholder="Project Name">
+                           placeholder="Story Title">
                 </div>
             </div>
             <div class="form-group">
                 <label for="description"
                        class="col-sm-2 control-label">
-                    Project Description
+                    Story Description
                 </label>
 
                 <div class="col-sm-10">
                     <textarea id="description"
                               class="form-control"
-                              ng-model="project.description"
+                              ng-model="story.description"
                               required
-                              placeholder="A brief project description">
+                              placeholder="A brief story description">
                     </textarea>
                 </div>
             </div>
@@ -50,10 +50,10 @@
                     <button type="button"
                             ng-click="update()"
                             class="btn btn-primary"
-                            ng-disabled="!projectForm.$valid">
+                            ng-disabled="!storyForm.$valid">
                         Save Changes
                     </button>
-                    <a href="#!/project/list"
+                    <a href="#!/story/list"
                        class="btn btn-default">
                         Cancel
                     </a>
