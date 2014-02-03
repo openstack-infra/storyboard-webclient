@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>3 Projects</h1>
+            <h1>3 Stories</h1>
         </div>
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback has-feedback-no-label">
                     <input type="text"
                            class="form-control input-sm"
-                           placeholder="Search Projects"
+                           placeholder="Search Stories"
                            ng-disabled="isSearching"
                            ng-enter="search()"
                            ng-model="searchQuery"/>
@@ -37,10 +37,11 @@
             </div>
         </div>
         <div class="col-sm-9 col-xs-2">
-            <a href="#!/project/new"
+            <a href=""
+               ng-click="newStory()"
                class="pull-right btn btn-default btn-sm">
                 <i class="fa fa-plus"></i>
-                <span class="hidden-xs">New Project</span>
+                <span class="hidden-xs">New Story</span>
             </a>
         </div>
     </div>
@@ -57,12 +58,15 @@
                    ng-hide="isSearching">
                 <thead>
                 <tr>
-                    <th class="col-sm-10">
-                        <small>Project Name</small>
+                    <th class="col-sm-1">
+                        <small>ID</small>
+                    </th>
+                    <th class="col-sm-7">
+                        <small>Story Name</small>
                     </th>
                     <th class="col-sm-2 text-right">
                         <small>
-                            <strong>Stories</strong><br/>
+                            <strong>Tasks</strong><br/>
                             Opened / Total
                         </small>
                     </th>
@@ -72,9 +76,14 @@
                 <tr>
                     <td>
                         <p><strong>
-                            <a href="#!/project/1">openstack/infra</a>
+                            <a href="#!/story/1">1</a>
                         </strong></p>
-                        <small class="text-muted">Project Description</small>
+                    </td>
+                    <td>
+                        <p><strong>
+                            <a href="#!/story/1">Story 1</a>
+                        </strong></p>
+                        <small class="text-muted">Story Description</small>
                     </td>
                     <td class="text-right">
                         <p class="text-muted">2 / 2</p>
@@ -83,9 +92,14 @@
                 <tr>
                     <td>
                         <p><strong>
-                            <a href="#!/project/2">openstack/nova</a>
+                            <a href="#!/story/2">2</a>
                         </strong></p>
-                        <small class="text-muted">Project Description</small>
+                    </td>
+                    <td>
+                        <p><strong>
+                            <a href="#!/story/2">Story 2</a>
+                        </strong></p>
+                        <small class="text-muted">Story Description</small>
                     </td>
                     <td class="text-right">
                         <p class="text-muted">2 / 2</p>
@@ -94,15 +108,19 @@
                 <tr>
                     <td>
                         <p><strong>
-                            <a href="#!/project/3">openstack/ironic</a>
+                            <a href="#!/story/3">3</a>
                         </strong></p>
-                        <small class="text-muted">Project Description</small>
+                    </td>
+                    <td>
+                        <p><strong>
+                            <a href="#!/story/3">Story 3</a>
+                        </strong></p>
+                        <small class="text-muted">Story Description</small>
                     </td>
                     <td class="text-right">
                         <p class="text-muted">2 / 2</p>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
 

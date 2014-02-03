@@ -22,8 +22,12 @@ angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
-        // URL Defaults.
+        // Routing Defaults.
         $urlRouterProvider.when('/project', '/project/list');
+        $urlRouterProvider.when('/project/{id:[0-9]+}',
+            function ($match) {
+                return '/project/' + $match.id + '/overview';
+            });
 
         // Set our page routes.
         $stateProvider
@@ -34,22 +38,31 @@ angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
             })
             .state('project.list', {
                 url: '/list',
-                templateUrl: 'app/templates/project/list.html',
-                controller: 'ProjectListController'
-            })
-            .state('project.edit', {
-                url: '/{id:[0-9]+}/edit',
-                templateUrl: 'app/templates/project/edit.html',
-                controller: 'ProjectDetailController'
+                templateUrl: 'app/templates/project/list.html'
             })
             .state('project.detail', {
+                abstract: true,
                 url: '/{id:[0-9]+}',
-                templateUrl: 'app/templates/project/detail.html',
-                controller: 'ProjectDetailController'
+                templateUrl: 'app/templates/project/detail.html'
+            })
+            .state('project.detail.overview', {
+                url: '/overview',
+                templateUrl: 'app/templates/project/overview.html'
+            })
+            .state('project.detail.edit', {
+                url: '/edit',
+                templateUrl: 'app/templates/project/edit.html'
+            })
+            .state('project.detail.delete', {
+                url: '/delete',
+                templateUrl: 'app/templates/project/delete.html'
+            })
+            .state('project.detail.stories', {
+                url: '/stories',
+                templateUrl: 'app/templates/project/stories.html'
             })
             .state('project.new', {
                 url: '/new',
-                templateUrl: 'app/templates/project/new.html',
-                controller: 'ProjectNewController'
+                templateUrl: 'app/templates/project/new.html'
             });
     });

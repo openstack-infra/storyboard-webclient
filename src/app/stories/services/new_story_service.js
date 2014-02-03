@@ -13,21 +13,25 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-/**
- * Styles specific to the overall application.
- */
-@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic);
 
-body {
-    margin-top: 70px;
 
-    .main {
-        // Min height set so that the footer doesn't bounce around as much,
-        // but there's only so much we can do.
-        min-height: 500px;
-    }
-}
+angular.module('sb.story')
+    .factory('NewStoryService', function ($modal, $log) {
+        'use strict';
 
-i.icon {
-    line-height: .5em;
-}
+        return {
+            showNewStoryModal: function () {
+
+                var modalInstance = $modal.open({
+                    templateUrl: 'app/templates/story/new.html',
+                    controller: 'StoryModalController'
+                });
+
+                modalInstance.result.then(function () {
+                    // Do nothing.
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            }
+        };
+    });

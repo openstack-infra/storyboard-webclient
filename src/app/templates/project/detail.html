@@ -13,26 +13,35 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-<div class="container" ng-show="isLoading">
-    <div class="col-xs-12">
-        <p class="text-center">
-            <i class="fa fa-refresh fa-spin"></i>
-        </p>
-    </div>
-</div>
 
-<div class="container" ng-hide="isLoading">
+<div class="container">
     <div class="row">
-        <div class="col-xs-12">
-            <h1>{{project.name}}</h1>
-
-            <p>{{project.description}}</p>
-            <hr/>
-        </div>
+        <h1 class="no-border no-margin-bottom">Project detail:
+            openstack/infra
+        </h1>
+        <ul class="nav nav-tabs nav-tabs-down nav-thick">
+            <li active-path="^\/project\/[0-9]+\/overview.*">
+                <a href="#!/project/1/overview">
+                    Overview
+                </a>
+            </li>
+            <li active-path="^\/project\/[0-9]+\/stories.*">
+                <a href="#!/project/1/stories">
+                    Stories (2)
+                </a>
+            </li>
+            <li active-path="^\/project\/[0-9]+\/edit.*">
+                <a href="#!/project/1/edit">
+                    Edit
+                </a>
+            </li>
+            <li active-path="^\/project\/[0-9]+\/delete.*">
+                <a href="#!/project/1/delete">
+                    Delete
+                </a>
+            </li>
+        </ul>
+        <br/>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            Project Detail List TBD.
-        </div>
-    </div>
+    <div class="row" ui-view></div>
 </div>

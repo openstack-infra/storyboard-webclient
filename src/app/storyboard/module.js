@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -24,7 +24,7 @@
  */
 angular.module('storyboard',
         [ 'sb.services', 'sb.templates', 'sb.pages', 'sb.projects', 'sb.auth',
-            'sb.teams', 'sb.project_groups', 'ui.router']
+            'sb.story', 'ui.router', 'ui.bootstrap']
     )
     .config(function ($provide, $stateProvider, $urlRouterProvider,
                       $locationProvider, $httpProvider) {

@@ -13,21 +13,15 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
- * Styles specific to the overall application.
+ * Controller for the "new story" modal popup.
  */
-@import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic);
+angular.module('sb.story').controller('StoryModalController',
+    function ($scope, $modalInstance) {
+        'use strict';
 
-body {
-    margin-top: 70px;
-
-    .main {
-        // Min height set so that the footer doesn't bounce around as much,
-        // but there's only so much we can do.
-        min-height: 500px;
-    }
-}
-
-i.icon {
-    line-height: .5em;
-}
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });

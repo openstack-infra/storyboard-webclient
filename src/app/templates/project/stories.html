@@ -1,0 +1,119 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="col-sm-3 col-xs-10">
+    <div class="btn-group btn-group-justified">
+        <div class="form-group has-feedback has-feedback-no-label">
+            <input type="text"
+                   class="form-control input-sm"
+                   placeholder="Search Stories"
+                   ng-disabled="isSearching"
+                   ng-enter="search()"
+                   ng-model="searchQuery"/>
+                    <span class="fa fa-search form-control-feedback"
+                          ng-hide="isSearching"></span>
+                    <span class="fa fa-refresh fa-spin form-control-feedback"
+                          ng-show="isSearching"></span>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-9 col-xs-2">
+    <a href="#!/story/new"
+       class="pull-right btn btn-default btn-sm">
+        <i class="fa fa-plus"></i>
+        <span class="hidden-xs">New Story</span>
+    </a>
+</div>
+
+<div class="col-sm-12">
+    <div ng-show="isSearching">
+        <hr/>
+        <p class="text-center">
+            <i class="fa fa-refresh fa-spin fa-lg"></i>
+        </p>
+    </div>
+</div>
+
+<table class="table table-striped"
+       ng-hide="isSearching">
+    <thead>
+    <tr>
+        <th class="col-sm-1">
+            <small>ID</small>
+        </th>
+        <th class="col-sm-7">
+            <small>Story Name</small>
+        </th>
+        <th class="col-sm-2 text-right">
+            <small>
+                <strong>Tasks</strong><br/>
+                Opened / Total
+            </small>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p><strong>
+                <a href="#!/story/1">1</a>
+            </strong></p>
+        </td>
+        <td>
+            <p><strong>
+                <a href="#!/story/1">Story 1</a>
+            </strong></p>
+            <small class="text-muted">Story Description</small>
+        </td>
+        <td class="text-right">
+            <p class="text-muted">2 / 2</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>
+                <a href="#!/story/2">2</a>
+            </strong></p>
+        </td>
+        <td>
+            <p><strong>
+                <a href="#!/story/2">Story 2</a>
+            </strong></p>
+            <small class="text-muted">Story Description</small>
+        </td>
+        <td class="text-right">
+            <p class="text-muted">2 / 2</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>
+                <a href="#!/story/3">3</a>
+            </strong></p>
+        </td>
+        <td>
+            <p><strong>
+                <a href="#!/story/3">Story 3</a>
+            </strong></p>
+            <small class="text-muted">Story Description</small>
+        </td>
+        <td class="text-right">
+            <p class="text-muted">2 / 2</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
