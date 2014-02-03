@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>{{projectCount}} Projects</h1>
+            <h1>{{storyCount}} Stories</h1>
         </div>
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 <div class="form-group has-feedback has-feedback-no-label">
                     <input type="text"
                            class="form-control input-sm"
-                           placeholder="Search Projects"
+                           placeholder="Search Stories"
                            ng-disabled="isSearching"
                            ng-enter="search()"
                            ng-model="searchQuery"/>
@@ -37,10 +37,11 @@
             </div>
         </div>
         <div class="col-sm-9 col-xs-2">
-            <a href="#!/project/new"
+            <a href=""
+               ng-click="newStory()"
                class="pull-right btn btn-default btn-sm">
                 <i class="fa fa-plus"></i>
-                <span class="hidden-xs">New Project</span>
+                <span class="hidden-xs">New Story</span>
             </a>
         </div>
     </div>
@@ -53,47 +54,53 @@
                 </p>
             </div>
 
-            <p ng-show="!isSearching && projects.length == 0"
+            <p ng-show="!isSearching && stories.length == 0"
                class="text-center text-warning">
-                <em> We were unable to find any projects.
+                <em> We were unable to find any stories.
                     Perhaps you would like to create one?</em>
             </p>
 
             <table class="table table-striped"
-                   ng-hide="isSearching || projects.length == 0">
+                   ng-hide="isSearching || stories.length == 0">
                 <thead>
                 <tr>
-                    <th class="col-sm-10">
-                        <small>Project Name</small>
+                    <th class="col-sm-1">
+                        <small>ID</small>
+                    </th>
+                    <th class="col-sm-7">
+                        <small>Story Name</small>
                     </th>
                     <th class="col-sm-2 text-right">
                         <small>
-                            <strong>Stories</strong><br/>
+                            <strong>Tasks</strong><br/>
                             Opened / Total
                         </small>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="project in projects">
+                <tr ng-repeat="story in stories">
                     <td>
                         <p><strong>
-                            <a href="#!/project/{{project.id}}">
-                                {{project.name}}
-                            </a>
+                            <a href="#!/story/{{story.id}}">{{story.id}}</a>
                         </strong></p>
-                        <small class="text-muted">
-                            {{project.description}}
-                        </small>
+                    </td>
+                    <td>
+                        <p><strong>
+                            <a href="#!/story/{{story.id}}">{{story.title}}</a>
+                        </strong></p>
+                        <small class="text-muted">{{story.description}}</small>
                     </td>
                     <td class="text-right">
                         <p class="text-muted">
-                            {{project.openStories}} / {{project.totalStories}}
+                            {{story.openTasks}} / {{story.totalTasks}}
                         </p>
                     </td>
                 </tr>
                 </tbody>
             </table>
+
         </div>
+
     </div>
 </div>
