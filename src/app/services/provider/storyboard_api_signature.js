@@ -38,9 +38,10 @@ angular.module('sb.services')
             'delete': {
                 method: 'DELETE'
             },
-            'search': {
+            'query': {
                 method: 'GET',
-                isArray: true
+                isArray: true,
+                responseType: 'json'
             }
         };
     }

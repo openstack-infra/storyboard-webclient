@@ -101,7 +101,6 @@ module.exports = function (grunt) {
         concat: {
             dist: {
                 src: [
-                    dir.source + '/app/storyboard.js',
                     dir.source + '/app/**/module.js',
                     dir.source + '/app/**/*.js'
                 ],
@@ -119,19 +118,20 @@ module.exports = function (grunt) {
          * Note: We're using LessCSS here because SASS requires ruby-compass,
          * and cannot be easily installed with npm.
          */
-        recess: {
+        less: {
             options: {
-                includePath: [
-                    dir.bower + '/bootstrap/less/',
+                paths: [
+                    dir.bower + '/bootstrap/less',
                     dir.bower + '/font-awesome/less/'
                 ],
-                compile: true
+                cleancss: true,
+                strictMath: true,
+                strictUnits: true
             },
             theme: {
-                src: [
-                    dir.source + '/styles/main.less'
-                ],
-                dest: dir.output + '/styles/main.css'
+                files: {
+                    'dist/styles/main.css': dir.source + '/styles/main.less'
+                }
             }
         },
 
@@ -346,17 +346,16 @@ module.exports = function (grunt) {
         watch: {
             concat: {
                 files: [
-                    dir.source + '/app/storyboard.js',
                     dir.source + '/app/**/module.js',
                     dir.source + '/app/**/*.js'
                 ],
                 tasks: ['concat']
             },
-            recess: {
+            less: {
                 files: [
                     dir.source + '/styles/**/*.less'
                 ],
-                tasks: ['recess:theme']
+                tasks: ['less:theme']
             },
             copy: {
                 files: [
@@ -505,7 +504,7 @@ module.exports = function (grunt) {
         'jshint',
         'useminPrepare',
         'concat',
-        'recess',
+        'less',
         'imagemin',
         'html2js',
         'copy',

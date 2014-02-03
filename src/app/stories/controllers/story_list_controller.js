@@ -15,16 +15,26 @@
  */
 
 /**
- * The projectGroup list controller handles discovery for all projectGroups,
- * including search. Note that it is assumed that we implemented a search
- * (inclusive), rather than a browse (exclusive) approach.
+ * Controller for our story list.
  */
-angular.module('sb.project_groups').controller('ProjectGroupListController',
-    function ($scope, ProjectGroup) {
+angular.module('sb.story').controller('StoryListController',
+    function ($scope, $modal, NewStoryService, Story) {
         'use strict';
 
+        $scope.newStory = function () {
+            NewStoryService.showNewStoryModal();
+        };
+
+
         // Variables and methods available to the template...
-        $scope.projectGroups = [];
+        function resetScope() {
+            $scope.storyCount = 0;
+            $scope.storyOffset = 0;
+            $scope.storyLimit = 10;
+            $scope.stories = [];
+            $scope.error = {};
+        }
+
         $scope.searchQuery = '';
         $scope.isSearching = false;
 
@@ -33,19 +43,26 @@ angular.module('sb.project_groups').controller('ProjectGroupListController',
          */
         $scope.search = function () {
             // Clear the scope and set the progress flag.
-            $scope.error = {};
+            resetScope();
             $scope.isSearching = true;
-            $scope.projectGroups = [];
 
-            // Execute the projectGroup query.
-            ProjectGroup.search(
-                // Enable this once the API's there, mocks don't support
-                // searches yet
-                {/* q: $scope.searchQuery || '' */},
-                function (result) {
+            // Execute the story query.
+            Story.query(
+                // Enable this once the API accepts search queries.
+                {},
+                function (result, headers) {
+
+                    // Extract metadata from returned headers.
+                    var storyCount = headers('X-List-Total') || result.length;
+                    var storyOffset = headers('X-List-Offset') || 0;
+                    var storyLimit = headers('X-List-Limit') || result.length;
+
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.projectGroups = result;
+                    $scope.storyCount = storyCount;
+                    $scope.storyOffset = storyOffset;
+                    $scope.storyLimit = storyLimit;
+                    $scope.stories = result;
                     $scope.isSearching = false;
                 },
                 function (error) {
@@ -58,5 +75,6 @@ angular.module('sb.project_groups').controller('ProjectGroupListController',
         };
 
         // Initialize the view with a default search.
+        resetScope();
         $scope.search();
     });
