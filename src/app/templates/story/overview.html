@@ -1,0 +1,169 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="row">
+    <div class="col-sm-9 col-xs-11">
+        <p ng-show="story.description">
+            {{story.description}}
+        </p>
+        <em ng-hide="story.description"
+            class="text-muted">
+            No description available
+        </em>
+    </div>
+    <div class="col-sm-3 col-xs-1">
+        <a href=""
+           ng-click="showAddTaskForm = !showAddTaskForm"
+           class="pull-right btn btn-default btn-sm">
+            <span ng-hide="showAddTaskForm">
+                <i class="fa fa-plus"></i>&nbsp;
+                <span class="hidden-xs">Add Task</span>
+            </span>
+            <span ng-show="showAddTaskForm">
+                <i class="fa fa-minus"></i>&nbsp;
+                <span class="hidden-xs">Add Task</span>
+            </span>
+        </a>
+    </div>
+</div>
+<div class="row" ng-show="showAddTaskForm">
+    <br/>
+
+    <div class="col-sm-12">
+        <div class="well">
+            <form role="form" name="taskForm">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 control-label">
+                        Task Title:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="title"
+                               type="text"
+                               class="form-control"
+                               ng-model="newTask.title"
+                               required
+                               placeholder="Task Title">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default"
+                                ng-click="addTask()">
+                            Add task
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-sm-1">
+                    <small>ID</small>
+                </th>
+                <th class="col-sm-6">
+                    <small>Title</small>
+                </th>
+                <th class="col-sm-3">
+                    <small>Project</small>
+                </th>
+                <th class="col-sm-2">
+                    <small>Status</small>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in tasks">
+                <td>
+                    <p><strong>
+                        <a href="">{{task.id}}</a>
+                    </strong></p>
+                </td>
+                <td>
+                    <p><strong>
+                        <a href="">{{task.title}}</a>
+                    </strong></p>
+                    <small class="text-muted">{{task.description}}</small>
+                </td>
+                <td>
+                    <p><strong>
+                        <a href="">Not Yet Implemented</a>
+                    </strong></p>
+                </td>
+                <td>
+                    <p class="text-success">{{task.status}}</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<!--
+<div class="row">
+<div class="col-sm-12">
+<h3>Comments</h3>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-user"></i>
+        Your Name Here
+    </div>
+    <div class="panel-body">
+        <p>I'm not certain I like the default panel ui, we can
+            definitely improve this.</p>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-user"></i>
+                Pinkie Pie
+            </div>
+            <div class="panel-body">
+                As long as we can nest them, we can start with that.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-user"></i>
+        Someone else's name here
+    </div>
+    <div class="panel-body">
+        Seriously. Talk about too much padding.
+    </div>
+</div>
+<form role="form">
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea class="form-control" name="comment"
+                  id="comment"
+                  rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Add comment</button>
+</form>
+</div>
+</div>
+-->
