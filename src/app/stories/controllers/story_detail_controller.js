@@ -13,36 +13,25 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
- * Project group detail &  manipulation controller. Usable for any view that
- * wants to view, edit, or delete a project group, though views don't have to
- * use all the functions therein. Includes flags for busy time, error responses
- * and more.
- *
- * This controller assumes that the $stateParams object is both injectable and
- * contains an ":id" property that indicates which project should be loaded. At
- * the moment it will only set a 'isLoading' flag to indicate that data is
- * loading. If loading the data is anticipated to take longer than 3 seconds,
- * this will need to be updated to display a sane progress.
- *
- * Do not allow loading of this (or any) controller to take longer than 10
- * seconds. 3 is preferable.
+ * Story detail &  manipulation controller.
  */
-angular.module('sb.project_groups').controller('ProjectGroupDetailController',
-    function ($scope, $state, $stateParams, ProjectGroup) {
+angular.module('sb.story').controller('StoryDetailController',
+    function ($scope, $state, $stateParams, Story, Task) {
         'use strict';
 
         // Parse the ID
-        var id = $stateParams.hasOwnProperty('id') ?
-            parseInt($stateParams.id, 10) :
+        var id = $stateParams.hasOwnProperty('storyId') ?
+            parseInt($stateParams.storyId, 10) :
             null;
 
         /**
-         * The project group we're manipulating right now.
-         *
-         * @type ProjectGroup
+         * The story we're manipulating right now.
          */
-        $scope.projectGroup = {};
+        $scope.story = {};
+        $scope.tasks = [];
+        $scope.newTask = new Task();
 
         /**
          * UI flag for when we're initially loading the view.
@@ -76,6 +65,20 @@ angular.module('sb.project_groups').controller('ProjectGroupDetailController',
             $scope.isUpdating = false;
         }
 
+        /**
+         * Loads the tasks for this story
+         */
+        function loadTasks() {
+            $scope.tasks = [];
+
+            Task.query(
+                {story: id},
+                function (result) {
+                    $scope.tasks = result;
+                },
+                handleServiceError
+            );
+        }
 
         // Sanity check, do we actually have an ID? (zero is falsy)
         if (!id && id !== 0) {
@@ -89,17 +92,31 @@ angular.module('sb.project_groups').controller('ProjectGroupDetailController',
             $scope.isLoading = false;
         } else {
             // We've got an ID, so let's load it...
-            ProjectGroup.read(
+            Story.read(
                 {'id': id},
                 function (result) {
                     // We've got a result, assign it to the view and unset our
                     // loading flag.
-                    $scope.projectGroup = result;
+                    $scope.story = result;
                     $scope.isLoading = false;
                 },
                 handleServiceError
             );
+
+            loadTasks();
         }
+
+        /**
+         * Adds a task.
+         */
+        $scope.addTask = function () {
+            $scope.newTask.story_id = id;
+            $scope.newTask.$save(function (result) {
+                loadTasks();
+                $scope.newTask = new Task();
+            })
+        };
+
 
         /**
          * Scope method, invoke this when you want to update the project.
@@ -110,34 +127,11 @@ angular.module('sb.project_groups').controller('ProjectGroupDetailController',
             $scope.error = {};
 
             // Invoke the save method and wait for results.
-            $scope.projectGroup.$update(
-                function () {
+            $scope.story.$update(
+                function (result) {
                     // Unset our loading flag and navigate to the detail view.
                     $scope.isUpdating = false;
-                    $state.go('project_groups.detail', {
-                        id: $scope.projectGroup.id
-                    });
-                },
-                handleServiceError
-            );
-        };
-
-
-        /**
-         * Scope method, invoke this when you'd like to delete this project.
-         */
-        $scope.remove = function () {
-            // Set our progress flags and clear previous error conditions.
-            $scope.isUpdating = true;
-            $scope.error = {};
-
-            // Try to delete.
-            $scope.projectGroup.$delete(
-                function () {
-                    // The deletion was successful, so head back to the list
-                    // view.
-                    $scope.isUpdating = false;
-                    $state.go('project_groups.list');
+                    $state.go('story.detail.overview', {storyId: result.id});
                 },
                 handleServiceError
             );

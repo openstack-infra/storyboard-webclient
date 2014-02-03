@@ -14,48 +14,95 @@
   ~ under the License.
   -->
 
-<div class="container">
+<div class="container" ng-controller="HeaderController">
     <div class="navbar-header">
+        <!-- Expand menu button, only visible in mobile view. -->
         <button class="navbar-toggle" type="button" data-toggle="collapse"
                 data-target=".sb-navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="#!/" class="navbar-brand">
-            <i class="icon icon_openstack"></i> Storyboard
-        </a>
+
+        <!-- New story button for the mobile view -->
+        <button type="button"
+                ng-click="newStory()"
+                class="visible-xs new-story-button btn btn-primary btn-sm navbar-btn pull-right"
+                >
+            <i class="fa fa-plus"></i>
+            New Story
+        </button>
+
+        <!-- Brand logo -->
+        <div class="navbar-brand">
+            <a href="#!/">
+                <i class="icon icon_openstack"></i> Storyboard
+            </a>
+        </div>
     </div>
-    <nav class="collapse navbar-collapse sb-navbar-collapse" role="navigation">
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="#!/project_groups">Project Groups</a>
-            </li>
-            <li>
-                <a href="#!/project">Projects</a>
-            </li>
-            <li>
-                <a href="#!/teams">Teams</a>
-            </li>
-            <li>
-            <a href="#!/stories">Stories</a>
-            </li>
-            <li>
-                <a href="#!/page/about">About</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li ng-show="isLoggedIn">
-                <a href="#!/profile">{{currentUser.firstName}}
-                    {{currentUser.lastName}} <i class="fa fa-cog"></i></a>
-            </li>
-            <li ng-show="isLoggedIn">
-                <a href="#!/logout">Log out</a>
-            </li>
-            <li ng-hide="isLoggedIn">
-                <a href="#!/auth">Log in</a>
-            </li>
-            </li>
-        </ul>
-    </nav>
+    <ul class="nav navbar-nav collapse navbar-collapse sb-navbar-collapse">
+
+        <!-- User name, visible in XS only -->
+        <li class="visible-xs">
+            <p class="navbar-text" ng-show="isLoggedIn">
+                <i class="fa fa-user"></i>&nbsp;
+                {{currentUser.firstName}}
+                {{currentUser.lastName}}
+            </p>
+        </li>
+
+        <li>
+            <a href="#!/" active-path="^\/$">Overview</a>
+        </li>
+        <li>
+            <a href="#!/project" active-path="^\/project\/*">Projects</a>
+        </li>
+        <li>
+            <a href="#!/story" active-path="^\/story.*">Stories</a>
+        </li>
+
+        <!-- Divider, XS only -->
+        <li class="visible-xs">
+            <hr/>
+        </li>
+        <!-- Login/Logout button, XS only. -->
+        <li class="visible-xs">
+            <a href="#!/auth/login" ng-hide="isLoggedIn">
+                Log in
+            </a>
+            <a href="#!/auth/logout" ng-show="isLoggedIn">
+                Log out
+            </a>
+        </li>
+    </ul>
+
+    <!-- User dropdown menu for non-mobile views -->
+    <ul class="nav navbar-nav navbar-right hidden-xs">
+        <li>
+            <button type="button"
+                    ng-click="newStory()"
+                    class="hidden-xs btn btn-primary btn-sm navbar-btn">
+                <i class="fa fa-plus"></i>
+                New Story
+            </button>
+        </li>
+        <!-- Username and logout, non-XS only. -->
+        <li ng-show="isLoggedIn">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user"></i>&nbsp;
+                {{currentUser.firstName}}
+                {{currentUser.lastName}}&nbsp;
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#!/auth/logout">Logout</a>
+                </li>
+            </ul>
+        </li>
+        <!-- Login, non-XS only. -->
+        <li ng-hide="isLoggedIn">
+            <a href="#!/auth">Log in</a>
+        </li>
+    </ul>
 </div>

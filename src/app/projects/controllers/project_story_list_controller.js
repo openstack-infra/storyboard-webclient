@@ -15,21 +15,30 @@
  */
 
 /**
- * The project list controller handles discovery for all projects, including
- * search. Note that it is assumed that we implemented a search (inclusive),
- * rather than a browse (exclusive) approach.
+ * This controller manages stories within the scope of a particular project.
  */
-angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, Project) {
+angular.module('sb.projects').controller('ProjectStoryListController',
+    function ($scope, $state, $stateParams, Story, NewStoryService) {
         'use strict';
 
-        // Variables and methods available to the template...
+        // Parse the ID. Since we're in a nested state, we don't really need
+        // to sanity check here, but in case of a future refactor we'll
+        // go ahead and do so anyway.
+        var id = $stateParams.hasOwnProperty('id') ?
+            parseInt($stateParams.id, 10) :
+            null;
 
+        if (id === null) {
+            $state.go('index');
+            return;
+        }
+
+        // Variables and methods available to the template...
         function resetScope() {
-            $scope.projectCount = 0;
-            $scope.projectOffset = 0;
-            $scope.projectLimit = 10;
-            $scope.projects = [];
+            $scope.storyCount = 0;
+            $scope.storyOffset = 0;
+            $scope.storyLimit = 10;
+            $scope.stories = [];
             $scope.error = {};
         }
 
@@ -44,23 +53,22 @@ angular.module('sb.projects').controller('ProjectListController',
             resetScope();
             $scope.isSearching = true;
 
-            // Execute the project query.
-            Project.query(
-                // Enable this once the API accepts search queries.
-                { /*q: $scope.searchQuery || ''*/},
+            // Execute the story query.
+            Story.query(
+                {project: id},
                 function (result, headers) {
 
                     // Extract metadata from returned headers.
-                    var projectCount = headers('X-List-Total') || result.length;
-                    var projectOffset = headers('X-List-Offset') || 0;
-                    var projectLimit = headers('X-List-Limit') || result.length;
+                    var storyCount = headers('X-List-Total') || result.length;
+                    var storyOffset = headers('X-List-Offset') || 0;
+                    var storyLimit = headers('X-List-Limit') || result.length;
 
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.projectCount = projectCount;
-                    $scope.projectOffset = projectOffset;
-                    $scope.projectLimit = projectLimit;
-                    $scope.projects = result;
+                    $scope.storyCount = storyCount;
+                    $scope.storyOffset = storyOffset;
+                    $scope.storyLimit = storyLimit;
+                    $scope.stories = result;
                     $scope.isSearching = false;
                 },
                 function (error) {
@@ -70,6 +78,10 @@ angular.module('sb.projects').controller('ProjectListController',
                     $scope.isSearching = false;
                 }
             );
+        };
+
+        $scope.newStory = function () {
+            NewStoryService.showNewStoryModal(id);
         };
 
         // Initialize the view with a default search.
