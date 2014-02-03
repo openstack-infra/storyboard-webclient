@@ -18,16 +18,132 @@
  * Generic overrides and addons for bootstrap.
  */
 h1, h2, h3, h4, h5, h6 {
+
     &.no-margin {
         margin: 0px;
     }
+
+    &.no-border {
+        border: none;
+    }
+
+    &.no-margin-bottom {
+        margin-bottom: 0px;
+    }
+}
+
+h1 {
+    padding-bottom: .3em;
+    border-bottom: 2px solid @gray-lighter;
+
 }
 
 .navbar {
     #gradient > .vertical(@white, @gray-lighter);
-    .box-shadow( 0 1px 3px rgba(0,0,0,.25))
+    .box-shadow(0 1px 3px rgba(0, 0, 0, .25));
+
+    // The new story button in the mobile view needs a little additional margin.
+    .new-story-button {
+        margin-right: 5px;
+    }
+
+    .navbar-nav {
+        li {
+            .active {
+                @media (max-width: @screen-sm) {
+                    border-left: 5px solid @brand-primary;
+                    color: @gray-darker;
+                }
+
+                @media (min-width: @screen-sm) {
+                    border-bottom: 3px solid @brand-primary;
+                    margin-bottom: -2px;
+                    padding-bottom: (@navbar-padding-vertical - 2);
+                    color: @gray-darker;
+                }
+            }
+
+            &.visible-xs {
+                hr {
+                    border-top: 1px solid @gray-light;
+                    margin: 5px 10px 5px 10px;
+                }
+            }
+        }
+    }
 }
 
 .navbar-brand {
     color: @brand-primary;
+
+    a:hover {
+        text-decoration: none;
+    }
+}
+
+.has-feedback {
+
+    // Sibling selectors for inputs of different sizes.
+    .input-sm + .form-control-feedback {
+        line-height: 30px;
+    }
+
+    &.has-feedback-no-label {
+        .form-control-feedback {
+            top: 0px;
+        }
+    }
+}
+
+.nav-tabs {
+
+    &.nav-tabs-down {
+        border-bottom: none;
+        border-top: 1px solid @nav-tabs-border-color;
+
+        > li {
+            margin-bottom: 0px;
+            margin-top: -1px;
+
+            // Actual tabs (as links)
+            > a {
+                border-width: 1px;
+                border-radius: 0 0 @border-radius-base @border-radius-base;
+                &:hover {
+                    border-bottom-color: @nav-tabs-link-hover-border-color;
+                    border-top-color: @nav-tabs-border-color;
+                }
+            }
+
+            // Active state, and its :hover to override normal :hover
+            &.active > a {
+                &,
+                &:hover,
+                &:focus {
+                    border-bottom-color: @nav-tabs-active-link-hover-border-color;
+                    border-top-color: transparent;
+                }
+            }
+        }
+    }
+
+    &.nav-thick {
+        border-width: 2px;
+
+        > li {
+            margin-bottom: 0px;
+            margin-top: -2px;
+            > a {
+                border-width: 2px;
+            }
+            // Active state, and its :hover to override normal :hover
+            &.active > a {
+                &,
+                &:hover,
+                &:focus {
+                    border-width: 2px;
+                }
+            }
+        }
+    }
 }

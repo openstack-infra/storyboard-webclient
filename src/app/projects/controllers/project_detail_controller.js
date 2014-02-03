@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -28,7 +28,7 @@
  * seconds. 3 is preferable.
  */
 angular.module('sb.projects').controller('ProjectDetailController',
-    function ($scope, $state, $stateParams, Project) {
+    function ($scope, $state, $stateParams, Project, Story) {
         'use strict';
 
         // Parse the ID
@@ -42,6 +42,15 @@ angular.module('sb.projects').controller('ProjectDetailController',
          * @type Project
          */
         $scope.project = {};
+
+        /**
+         * The count of stories for this project.
+         *
+         * TODO(krotscheck): Once we have proper paging requests working,
+         * this should become a count-only request, so we can delegate project
+         * story searches to the ProjectStoryListController.
+         */
+        $scope.projectStoryCount = 0;
 
         /**
          * UI flag for when we're initially loading the view.
@@ -98,6 +107,15 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 },
                 handleServiceError
             );
+            // Load the count of stories while we're at it...
+            Story.query({project: id},
+                function (result, headers) {
+                    // Only extract the total header...
+                    $scope.projectStoryCount =
+                        headers('X-List-Total') || result.length;
+                },
+                handleServiceError
+            );
         }
 
         /**
@@ -114,27 +132,6 @@ angular.module('sb.projects').controller('ProjectDetailController',
                     // Unset our loading flag and navigate to the detail view.
                     $scope.isUpdating = false;
                     $state.go('project.detail', {id: $scope.project.id});
-                },
-                handleServiceError
-            );
-        };
-
-
-        /**
-         * Scope method, invoke this when you'd like to delete this project.
-         */
-        $scope.remove = function () {
-            // Set our progress flags and clear previous error conditions.
-            $scope.isUpdating = true;
-            $scope.error = {};
-
-            // Try to delete.
-            $scope.project.$delete(
-                function () {
-                    // The deletion was successful, so head back to the list
-                    // view.
-                    $scope.isUpdating = false;
-                    $state.go('project.list');
                 },
                 handleServiceError
             );

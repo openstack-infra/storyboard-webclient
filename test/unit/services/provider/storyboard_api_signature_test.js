@@ -38,9 +38,9 @@ describe('storyboardApiSignature', function () {
         });
     });
 
-    it('should declare a search method', function () {
+    it('should declare a query method', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.search).toBeTruthy();
+            expect(storyboardApiSignature.query).toBeTruthy();
         });
     });
 
@@ -68,10 +68,10 @@ describe('storyboardApiSignature', function () {
             expect(storyboardApiSignature.delete.method).toEqual('DELETE');
         });
     });
-    it('should use GET to search', function () {
+    it('should use GET to query', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.search).toBeTruthy();
-            expect(storyboardApiSignature.search.method).toEqual('GET');
+            expect(storyboardApiSignature.query).toBeTruthy();
+            expect(storyboardApiSignature.query.method).toEqual('GET');
         });
     });
 
@@ -81,7 +81,7 @@ describe('storyboardApiSignature', function () {
             var Resource =  $resource('/path/:id',
                 {id: '@id'},
                 storyboardApiSignature);
-            expect(Resource.search).toBeTruthy();
+            expect(Resource.query).toBeTruthy();
             expect(Resource.read).toBeTruthy();
 
             var resourceInstance = new Resource();
