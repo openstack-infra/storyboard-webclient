@@ -36,7 +36,7 @@ angular.module('storyboard',
         // Override the hash prefix for Google's AJAX crawling.
         $locationProvider.hashPrefix('!');
 
-        // Set an intial home page.
+        // Set an initial home page.
         $stateProvider
             .state('index', {
                 url: '/',
