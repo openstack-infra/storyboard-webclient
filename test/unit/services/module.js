@@ -34,7 +34,7 @@ describe('sb.services', function () {
         expect(module).toBeTruthy();
     });
 
-    it('should load cookies module', function () {
-        expect(hasModule('ngCookies')).toBeTruthy();
+    it('should load resource module', function () {
+        expect(hasModule('ngResource')).toBeTruthy();
     });
 });

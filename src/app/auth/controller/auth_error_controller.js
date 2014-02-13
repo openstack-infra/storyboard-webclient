@@ -5,7 +5,7 @@
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -15,19 +15,16 @@
  */
 
 /**
- * This resource exposes authorization providers to our angularjs environment,
- * allowing us to manage & control them. It's also used during the
- * authorization/login process to determine how we're going to allow users to
- * log in to storyboard.
- *
- * @author Michael Krotscheck
+ * View controller for authorization error conditions.
  */
-
-angular.module('sb.services').factory('AuthProvider',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+angular.module('sb.auth').controller('AuthErrorController',
+    function ($scope, $stateParams) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/auth/provider/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        console.warn('AuthErrorController');
+
+
+        $scope.error = $stateParams.error || 'Unknown';
+        $scope.errorDescription = $stateParams.error_description ||
+            'No description received from server.';
     });

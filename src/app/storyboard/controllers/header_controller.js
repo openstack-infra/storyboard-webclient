@@ -18,10 +18,35 @@
  * Controller for our application header.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($scope, $modal, NewStoryService) {
+    function ($scope, NewStoryService, Session, SessionState, CurrentUser) {
         'use strict';
 
+        /**
+         * Load and maintain the current user.
+         */
+        $scope.currentUser = CurrentUser.get();
+
+        /**
+         * Create a new story.
+         */
         $scope.newStory = function () {
             NewStoryService.showNewStoryModal();
         };
+
+        /**
+         * View handle to show the current logged in state.
+         */
+        $scope.isLoggedIn =
+            (Session.getSessionState() === SessionState.LOGGED_IN);
+
+        // Watch for changes to the session state.
+        $scope.$watch(
+            function () {
+                return Session.getSessionState();
+            },
+            function (sessionState) {
+                $scope.isLoggedIn = sessionState === SessionState.LOGGED_IN;
+                $scope.currentUser = CurrentUser.get();
+            }
+        );
     });

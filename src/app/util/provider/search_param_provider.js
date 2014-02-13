@@ -5,7 +5,7 @@
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -15,19 +15,21 @@
  */
 
 /**
- * This controller handles the logic for the authorization provider list page.
- *
- * @author Michael Krotscheck
+ * Utility injector, injects the query parameters from the NON-hashbang URL as
+ * $searchParams.
  */
-angular.module('sb.auth').controller('AuthListController',
-    function ($scope, authProviders, $state) {
+angular.module('sb.util').factory('$searchParams',
+    function ($window, UrlUtil) {
         'use strict';
 
-        // If there's only one auth provider, just use that.
-        if (!!authProviders && authProviders.length === 1) {
-            $state.go('auth.provider.id', {id: authProviders[0].id});
+        var params = {};
+        var search = $window.location.search;
+        if (!!search) {
+            if (search.charAt(0) === '?') {
+                search = search.substr(1);
+            }
+
+            return UrlUtil.deserializeParameters(search);
         }
-
-        $scope.authProviders = authProviders;
-
+        return params;
     });
