@@ -21,4 +21,50 @@
  *
  * @author Michael Krotscheck
  */
-angular.module('sb.services', ['ngResource', 'ngCookies']);
+angular.module('sb.services',
+        ['ngResource', 'ui.router', 'sb.templates', 'sb.util',
+            'LocalStorageModule'])
+    .config(function ($stateProvider, $urlRouterProvider) {
+        'use strict';
+
+        // Default rerouting.
+        $urlRouterProvider.when('/auth/login', '/login');
+        $urlRouterProvider.when('/auth/logout', '/logout');
+
+        // Declare the states for this module.
+        $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/templates/auth/provider/login.html',
+                resolve: {
+                    data: function(authService) {
+                        authService.loginHandler();
+                    }
+                }
+            })
+            .state('logout', {
+                url: '/logout',
+                resolve: {
+                    data: function(authService) {
+                        authService.logoutHandler();
+                    }
+                }
+            })
+            .state('code', {
+                url: '/auth/code',
+                resolve: {
+                    data: function(authService) {
+                        authService.authCodeHandler();
+                    }
+                }
+            })
+            .state('token', {
+                url: '/auth/token',
+                resolve: {
+                    data: function(authService) {
+                        authService.tokenHandler();
+                    }
+                }
+            });
+    }
+);

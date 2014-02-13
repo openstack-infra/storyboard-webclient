@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2014 Mirantis Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -15,19 +15,20 @@
  */
 
 /**
- * This controller handles the logic for the authorization provider list page.
+ * Auth API signature is different from all other services. So it is provided
+ * via a separate factory.
  *
- * @author Michael Krotscheck
+ * @author Nikita Konovalov
  */
-angular.module('sb.auth').controller('AuthListController',
-    function ($scope, authProviders, $state) {
+
+angular.module('sb.services')
+    .factory('storyboardAuthApiSignature', function () {
         'use strict';
 
-        // If there's only one auth provider, just use that.
-        if (!!authProviders && authProviders.length === 1) {
-            $state.go('auth.provider.id', {id: authProviders[0].id});
-        }
-
-        $scope.authProviders = authProviders;
-
-    });
+        return {
+            'authorize': {
+                method: 'POST'
+            }
+        };
+    }
+);

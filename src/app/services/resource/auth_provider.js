@@ -24,10 +24,17 @@
  */
 
 angular.module('sb.services').factory('AuthProvider',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function ($resource, storyboardApiBase, storyboardAuthApiSignature) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/auth/provider/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        var authProviderFactory = $resource();
+        var authorizeEndpoint = $resource();
+
+        var tokenEndpoint = $resource(
+            storyboardApiBase + '/auth/token', {},
+            storyboardAuthApiSignature);
+
+        authProviderFactory.authorizeEndpoint = authorizeEndpoint;
+        authProviderFactory.tokenEndpoint = tokenEndpoint;
+        return  authProviderFactory;
     });
