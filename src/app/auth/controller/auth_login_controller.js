@@ -15,14 +15,38 @@
  */
 
 /**
- * This controller handles the logic for the authorization provider list page.
+ * This controller handles the logic for the OpenId provider redirect.
  *
  * @author Michael Krotscheck
  */
 angular.module('sb.auth').controller('AuthLoginController',
-    function ($scope, authProvider) {
+    function ($scope, storyboardApiBase, $window) {
         'use strict';
 
-        $scope.authProvider = authProvider;
+        function random_state() {
+            var text = '';
+            var possible =
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+                'abcdefghijklmnopqrstuvwxyz' +
+                '0123456789';
+
+            var state_length = 10;
+
+            for(var i=0; i < state_length; i++ ) {
+                text += possible.charAt(Math.floor(
+                    Math.random() * possible.length));
+            }
+
+            return text;
+        }
+
+        function authorize_redirect() {
+            var randomstate = random_state();
+            localStorage.setItem('state', randomstate);
+            $window.location.href = storyboardApiBase + '/auth/login_redirect' +
+                '?state=' + encodeURIComponent(randomstate);
+        }
+
+        authorize_redirect();
 
     });
