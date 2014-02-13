@@ -1,11 +1,11 @@
 <!--
-  ~ Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
   ~ a copy of the License at
   ~
-  ~ 	http://www.apache.org/licenses/LICENSE-2.0
+  ~         http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -17,17 +17,9 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>How would you like to log in?</h1>
-            <hr/>
+            <p class="text-center">
+                <i class="fa fa-spinner fa-lg fa-spin"></i>
+            </p>
         </div>
-        <div class="col-sm-8 col-xs-12">
-            <a ng-repeat="provider in authProviders"
-               ng-class="[provider.type]"
-               class="auth-provider btn btn-info btn-lg btn-block"
-               href="#!/auth/provider/{{provider.id}}">
-                <i class="fa fa-caret-right"></i> {{provider.title}}
-            </a>
-        </div>
-
     </div>
 </div>

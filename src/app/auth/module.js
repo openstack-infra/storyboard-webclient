@@ -15,48 +15,48 @@
  */
 
 /**
- * This Storyboard module contains our adaptive authentication and authorization
- * logic.
- *
- * @author Michael Krotscheck
+ * This Storyboard module contains our authentication and authorization logic.
  */
-angular.module('sb.auth',
-        [ 'sb.services', 'sb.templates', 'ui.router']
+angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
+        'sb.util', 'LocalStorageModule']
     )
-    .config(function ($stateProvider, $urlRouterProvider,
-                      AuthProviderResolver) {
+    .config(function ($stateProvider, SessionResolver) {
         'use strict';
-
-        // Default rerouting.
-        $urlRouterProvider.when('/auth', '/auth/provider/list');
-        $urlRouterProvider.when('/auth/provider', '/auth/provider/list');
 
         // Declare the states for this module.
         $stateProvider
             .state('auth', {
                 abstract: true,
-                url: '/auth',
-                template: '<div ui-view></div>'
+                template: '<div ui-view></div>',
+                url: '/auth'
             })
-            .state('auth.provider', {
-                abstract: true,
-                url: '/provider',
-                template: '<div ui-view></div>'
-            })
-            .state('auth.provider.list', {
-                url: '/list',
-                templateUrl: 'app/templates/auth/provider/list.html',
-                controller: 'AuthListController',
+            .state('auth.authorize', {
+                url: '/authorize?error&error_description',
+                templateUrl: 'app/templates/auth/busy.html',
+                controller: 'AuthAuthorizeController',
                 resolve: {
-                    authProviders: AuthProviderResolver.resolveAuthProviders
+                    isLoggedOut: SessionResolver.requireLoggedOut
                 }
             })
-            .state('auth.provider.id', {
-                url: '/:id',
-                templateUrl: 'app/templates/auth/provider/login.html',
-                controller: 'AuthLoginController',
+            .state('auth.deauthorize', {
+                url: '/deauthorize',
+                templateUrl: 'app/templates/auth/busy.html',
+                controller: 'AuthDeauthorizeController',
                 resolve: {
-                    authProvider: AuthProviderResolver.resolveAuthProvider('id')
+                    isLoggedIn: SessionResolver.requireLoggedIn
                 }
+            })
+            .state('auth.token', {
+                url: '/token?code&state&error&error_description',
+                templateUrl: 'app/templates/auth/busy.html',
+                controller: 'AuthTokenController',
+                resolve: {
+                    isLoggedOut: SessionResolver.requireLoggedOut
+                }
+            })
+            .state('auth.error', {
+                url: '/error?error&error_description',
+                templateUrl: 'app/templates/auth/error.html',
+                controller: 'AuthErrorController'
             });
     });
