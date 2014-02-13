@@ -20,9 +20,34 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.auth').controller('AuthLoginController',
-    function ($scope, authProvider) {
+    function ($scope, storyboardApiBase, $window) {
         'use strict';
 
-        $scope.authProvider = authProvider;
+        function random_state() {
+            var text = '';
+            var possible =
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+                'abcdefghijklmnopqrstuvwxyz' +
+                '0123456789';
+
+            var state_length = 10;
+
+            for(var i=0; i < state_length; i++ ) {
+                text += possible.charAt(Math.floor(
+                    Math.random() * possible.length));
+            }
+
+            return text;
+        }
+
+        function authorize_redirect() {
+            var randomstate = random_state();
+            $window.location.href = storyboardApiBase + '/auth/authorize' +
+                '?grant_type=login_redirect' +
+                '&state=' + randomstate;
+            localStorage.setItem('state', randomstate);
+        }
+
+        authorize_redirect();
 
     });
