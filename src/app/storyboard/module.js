@@ -23,7 +23,7 @@
  * @author Michael Krotscheck
  */
 angular.module('storyboard',
-        [ 'sb.services', 'sb.templates', 'sb.pages', 'sb.projects', 'sb.auth',
+        [ 'sb.services', 'sb.templates', 'sb.pages', 'sb.projects',
             'sb.story', 'ui.router', 'ui.bootstrap']
     )
     .config(function ($provide, $stateProvider, $urlRouterProvider,
@@ -48,7 +48,7 @@ angular.module('storyboard',
         $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
 
     })
-    .run(function ($log, $rootScope, $location) {
+    .run(function ($log, $rootScope, $location, authService) {
         'use strict';
 
         // Listen to changes on the root scope. If it's an error in the state
@@ -56,5 +56,17 @@ angular.module('storyboard',
         $rootScope.$on('$stateChangeError',
             function () {
                 $location.path('/');
+            });
+
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState){
+                var skipUrls = [
+                    '/auth/code',
+                    '/auth/token'
+                ];
+                var url = toState.url;
+                if (skipUrls.indexOf(url) === -1) {
+                    authService.updateRootScope();
+                }
             });
     });
