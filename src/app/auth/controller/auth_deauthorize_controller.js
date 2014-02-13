@@ -5,7 +5,7 @@
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -15,14 +15,14 @@
  */
 
 /**
- * This controller handles the logic for the authorization provider list page.
- *
- * @author Michael Krotscheck
+ * This controller deauthorizes the session and destroys all tokens.
  */
-angular.module('sb.auth').controller('AuthLoginController',
-    function ($scope, authProvider) {
+
+angular.module('sb.auth').controller('AuthDeauthorizeController',
+    function (Session, $state, $log) {
         'use strict';
 
-        $scope.authProvider = authProvider;
-
+        $log.debug('Logging out');
+        Session.destroySession();
+        $state.go('index');
     });
