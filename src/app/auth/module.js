@@ -21,42 +21,27 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.auth',
-        [ 'sb.services', 'sb.templates', 'ui.router']
+        [ 'sb.services', 'sb.templates', 'ui.router', 'sb.util']
     )
-    .config(function ($stateProvider, $urlRouterProvider,
-                      AuthProviderResolver) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
         // Default rerouting.
-        $urlRouterProvider.when('/auth', '/auth/provider/list');
-        $urlRouterProvider.when('/auth/provider', '/auth/provider/list');
+        $urlRouterProvider.when('/auth/login', '/login');
 
         // Declare the states for this module.
         $stateProvider
-            .state('auth', {
-                abstract: true,
-                url: '/auth',
-                template: '<div ui-view></div>'
-            })
-            .state('auth.provider', {
-                abstract: true,
-                url: '/provider',
-                template: '<div ui-view></div>'
-            })
-            .state('auth.provider.list', {
-                url: '/list',
-                templateUrl: 'app/templates/auth/provider/list.html',
-                controller: 'AuthListController',
-                resolve: {
-                    authProviders: AuthProviderResolver.resolveAuthProviders
-                }
-            })
-            .state('auth.provider.id', {
-                url: '/:id',
+            .state('login', {
+                url: '/login',
                 templateUrl: 'app/templates/auth/provider/login.html',
-                controller: 'AuthLoginController',
-                resolve: {
-                    authProvider: AuthProviderResolver.resolveAuthProvider('id')
-                }
+                controller: 'AuthLoginController'
+            })
+            .state('code', {
+                url: '/auth/code',
+                controller: 'AuthCodeController'
+            })
+            .state('token', {
+                url: '/auth/token',
+                controller: 'AuthTokenController'
             });
     });

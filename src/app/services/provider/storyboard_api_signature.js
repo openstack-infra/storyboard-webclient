@@ -25,6 +25,9 @@ angular.module('sb.services')
         'use strict';
 
         return {
+            'post': {
+                method: 'POST'
+            },
             'create': {
                 method: 'POST'
             },
