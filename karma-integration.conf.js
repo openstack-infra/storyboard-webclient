@@ -33,7 +33,10 @@ module.exports = function (config) {
         ],
 
         files: [
-            './dist/js/*.js',
+            './dist/js/libs.js',
+            './bower_components/angular-mocks/angular-mocks.js',
+            './dist/js/storyboard.js',
+            './dist/js/templates.js',
             './test/unit/**/*.js'
         ],
 
