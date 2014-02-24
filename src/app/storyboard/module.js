@@ -47,8 +47,12 @@ angular.module('storyboard',
         // Attach common request headers out of courtesy to the API
         $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
 
+        // Add a response interceptor to handle 401 Unauthorized
+        $httpProvider.interceptors.push('authInterceptor');
+
     })
-    .run(function ($log, $rootScope, $location, authService) {
+    .run(function ($log, $rootScope, $location,
+                   authService) {
         'use strict';
 
         // Listen to changes on the root scope. If it's an error in the state

@@ -20,8 +20,8 @@
  *
  * @author Michael Krotscheck
  */
-angular.module('sb.services')
-    .factory('storyboardApiSignature', function () {
+angular.module('sb.services').factory('storyboardApiSignature',
+    function () {
         'use strict';
 
         return {

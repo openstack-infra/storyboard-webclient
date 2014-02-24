@@ -65,6 +65,13 @@ angular.module('sb.services',
                         authService.tokenHandler();
                     }
                 }
+            })
+            .state('unauthorized', {
+                url: '/auth/unauthorized',
+                controller: function(UnauthorizedModal) {
+                    UnauthorizedModal.showUnauthorizedModal();
+
+                }
             });
     }
 );

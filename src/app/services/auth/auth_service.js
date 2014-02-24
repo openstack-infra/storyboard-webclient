@@ -85,12 +85,12 @@ angular.module('sb.services').service('authService',
                     var expiresIn = $location.search().expires_in;
                     var refreshToken = $location.search().refresh_token;
 
-                    localStorageService.set('accessToken', accessToken);
+                    localStorageService.set('access_token', accessToken);
                     var expiresInInt = parseInt(expiresIn);
-                    localStorageService.set('expiresIn', expiresInInt);
+                    localStorageService.set('expires_in', expiresInInt);
                     localStorageService.set('expires_at',
                         new Date(new Date().getTime() + expiresInInt * 1000));
-                    localStorageService.set('refreshToken', refreshToken);
+                    localStorageService.set('refresh_token', refreshToken);
                 }
 
                 if (code) {
