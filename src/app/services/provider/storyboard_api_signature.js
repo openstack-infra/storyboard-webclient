@@ -20,31 +20,45 @@
  *
  * @author Michael Krotscheck
  */
-angular.module('sb.services')
-    .factory('storyboardApiSignature', function () {
+angular.module('sb.services').factory('storyboardApiSignature',
+    function () {
         'use strict';
+
+        function tokenHandler(data, headersGetter) {
+            var access_token = localStorage.getItem('access_token');
+            if (access_token) {
+                console.log('setting a header');
+                headersGetter.access_token = access_token;
+            }
+        }
 
         return {
             'post': {
-                method: 'POST'
+                method: 'POST',
+                transformRequest: tokenHandler
             },
             'create': {
-                method: 'POST'
+                method: 'POST',
+                transformRequest: tokenHandler
             },
             'read': {
                 method: 'GET',
-                cache: false
+                cache: false,
+                transformRequest: tokenHandler
             },
             'update': {
-                method: 'PUT'
+                method: 'PUT',
+                transformRequest: tokenHandler
             },
             'delete': {
-                method: 'DELETE'
+                method: 'DELETE',
+                transformRequest: tokenHandler
             },
             'query': {
                 method: 'GET',
                 isArray: true,
-                responseType: 'json'
+                responseType: 'json',
+                transformRequest: tokenHandler
             }
         };
     }
