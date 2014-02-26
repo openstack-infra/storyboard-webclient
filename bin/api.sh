@@ -60,7 +60,7 @@ function stop_service() {
 function detect_storyboard_config() {
     local global_config_path='/etc/storyboard/storyboard.conf'
     local test_config_path="$WORKSPACE/bin/storyboard_test.conf"
-    local config_path="$WORKSPACE/.tox/node/etc/storyboard/storyboard.conf"
+    local config_path="$WORKSPACE/.tox/grunt/etc/storyboard/storyboard.conf"
 
     local source_config_path
 
