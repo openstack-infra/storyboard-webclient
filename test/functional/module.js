@@ -14,12 +14,16 @@
  * under the License.
  */
 
+// Variables from protractor.conf.js -> params: {}
+var config = browser.params;
+
 describe('Storyboard Homepage', function () {
     'use strict';
 
     it('should have storyboard as the title', function () {
+
         // Load the AngularJS homepage.
-        browser.get('http://localhost:9000');
+        browser.get(config.buildUrl('/'));
 
         var title = element(by.tagName('title'));
         expect(title.getInnerHtml()).toEqual('Storyboard');
