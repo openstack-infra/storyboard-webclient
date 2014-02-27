@@ -18,7 +18,7 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($scope, $state, $stateParams, Story, Task) {
+    function ($scope, $state, $stateParams, Story, Task, Project) {
         'use strict';
 
         // Parse the ID
@@ -31,7 +31,10 @@ angular.module('sb.story').controller('StoryDetailController',
          */
         $scope.story = {};
         $scope.tasks = [];
-        $scope.newTask = new Task();
+        $scope.newTask = new Task({
+            story_id: id
+        });
+        $scope.projects = Project.query({});
 
         /**
          * UI flag for when we're initially loading the view.
@@ -72,7 +75,7 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.tasks = [];
 
             Task.query(
-                {story: id},
+                {story_id: id},
                 function (result) {
                     $scope.tasks = result;
                 },
@@ -98,6 +101,8 @@ angular.module('sb.story').controller('StoryDetailController',
                     // We've got a result, assign it to the view and unset our
                     // loading flag.
                     $scope.story = result;
+                    console.warn(result);
+                    $scope.newTask.project_id = result.project_id;
                     $scope.isLoading = false;
                 },
                 handleServiceError
@@ -110,7 +115,6 @@ angular.module('sb.story').controller('StoryDetailController',
          * Adds a task.
          */
         $scope.addTask = function () {
-            $scope.newTask.story_id = id;
             $scope.newTask.$save(function () {
                 loadTasks();
                 $scope.newTask = new Task();
