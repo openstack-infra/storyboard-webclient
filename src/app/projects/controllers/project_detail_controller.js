@@ -108,7 +108,7 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 handleServiceError
             );
             // Load the count of stories while we're at it...
-            Story.query({project: id},
+            Story.query({project_id: id},
                 function (result, headers) {
                     // Only extract the total header...
                     $scope.projectStoryCount =

@@ -18,30 +18,31 @@
  * Controller for the "new story" modal popup.
  */
 angular.module('sb.story').controller('StoryModalController',
-    function ($scope, $modalInstance, params, Project, Story) {
+    function ($scope, $modalInstance, params, Project, Story, Task) {
         'use strict';
 
+        $scope.projects = Project.query({});
         $scope.story = new Story();
-        $scope.projects = Project.query({},
-            function (results) {
-                if (params.projectId !== null) {
-                    for (var i = 0; i < results.length; i++) {
-                        var project = results[i];
-                        if (project.id === params.projectId) {
-                            $scope.project = project;
-                            return;
-                        }
-                    }
-                }
-            });
+        $scope.task = new Task({
+            project_id: params.projectId || null
+        });
 
         $scope.save = function () {
-            $scope.story.$create(function () {
-                $modalInstance.dismiss('success');
+            $scope.story.$create(function (story) {
+
+                // Create the task here, since we'll have the project_id
+                // bound to it.
+                $scope.task.title = story.title;
+                $scope.task.story_id = story.id;
+
+                $scope.task.$create(function () {
+                    $modalInstance.dismiss('success');
+                });
             });
         };
 
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
+    })
+;

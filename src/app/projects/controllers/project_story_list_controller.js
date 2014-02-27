@@ -55,7 +55,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
             // Execute the story query.
             Story.query(
-                {project: id},
+                {project_id: id},
                 function (result, headers) {
 
                     // Extract metadata from returned headers.
