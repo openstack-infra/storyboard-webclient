@@ -28,12 +28,12 @@
         </h1>
         <ul class="nav nav-tabs nav-tabs-down nav-thick">
             <li active-path="^\/project\/[0-9]+\/overview.*">
-                <a href="#!/project/1/overview">
+                <a href="#!/project/{{project.id}}/overview">
                     Overview
                 </a>
             </li>
             <li active-path="^\/project\/[0-9]+\/stories.*">
-                <a href="#!/project/1/stories">
+                <a href="#!/project/{{project.id}}/stories">
                     Stories
                     <span ng-show="!!projectStoryCount">
                     ({{projectStoryCount}})
@@ -41,12 +41,12 @@
                 </a>
             </li>
             <li active-path="^\/project\/[0-9]+\/edit.*">
-                <a href="#!/project/1/edit">
+                <a href="#!/project/{{project.id}}/edit">
                     Edit
                 </a>
             </li>
             <li active-path="^\/project\/[0-9]+\/delete.*">
-                <a href="#!/project/1/delete">
+                <a href="#!/project/{{project.id}}/delete">
                     Delete
                 </a>
             </li>
