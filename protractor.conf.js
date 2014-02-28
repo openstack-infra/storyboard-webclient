@@ -50,7 +50,7 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    baseUrl: 'http://localhost:9000',
+    baseUrl: 'http://localhost:9005',
 
     // Selector for the element housing the angular app - this defaults to
     // body, but is necessary if ng-app is on a descendant of <body>
@@ -73,9 +73,15 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
+        hostname: 'http://localhost:9005/',
         login: {
             user: 'Jane',
             password: '1234'
+        },
+        buildUrl: function (fragment) {
+            'use strict';
+
+            return this.hostname + '#!' + fragment;
         }
     },
 

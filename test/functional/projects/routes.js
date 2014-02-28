@@ -14,11 +14,15 @@
  * under the License.
  */
 
+
+// Variables from protractor.conf.js -> params: {}
+var config = browser.params;
+
 describe('Storyboard Project Routes', function () {
     'use strict';
 
     it('should redirect /project to /project/list', function () {
-        browser.get('http://localhost:9000/#!/project');
+        browser.get(config.buildUrl('/project'));
         expect(browser.getCurrentUrl()).toContain('#!/project/list');
     });
 });
