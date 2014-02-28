@@ -19,6 +19,8 @@ module.exports = function (config) {
 
     config.set({
 
+        port: 9877,
+
         basePath: '',
 
         frameworks: ['jasmine'],

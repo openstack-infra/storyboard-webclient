@@ -402,7 +402,6 @@ module.exports = function (grunt) {
          */
         connect: {
             options: {
-                port: 9000,
                 hostname: 'localhost'
             },
             proxies: [
@@ -418,6 +417,7 @@ module.exports = function (grunt) {
             ],
             livereload: {
                 options: {
+                    port: 9000,
                     middleware: function (connect) {
                         return [
                             lrSnippet,
@@ -429,6 +429,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
+                    port: 9000,
                     keepalive: true,
                     middleware: function (connect) {
                         return [
@@ -440,6 +441,7 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
+                    port: 9005,
                     middleware: function (connect) {
                         return [
                             mountFolder(connect, dir.output),
@@ -612,8 +614,8 @@ module.exports = function (grunt) {
         'concat',
         'karma:unit',
         'karma:integration',
-        'package',
-        'connect:test',
-        'protractor'
+        'package'
+//        'connect:test',
+//        'protractor'
     ]);
 };
