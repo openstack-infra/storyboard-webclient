@@ -1,81 +1,35 @@
-storyboard-webclient
-====================
+Storyboard Web Client
+=====================
 
 A WebClient for the OpenStack Storyboard project.
 
-### Prerequisites: Quick build/CI
 
-* Xvfb
-* GCC 4.2 or newer
-* Python 2.6 or 2.7
-* GNU Make 3.81 or newer
-* libexecinfo (FreeBSD and OpenBSD only)
+-----------------
+Project Resources
+-----------------
 
-### Prerequisites: Dev
+Project status, bugs, and blueprints are tracked at:
 
-* tox
+  http://storyboard.openstack.org
 
-### Use tox:
+Source code can be found at:
 
-**Run the test suite**
+  https://git.openstack.org/cgit/openstack-infra/storyboard-webclient/
 
-* `tox -egrunt test`
+Documentation can be found here:
 
-**Run a local development server**
+  http://ci.openstack.org/storyboard/
 
-* `tox -egrunt server`
+Additional resources are linked from the project wiki page:
 
-**Package the distro**
+  https://wiki.openstack.org/wiki/StoryBoard
 
-* `tox -egrunt build`
+Anyone wishing to contribute to an OpenStack project should
+find plenty of helpful resources here:
 
-### For development.
+  https://wiki.openstack.org/wiki/HowToContribute
 
-**Create the virtualenv**
+All OpenStack projects use Gerrit for code reviews.
+A good reference for that is here:
 
-* `tox -egrunt build`
-
-**Run a local development server without the API**
-
-* `tox -egrunt_no_api server`
-
-**Activate the virtualenv**
-
-* `source .tox/grunt/bin/activate`
-
-#### Within the virtual environment, you have the following options
-
-**Update/refresh the javascript build and runtime dependencies**
-
-* `npm prune`
-* `npm install`
-* `bower prune`
-* `bower install`
-
-**Run a local development server**
-
-`grunt server`
-
-**Run the test suite**
-
-`grunt test`
-
-**Package the distro**
-
-`grunt build`
-
-**Bootstrap your database**
-
-`./bin/api.sh create-db`
-
-**Migrate the database**
-
-`./bin/api.sh migrate-db`
-
-**Start the API**
-
-`./bin/api.sh start`
-
-**Stop the API**
-
-`./bin/api.sh stop`
+  https://wiki.openstack.org/wiki/GerritWorkflow
