@@ -46,8 +46,8 @@
         <li class="visible-xs">
             <p class="navbar-text" ng-show="isLoggedIn">
                 <i class="fa fa-user"></i>&nbsp;
-                {{currentUser.firstName}}
-                {{currentUser.lastName}}
+                {{currentUser.first_name}}
+                {{currentUser.last_name}}
             </p>
         </li>
 
@@ -67,10 +67,10 @@
         </li>
         <!-- Login/Logout button, XS only. -->
         <li class="visible-xs">
-            <a href="#!/auth/login" ng-hide="isLoggedIn">
+            <a href="#!/auth/authorize" ng-hide="isLoggedIn">
                 Log in
             </a>
-            <a href="#!/auth/logout" ng-show="isLoggedIn">
+            <a href="#!/auth/deauthorize" ng-show="isLoggedIn">
                 Log out
             </a>
         </li>
@@ -90,19 +90,19 @@
         <li ng-show="isLoggedIn">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user"></i>&nbsp;
-                {{currentUser.firstName}}
-                {{currentUser.lastName}}&nbsp;
+                {{currentUser.first_name}}
+                {{currentUser.last_name}}&nbsp;
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#!/auth/logout">Logout</a>
+                    <a href="#!/auth/deauthorize">Logout</a>
                 </li>
             </ul>
         </li>
         <!-- Login, non-XS only. -->
         <li ng-hide="isLoggedIn">
-            <a href="#!/auth">Log in</a>
+            <a href="#!/auth/authorize">Log in</a>
         </li>
     </ul>
 </div>

@@ -48,13 +48,13 @@ angular.module('storyboard',
         $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
 
     })
-    .run(function ($log, $rootScope, $location) {
+    .run(function ($log, $rootScope, $state) {
         'use strict';
 
         // Listen to changes on the root scope. If it's an error in the state
         // changes (i.e. a 404) take the user back to the index.
         $rootScope.$on('$stateChangeError',
             function () {
-                $location.path('/');
+                $state.go('index');
             });
     });
