@@ -21,9 +21,6 @@ angular.module('sb.auth').controller('AuthErrorController',
     function ($scope, $stateParams) {
         'use strict';
 
-        console.warn('AuthErrorController');
-
-
         $scope.error = $stateParams.error || 'Unknown';
         $scope.errorDescription = $stateParams.error_description ||
             'No description received from server.';

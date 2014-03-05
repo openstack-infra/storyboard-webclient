@@ -101,7 +101,6 @@ angular.module('sb.story').controller('StoryDetailController',
                     // We've got a result, assign it to the view and unset our
                     // loading flag.
                     $scope.story = result;
-                    console.warn(result);
                     $scope.newTask.project_id = result.project_id;
                     $scope.isLoading = false;
                 },
