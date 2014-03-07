@@ -22,7 +22,7 @@
  */
 
 angular.module('sb.auth').controller('AuthTokenController',
-    function ($state, $log, OpenId, Session, $searchParams) {
+    function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code
@@ -42,7 +42,7 @@ angular.module('sb.auth').controller('AuthTokenController',
             function (token) {
                 Session.updateSession(token)
                     .then(function () {
-                        $state.go('index');
+                        $window.location.href = UrlUtil.buildApplicationUrl('');
                     });
             },
             function (error) {
