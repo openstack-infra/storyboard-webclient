@@ -15,32 +15,32 @@
  */
 
 
-angular.module('sb.story')
-    .factory('NewStoryService', function ($modal, $log) {
+angular.module('sb.story').factory('NewStoryService',
+    function ($modal, $log, Session, SessionModalService) {
         'use strict';
 
         return {
             showNewStoryModal: function (projectId) {
-
-                var modalInstance = $modal.open(
-                    {
-                        templateUrl: 'app/templates/story/new.html',
-                        controller: 'StoryModalController',
-                        resolve: {
-                            params: function () {
-                                return {
-                                    projectId: projectId || null
-                                };
+                if (!Session.isLoggedIn()) {
+                    return SessionModalService.showLoginRequiredModal();
+                } else {
+                    var modalInstance = $modal.open(
+                        {
+                            templateUrl: 'app/templates/story/new.html',
+                            controller: 'StoryModalController',
+                            resolve: {
+                                params: function () {
+                                    return {
+                                        projectId: projectId || null
+                                    };
+                                }
                             }
                         }
-                    }
-                );
+                    );
 
-                modalInstance.result.then(function () {
-                    // Do nothing.
-                }, function () {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
+                    // Return the modal's promise.
+                    return modalInstance.result;
+                }
             }
         };
     }
