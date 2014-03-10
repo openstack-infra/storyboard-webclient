@@ -139,4 +139,20 @@ angular.module('sb.story').controller('StoryDetailController',
                 handleServiceError
             );
         };
+
+        /**
+         * Delete method.
+         */
+        $scope.remove = function () {
+            // Set our progress flags and clear previous error conditions.
+            $scope.isUpdating = true;
+            $scope.error = {};
+
+            $scope.story.$delete(
+                function () {
+                    $state.go('project.list');
+                },
+                handleServiceError
+            );
+        };
     });
