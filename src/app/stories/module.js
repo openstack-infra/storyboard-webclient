@@ -18,8 +18,8 @@
  * The Storyboard story submodule handles most activity surrounding the
  * creation and management of stories, their tasks, and comments.
  */
-angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
+    .config(function ($stateProvider, $urlRouterProvider, SessionResolver) {
         'use strict';
 
         // URL Defaults.
@@ -62,10 +62,16 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util'])
             })
             .state('story.detail.edit', {
                 url: '/edit',
-                templateUrl: 'app/templates/story/edit.html'
+                templateUrl: 'app/templates/story/edit.html',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn
+                }
             })
             .state('story.detail.delete', {
                 url: '/delete',
-                templateUrl: 'app/templates/story/delete.html'
+                templateUrl: 'app/templates/story/delete.html',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn
+                }
             });
     });

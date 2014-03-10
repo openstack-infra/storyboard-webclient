@@ -19,7 +19,7 @@
  * by verifying the token state returned from the OpenID service.
  */
 angular.module('sb.auth').factory('Session',
-    function (SessionState, AccessToken, $rootScope, $log, $q, User) {
+    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User) {
         'use strict';
 
         /**
@@ -90,6 +90,7 @@ angular.module('sb.auth').factory('Session',
         function destroySession() {
             AccessToken.clear();
             updateSessionState(SessionState.LOGGED_OUT);
+            $state.reload();
         }
 
         /**

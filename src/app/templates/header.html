@@ -70,7 +70,7 @@
             <a href="#!/auth/authorize" ng-hide="isLoggedIn">
                 Log in
             </a>
-            <a href="#!/auth/deauthorize" ng-show="isLoggedIn">
+            <a href="" ng-click="logout()">
                 Log out
             </a>
         </li>
@@ -96,7 +96,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#!/auth/deauthorize">Logout</a>
+                    <a href="" ng-click="logout()">Logout</a>
                 </li>
             </ul>
         </li>

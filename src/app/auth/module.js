@@ -59,4 +59,15 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                 templateUrl: 'app/templates/auth/error.html',
                 controller: 'AuthErrorController'
             });
+    })
+    .run(function ($rootScope, SessionState, Session) {
+        'use strict';
+
+        // Always record the logged in state on the root scope.
+        $rootScope.$on(SessionState.LOGGED_IN, function () {
+            $rootScope.isLoggedIn = Session.isLoggedIn();
+        });
+        $rootScope.$on(SessionState.LOGGED_OUT, function () {
+            $rootScope.isLoggedIn = Session.isLoggedIn();
+        });
     });

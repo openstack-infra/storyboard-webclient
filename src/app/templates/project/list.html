@@ -38,8 +38,9 @@
         </div>
         <div class="col-sm-9 col-xs-2">
             <a href="#!/project/new"
-               class="pull-right btn btn-default btn-sm">
-                <i class="fa fa-plus"></i>
+               class="pull-right btn btn-default btn-sm"
+               ng-show="isLoggedIn">
+            <i class="fa fa-plus"></i>
                 <span class="hidden-xs">New Project</span>
             </a>
         </div>
