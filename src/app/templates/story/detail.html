@@ -22,12 +22,14 @@
                 Overview
             </a>
         </li>
-        <li active-path="^\/story\/[0-9]+\/edit.*">
+        <li active-path="^\/story\/[0-9]+\/edit.*"
+            ng-show="isLoggedIn">
             <a href="#!/story/{{story.id}}/edit">
                 Edit
             </a>
         </li>
-        <li active-path="^\/story\/[0-9]+\/delete.*">
+        <li active-path="^\/story\/[0-9]+\/delete.*"
+            ng-show="isLoggedIn">
             <a href="#!/story/{{story.id}}/delete">
                 Delete
             </a>

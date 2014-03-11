@@ -18,8 +18,9 @@
  * The Storyboard project submodule handles most activity surrounding the
  * creation and management of projects.
  */
-angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
-    .config(function ($stateProvider, $urlRouterProvider) {
+angular.module('sb.projects',
+        ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
+    .config(function ($stateProvider, $urlRouterProvider, SessionResolver) {
         'use strict';
 
         // Routing Defaults.
@@ -53,11 +54,17 @@ angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
             })
             .state('project.detail.edit', {
                 url: '/edit',
-                templateUrl: 'app/templates/project/edit.html'
+                templateUrl: 'app/templates/project/edit.html',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn
+                }
             })
             .state('project.detail.delete', {
                 url: '/delete',
-                templateUrl: 'app/templates/project/delete.html'
+                templateUrl: 'app/templates/project/delete.html',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn
+                }
             })
             .state('project.detail.stories', {
                 url: '/stories',
@@ -67,6 +74,9 @@ angular.module('sb.projects', ['ui.router', 'sb.services', 'sb.util'])
             .state('project.new', {
                 url: '/new',
                 templateUrl: 'app/templates/project/new.html',
-                controller: 'ProjectNewController'
+                controller: 'ProjectNewController',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn
+                }
             });
     });

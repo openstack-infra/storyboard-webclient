@@ -40,12 +40,14 @@
                     </span>
                 </a>
             </li>
-            <li active-path="^\/project\/[0-9]+\/edit.*">
+            <li active-path="^\/project\/[0-9]+\/edit.*"
+                ng-show="isLoggedIn">
                 <a href="#!/project/{{project.id}}/edit">
                     Edit
                 </a>
             </li>
-            <li active-path="^\/project\/[0-9]+\/delete.*">
+            <li active-path="^\/project\/[0-9]+\/delete.*"
+                ng-show="isLoggedIn">
                 <a href="#!/project/{{project.id}}/delete">
                     Delete
                 </a>
