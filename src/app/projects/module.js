@@ -20,7 +20,8 @@
  */
 angular.module('sb.projects',
         ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
-    .config(function ($stateProvider, $urlRouterProvider, SessionResolver) {
+    .config(function ($stateProvider, $urlRouterProvider, SessionResolver,
+                      PermissionResolver) {
         'use strict';
 
         // Routing Defaults.
@@ -56,14 +57,18 @@ angular.module('sb.projects',
                 url: '/edit',
                 templateUrl: 'app/templates/project/edit.html',
                 resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn
+                    isLoggedIn: SessionResolver.requireLoggedIn,
+                    isSuperuser: PermissionResolver
+                        .requirePermission('is_superuser', true)
                 }
-            })
-            .state('project.detail.delete', {
+            }).
+            state('project.detail.delete', {
                 url: '/delete',
                 templateUrl: 'app/templates/project/delete.html',
                 resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn
+                    isLoggedIn: SessionResolver.requireLoggedIn,
+                    isSuperuser: PermissionResolver
+                        .requirePermission('is_superuser', true)
                 }
             })
             .state('project.detail.stories', {
@@ -76,7 +81,10 @@ angular.module('sb.projects',
                 templateUrl: 'app/templates/project/new.html',
                 controller: 'ProjectNewController',
                 resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn
+                    isLoggedIn: SessionResolver.requireLoggedIn,
+                    isSuperuser: PermissionResolver
+                        .requirePermission('is_superuser', true)
                 }
             });
-    });
+    })
+;

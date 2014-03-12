@@ -22,10 +22,23 @@ angular.module('storyboard').controller('HeaderController',
               CurrentUser) {
         'use strict';
 
+        function resolveCurrentUser() {
+            CurrentUser.resolve().then(
+                function (user) {
+                    $scope.currentUser = user;
+                },
+                function () {
+                    $scope.currentUser = null;
+                }
+            );
+        }
+
+        resolveCurrentUser();
+
         /**
          * Load and maintain the current user.
          */
-        $scope.currentUser = CurrentUser.get();
+        $scope.currentUser = null;
 
         /**
          * Create a new story.
@@ -43,7 +56,7 @@ angular.module('storyboard').controller('HeaderController',
 
         // Watch for changes to the session state.
         $rootScope.$on(SessionState.LOGGED_IN, function () {
-            $scope.currentUser = CurrentUser.get();
+            resolveCurrentUser();
         });
         $rootScope.$on(SessionState.LOGGED_OUT, function () {
             $scope.currentUser = null;
