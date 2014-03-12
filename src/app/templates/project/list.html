@@ -16,11 +16,19 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
+            <a href="#!/project/new"
+               permission="is_superuser"
+               class="pull-right btn btn-default btn-sm line-height"
+               ng-show="isLoggedIn">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-xs">New Project</span>
+            </a>
+
             <h1>{{projectCount}} Projects</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 col-xs-10">
+        <div class="col-sm-3 col-xs-7">
             <div class="btn-group btn-group-justified">
                 <div class="form-group has-feedback has-feedback-no-label">
                     <input type="text"
@@ -36,12 +44,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-xs-2">
-            <a href="#!/project/new" permission="is_superuser"
-               class="pull-right btn btn-default btn-sm">
-            <i class="fa fa-plus"></i>
-                <span class="hidden-xs">New Project</span>
-            </a>
+        <div class="col-sm-9 col-xs-5">
+            <pagination total-items="total"
+                        class="pagination-sm pull-right hidden-xs"
+                        page="page"
+                        items-per-page="pageSize"
+                        max-size="5"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        on-select-page="search(page)"
+                        first-text="&laquo;"
+                        previous-text="&lsaquo;"
+                        next-text="&rsaquo;"
+                        last-text="&raquo;"/>
         </div>
     </div>
     <div class="row">
@@ -96,3 +111,10 @@
         </div>
     </div>
 </div>
+
+<paging-footer
+        class="visible-xs"
+        on-change="search(selectedPage)"
+        page="{{page}}"
+        page-total="{{pageTotal}}"
+        />

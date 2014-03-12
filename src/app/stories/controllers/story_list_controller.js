@@ -25,43 +25,50 @@ angular.module('sb.story').controller('StoryListController',
             NewStoryService.showNewStoryModal();
         };
 
+        $scope.page = 1;
+        $scope.pageSize = 20;
+        $scope.pageTotal = 1;
+        $scope.total = 0;
+        $scope.searchQuery = '';
+        $scope.isSearching = false;
 
         // Variables and methods available to the template...
         function resetScope() {
-            $scope.storyCount = 0;
-            $scope.storyOffset = 0;
-            $scope.storyLimit = 10;
             $scope.stories = [];
             $scope.error = {};
         }
 
-        $scope.searchQuery = '';
-        $scope.isSearching = false;
-
         /**
          * The search method.
          */
-        $scope.search = function () {
+        $scope.search = function (page) {
+            // Make sure we have a sane offset
+            page = Math.max(page, 1);
+
             // Clear the scope and set the progress flag.
             resetScope();
             $scope.isSearching = true;
 
             // Execute the story query.
             Story.query(
-                // Enable this once the API accepts search queries.
-                {},
+                {
+                    offset: (page - 1) * $scope.pageSize,
+                    limit: $scope.pageSize
+                },
                 function (result, headers) {
 
-                    // Extract metadata from returned headers.
-                    var storyCount = headers('X-List-Total') || result.length;
-                    var storyOffset = headers('X-List-Offset') || 0;
-                    var storyLimit = headers('X-List-Limit') || result.length;
+                    // Determine the actual page, in case the size has changed
+                    // on the server
+                    var count = headers('X-Total') || result.length;
+                    var offset = headers('X-Offset') || 0;
+
+                    $scope.total = count;
+                    $scope.offset = offset;
+                    $scope.pageTotal = Math.ceil(count / $scope.pageSize);
+                    $scope.page = Math.floor(offset / $scope.pageSize) + 1;
 
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.storyCount = storyCount;
-                    $scope.storyOffset = storyOffset;
-                    $scope.storyLimit = storyLimit;
                     $scope.stories = result;
                     $scope.isSearching = false;
                 },
@@ -76,5 +83,5 @@ angular.module('sb.story').controller('StoryListController',
 
         // Initialize the view with a default search.
         resetScope();
-        $scope.search();
+        $scope.search(1);
     });

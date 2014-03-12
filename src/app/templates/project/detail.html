@@ -23,7 +23,14 @@
 
 <div class="container" ng-hide="isLoading">
     <div class="row">
-        <h1 class="no-border no-margin-bottom">Project detail:
+        <a href=""
+           ng-click="newStory()"
+           class="pull-right btn btn-default btn-sm line-height">
+            <i class="fa fa-plus"></i>
+            <span class="hidden-xs">New Story</span>
+        </a>
+
+        <h1 class="no-border no-margin-bottom">Project:
             {{project.name}}
         </h1>
         <ul class="nav nav-tabs nav-tabs-down nav-thick">

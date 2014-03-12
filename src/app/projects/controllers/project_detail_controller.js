@@ -28,7 +28,7 @@
  * seconds. 3 is preferable.
  */
 angular.module('sb.projects').controller('ProjectDetailController',
-    function ($scope, $state, $stateParams, Project, Story) {
+    function ($scope, $state, $stateParams, NewStoryService, Project, Story) {
         'use strict';
 
         // Parse the ID
@@ -151,5 +151,13 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 },
                 handleServiceError
             );
+        };
+
+
+        /**
+         * New story method.
+         */
+        $scope.newStory = function () {
+            NewStoryService.showNewStoryModal(id);
         };
     });

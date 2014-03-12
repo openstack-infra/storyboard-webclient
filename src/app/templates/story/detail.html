@@ -15,7 +15,8 @@
   -->
 
 <div class="container">
-    <h1 class="no-border no-margin-bottom">Story detail: {{story.title}}</h1>
+    <h1 class="no-border no-margin-bottom ellipsis">Story: {{story
+        .title}}</h1>
     <ul class="nav nav-tabs nav-tabs-down nav-thick">
         <li active-path="^\/story\/[0-9]+\/overview.*">
             <a href="#!/story/{{story.id}}/overview">

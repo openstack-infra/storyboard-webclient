@@ -92,9 +92,6 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th class="col-sm-1">
-                    <small>ID</small>
-                </th>
                 <th class="col-sm-6">
                     <small>Title</small>
                 </th>
@@ -110,13 +107,8 @@
             <tr ng-repeat="task in tasks"
                 ng-controller="StoryTaskListItemController">
                 <td>
-                    <p><strong>
-                        <a href="">{{task.id}}</a>
-                    </strong></p>
-                </td>
-                <td>
-                    <p><strong>
-                        <a href="">{{task.title}}</a>
+                    <p class="ellipsis"><strong>
+                        <a href="">{{task.id}}: {{task.title}}</a>
                     </strong></p>
                     <small class="text-muted">{{task.description}}</small>
                 </td>
@@ -138,7 +130,12 @@
             </tr>
             </tbody>
         </table>
-
     </div>
-
 </div>
+
+<paging-footer
+        class="visible-xs"
+        on-change="search(selectedPage)"
+        page="{{page}}"
+        page-total="{{pageTotal}}"
+        />

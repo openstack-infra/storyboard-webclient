@@ -14,8 +14,8 @@
   ~ under the License.
   -->
 
-<div class="col-sm-3 col-xs-10">
-    <div class="btn-group btn-group-justified">
+<div class="col-sm-3 col-xs-12">
+<div class="btn-group btn-group-justified">
         <div class="form-group has-feedback has-feedback-no-label">
             <input type="text"
                    class="form-control input-sm"
@@ -31,13 +31,19 @@
     </div>
 </div>
 
-<div class="col-sm-9 col-xs-2">
-    <a href=""
-       ng-click="newStory()"
-       class="pull-right btn btn-default btn-sm">
-        <i class="fa fa-plus"></i>
-        <span class="hidden-xs">New Story</span>
-    </a>
+<div class="col-sm-9 hidden-xs">
+    <pagination total-items="total"
+                class="pagination-sm pull-right"
+                page="page"
+                items-per-page="pageSize"
+                max-size="5"
+                class="pagination-sm"
+                boundary-links="true"
+                on-select-page="search(page)"
+                first-text="&laquo;"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;"
+                last-text="&raquo;"/>
 </div>
 
 <div ng-show="!isSearching && stories.length == 0"
@@ -95,3 +101,11 @@
     </tr>
     </tbody>
 </table>
+
+
+<paging-footer
+        class="visible-xs"
+        page="{{page}}"
+        on-change="search(selectedPage)"
+        page-total="{{pageTotal}}"
+        />
