@@ -18,7 +18,7 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($scope, $state, $stateParams, Story, Task, Project) {
+    function ($scope, $state, $stateParams, Story, Task, Project, pageSize) {
         'use strict';
 
         // Parse the ID
@@ -58,6 +58,21 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.error = {};
 
         /**
+         * The page size for the task paging
+         */
+        $scope.pageSize = pageSize;
+
+        /**
+         * The total calculated number of pages.
+         */
+        $scope.pageTotal = 1;
+
+        /**
+         * The first page.
+         */
+        $scope.page = 1;
+
+        /**
          * Generic service error handler. Assigns errors to the view's scope,
          * and unsets our flags.
          */
@@ -66,22 +81,38 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.error = error;
             $scope.isLoading = false;
             $scope.isUpdating = false;
+            $scope.tasks = [];
         }
 
         /**
          * Loads the tasks for this story
          */
-        function loadTasks() {
-            $scope.tasks = [];
+        $scope.search = function (page) {
+
+            // Sanity check on the page.
+            page = Math.min(Math.max(1, page || 1), $scope.pageTotal);
 
             Task.query(
-                {story_id: id},
-                function (result) {
+                {
+                    story_id: id,
+                    offset: (page - 1) * pageSize,
+                    limit: pageSize
+                },
+                function (result, headers) {
+
+                    // Determine the actual page, in case the size has changed
+                    // on the server
+                    var count = headers('X-Total') || result.length;
+                    var offset = headers('X-Offset') || 0;
+
+                    $scope.pageTotal = Math.ceil(count / $scope.pageSize);
+                    $scope.page = Math.floor(offset / $scope.pageSize) + 1;
+
                     $scope.tasks = result;
                 },
                 handleServiceError
             );
-        }
+        };
 
         // Sanity check, do we actually have an ID? (zero is falsy)
         if (!id && id !== 0) {
@@ -107,7 +138,7 @@ angular.module('sb.story').controller('StoryDetailController',
                 handleServiceError
             );
 
-            loadTasks();
+            $scope.search(1);
         }
 
         /**
@@ -115,7 +146,7 @@ angular.module('sb.story').controller('StoryDetailController',
          */
         $scope.addTask = function () {
             $scope.newTask.$save(function () {
-                loadTasks();
+                $scope.search($scope.page);
                 $scope.newTask = new Task();
             });
         };

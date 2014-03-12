@@ -18,7 +18,7 @@
  * This controller manages stories within the scope of a particular project.
  */
 angular.module('sb.projects').controller('ProjectStoryListController',
-    function ($scope, $state, $stateParams, Story, NewStoryService) {
+    function ($scope, $state, $stateParams, Story, pageSize) {
         'use strict';
 
         // Parse the ID. Since we're in a nested state, we don't really need
@@ -46,28 +46,52 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         $scope.isSearching = false;
 
         /**
+         * The page size for the task paging
+         */
+        $scope.pageSize = pageSize;
+
+        /**
+         * The total calculated number of pages.
+         */
+        $scope.pageTotal = 1;
+
+        /**
+         * The first page.
+         */
+        $scope.page = 1;
+
+        /**
          * The search method.
          */
-        $scope.search = function () {
+        $scope.search = function (page) {
+
+            // Sanity check on the page.
+            page = Math.min(Math.max(1, page || 1), $scope.pageTotal);
+
             // Clear the scope and set the progress flag.
             resetScope();
             $scope.isSearching = true;
 
             // Execute the story query.
             Story.query(
-                {project_id: id},
+                {
+                    project_id: id,
+                    offset: (page - 1) * pageSize,
+                    limit: pageSize
+                },
                 function (result, headers) {
 
                     // Extract metadata from returned headers.
-                    var storyCount = headers('X-List-Total') || result.length;
-                    var storyOffset = headers('X-List-Offset') || 0;
-                    var storyLimit = headers('X-List-Limit') || result.length;
+                    var count = headers('X-Total') || result.length;
+                    var offset = headers('X-Offset') || 0;
+
+                    // Determine the actual page, in case the size has changed
+                    // on the server
+                    $scope.pageTotal = Math.ceil(count / $scope.pageSize);
+                    $scope.page = Math.floor(offset / $scope.pageSize) + 1;
 
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.storyCount = storyCount;
-                    $scope.storyOffset = storyOffset;
-                    $scope.storyLimit = storyLimit;
                     $scope.stories = result;
                     $scope.isSearching = false;
                 },
@@ -80,11 +104,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             );
         };
 
-        $scope.newStory = function () {
-            NewStoryService.showNewStoryModal(id);
-        };
-
         // Initialize the view with a default search.
         resetScope();
-        $scope.search();
+        $scope.search(1);
     });

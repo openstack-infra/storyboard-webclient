@@ -41,6 +41,7 @@ angular.module('sb.services')
             'query': {
                 method: 'GET',
                 isArray: true,
+                cache: false,
                 responseType: 'json'
             }
         };

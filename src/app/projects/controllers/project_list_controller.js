@@ -20,46 +20,54 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, Project) {
+    function ($scope, Project, pageSize) {
         'use strict';
 
-        // Variables and methods available to the template...
+        $scope.page = 1;
+        $scope.pageSize = pageSize;
+        $scope.pageTotal = 1;
+        $scope.total = 0;
+        $scope.searchQuery = '';
+        $scope.isSearching = false;
 
+        // Variables and methods available to the template...
         function resetScope() {
-            $scope.projectCount = 0;
-            $scope.projectOffset = 0;
-            $scope.projectLimit = 10;
             $scope.projects = [];
             $scope.error = {};
         }
 
-        $scope.searchQuery = '';
-        $scope.isSearching = false;
-
         /**
          * The search method.
          */
-        $scope.search = function () {
+        $scope.search = function (page) {
+
+            // Make sure we have a sane offset
+            page = Math.max(page, 1);
+
             // Clear the scope and set the progress flag.
             resetScope();
             $scope.isSearching = true;
 
             // Execute the project query.
             Project.query(
-                // Enable this once the API accepts search queries.
-                { /*q: $scope.searchQuery || ''*/},
+                {
+                    offset: (page - 1) * $scope.pageSize,
+                    limit: $scope.pageSize
+                },
                 function (result, headers) {
 
-                    // Extract metadata from returned headers.
-                    var projectCount = headers('X-List-Total') || result.length;
-                    var projectOffset = headers('X-List-Offset') || 0;
-                    var projectLimit = headers('X-List-Limit') || result.length;
+                    // Determine the actual page, in case the size has changed
+                    // on the server
+                    var count = headers('X-Total') || result.length;
+                    var offset = headers('X-Offset') || 0;
+
+                    $scope.total = count;
+                    $scope.offset = offset;
+                    $scope.pageTotal = Math.ceil(count / $scope.pageSize);
+                    $scope.page = Math.floor(offset / $scope.pageSize) + 1;
 
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.projectCount = projectCount;
-                    $scope.projectOffset = projectOffset;
-                    $scope.projectLimit = projectLimit;
                     $scope.projects = result;
                     $scope.isSearching = false;
                 },
@@ -74,5 +82,5 @@ angular.module('sb.projects').controller('ProjectListController',
 
         // Initialize the view with a default search.
         resetScope();
-        $scope.search();
+        $scope.search(1);
     });

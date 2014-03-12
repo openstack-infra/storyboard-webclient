@@ -17,7 +17,13 @@
 /**
  * Generic overrides and addons for bootstrap.
  */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
+
+    &.ellipsis {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 
     &.no-margin {
         margin: 0px;
@@ -30,6 +36,11 @@ h1, h2, h3, h4, h5, h6 {
     &.no-margin-bottom {
         margin-bottom: 0px;
     }
+
+}
+
+.line-height {
+    margin: @line-height-computed 0px
 }
 
 h1 {
@@ -157,4 +168,10 @@ table.table.table-outlined {
 // to get rid of.
 .modal-content .panel {
     margin-bottom: 0px;
+}
+
+// Pagination fixes to make small pagination entities lie in line with regular
+// buttons
+.pagination {
+    margin: 0px;
 }
