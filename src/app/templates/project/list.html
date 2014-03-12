@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-xs-2">
+        <div class="col-sm-9 col-xs-2" ng-show="allowCreate()">
             <a href="#!/project/new"
                class="pull-right btn btn-default btn-sm">
                 <i class="fa fa-plus"></i>
@@ -55,8 +55,7 @@
 
             <p ng-show="!isSearching && projects.length == 0"
                class="text-center text-warning">
-                <em> We were unable to find any projects.
-                    Perhaps you would like to create one?</em>
+                <em> We were unable to find any projects.</em>
             </p>
 
             <table class="table table-striped"

@@ -20,7 +20,7 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, Project) {
+    function ($scope, Project, CurrentUser) {
         'use strict';
 
         // Variables and methods available to the template...
@@ -35,6 +35,15 @@ angular.module('sb.projects').controller('ProjectListController',
 
         $scope.searchQuery = '';
         $scope.isSearching = false;
+
+        $scope.allowCreate = function() {
+            var currentUser = CurrentUser.get();
+            if (currentUser !== null) {
+                return currentUser.is_superuser;
+            }
+
+            return false;
+        };
 
         /**
          * The search method.
