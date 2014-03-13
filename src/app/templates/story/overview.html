@@ -107,7 +107,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="task in tasks">
+            <tr ng-repeat="task in tasks"
+                ng-controller="StoryTaskListItemController">
                 <td>
                     <p><strong>
                         <a href="">{{task.id}}</a>
@@ -120,9 +121,16 @@
                     <small class="text-muted">{{task.description}}</small>
                 </td>
                 <td>
-                    <p><strong>
-                        <a href="">Not Yet Implemented</a>
-                    </strong></p>
+                    <p>
+                        <a href="#!/project/{{project.id}}/overview"
+                           ng-show="project">
+                            {{project.name}}
+                        </a>
+
+                        <span class="text-danger" ng-hide="project">
+                            Project not found
+                        </span>
+                    </p>
                 </td>
                 <td>
                     <p class="text-success">{{task.status}}</p>
