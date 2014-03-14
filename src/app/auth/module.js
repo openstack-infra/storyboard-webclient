@@ -60,8 +60,11 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                 controller: 'AuthErrorController'
             });
     })
-    .run(function ($rootScope, SessionState, Session) {
+    .run(function ($rootScope, SessionState, Session, PermissionManager) {
         'use strict';
+
+        // Initialize our permission manager.
+        PermissionManager.initialize();
 
         // Always record the logged in state on the root scope.
         $rootScope.$on(SessionState.LOGGED_IN, function () {

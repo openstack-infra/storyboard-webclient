@@ -123,8 +123,10 @@ angular.module('sb.auth').factory('Session',
                     var unwatch = $rootScope.$watch(function () {
                         return sessionState;
                     }, function () {
-                        deferred.resolve(sessionState);
-                        unwatch();
+                        if (sessionState !== SessionState.PENDING) {
+                            deferred.resolve(sessionState);
+                            unwatch();
+                        }
                     });
                 }
 

@@ -27,33 +27,102 @@ angular.module('sb.auth').factory('CurrentUser',
          * The current user
          */
         var currentUser = null;
+        var currentPromise = null;
 
         /**
-         * Load the current user, if such exists.
+         * Resolve a current user.
          */
-        function loadCurrentUser() {
-            if (Session.getSessionState() === SessionState.LOGGED_IN) {
-                var userId = AccessToken.getIdToken();
-
-                $log.debug('Loading Current User ' + userId);
-                currentUser = User.get({id: userId});
-            } else {
-                currentUser = null;
+        function resolveCurrentUser() {
+            // If we've got an in-flight promise, just return that and let
+            // the consumers chain off of that.
+            if (!!currentPromise) {
+                return currentPromise;
             }
+
+            // Construct a new resolution promise.
+            var deferred = $q.defer();
+            currentPromise = deferred.promise;
+
+            // Make sure we have a logged-in session.
+            resolveLoggedInSession().then(
+                function () {
+                    // Now that we know we're logged in, do we have a
+                    // currentUser yet?
+                    if (!!currentUser) {
+                        deferred.resolve(currentUser);
+                    } else {
+                        // Ok, we have to load.
+                        User.get(
+                            {
+                                id: AccessToken.getIdToken()
+                            },
+                            function (user) {
+                                currentUser = user;
+                                deferred.resolve(user);
+                            },
+                            function (error) {
+                                currentUser = null;
+                                deferred.reject(error);
+                            }
+                        );
+                    }
+                },
+                function (error) {
+                    currentUser = null;
+                    deferred.reject(error);
+                }
+            );
+
+            // Chain a resolution that'll make the currentPromise clear itself.
+            currentPromise.then(
+                function () {
+                    currentPromise = null;
+                },
+                function () {
+                    currentPromise = null;
+                }
+            );
+
+            return currentPromise;
         }
 
-        $rootScope.$on(SessionState.LOGGED_IN, loadCurrentUser);
-        $rootScope.$on(SessionState.LOGGED_OUT, loadCurrentUser);
+        /**
+         * A promise that only resolves if we're currently logged in.
+         */
+        function resolveLoggedInSession() {
+            var deferred = $q.defer();
 
-        loadCurrentUser();
+            Session.resolveSessionState().then(
+                function (sessionState) {
+
+                    if (sessionState === SessionState.LOGGED_IN) {
+                        deferred.resolve(sessionState);
+                    } else {
+                        deferred.reject(sessionState);
+                    }
+                },
+                function (error) {
+                    deferred.reject(error);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        // Add event listeners.
+        $rootScope.$on(SessionState.LOGGED_IN, resolveCurrentUser);
+        $rootScope.$on(SessionState.LOGGED_OUT, function () {
+            currentUser = null;
+        });
 
         // Expose the methods for this service.
         return {
+
             /**
-             * Retrieve the current user.
+             * Resolves the current user with a promise.
              */
-            get: function () {
-                return currentUser;
+            resolve: function () {
+                return resolveCurrentUser();
             }
         };
     });
