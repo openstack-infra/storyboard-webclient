@@ -64,12 +64,17 @@
         <li class="visible-xs">
             <hr/>
         </li>
+
+        <li class="visible-xs">
+            <a href="#!/profile/preferences" ng-show="isLoggedIn"
+               active-path="^\/profile\/preferences*">Preferences</a>
+        </li>
         <!-- Login/Logout button, XS only. -->
         <li class="visible-xs">
             <a href="#!/auth/authorize" ng-hide="isLoggedIn">
                 Log in
             </a>
-            <a href="" ng-click="logout()">
+            <a href="" ng-click="logout()" ng-show="isLoggedIn">
                 Log out
             </a>
         </li>
@@ -93,6 +98,9 @@
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu">
+                <li>
+                    <a href="#!/profile/preferences">Preferences</a>
+                </li>
                 <li>
                     <a href="" ng-click="logout()">Logout</a>
                 </li>

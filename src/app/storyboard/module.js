@@ -24,7 +24,7 @@
  */
 angular.module('storyboard',
         [ 'sb.services', 'sb.templates', 'sb.pages', 'sb.projects', 'sb.auth',
-            'sb.story', 'ui.router', 'ui.bootstrap']
+            'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap']
     )
     .config(function ($provide, $stateProvider, $urlRouterProvider,
                       $locationProvider, $httpProvider) {

@@ -1,0 +1,69 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="container" ng-hide="isLoading">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Preferences</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="preferencesForm">
+                <div class="form-group">
+                    <label>Page size</label>
+
+                    <p class="help-block">
+                        How many results would you like to see when viewing
+                        lists?
+                    </p>
+
+                    <div>
+                        <input type="radio" name="pageSize"
+                               id="pageSize10" value="10"
+                               ng-model="pageSize">
+                        10
+                        &nbsp;
+                        <input type="radio" name="pageSize"
+                               id="pageSize25" value="25"
+                               ng-model="pageSize">
+                        25
+                        &nbsp;
+                        <input type="radio" name="pageSize"
+                               id="pageSize50" value="50"
+                               ng-model="pageSize">
+                        50
+                        &nbsp;
+                        <input type="radio" name="pageSize"
+                               id="pageSize100" value="100"
+                               ng-model="pageSize">
+                        100
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-default"
+                            ng-click="save()">
+                        Save
+                    </button>
+                    <p class="help-block text-success">{{message}}</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

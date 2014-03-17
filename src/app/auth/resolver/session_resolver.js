@@ -80,6 +80,15 @@ angular.module('sb.auth').constant('SessionResolver',
                 }
 
                 return deferred.promise;
+            },
+
+            /**
+             * This resolver ensures that the currentUser has been resolved
+             * before the route resolves.
+             */
+            requireCurrentUser: function ($q, $log, CurrentUser) {
+                $log.debug('Resolving current user...');
+                return CurrentUser.resolve();
             }
         };
     })());
