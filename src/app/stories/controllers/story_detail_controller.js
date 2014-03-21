@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * Licensed under the Apache License, Version 2.0 (the 'License'); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
  *         http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations
  * under the License.
@@ -18,7 +18,8 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($scope, $state, $stateParams, Story, Task, Project) {
+    function ($log, $scope, $state, $stateParams, Story, Task, Project,
+              Comment) {
         'use strict';
 
         // Parse the ID
@@ -35,6 +36,9 @@ angular.module('sb.story').controller('StoryDetailController',
             story_id: id
         });
         $scope.projects = Project.query({});
+        $scope.comments = Comment.query({story_id: id});
+        $scope.newComment = new Comment({story_id: id});
+        $scope.isSavingComment = false;
 
         /**
          * UI flag for when we're initially loading the view.
@@ -153,6 +157,35 @@ angular.module('sb.story').controller('StoryDetailController',
                     $state.go('project.list');
                 },
                 handleServiceError
+            );
+        };
+
+        /**
+         * Add a comment
+         */
+        $scope.addComment = function () {
+
+            function resetSavingFlag() {
+                $scope.isSavingComment = false;
+            }
+
+            // Do nothing if the comment is empty
+            if (!$scope.newComment.content) {
+                $log.warn('No content in comment, discarding submission');
+                return;
+            }
+
+            $scope.isSavingComment = true;
+
+            // Author ID will be automatically attached by the service, so
+            // don't inject it into the conversation until it comes back.
+            $scope.newComment.$create(
+                function (comment) {
+                    $scope.comments.push(comment);
+                    $scope.newComment = new Comment({story_id: id});
+                    resetSavingFlag();
+                },
+                resetSavingFlag
             );
         };
     });
