@@ -15,27 +15,21 @@
   -->
 
 <div class="container">
-    <h1 class="no-border no-margin-bottom">Story detail: {{story.title}}</h1>
-    <ul class="nav nav-tabs nav-tabs-down nav-thick">
-        <li active-path="^\/story\/[0-9]+\/overview.*">
-            <a href="#!/story/{{story.id}}/overview">
-                Overview
-            </a>
-        </li>
-        <li active-path="^\/story\/[0-9]+\/edit.*"
-            ng-show="isLoggedIn">
-            <a href="#!/story/{{story.id}}/edit">
-                Edit
-            </a>
-        </li>
-        <li active-path="^\/story\/[0-9]+\/delete.*"
-            ng-show="isLoggedIn">
-            <a href="#!/story/{{story.id}}/delete">
-                Delete
-            </a>
-        </li>
-    </ul>
-    <br/>
-
-    <div ui-view></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>{{story.title}}</h3>
+            <p ng-show="story.description">
+                {{story.description}}
+            </p>
+            <em ng-hide="story.description"
+                class="text-muted">
+                No description available
+            </em>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div ui-view></div>
+        </div>
+    </div>
 </div>

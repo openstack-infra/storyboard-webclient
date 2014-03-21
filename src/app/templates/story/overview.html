@@ -13,38 +13,22 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-
 <div class="row">
-    <div class="col-sm-9 col-xs-11">
-        <p ng-show="story.description">
-            {{story.description}}
-        </p>
-        <em ng-hide="story.description"
-            class="text-muted">
-            No description available
-        </em>
-    </div>
-    <div class="col-sm-3 col-xs-1">
+    <div class="col-sm-6 col-xs-12">
         <a href=""
            ng-click="showAddTaskForm = !showAddTaskForm"
            ng-show="isLoggedIn"
            class="pull-right btn btn-default btn-sm">
-            <span ng-hide="showAddTaskForm">
-                <i class="fa fa-plus"></i>&nbsp;
-                <span class="hidden-xs">Add Task</span>
-            </span>
-            <span ng-show="showAddTaskForm">
-                <i class="fa fa-minus"></i>&nbsp;
-                <span class="hidden-xs">Add Task</span>
+            <span>
+                <i class="fa fa-plus"
+                   ng-hide="showAddTaskForm"></i>
+                <i class="fa fa-minus"
+                   ng-show="showAddTaskForm"></i>
             </span>
         </a>
-    </div>
-</div>
-<div class="row" ng-show="showAddTaskForm">
-    <br/>
+        <h4>Tasks</h4>
 
-    <div class="col-sm-12">
-        <div class="well">
+        <div class="well" ng-show="showAddTaskForm">
             <form role="form" name="taskForm">
                 <div class="form-group row">
                     <label for="title" class="col-sm-2 control-label">
@@ -85,60 +69,78 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
         <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-sm-1">
-                    <small>ID</small>
-                </th>
-                <th class="col-sm-6">
-                    <small>Title</small>
-                </th>
-                <th class="col-sm-3">
-                    <small>Project</small>
-                </th>
-                <th class="col-sm-2">
-                    <small>Status</small>
-                </th>
-            </tr>
-            </thead>
             <tbody>
             <tr ng-repeat="task in tasks"
                 ng-controller="StoryTaskListItemController">
                 <td>
-                    <p><strong>
-                        <a href="">{{task.id}}</a>
-                    </strong></p>
-                </td>
-                <td>
+                    <span class="label label-default pull-right">
+                        {{task.status}}
+                    </span>
+
                     <p><strong>
                         <a href="">{{task.title}}</a>
                     </strong></p>
-                    <small class="text-muted">{{task.description}}</small>
-                </td>
-                <td>
-                    <p>
-                        <a href="#!/project/{{project.id}}/overview"
-                           ng-show="project">
-                            {{project.name}}
-                        </a>
+                    <a href="#!/project/{{project.id}}/overview"
+                       ng-show="project">
+                        {{project.name}}
+                    </a>
 
                         <span class="text-danger" ng-hide="project">
                             Project not found
                         </span>
-                    </p>
-                </td>
-                <td>
-                    <p class="text-success">{{task.status}}</p>
+                    <small class="text-muted">{{task.description}}</small>
                 </td>
             </tr>
             </tbody>
         </table>
-
     </div>
+    <div class="col-sm-6 col-xs-12">
+        <h4>Discussion</h4>
 
+        <div class="discussion">
+            <div class="alert alert-warning"
+                 ng-show="comments.length == 0">
+                The discussion hasn't started yet
+            </div>
+            <div ng-repeat="comment in comments"
+                 ng-controller="StoryDetailCommentController"
+                 class="discussion-comment">
+                <p class="discussion-comment-author">
+                    {{author.full_name}}
+                </p>
+
+                <p ng-show="comment.content">{{comment.content}}</p>
+                <p><em ng-hide="comment.content"
+                    class="text-muted">
+                    The author left a blank comment.
+                </em></p>
+            </div>
+
+            <form class="discussion-comment-form comment"
+                  id="commentForm"
+                  name="commentForm"
+                  ng-show="isLoggedIn">
+                <div class="form-group">
+                    <textarea id="comment"
+                              placeholder="Enter your comment here"
+                              class="form-control"
+                              rows="3"
+                              required
+                              ng-disabled="isSavingComment"
+                              ng-shift-enter="addComment()"
+                              ng-model="newComment.content">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <button type="button"
+                            class="btn btn-primary pull-right"
+                            ng-click="addComment()"
+                            ng-disabled="!commentForm.$valid || isSavingComment">
+                        Comment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
