@@ -17,7 +17,7 @@
 /**
  * Generic overrides and addons for bootstrap.
  */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
 
     &.no-margin {
         margin: 0px;
@@ -157,4 +157,26 @@ table.table.table-outlined {
 // to get rid of.
 .modal-content .panel {
     margin-bottom: 0px;
+}
+
+// Added highlighting for enabled conteneditable areas
+*[contenteditable=true] {
+
+    // Most of this copied from .form-control, removing the font declarations.
+
+    padding: @padding-base-vertical @padding-base-horizontal;
+    color: @input-color;
+    background-color: @input-bg;
+    background-image: none;
+    border: 1px solid @white;
+    border-radius: @input-border-radius;
+
+    &:hover {
+        border-color: @input-border;
+        .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+    }
+    .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
+
+    // Customize the `:focus` state to imitate native WebKit styles.
+    .form-control-focus();
 }

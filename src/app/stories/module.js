@@ -18,25 +18,12 @@
  * The Storyboard story submodule handles most activity surrounding the
  * creation and management of stories, their tasks, and comments.
  */
-angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
-    .config(function ($stateProvider, $urlRouterProvider, SessionResolver) {
+angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util'])
+    .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
         // URL Defaults.
         $urlRouterProvider.when('/story', '/story/list');
-        $urlRouterProvider.when('/story/{id:[0-9]+}',
-            function ($match) {
-                return '/story/' + $match.id + '/overview';
-            });
-        $urlRouterProvider.when('/story/{storyId:[0-9]+}/task',
-            function ($match) {
-                return '/story/' + $match.storyId + '/overview';
-            });
-        $urlRouterProvider.when('/story/{storyId:[0-9]+}/task/{taskId:[0-9]+}',
-            function ($match) {
-                return '/story/' + $match.storyId +
-                    '/task/' + $match.taskId;
-            });
 
         // Set our page routes.
         $stateProvider
@@ -52,26 +39,6 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
             })
             .state('story.detail', {
                 url: '/{storyId:[0-9]+}',
-                abstract: true,
-                templateUrl: 'app/templates/story/detail.html',
-                controller: 'StoryDetailController'
-            })
-            .state('story.detail.overview', {
-                url: '/overview',
-                templateUrl: 'app/templates/story/overview.html'
-            })
-            .state('story.detail.edit', {
-                url: '/edit',
-                templateUrl: 'app/templates/story/edit.html',
-                resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn
-                }
-            })
-            .state('story.detail.delete', {
-                url: '/delete',
-                templateUrl: 'app/templates/story/delete.html',
-                resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn
-                }
+                templateUrl: 'app/templates/story/detail.html'
             });
     });

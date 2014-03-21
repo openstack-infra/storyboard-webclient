@@ -13,22 +13,29 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">{{story.title}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h2 class="text-danger text-center">
+                    Are you certain that you want to delete this story?
+                </h2>
 
-<div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-        <h2 class="text-danger text-center">
-            Are you certain that you want to delete this story?
-        </h2>
+                <p class="text-center lead">
+                    This action cannot be undone.
+                </p>
 
-        <p class="text-center lead">
-            This will set the story to a "deleted" state, and any
-            tasks will no longer be visible.
-        </p>
-
-        <div class="text-center">
-            <a href="" class="btn btn-danger" ng-click="remove()">
-                Remove this story
-            </a>
+                <div class="text-center">
+                    <a href="" class="btn btn-danger" ng-click="remove()">
+                        Remove this story
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
