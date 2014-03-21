@@ -18,7 +18,8 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($scope, $state, $stateParams, Story, Task, Project) {
+    function ($scope, $state, $stateParams, Story, Task, Project, Comment,
+              CurrentUser) {
         'use strict';
 
         // Parse the ID
@@ -35,6 +36,8 @@ angular.module('sb.story').controller('StoryDetailController',
             story_id: id
         });
         $scope.projects = Project.query({});
+        $scope.comments = Comment.query({story_id: id});
+        $scope.newComment = new Comment({story_id: id});
 
         /**
          * UI flag for when we're initially loading the view.
@@ -153,6 +156,26 @@ angular.module('sb.story').controller('StoryDetailController',
                     $state.go('project.list');
                 },
                 handleServiceError
+            );
+        };
+
+        /**
+         * Add a comment
+         */
+        $scope.addComment = function () {
+            // Pull the pending data submission out and reset the form.
+            CurrentUser.resolve().then(
+                function (currentUser) {
+                    // Grab our data, separate out the
+                    $scope.newComment.author_id = currentUser.id;
+                    $scope.newComment.$create(
+                        function(comment){
+                            $scope.comments.push(comment);
+                            $scope.newComment = new Comment();
+                            $scope.commentForm.$setPristine();
+                        }
+                    );
+                }
             );
         };
     });
