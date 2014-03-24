@@ -48,6 +48,24 @@ module.exports = function (grunt) {
         bower: './bower_components'
     };
 
+    var proxies = {
+        localhost: {
+            context: '/api/v1',
+            host: 'localhost',
+            port: 8080,
+            https: false,
+            rewrite: {
+                '^/api/v1': '/v1'
+            }
+        },
+        production: {
+            context: '/api/v1',
+            host: 'storyboard.openstack.org',
+            port: 443,
+            https: true
+        }
+    };
+
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
@@ -404,17 +422,6 @@ module.exports = function (grunt) {
             options: {
                 hostname: 'localhost'
             },
-            proxies: [
-                {
-                    context: '/api/v1',
-                    host: 'localhost',
-                    port: 8080,
-                    https: false,
-                    rewrite: {
-                        '^/api/v1': '/v1'
-                    }
-                }
-            ],
             livereload: {
                 options: {
                     port: 9000,
@@ -425,7 +432,8 @@ module.exports = function (grunt) {
                             proxySnippet
                         ];
                     }
-                }
+                },
+                proxies: [proxies.localhost]
             },
             dist: {
                 options: {
@@ -437,7 +445,8 @@ module.exports = function (grunt) {
                             proxySnippet
                         ];
                     }
-                }
+                },
+                proxies: [proxies.localhost]
             },
             test: {
                 options: {
@@ -448,7 +457,21 @@ module.exports = function (grunt) {
                             proxySnippet
                         ];
                     }
-                }
+                },
+                proxies: [proxies.localhost]
+            },
+            prod: {
+                options: {
+                    port: 9000,
+                    keepalive: true,
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, dir.output),
+                            proxySnippet
+                        ];
+                    }
+                },
+                proxies: [proxies.production]
             }
         },
 
@@ -540,8 +563,23 @@ module.exports = function (grunt) {
         'compile',
         'package',
         'open',
-        'configureProxies:server',
+        'configureProxies:dist',
         'connect:dist'
+    ]);
+
+    /**
+     * This task is identical to 'server:dist', with the exception that it
+     * will proxy the API requests against the production API.
+     *
+     * USE WITH CAUTION
+     */
+    grunt.registerTask('server:prod', [
+        'clean',
+        'compile',
+        'package',
+        'open',
+        'configureProxies:prod',
+        'connect:prod'
     ]);
 
     /**
@@ -552,7 +590,7 @@ module.exports = function (grunt) {
     grunt.registerTask('server', [
         'clean',
         'compile',
-        'configureProxies:server',
+        'configureProxies:livereload',
         'connect:livereload',
         'open',
         'watch'
