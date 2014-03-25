@@ -1,0 +1,23 @@
+<span class="label label-{{style}}" ng-hide="editable">
+    {{status}}
+</span>
+<div class="dropdown" ng-show="editable">
+    <a class="btn btn-{{style}} btn-xs dropdown-toggle" data-toggle="dropdown">
+        {{status}}
+        <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li ng-class="{disabled: status == 'Todo'}">
+            <a href=""
+               ng-click="setStatus('Todo')">Todo</a>
+        </li>
+        <li ng-class="{disabled: status == 'In review'}">
+            <a href=""
+               ng-click="setStatus('In review')">In review</a>
+        </li>
+        <li ng-class="{disabled: status == 'Landed'}">
+            <a href=""
+               ng-click="setStatus('Landed')">Landed</a>
+        </li>
+    </ul>
+</div>
