@@ -74,9 +74,12 @@
             <tr ng-repeat="task in tasks"
                 ng-controller="StoryTaskListItemController">
                 <td>
-                    <span class="label label-default pull-right">
-                        {{task.status}}
-                    </span>
+                    <div class="pull-right">
+                        <task-status-dropdown
+                                editable="{{isLoggedIn}}"
+                                on-change="updateStatus(status)"
+                                status="{{task.status}}"/>
+                    </div>
 
                     <p><strong>
                         <a href="">{{task.title}}</a>
@@ -111,8 +114,9 @@
                 </p>
 
                 <p ng-show="comment.content">{{comment.content}}</p>
+
                 <p><em ng-hide="comment.content"
-                    class="text-muted">
+                       class="text-muted">
                     The author left a blank comment.
                 </em></p>
             </div>
