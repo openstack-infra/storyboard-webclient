@@ -31,4 +31,12 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                     $scope.project = null;
                 });
         }
+
+        /**
+         * Updates this task's status
+         */
+        $scope.updateStatus = function (status) {
+            $scope.task.status = status;
+            $scope.task.$update();
+        };
     });
