@@ -29,8 +29,6 @@ angular.module('sb.story').controller('StoryListController',
         // Variables and methods available to the template...
         function resetScope() {
             $scope.storyCount = 0;
-            $scope.storyOffset = 0;
-            $scope.storyLimit = 10;
             $scope.stories = [];
             $scope.error = {};
         }
@@ -52,16 +50,9 @@ angular.module('sb.story').controller('StoryListController',
                 {},
                 function (result, headers) {
 
-                    // Extract metadata from returned headers.
-                    var storyCount = headers('X-List-Total') || result.length;
-                    var storyOffset = headers('X-List-Offset') || 0;
-                    var storyLimit = headers('X-List-Limit') || result.length;
-
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.storyCount = storyCount;
-                    $scope.storyOffset = storyOffset;
-                    $scope.storyLimit = storyLimit;
+                    $scope.storyCount = headers('X-Total') || result.length;
                     $scope.stories = result;
                     $scope.isSearching = false;
                 },

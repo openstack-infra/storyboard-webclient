@@ -21,7 +21,7 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.services')
-    .factory('storyboardApiSignature', function () {
+    .factory('storyboardApiSignature', function (pageSize) {
         'use strict';
 
         return {
@@ -41,7 +41,10 @@ angular.module('sb.services')
             'query': {
                 method: 'GET',
                 isArray: true,
-                responseType: 'json'
+                responseType: 'json',
+                params: {
+                    limit: pageSize
+                }
             }
         };
     }
