@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+1: Emmet Hikory <persia@shipstone.jp>
+Approved+1: Michael Krotscheck <krotscheck@gmail.com>
+Code-Review+2: Michael Krotscheck <krotscheck@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 27 Mar 2014 20:55:43 +0000
+Reviewed-on: https://review.openstack.org/82690
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
