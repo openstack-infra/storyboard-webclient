@@ -17,7 +17,7 @@
     "license": "Apache2",
     "devDependencies": {
         "connect-livereload": "0.3.1",
-        "karma-jasmine": "0.1.4",
+        "karma-jasmine": "0.2.2",
         "grunt-contrib-concat": "0.3.0",
         "grunt-contrib-copy": "0.4.1",
         "grunt-contrib-clean": "0.5.0",
