@@ -27,8 +27,6 @@ angular.module('sb.projects').controller('ProjectListController',
 
         function resetScope() {
             $scope.projectCount = 0;
-            $scope.projectOffset = 0;
-            $scope.projectLimit = 10;
             $scope.projects = [];
             $scope.error = {};
         }
@@ -50,16 +48,9 @@ angular.module('sb.projects').controller('ProjectListController',
                 { /*q: $scope.searchQuery || ''*/},
                 function (result, headers) {
 
-                    // Extract metadata from returned headers.
-                    var projectCount = headers('X-List-Total') || result.length;
-                    var projectOffset = headers('X-List-Offset') || 0;
-                    var projectLimit = headers('X-List-Limit') || result.length;
-
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.projectCount = projectCount;
-                    $scope.projectOffset = projectOffset;
-                    $scope.projectLimit = projectLimit;
+                    $scope.projectCount = headers('X-Total') || result.length;
                     $scope.projects = result;
                     $scope.isSearching = false;
                 },
