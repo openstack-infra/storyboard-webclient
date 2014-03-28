@@ -15,9 +15,8 @@
  */
 
 /**
- * Permission provider, which sets
- *
- * @author Michael Krotscheck
+ * Permission provider, which hides particular controls based on whether the
+ * passed permission flag has been set.
  */
 angular.module('sb.util').directive('permission',
     function ($log, PermissionManager) {

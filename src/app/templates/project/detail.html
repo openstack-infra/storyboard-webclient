@@ -41,13 +41,13 @@
                 </a>
             </li>
             <li active-path="^\/project\/[0-9]+\/edit.*"
-                ng-show="isLoggedIn">
+                permission="is_superuser">
                 <a href="#!/project/{{project.id}}/edit">
                     Edit
                 </a>
             </li>
             <li active-path="^\/project\/[0-9]+\/delete.*"
-                ng-show="isLoggedIn">
+                permission="is_superuser">
                 <a href="#!/project/{{project.id}}/delete">
                     Delete
                 </a>
