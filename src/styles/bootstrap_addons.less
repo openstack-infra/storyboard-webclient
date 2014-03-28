@@ -159,24 +159,70 @@ table.table.table-outlined {
     margin-bottom: 0px;
 }
 
-// Added highlighting for enabled conteneditable areas
-*[contenteditable=true] {
 
-    // Most of this copied from .form-control, removing the font declarations.
+.form-control {
+    // The context-edit class, when applied to a form control, will hide the
+    // border when the field is not focused, allowing for a more contextual
+    // experience.
+    &.context-edit {
+        border-color: @input-bg;
+        .box-shadow(inset 0 0px 0px rgba(0,0,0,0));
+        &:hover {
+            border-color: @input-border;
+            .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+        }
 
-    padding: @padding-base-vertical @padding-base-horizontal;
-    color: @input-color;
-    background-color: @input-bg;
-    background-image: none;
-    border: 1px solid @white;
-    border-radius: @input-border-radius;
-
-    &:hover {
-        border-color: @input-border;
-        .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+        // Customize the `:focus` state to imitate native WebKit styles.
+        .form-control-focus();
     }
-    .transition(~"border-color ease-in-out .15s, box-shadow ease-in-out .15s");
 
-    // Customize the `:focus` state to imitate native WebKit styles.
-    .form-control-focus();
+    &.h1 {
+        .input-size(
+            @input-height-h1;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h1;
+            @line-height-large;
+            @border-radius-base);
+    }
+    &.h2 {
+        .input-size(@input-height-h2;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h2;
+            @line-height-large;
+            @border-radius-base);
+    }
+    &.h3 {
+        .input-size(@input-height-h3;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h3;
+            @line-height-base;
+            @border-radius-base);
+    }
+    &.h4 {
+        .input-size(@input-height-h4;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h4;
+            @line-height-base;
+            @border-radius-base);
+    }
+    &.h5 {
+        .input-size(@input-height-h5;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h5;
+            @line-height-base;
+            @border-radius-base);
+    }
+    &.h6 {
+        .input-size(@input-height-h6;
+            @padding-base-vertical;
+            @padding-base-horizontal;
+            @font-size-h6;
+            @line-height-base;
+            @border-radius-base);
+    }
 }
