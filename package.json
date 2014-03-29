@@ -6,7 +6,10 @@
     "scripts": {
         "test": "grunt test"
     },
-    "repository": "",
+    "repository": {
+        "type": "git",
+        "url": "https://git.openstack.org/openstack-infra/storyboard-webclient.git"
+    }
     "keywords": [
         "openstack",
         "storyboard",
