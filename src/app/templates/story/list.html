@@ -20,23 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 col-xs-10">
-            <div class="btn-group btn-group-justified">
-                <div class="form-group has-feedback has-feedback-no-label">
-                    <input type="text"
-                           class="form-control input-sm"
-                           placeholder="Search Stories"
-                           ng-disabled="isSearching"
-                           ng-enter="search()"
-                           ng-model="searchQuery"/>
-                    <span class="fa fa-search form-control-feedback"
-                          ng-hide="isSearching"></span>
-                    <span class="fa fa-refresh fa-spin form-control-feedback"
-                          ng-show="isSearching"></span>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-9 col-xs-2">
+        <div class="col-sm-9 col-sm-offset-3 col-xs-2 col-xs-offset-10">
             <a href=""
                ng-click="newStory()"
                class="pull-right btn btn-default btn-sm">
@@ -70,12 +54,6 @@
                     <th class="col-sm-7">
                         <small>Story Name</small>
                     </th>
-                    <th class="col-sm-2 text-right">
-                        <small>
-                            <strong>Tasks</strong><br/>
-                            Opened / Total
-                        </small>
-                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,11 +68,6 @@
                             <a href="#!/story/{{story.id}}">{{story.title}}</a>
                         </strong></p>
                         <small class="text-muted">{{story.description}}</small>
-                    </td>
-                    <td class="text-right">
-                        <p class="text-muted">
-                            {{story.openTasks}} / {{story.totalTasks}}
-                        </p>
                     </td>
                 </tr>
                 </tbody>

@@ -20,23 +20,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 col-xs-10">
-            <div class="btn-group btn-group-justified">
-                <div class="form-group has-feedback has-feedback-no-label">
-                    <input type="text"
-                           class="form-control input-sm"
-                           placeholder="Search Projects"
-                           ng-disabled="isSearching"
-                           ng-enter="search()"
-                           ng-model="searchQuery"/>
-                    <span class="fa fa-search form-control-feedback"
-                          ng-hide="isSearching"></span>
-                    <span class="fa fa-refresh fa-spin form-control-feedback"
-                          ng-show="isSearching"></span>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-9 col-xs-2">
+        <div class="col-sm-9 col-sm-offset-3 col-xs-2 col-xs-offset-10">
             <a href="#!/project/new" permission="is_superuser"
                class="pull-right btn btn-default btn-sm">
             <i class="fa fa-plus"></i>
@@ -65,12 +49,6 @@
                     <th class="col-sm-10">
                         <small>Project Name</small>
                     </th>
-                    <th class="col-sm-2 text-right">
-                        <small>
-                            <strong>Stories</strong><br/>
-                            Opened / Total
-                        </small>
-                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -84,11 +62,6 @@
                         <small class="text-muted">
                             {{project.description}}
                         </small>
-                    </td>
-                    <td class="text-right">
-                        <p class="text-muted">
-                            {{project.openStories}} / {{project.totalStories}}
-                        </p>
                     </td>
                 </tr>
                 </tbody>
