@@ -1,0 +1,15 @@
+<div class="form-control tag-input"
+     ng-click="focus()">
+    <div class="tag" ng-repeat="tag in tags">
+        {{tag.name}}
+        <a class="tag-remove"
+           ng-click="removeTag(tag)">
+            &times;
+        </a>
+    </div>
+    <input class="tag-input"
+           type="text"
+           ng-model="newTagName"
+           ng-enter="addTag(newTagName)">
+    </input>
+</div>
