@@ -1,0 +1,17 @@
+<div class="form-control tag-input" ng-click="focus()">
+    <div class="tag" ng-repeat="tag in selectedTags"
+         ng-click="noFocus($event)">
+        {{tag}}
+        <a class="tag-remove" ng-click="removeTag(tag)">
+            &times;
+        </a>
+    </div>
+
+    <input name="tagInputField"
+           class="tag-input dropdown-toggle"
+           type="text"
+           ng-model="newTagName"
+           ng-delete="deletePressed()"
+           ng-enter="addTag()">
+    </input>
+</div>
