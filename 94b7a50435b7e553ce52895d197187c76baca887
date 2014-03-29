@@ -1,0 +1,10 @@
+Approved+1: Monty Taylor <mordred@inaugust.com>
+Code-Review+2: Monty Taylor <mordred@inaugust.com>
+Verified+2: Jenkins
+Code-Review+1: Emmet Hikory <persia@shipstone.jp>
+Code-Review+2: Sergey Lukjanov <slukjanov@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Sat, 29 Mar 2014 16:50:29 +0000
+Reviewed-on: https://review.openstack.org/83865
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
