@@ -21,8 +21,7 @@
 describe('httpErrorBroadcaster', function () {
     'use strict';
 
-    var $rootScope, $httpBackend, $http, $resource, MockResource,
-        storyboardApiBase;
+    var $rootScope, $httpBackend, $resource, MockResource;
 
     var errorResponse = {
         error_code: 404,
@@ -37,50 +36,30 @@ describe('httpErrorBroadcaster', function () {
         inject(function ($injector) {
             // Capture various providers for later use.
             $rootScope = $injector.get('$rootScope');
-            $http = $injector.get('$http');
             $httpBackend = $injector.get('$httpBackend');
             $resource = $injector.get('$resource');
             MockResource = $resource('/foo/:id', {id: '@id'});
-            storyboardApiBase = $injector.get('storyboardApiBase');
         });
 
         // Start listening to the broadcast method.
         spyOn($rootScope, '$broadcast');
     });
 
-    // Teardown
-    afterEach(function () {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
-    });
 
+    it('should capture events on the $rootScope', function (done) {
 
-    it('should capture events on the $rootScope', function () {
-
+        // Prepare the HTTP Backend
         $httpBackend.when('GET', '/foo/99')
             .respond(553, JSON.stringify(errorResponse));
 
-        var complete = false;
-
-        runs(function () {
-            MockResource.get({'id': 99},
-                function () {
-                    complete = true;
-                },
-                function () {
-                    complete = true;
-                });
-
-            $httpBackend.flush();
-        });
-
-        waitsFor(function () {
-            return complete;
-        }, 'query to complete', 5000);
-
-        runs(function () {
+        // Handle a result.
+        function handleResult() {
             expect($rootScope.$broadcast)
                 .toHaveBeenCalledWith('http_553', errorResponse);
-        });
+            done();
+        }
+
+        MockResource.get({'id': 99}, handleResult, handleResult);
+        $httpBackend.flush();
     });
 });
