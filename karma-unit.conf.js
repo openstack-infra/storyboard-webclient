@@ -39,6 +39,7 @@ module.exports = function (config) {
             './bower_components/angular-mocks/angular-mocks.js',
             './dist/js/storyboard.js',
             './dist/js/templates.js',
+            './test/unit/custom_matchers.js',
             './test/unit/**/*.js'
         ],
 

@@ -58,6 +58,7 @@
         "spyOn": false,
         "runs": false,
         "waitsFor": false,
+        "jasmine": false,
 
         // functional test constants
         "browser": false,

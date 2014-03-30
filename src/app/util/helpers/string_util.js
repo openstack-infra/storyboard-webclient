@@ -24,6 +24,11 @@ angular.module('sb.util').factory('StringUtil',
     function () {
         'use strict';
 
+        var defaultLength = 32; // MD5 length. Seems decent.
+        var alphaNumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+            'abcdefghijklmnopqrstuvwxyz' +
+            '0123456789';
+
         return {
             /**
              * Helper to generate a random alphanumeric string for the state
@@ -33,12 +38,7 @@ angular.module('sb.util').factory('StringUtil',
              * @returns {string} A random alphanumeric string.
              */
             randomAlphaNumeric: function (length) {
-                var possible =
-                    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-                    'abcdefghijklmnopqrstuvwxyz' +
-                    '0123456789';
-
-                return this.random(length, possible);
+                return this.random(length, alphaNumeric);
             },
 
             /**
@@ -51,11 +51,14 @@ angular.module('sb.util').factory('StringUtil',
              * characters.
              */
             random: function (length, characters) {
+                length = length || defaultLength;
+                characters = characters || alphaNumeric;
+
                 var text = '';
 
                 for (var i = 0; i < length; i++) {
                     text += characters.charAt(Math.floor(
-                        Math.random() * characters.length));
+                            Math.random() * characters.length));
                 }
 
                 return text;
