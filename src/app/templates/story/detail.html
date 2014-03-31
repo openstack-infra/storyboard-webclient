@@ -18,17 +18,35 @@
     <!-- Begin header -->
     <div class="row">
         <div class="col-md-8 col-xs-12">
-            <h1 contenteditable="{{isLoggedIn}}"
-                ng-model="story.title"></h1>
+            <h1 ng-hide="isLoggedIn">{{story.title}}</h1>
+
+            <div class="form-group" ng-show="isLoggedIn">
+                <input type="text"
+                       class="form-control context-edit h1"
+                       ng-model="story.title"
+                       required
+                       placeholder="Story Title"/>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-8 col-xs-12">
             <!-- Begin Description -->
-            <p contenteditable="{{isLoggedIn}}"
-               ng-model="story.description">
+            <p ng-hide="isLoggedIn">
+                {{story.description}}
             </p>
+
+            <div class="form-group" ng-show="isLoggedIn">
+                <textarea placeholder="Enter a story description here"
+                          ng-show="isLoggedIn"
+                          class="form-control context-edit"
+                          rows="3"
+                          required
+                          ng-blur="updateStory()"
+                          ng-model="story.description">
+                </textarea>
+            </div>
 
             <div class="clearfix">
                 <div class="pull-right">
@@ -107,7 +125,8 @@
         </div>
 
         <!-- Begin Task List -->
-        <div class="col-xs-12 col-md-4" ng-controller="StoryTaskListController">
+        <div class="col-xs-12 col-md-4"
+             ng-controller="StoryTaskListController">
             <button type="button"
                     ng-click="showAddTaskForm = !showAddTaskForm"
                     ng-show="isLoggedIn"
