@@ -1,0 +1,33 @@
+<div class="dropdown">
+    {{model}}
+    <div class="form-control tag-input"
+         ng-click="focus()"
+         data-toggle="dropdown">
+        <div class="tag"
+             ng-repeat="tag in selectedTags"
+             ng-click="noFocus($event)">
+            {{tag[tagLabelField]}}
+            <a class="tag-remove" ng-click="removeTag(tag)">
+                &times;
+            </a>
+        </div>
+        <input name="tagInputField"
+               class="tag-input dropdown-toggle"
+               type="text"
+               autoresize-width
+               ng-model="newTagName"
+               ng-keydown="onKeyDown($event)"
+               ng-keyup="onKeyUp($event)"
+               ng-delete="deletePressed()"
+               ng-enter="addTag()">
+        </input>
+    </div>
+    <ul class="dropdown-menu">
+        <li ng-repeat="tag in filteredTags"
+            ng-class="{active: $index == selectedIndex}">
+            <a ng-click="addTag(tag[tagLabelField])">
+                {{tag[tagLabelField]}}
+            </a>
+        </li>
+    </ul>
+</div>
