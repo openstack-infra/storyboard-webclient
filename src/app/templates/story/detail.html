@@ -14,7 +14,6 @@
   ~ under the License.
   -->
 
-
 <div class="container" ng-controller="StoryDetailController">
     <div class="row">
         <div class="col-md-8 col-xs-12">
@@ -34,7 +33,8 @@
                 <!-- Spacer -->
                 &nbsp;
             </h1>
-
+            <div ng-include src="'/inline/metadata.html'"></div>
+            <hr/>
             <div ng-include src="'/inline/task_list.html'"></div>
         </div>
     </div>
@@ -310,4 +310,30 @@
             </div>
         </div>
     </form>
+</script>
+
+<!-- Template for story metadata -->
+<script type="text/ng-template" id="/inline/metadata.html">
+    <p><strong>Author:</strong>
+        <em ng-show="!story.creator_id" class="text-muted">
+            None
+        </em>
+        <span ng-show="story.creator_id && !creator.$resolved">
+            <i class="fa fa-refresh fa-spin"></i>
+        </span>
+        <span ng-show="creator.full_name">
+            {{creator.full_name}}
+        </span>
+        <br/>
+        <strong>Last updated:</strong>
+        <span ng-show="story.updated_at">
+            {{story.updated_at | date: 'longDate'}}
+        </span>
+        <span ng-show="!story.updated_at && story.created_at">
+            {{story.created_at | date: 'longDate'}}
+        </span>
+        <em ng-hide="story.updated_at || story.created_at" class="text-muted">
+            Never
+        </em>
+    </p>
 </script>

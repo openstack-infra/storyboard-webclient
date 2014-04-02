@@ -18,7 +18,8 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($log, $scope, $state, $stateParams, $modal, Story, Session) {
+    function ($log, $scope, $state, $stateParams, $modal, Story,
+              Session, User) {
         'use strict';
 
         // Parse the ID
@@ -53,6 +54,12 @@ angular.module('sb.story').controller('StoryDetailController',
                 {'id': id},
                 function (story) {
                     $scope.story = story;
+
+                    // Load the creator if one exists.
+                    if (!!story.creator_id) {
+                        $scope.creator = User.get({id: story.creator_id});
+                    }
+
                     handleServiceSuccess();
                 },
                 handleServiceError
@@ -74,6 +81,11 @@ angular.module('sb.story').controller('StoryDetailController',
          * UI Flag for when we're in edit mode.
          */
         $scope.showEditForm = false;
+
+        /**
+         * The user record for the author
+         */
+        $scope.creator = null;
 
         /**
          * UI flag for when we're initially loading the view.
