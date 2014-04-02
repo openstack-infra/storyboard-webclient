@@ -13,202 +13,243 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
+
+
 <div class="container" ng-controller="StoryDetailController">
-
-    <!-- Begin header -->
     <div class="row">
         <div class="col-md-8 col-xs-12">
-            <h1 ng-hide="isLoggedIn">{{story.title}}</h1>
-
-            <div class="form-group" ng-show="isLoggedIn">
-                <input type="text"
-                       class="form-control context-edit h1"
-                       ng-model="story.title"
-                       required
-                       placeholder="Story Title"/>
+            <div ng-include
+                 src="'/inline/story_detail.html'"
+                 ng-hide="showEditForm">
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8 col-xs-12">
-            <!-- Begin Description -->
-            <p ng-hide="isLoggedIn">
-                {{story.description}}
-            </p>
-
-            <div class="form-group" ng-show="isLoggedIn">
-                <textarea placeholder="Enter a story description here"
-                          ng-show="isLoggedIn"
-                          class="form-control context-edit"
-                          rows="3"
-                          required
-                          ng-blur="updateStory()"
-                          ng-model="story.description">
-                </textarea>
-            </div>
-
-            <div class="clearfix">
-                <div class="pull-right">
-                    <div class="btn" ng-show="isUpdating">
-                        <i class="fa fa-spinner fa-lg fa-spin"></i>
-                    </div>
-                    <button type="button"
-                            class="btn btn-primary"
-                            ng-click="update()"
-                            ng-disabled="story.description.length < 1 ||
-                                         story.title.length < 1"
-                            ng-show="isLoggedIn">
-                        Save
-                    </button>
-                    <button type="button"
-                            class="btn btn-default"
-                            ng-click="remove()"
-                            ng-show="isLoggedIn">
-                        Delete
-                    </button>
-                </div>
+            <div ng-include
+                 src="'/inline/story_detail_form.html'"
+                 ng-show="showEditForm">
             </div>
             <hr/>
+            <div ng-include src="'/inline/discussion.html'"></div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <h1 class="hidden-xs hidden-sm no-border text-right">
+                <!-- Spacer -->
+                &nbsp;
+            </h1>
 
-            <!-- Begin Discussion -->
-            <div ng-controller="StoryDiscussionController">
-                <h4>Discussion</h4>
+            <div ng-include src="'/inline/task_list.html'"></div>
+        </div>
+    </div>
+</div>
 
-                <div class="discussion">
-                    <div class="alert alert-warning"
-                         ng-show="comments.length == 0">
-                        The discussion hasn't started yet
-                    </div>
-                    <div ng-repeat="comment in comments"
-                         ng-controller="StoryDiscussionItemController"
-                         class="discussion-comment">
-                        <p class="discussion-comment-author">
-                            {{author.full_name}}
-                        </p>
 
-                        <p ng-show="comment.content">{{comment.content}}</p>
+<!-- Template for the header and description -->
+<script type="text/ng-template" id="/inline/story_detail.html">
+    <h1 ng-click="toggleEditMode()" class="editable">
+        <span ng-show="story.title">
+            {{story.title}}
+        </span>
+        <em ng-hide="story.title" class="text-muted">
+            No title
+        </em>
+    </h1>
+    <p ng-click="toggleEditMode()" class="editable">
+        <span ng-show="story.description">
+            {{story.description}}
+        </span>
+        <em ng-hide="story.description" class="text-muted">
+            No description provided
+        </em>
+    </p>
+</script>
 
-                        <p><em ng-hide="comment.content"
-                               class="text-muted">
-                            The author left a blank comment.
-                        </em></p>
-                    </div>
 
-                    <form class="discussion-comment-form comment"
-                          id="commentForm"
-                          name="commentForm"
-                          ng-show="isLoggedIn">
-                        <div class="form-group">
-                            <textarea id="comment"
-                                      placeholder="Enter your comment here"
-                                      class="form-control"
-                                      rows="3"
-                                      required
-                                      ng-disabled="isSavingComment"
-                                      ng-shift-enter="addComment()"
-                                      ng-model="newComment.content">
-                            </textarea>
-                        </div>
-                        <div class="form-group clearfix">
-                            <button type="button"
-                                    class="btn btn-primary pull-right"
-                                    ng-click="addComment()"
-                                    ng-disabled="!commentForm.$valid || isSavingComment">
-                                Comment
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <hr class="hidden-md hidden-lg"/>
+<!-- Template for the header and description -->
+<script type="text/ng-template" id="/inline/story_detail_form.html">
+    <form name="storyForm">
+        <div class="form-group">
+            <textarea type="text"
+                   class="form-control context-edit h1"
+                   ng-model="story.title"
+                   required
+                   ng-disabled="isUpdating"
+                   placeholder="Story Title">
+            </textarea>
+        </div>
+        <div class="form-group">
+            <textarea placeholder="Enter a story description here"
+                      class="form-control context-edit"
+                      rows="3"
+                      required
+                      ng-disabled="isUpdating"
+                      ng-model="story.description">
+            </textarea>
         </div>
 
-        <!-- Begin Task List -->
-        <div class="col-xs-12 col-md-4"
-             ng-controller="StoryTaskListController">
-            <button type="button"
-                    ng-click="showAddTaskForm = !showAddTaskForm"
-                    ng-show="isLoggedIn"
-                    class="pull-right btn btn-default btn-sm">
-                <i class="fa fa-plus"
-                   ng-hide="showAddTaskForm"></i>
-                <i class="fa fa-minus"
-                   ng-show="showAddTaskForm"></i>
-            </button>
-
-            <h4>Tasks</h4>
-
-            <div class="well" ng-show="showAddTaskForm">
-                <form role="form" name="taskForm">
-                    <div class="form-group row">
-                        <label for="title" class="col-sm-2 control-label">
-                            Task Title:
-                        </label>
-
-                        <div class="col-sm-10">
-                            <input id="title"
-                                   type="text"
-                                   class="form-control"
-                                   ng-model="newTask.title"
-                                   required
-                                   placeholder="Task Title">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="project" class="col-sm-2 control-label">
-                            Task Project:
-                        </label>
-
-                        <div class="col-sm-10">
-                            <select ng-model="newTask.project_id"
-                                    id="project"
-                                    name="project"
-                                    class="form-control"
-                                    required
-                                    ng-options="p.id as p.name for p in projects"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default"
-                                    ng-click="addTask()"
-                                    ng-disabled="!taskForm.$valid">
-                                Add task
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div class="clearfix">
+            <div class="pull-right">
+                <div class="btn" ng-show="isUpdating">
+                    <i class="fa fa-spinner fa-lg fa-spin"></i>
+                </div>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="update()"
+                        ng-disabled="!storyForm.$valid">
+                    Save
+                </button>
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="cancel()">
+                    Cancel
+                </button>
             </div>
+            <button type="button"
+                    class="btn btn-link"
+                    ng-click="remove()">
+                Remove this story
+            </button>
+        </div>
+    </form>
+</script>
 
-            <table class="table table-striped">
-                <tbody>
-                <tr ng-repeat="task in tasks"
-                    ng-controller="StoryTaskListItemController">
-                    <td>
-                        <div class="pull-right">
-                            <task-status-dropdown
-                                    editable="{{isLoggedIn}}"
-                                    on-change="updateStatus(status)"
-                                    status="{{task.status}}"/>
-                        </div>
-                        <p><strong>
-                            <a href="">{{task.title}}</a>
-                        </strong></p>
-                        <a href="#!/project/{{project.id}}/overview"
-                           ng-show="project">
-                            {{project.name}}
-                        </a>
+
+<!-- Template for the task list -->
+<script type="text/ng-template" id="/inline/task_list.html">
+    <div ng-controller="StoryTaskListController">
+        <button type="button"
+                ng-click="showAddTaskForm = !showAddTaskForm"
+                ng-show="isLoggedIn"
+                class="pull-right btn btn-default btn-sm">
+            <i class="fa fa-plus"
+               ng-hide="showAddTaskForm"></i>
+            <i class="fa fa-minus"
+               ng-show="showAddTaskForm"></i>
+        </button>
+
+        <h4>Tasks</h4>
+
+        <div class="well" ng-show="showAddTaskForm">
+            <form role="form" name="taskForm">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-2 control-label">
+                        Task Title:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="title"
+                               type="text"
+                               class="form-control"
+                               ng-model="newTask.title"
+                               required
+                               placeholder="Task Title">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="project" class="col-sm-2 control-label">
+                        Task Project:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <select ng-model="newTask.project_id"
+                                id="project"
+                                name="project"
+                                class="form-control"
+                                required
+                                ng-options="p.id as p.name for p in projects"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default"
+                                ng-click="addTask()"
+                                ng-disabled="!taskForm.$valid">
+                            Add task
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr ng-repeat="task in tasks"
+                ng-controller="StoryTaskListItemController">
+                <td>
+                    <div class="pull-right">
+                        <task-status-dropdown
+                                editable="{{isLoggedIn}}"
+                                on-change="updateStatus(status)"
+                                status="{{task.status}}"/>
+                    </div>
+                    <p><strong>
+                        <a href="">{{task.title}}</a>
+                    </strong></p>
+                    <a href="#!/project/{{project.id}}/overview"
+                       ng-show="project">
+                        {{project.name}}
+                    </a>
 
                         <span class="text-danger" ng-hide="project">
                             Project not found
                         </span>
-                        <small class="text-muted">{{task.description}}
-                        </small>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <small class="text-muted">{{task.description}}
+                    </small>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</script>
+
+
+<!-- Template for the task list -->
+<script type="text/ng-template" id="/inline/discussion.html">
+    <div ng-controller="StoryDiscussionController">
+        <h4>Discussion</h4>
+
+        <div class="discussion">
+            <div class="alert alert-warning"
+                 ng-show="comments.length == 0">
+                The discussion hasn't started yet
+            </div>
+            <div ng-repeat="comment in comments"
+                 ng-controller="StoryDiscussionItemController"
+                 class="discussion-comment">
+                <p class="discussion-comment-author">
+                    {{author.full_name}}
+                </p>
+
+                <p ng-show="comment.content">{{comment.content}}</p>
+
+                <p><em ng-hide="comment.content"
+                       class="text-muted">
+                    The author left a blank comment.
+                </em></p>
+            </div>
+
+            <form class="discussion-comment-form comment"
+                  id="commentForm"
+                  name="commentForm"
+                  ng-show="isLoggedIn">
+                <div class="form-group">
+                    <textarea id="comment"
+                              placeholder="Enter your comment here"
+                              class="form-control"
+                              rows="3"
+                              required
+                              ng-disabled="isSavingComment"
+                              ng-shift-enter="addComment()"
+                              ng-model="newComment.content">
+                    </textarea>
+                </div>
+                <div class="form-group clearfix">
+                    <button type="button"
+                            class="btn btn-primary pull-right"
+                            ng-click="addComment()"
+                            ng-disabled="!commentForm.$valid || isSavingComment">
+                        Comment
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</script>

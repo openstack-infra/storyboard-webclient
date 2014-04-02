@@ -18,7 +18,7 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($log, $scope, $state, $stateParams, $modal, Story) {
+    function ($log, $scope, $state, $stateParams, $modal, Story, Session) {
         'use strict';
 
         // Parse the ID
@@ -46,13 +46,34 @@ angular.module('sb.story').controller('StoryDetailController',
         }
 
         /**
-         * The story we're manipulating right now.
+         * Load the story
          */
-        $scope.story = Story.get(
-            {'id': id},
-            handleServiceSuccess,
-            handleServiceError
-        );
+        function loadStory() {
+            Story.get(
+                {'id': id},
+                function (story) {
+                    $scope.story = story;
+                    handleServiceSuccess();
+                },
+                handleServiceError
+            );
+        }
+
+        /**
+         * Toggle/display the edit form
+         */
+        $scope.toggleEditMode = function () {
+            if (Session.isLoggedIn()) {
+                $scope.showEditForm = !$scope.showEditForm;
+            } else {
+                $scope.showEditForm = false;
+            }
+        };
+
+        /**
+         * UI Flag for when we're in edit mode.
+         */
+        $scope.showEditForm = false;
 
         /**
          * UI flag for when we're initially loading the view.
@@ -84,14 +105,27 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.error = {};
 
             // Invoke the save method and wait for results.
-            $scope.story.$update(handleServiceSuccess, handleServiceError);
+            $scope.story.$update(
+                function () {
+                    $scope.showEditForm = false;
+                    handleServiceSuccess();
+                },
+                handleServiceError
+            );
+        };
+
+        /**
+         * Resets any changes and toggles the form back.
+         */
+        $scope.cancel = function () {
+            loadStory(); // Reload.
+            $scope.showEditForm = false;
         };
 
         /**
          * Delete method.
          */
         $scope.remove = function () {
-
             var modalInstance = $modal.open({
                 templateUrl: 'app/templates/story/delete.html',
                 controller: 'StoryDeleteController',
@@ -105,4 +139,9 @@ angular.module('sb.story').controller('StoryDetailController',
             // Return the modal's promise.
             return modalInstance.result;
         };
+
+        /**
+         * Initialize
+         */
+        loadStory();
     });
