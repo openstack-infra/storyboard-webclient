@@ -45,7 +45,7 @@
     <script src="js/storyboard.js"></script>
     <script src="js/templates.js"></script>
 </head>
-<body>
+<body ng-class="{'logged-in' : isLoggedIn}">
 <header class="navbar navbar-default navbar-fixed-top"
         ng-include src="'app/templates/header.html'">
 </header>
