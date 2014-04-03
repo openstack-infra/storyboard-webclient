@@ -9,15 +9,15 @@
     <ul class="dropdown-menu dropdown-menu-right">
         <li ng-class="{disabled: status == 'Todo'}">
             <a href=""
-               ng-click="setStatus('Todo')">Todo</a>
+               ng-click="setStatus('Todo', $event)">Todo</a>
         </li>
         <li ng-class="{disabled: status == 'In review'}">
             <a href=""
-               ng-click="setStatus('In review')">In review</a>
+               ng-click="setStatus('In review', $event)">In review</a>
         </li>
         <li ng-class="{disabled: status == 'Landed'}">
             <a href=""
-               ng-click="setStatus('Landed')">Landed</a>
+               ng-click="setStatus('Landed', $event)">Landed</a>
         </li>
     </ul>
 </div>

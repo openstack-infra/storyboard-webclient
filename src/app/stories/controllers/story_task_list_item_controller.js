@@ -18,7 +18,7 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryTaskListItemController',
-    function ($scope, Project) {
+    function ($scope, $state, $modal, Project, Session, Task) {
         'use strict';
 
         var projectId = $scope.task.project_id || null;
@@ -38,5 +38,63 @@ angular.module('sb.story').controller('StoryTaskListItemController',
         $scope.updateStatus = function (status) {
             $scope.task.status = status;
             $scope.task.$update();
+        };
+
+        /**
+         * UI Toggle for when the edit form should be displayed.
+         */
+        $scope.showTaskEditForm = false;
+
+        /**
+         * Scope method to toggle said edit form.
+         */
+        $scope.toggleEditForm = function () {
+            if (Session.isLoggedIn()) {
+                $scope.showTaskEditForm = !$scope.showTaskEditForm;
+            } else {
+                $scope.showTaskEditForm = false;
+            }
+        };
+
+        /**
+         * Removes this task
+         */
+        $scope.removeTask = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/templates/story/delete_task.html',
+                controller: 'StoryTaskDeleteController',
+                resolve: {
+                    task: function () {
+                        return $scope.task;
+                    }
+                }
+            });
+
+            modalInstance.result.then(
+                function () {
+                    $scope.loadTasks();
+                }
+            );
+        };
+
+        /**
+         * Cancel the edit form
+         */
+        $scope.cancelTask = function () {
+            Task.read({id: $scope.task.id},
+                function (task) {
+                    $scope.task = task;
+                });
+            $scope.showTaskEditForm = false;
+        };
+
+        /**
+         * Removes this task
+         */
+        $scope.updateTask = function () {
+            $scope.task.$update(function () {
+                $scope.loadTasks(); // Reload
+                $scope.showTaskEditForm = false;
+            });
         };
     });

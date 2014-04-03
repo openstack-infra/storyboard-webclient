@@ -52,18 +52,25 @@ angular.module('sb.util').directive('taskStatusDropdown',
                 onChange: '&',
                 editable: '@'
             },
-            link: function ($scope) {
+            link: function ($scope, element) {
 
                 // Initialize the style.
                 $scope.style = setStyle($scope.status);
 
                 // Make sure our scope can set its own status
-                $scope.setStatus = function (newStatus) {
+                $scope.setStatus = function (newStatus, $event) {
                     if (newStatus !== $scope.status) {
                         $scope.style = setStyle(newStatus);
                         $scope.status = newStatus;
                         $scope.onChange({status: newStatus});
                     }
+
+                    // We have to manually stop propagation so the control
+                    // doesn't leak its events to other parts of the app.
+                    $event.stopPropagation();
+
+                    // This also forces us to close the dropdown manually.
+                    element.find('.dropdown').dropdown('toggle');
                 };
             }
         };

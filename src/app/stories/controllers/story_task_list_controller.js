@@ -66,7 +66,7 @@ angular.module('sb.story').controller('StoryTaskListController',
         /**
          * Loads the tasks for this story
          */
-        function loadTasks() {
+        $scope.loadTasks = function() {
             $scope.tasks = [];
 
             Task.query(
@@ -81,18 +81,18 @@ angular.module('sb.story').controller('StoryTaskListController',
                     $scope.isUpdating = false;
                 }
             );
-        }
+        };
 
         /**
          * Adds a task.
          */
         $scope.addTask = function () {
             $scope.newTask.$save(function () {
-                loadTasks();
+                $scope.loadTasks();
                 $scope.newTask = new Task({story_id: id});
             });
         };
 
         // Initialize our view
-        loadTasks();
+        $scope.loadTasks();
     });
