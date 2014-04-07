@@ -3,21 +3,34 @@
 </span>
 <div class="dropdown" ng-show="editable">
     <a class="btn btn-{{style}} btn-xs dropdown-toggle" data-toggle="dropdown">
-        {{status}}
+        {{status | taskStatusLabel}}
         <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-right">
-        <li ng-class="{disabled: status == 'Todo'}">
-            <a href=""
-               ng-click="setStatus('Todo', $event)">Todo</a>
+        <li ng-class="{disabled: status == 'invalid'}">
+            <a href="" ng-click="setStatus('invalid', $event)">
+                {{'invalid' | taskStatusLabel}}
+            </a>
         </li>
-        <li ng-class="{disabled: status == 'In review'}">
-            <a href=""
-               ng-click="setStatus('In review', $event)">In review</a>
+        <li ng-class="{disabled: status == 'todo'}">
+            <a href="" ng-click="setStatus('todo', $event)">
+                {{'todo' | taskStatusLabel}}
+            </a>
         </li>
-        <li ng-class="{disabled: status == 'Landed'}">
-            <a href=""
-               ng-click="setStatus('Landed', $event)">Landed</a>
+        <li ng-class="{disabled: status == 'inprogress'}">
+            <a href="" ng-click="setStatus('inprogress', $event)">
+                {{'inprogress' | taskStatusLabel}}
+            </a>
+        </li>
+        <li ng-class="{disabled: status == 'review'}">
+            <a href="" ng-click="setStatus('review', $event)">
+                {{'review' | taskStatusLabel}}
+            </a>
+        </li>
+        <li ng-class="{disabled: status == 'merged'}">
+            <a href="" ng-click="setStatus('merged', $event)">
+                {{'merged' | taskStatusLabel}}
+            </a>
         </li>
     </ul>
 </div>

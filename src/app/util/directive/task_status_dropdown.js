@@ -33,11 +33,15 @@ angular.module('sb.util').directive('taskStatusDropdown',
          */
         function setStyle(status) {
             switch (status) {
-                case 'Landed':
+                case 'invalid':
+                    return 'default';
+                case 'merged':
                     return 'success';
-                case 'In review':
+                case 'inprogress':
                     return 'info';
-                case 'Todo':
+                case 'review':
+                    return 'warning';
+                case 'todo':
                     return 'default';
                 default:
                     return 'default';
