@@ -91,7 +91,7 @@
                                ng-show="expandRow"></i>
                             <i class="fa fa-caret-right"
                                ng-hide="expandRow"></i>
-                            {{story.status}}
+                            {{story.status | capitalize}}
                         </p>
                         <table ng-show="expandRow"
                                class="table table-clean table-supercondensed">
