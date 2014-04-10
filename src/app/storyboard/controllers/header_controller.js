@@ -18,8 +18,8 @@
  * Controller for our application header.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($scope, $rootScope, NewStoryService, Session, SessionState,
-              CurrentUser) {
+    function ($scope, $rootScope, $state, NewStoryService, Session,
+              SessionState, CurrentUser) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -44,7 +44,12 @@ angular.module('storyboard').controller('HeaderController',
          * Create a new story.
          */
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal();
+            NewStoryService.showNewStoryModal()
+                .then(function (story) {
+                    // On success, go to the story detail.
+                    $state.go('story.detail', {storyId: story.id});
+                }
+            );
         };
 
         /**
