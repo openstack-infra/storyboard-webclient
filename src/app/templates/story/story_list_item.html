@@ -1,0 +1,90 @@
+<td style="white-space: nowrap">
+    <a href=""
+       ng-click="expandRow = !expandRow">
+        <i class="fa fa-caret-down"
+           ng-show="expandRow"></i>
+        <i class="fa fa-caret-right"
+           ng-hide="expandRow"></i>
+    </a>&nbsp;
+    <strong>
+        <a href="#!/story/{{story.id}}">
+            {{story.id}}
+        </a>
+    </strong>
+</td>
+<td>
+    <p>
+        <strong>
+            <a href="#!/story/{{story.id}}">
+                {{story.title}}
+            </a>
+        </strong>
+        <br/>
+        <small class="text-muted" ng-show="expandRow">
+            {{story.description}}
+        </small>
+    </p>
+</td>
+<td class="text-right">
+    <p class="label {{statusLabelStyle}}"
+       ng-click="expandRow = !expandRow">
+        <i class="fa fa-caret-down"
+           ng-show="expandRow"></i>
+        <i class="fa fa-caret-right"
+           ng-hide="expandRow"></i>
+        {{story.status | capitalize}}
+    </p>
+    <table ng-show="expandRow"
+           class="table table-clean table-supercondensed">
+        <tr>
+            <th>
+                <small>Todo:</small>
+            </th>
+            <td>
+                <strong>
+                    <small>{{story.todo || 0}}</small>
+                </strong>
+            </td>
+        </tr>
+        <tr class="text-info">
+            <th>
+                <small>Progress:</small>
+            </th>
+            <td>
+                <strong>
+                    <small>{{story.inprogress || 0}}</small>
+                </strong>
+            </td>
+        </tr>
+        <tr class="text-warning">
+            <th>
+                <small>Review:</small>
+            </th>
+            <td>
+                <strong>
+                    <small>{{story.review || 0}}</small>
+                </strong>
+            </td>
+        </tr>
+        <tr class="text-success">
+            <th>
+                <small>Merged:</small>
+            </th>
+            <td>
+                <strong>
+                    <small>{{story.merged || 0}}</small>
+                </strong>
+            </td>
+        </tr>
+        <tr class="text-muted">
+            <th>
+                <small>Invalid:</small>
+            </th>
+            <td>
+                <strong>
+                    <small>{{story.invalid || 0}}</small>
+                </strong>
+            </td>
+        </tr>
+    </table>
+</td>
