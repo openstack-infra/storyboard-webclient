@@ -18,10 +18,15 @@
  * Controller for our home(index) page, currently just a placeholder.
  */
 angular.module('storyboard').controller('HomeController',
-    function ($scope, $modal, NewStoryService) {
+    function ($scope, $state, $modal, NewStoryService) {
         'use strict';
 
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal();
+            NewStoryService.showNewStoryModal()
+                .then(function (story) {
+                    // On success, go to the story detail.
+                    $state.go('story.detail', {storyId: story.id});
+                }
+            );
         };
     });

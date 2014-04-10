@@ -72,7 +72,12 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         };
 
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal(id);
+            NewStoryService.showNewStoryModal(id)
+                .then(function () {
+                    // On success, refresh the page.
+                    $scope.search();
+                }
+            );
         };
 
         // Initialize the view with a default search.
