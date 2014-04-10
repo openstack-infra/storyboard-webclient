@@ -18,7 +18,7 @@
  * Controller for the "new story" modal popup.
  */
 angular.module('sb.story').controller('StoryModalController',
-    function ($scope, $modalInstance, params, Project, Story, Task) {
+    function ($scope, $modalInstance, $state, params, Project, Story, Task) {
         'use strict';
 
         $scope.projects = Project.query({});
@@ -66,10 +66,11 @@ angular.module('sb.story').controller('StoryModalController',
                     task.$create(function () {
                         resolvingTasks--;
                         if (resolvingTasks === 0) {
-                            $modalInstance.dismiss('success');
+                            $modalInstance.close('success');
                         }
                     });
                 });
+                $state.go('story.detail', {storyId: story.id});
             });
         };
 
