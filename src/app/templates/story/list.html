@@ -57,23 +57,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="story in stories">
-                    <td>
-                        <p><strong>
-                            <a href="#!/story/{{story.id}}">{{story.id}}</a>
-                        </strong></p>
-                    </td>
-                    <td>
-                        <p><strong>
-                            <a href="#!/story/{{story.id}}">{{story.title}}</a>
-                        </strong></p>
-                        <small class="text-muted honor-carriage-return"
-                                >{{story.description}}  </small>
-                    </td>
+                <tr ng-repeat="story in stories"
+                    ng-controller="StoryListItemController"
+                    ng-include="'app/templates/story/story_list_item.html'">
                 </tr>
                 </tbody>
             </table>
-
         </div>
 
     </div>
