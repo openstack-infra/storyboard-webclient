@@ -52,8 +52,8 @@
         </em>
     </h1>
     <p ng-click="toggleEditMode()" class="editable">
-        <span ng-show="story.description">
-            {{story.description}}
+        <span ng-show="story.description"
+              class="honor-carriage-return">{{story.description}}
         </span>
         <em ng-hide="story.description" class="text-muted">
             No description provided
