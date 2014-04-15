@@ -56,6 +56,7 @@
                             <td class="col-xs-3">
                                 <select ng-model="task.project_id"
                                         class="form-control"
+                                        chosen
                                         required
                                         placeholder="Project"
                                         ng-options="p.id as p.name for p in projects"/>
