@@ -42,6 +42,7 @@ module.exports = function (grunt) {
 
     var dir = {
         source: './src',
+        theme: './src/theme',
         test: './test',
         output: './dist',
         report: './reports',
@@ -138,17 +139,22 @@ module.exports = function (grunt) {
          */
         less: {
             options: {
-                paths: [
-                    dir.bower + '/bootstrap/less',
-                    dir.bower + '/font-awesome/less/'
-                ],
+                paths: function(mainPath) {
+                    return [
+                        mainPath,
+                        dir.theme + '/custom/',
+                        dir.theme + '/storyboard/',
+                        dir.bower + '/bootstrap/less/',
+                        dir.bower + '/font-awesome/less/'
+                    ];
+                },
                 cleancss: true,
                 strictMath: true,
                 strictUnits: true
             },
             theme: {
                 files: {
-                    'dist/styles/main.css': dir.source + '/styles/main.less'
+                    'dist/styles/main.css': dir.theme + '/main.less'
                 }
             }
         },
@@ -371,7 +377,7 @@ module.exports = function (grunt) {
             },
             less: {
                 files: [
-                    dir.source + '/styles/**/*.less'
+                    dir.theme + '/**/*.less'
                 ],
                 tasks: ['less:theme']
             },
