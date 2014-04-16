@@ -42,6 +42,15 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
         $scope.searchQuery = '';
         $scope.isSearching = false;
+        $scope.filter = 'active';
+
+        /**
+         * Set the filter and refresh the search.
+         */
+        $scope.setFilter = function (state) {
+            $scope.filter = state;
+            $scope.search();
+        };
 
         /**
          * The search method.
@@ -53,7 +62,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
             // Execute the story query.
             Story.query(
-                {project_id: id},
+                {project_id: id, status: $scope.filter || null},
                 function (result, headers) {
 
                     // Successful search results, apply the results to the
