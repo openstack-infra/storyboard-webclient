@@ -40,6 +40,15 @@ angular.module('sb.story').controller('StoryListController',
 
         $scope.searchQuery = '';
         $scope.isSearching = false;
+        $scope.filter = 'active';
+
+        /**
+         * Set the filter and refresh the search.
+         */
+        $scope.setFilter = function (state) {
+            $scope.filter = state;
+            $scope.search();
+        };
 
         /**
          * The search method.
@@ -52,7 +61,7 @@ angular.module('sb.story').controller('StoryListController',
             // Execute the story query.
             Story.query(
                 // Enable this once the API accepts search queries.
-                {},
+                {status: $scope.filter || null},
                 function (result, headers) {
 
                     // Successful search results, apply the results to the

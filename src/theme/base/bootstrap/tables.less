@@ -35,3 +35,13 @@ table.table.table-clean {
         }
     }
 }
+
+// Any striped table immediately following a tab list should not have a top
+// border.
+.nav-tabs + .table-striped {
+    tr:first-child {
+        td {
+            border-top: none;
+        }
+    }
+}
