@@ -31,6 +31,31 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
+
+            <ul class="nav nav-tabs">
+                <li ng-class="{'active': filter == 'active'}">
+                    <a href=""
+                       ng-click="setFilter('active')">Active</a>
+                </li>
+                <li ng-class="{'active': filter == 'merged'}">
+                    <a href=""
+                       ng-click="setFilter('merged')">Merged</a>
+                </li>
+                <li ng-class="{'active': filter == 'invalid'}">
+                    <a href=""
+                       ng-click="setFilter('invalid')">Invalid</a>
+                </li>
+            </ul>
+            <table class="table table-striped"
+                   ng-hide="isSearching || stories.length == 0">
+                <tbody>
+                <tr ng-repeat="story in stories"
+                    ng-controller="StoryListItemController"
+                    ng-include="'app/templates/story/story_list_item.html'">
+                </tr>
+                </tbody>
+            </table>
+
             <div ng-show="isSearching">
                 <hr/>
                 <p class="text-center">
@@ -43,23 +68,6 @@
                 <em> We were unable to find any stories.
                     Perhaps you would like to create one?</em>
             </p>
-
-            <table class="table table-striped"
-                   ng-hide="isSearching || stories.length == 0">
-                <thead>
-                <tr>
-                    <th colspan="3">
-                        &nbsp;
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="story in stories"
-                    ng-controller="StoryListItemController"
-                    ng-include="'app/templates/story/story_list_item.html'">
-                </tr>
-                </tbody>
-            </table>
         </div>
 
     </div>
