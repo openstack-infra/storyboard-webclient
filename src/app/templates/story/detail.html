@@ -185,27 +185,16 @@
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/discussion.html">
     <div ng-controller="StoryDiscussionController">
-        <h4>Discussion</h4>
+        <h4>Events timeline</h4>
 
         <div class="discussion">
             <div class="alert alert-warning"
                  ng-show="comments.length == 0">
                 The discussion hasn't started yet
             </div>
-            <div ng-repeat="comment in comments"
-                 ng-controller="StoryDiscussionItemController"
-                 class="discussion-comment">
-                <p class="discussion-comment-author">
-                    {{author.full_name}}
-                </p>
-
-                <p ng-show="comment.content"
-                   class="honor-carriage-return">{{comment.content}}</p>
-
-                <p><em ng-hide="comment.content"
-                       class="text-muted">
-                    The author left a blank comment.
-                </em></p>
+            <div ng-repeat="event in events"
+                 ng-controller="StoryDiscussionItemController">
+                <timeline-event tl_event={{event}}/>
             </div>
 
             <form class="discussion-comment-form comment"

@@ -15,19 +15,19 @@
  */
 
 /**
- * Controller used for the comments section on the story detail page.
+ * The angular resource abstraction that allows us to access discussions that
+ * are surrounding stories.
+ *
+ * @see storyboardApiSignature
  */
-angular.module('sb.story').controller('StoryDiscussionItemController',
-    function ($scope, $log, User) {
+angular.module('sb.services').factory('TimelineEvent',
+    function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
-        $scope.author = User.get({
-            id: $scope.event.author_id
-        });
-
-        try {
-            $scope.event_info = JSON.parse($scope.event.event_info);
-        } catch (error) {
-            $log.warn(error);
-        }
+        return $resource(storyboardApiBase + '/stories/:story_id/events/:id',
+            {
+                id: '@id',
+                story_id: '@story_id'
+            },
+            storyboardApiSignature);
     });
