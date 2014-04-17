@@ -200,17 +200,17 @@
                  ng-show="comments.length == 0">
                 The discussion hasn't started yet
             </div>
-            <div ng-repeat="comment in comments"
+            <div ng-repeat="event in events"
                  ng-controller="StoryDiscussionItemController"
                  class="discussion-comment">
                 <p class="discussion-comment-author">
                     {{author.full_name}}
                 </p>
 
-                <p ng-show="comment.content"
-                   class="honor-carriage-return">{{comment.content}}</p>
+                <p ng-show="event.comment.content"
+                   class="honor-carriage-return">{{event.comment.content}}</p>
 
-                <p><em ng-hide="comment.content"
+                <p><em ng-hide="event.comment.content"
                        class="text-muted">
                     The author left a blank comment.
                 </em></p>
