@@ -18,7 +18,8 @@
  * Controller used for the comments section on the story detail page.
  */
 angular.module('sb.story').controller('StoryDiscussionController',
-    function ($log, $scope, $state, $stateParams, Project, Comment) {
+    function ($log, $scope, $state, $stateParams, Project, Comment,
+              TimelineEvent) {
         'use strict';
 
         // Parse the ID
@@ -29,7 +30,7 @@ angular.module('sb.story').controller('StoryDiscussionController',
         /**
          * The story we're manipulating right now.
          */
-        $scope.comments = Comment.query({story_id: id});
+        $scope.events = TimelineEvent.query({story_id: id});
 
         /**
          * The new comment backing the input form.
@@ -77,8 +78,8 @@ angular.module('sb.story').controller('StoryDiscussionController',
             // Author ID will be automatically attached by the service, so
             // don't inject it into the conversation until it comes back.
             $scope.newComment.$create(
-                function (comment) {
-                    $scope.comments.push(comment);
+                function (event) {
+                    $scope.events.push(event);
                     $scope.newComment = new Comment({story_id: id});
                     resetSavingFlag();
                 },

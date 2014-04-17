@@ -1,0 +1,34 @@
+<div ng-switch="event_type">
+    <div ng-switch-when="story_created">
+        <div ng-include src="'app/templates/story/comments/story_created.html'"></div>
+    </div>
+    <div ng-switch-when="story_details_updated">
+        <div ng-include src="'app/templates/story/comments/story_details_updated.html'"></div>
+    </div>
+    <div ng-switch-when="task_assignee_changed">
+        <div ng-include src="'app/templates/story/comments/task_assignee_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_created">
+        <div ng-include src="'app/templates/story/comments/task_created.html'"></div>
+    </div>
+    <div ng-switch-when="task_deleted">
+        <div ng-include src="'app/templates/story/comments/task_deleted.html'"></div>
+    </div>
+    <div ng-switch-when="task_details_changed">
+        <div ng-include src="'app/templates/story/comments/task_details_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_status_changed">
+        <div ng-include src="'app/templates/story/comments/task_status_changed.html'"></div>
+    </div>
+    <div ng-switch-when="user_comment">
+        <div ng-include src="'app/templates/story/comments/user_comment.html'"></div>
+    </div>
+    <div ng-switch-default>
+        <div class="discussion-comment">
+            <p class="discussion-comment-author">
+                Event of unknown type has occurred.
+            </p>
+        </div>
+    </div>
+
+</div>
