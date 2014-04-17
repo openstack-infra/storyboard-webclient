@@ -6,10 +6,21 @@
 @white: #FFFFFF;
 @black: #000000;
 
+// Sizes for the left navbar at different container sizes.
+@navbar-fixed-left-width-xs: 50px;
+@navbar-fixed-left-width-sm: 150px;
+@navbar-fixed-left-width-md: 150px;
+@navbar-fixed-left-width-lg: 200px;
+
 // ============================== Bootstrap Overrides ==========================
 // Brand colors
 // -------------------------
 @brand-primary: #C43422;
+
+// == Container sizes
+@container-tablet:             ((720px + @grid-gutter-width - @navbar-fixed-left-width-sm));
+@container-desktop:            ((940px + @grid-gutter-width - @navbar-fixed-left-width-md));
+@container-large-desktop:      ((1140px + @grid-gutter-width - @navbar-fixed-left-width-lg));
 
 // Typography
 // -------------------------
