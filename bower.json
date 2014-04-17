@@ -7,7 +7,7 @@
         "angular": "1.2.13",
         "angular-resource": "1.2.13",
         "angular-sanitize": "1.2.13",
-        "bootstrap": "3.1.0",
+        "bootstrap": "3.1.1",
         "angular-ui-router": "0.2.8-bowratic-tedium",
         "angular-bootstrap": "0.10.0",
         "angular-local-storage": "0.0.1"
