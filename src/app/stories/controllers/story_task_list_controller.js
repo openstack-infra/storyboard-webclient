@@ -45,11 +45,6 @@ angular.module('sb.story').controller('StoryTaskListController',
         $scope.newTask = new Task({ story_id: id });
 
         /**
-         * Projects for the new task form
-         */
-        $scope.projects = Project.query();
-
-        /**
          * UI flag for when we're initially loading the view.
          *
          * @type {boolean}
@@ -87,8 +82,8 @@ angular.module('sb.story').controller('StoryTaskListController',
          * Adds a task.
          */
         $scope.addTask = function () {
-            $scope.newTask.$save(function () {
-                $scope.loadTasks();
+            $scope.newTask.$save(function (savedTask) {
+                $scope.tasks.push(savedTask);
                 $scope.newTask = new Task({story_id: id});
             });
         };
