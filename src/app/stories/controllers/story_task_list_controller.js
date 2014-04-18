@@ -18,7 +18,7 @@
  * Controller that provides methods that allow editing of a story.
  */
 angular.module('sb.story').controller('StoryTaskListController',
-    function ($log, $scope, $state, $stateParams, Task, Project) {
+    function ($log, $scope, $state, $stateParams, Task) {
         'use strict';
 
         // Parse the ID
@@ -43,11 +43,6 @@ angular.module('sb.story').controller('StoryTaskListController',
          * The new task for the task form.
          */
         $scope.newTask = new Task({ story_id: id });
-
-        /**
-         * Projects for the new task form
-         */
-        $scope.projects = Project.query();
 
         /**
          * UI flag for when we're initially loading the view.
@@ -87,8 +82,8 @@ angular.module('sb.story').controller('StoryTaskListController',
          * Adds a task.
          */
         $scope.addTask = function () {
-            $scope.newTask.$save(function () {
-                $scope.loadTasks();
+            $scope.newTask.$save(function (savedTask) {
+                $scope.tasks.push(savedTask);
                 $scope.newTask = new Task({story_id: id});
             });
         };

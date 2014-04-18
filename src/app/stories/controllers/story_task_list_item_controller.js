@@ -18,10 +18,11 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryTaskListItemController',
-    function ($scope, $state, $modal, Project, Session, Task) {
+    function ($scope, $state, $modal, Project, Session, Task, User) {
         'use strict';
 
         var projectId = $scope.task.project_id || null;
+        var assigneeId = $scope.task.assignee_id || null;
 
         if (!!projectId) {
             Project.get({id: projectId},
@@ -31,6 +32,16 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                     $scope.project = null;
                 });
         }
+
+        if (!!assigneeId) {
+            User.get({id: assigneeId},
+                function (assignee) {
+                    $scope.assignee = assignee;
+                }, function () {
+                    $scope.assignee = null;
+                });
+        }
+
 
         /**
          * Updates this task's status
@@ -89,7 +100,7 @@ angular.module('sb.story').controller('StoryTaskListItemController',
         };
 
         /**
-         * Removes this task
+         * Updates the task list.
          */
         $scope.updateTask = function () {
             $scope.task.$update(function () {
