@@ -53,6 +53,6 @@
         "grunt-protractor-runner": "0.2.3",
         "selenium-standalone": "2.39.0-2.7.0",
         "karma-html-reporter": "0.1.1",
-        "grunt-connect-proxy": "0.1.8"
+        "grunt-connect-proxy": "0.1.10"
     }
 }
