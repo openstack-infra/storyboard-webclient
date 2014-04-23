@@ -1,0 +1,10 @@
+Verified+2: Jenkins
+Approved+1: Thierry Carrez <thierry@openstack.org>
+Code-Review+2: Thierry Carrez <thierry@openstack.org>
+Code-Review+2: Sergey Lukjanov <slukjanov@mirantis.com>
+Code-Review+1: Nikita Konovalov <nkonovalov@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Wed, 23 Apr 2014 15:27:45 +0000
+Reviewed-on: https://review.openstack.org/86571
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
