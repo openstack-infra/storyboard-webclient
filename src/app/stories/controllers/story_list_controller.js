@@ -18,11 +18,16 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryListController',
-    function ($scope, $modal, NewStoryService, Story) {
+    function ($scope, $modal, $state, NewStoryService, Story) {
         'use strict';
 
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal();
+            NewStoryService.showNewStoryModal()
+                .then(function (story) {
+                    // On success, go to the story detail.
+                    $state.go('story.detail', {storyId: story.id});
+                }
+            );
         };
 
 

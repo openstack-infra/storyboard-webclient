@@ -66,7 +66,7 @@ angular.module('sb.story').controller('StoryModalController',
                     task.$create(function () {
                         resolvingTasks--;
                         if (resolvingTasks === 0) {
-                            $modalInstance.dismiss('success');
+                            $modalInstance.close(story);
                         }
                     });
                 });
