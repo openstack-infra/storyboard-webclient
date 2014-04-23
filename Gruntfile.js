@@ -657,8 +657,8 @@ module.exports = function (grunt) {
         'concat',
         'karma:unit',
         'karma:integration',
-        'package'
-//        'connect:test',
-//        'protractor'
+        'package',
+        'connect:test',
+        'protractor'
     ]);
 };
