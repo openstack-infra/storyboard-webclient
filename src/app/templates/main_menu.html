@@ -50,7 +50,14 @@
     <ul class="nav nav-pilltabs nav-stacked">
         <li active-path="^\/profile\/preferences*">
             <a href="#!/profile/preferences" ng-show="isLoggedIn">
-                <span class="hidden-xs">{{currentUser.full_name}}</span>
+                <span class="hidden-xs"
+                      ng-show="currentUser.$resolved">
+                    {{currentUser.full_name}}
+                </span>
+                <em class="hidden-xs text-muted"
+                      ng-hide="currentUser.$resolved">
+                    Loading...
+                </em>
                 <i class="fa fa-user visible-xs"></i>
             </a>
         </li>
