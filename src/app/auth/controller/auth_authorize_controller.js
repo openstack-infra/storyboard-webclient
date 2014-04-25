@@ -22,7 +22,8 @@
  */
 
 angular.module('sb.auth').controller('AuthAuthorizeController',
-    function ($stateParams, $state, $log, OpenId) {
+    function ($stateParams, $state, $log, OpenId, $window, LastLocation,
+              localStorageService) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code
@@ -34,6 +35,9 @@ angular.module('sb.auth').controller('AuthAuthorizeController',
             $state.go('auth.error', $stateParams);
             return;
         }
+
+        // Store the last path...
+        localStorageService.set('lastPath', LastLocation.get());
 
         // We're not an error, let's fire the authorization.
         OpenId.authorize();
