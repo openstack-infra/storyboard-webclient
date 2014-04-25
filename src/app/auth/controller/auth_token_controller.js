@@ -22,7 +22,8 @@
  */
 
 angular.module('sb.auth').controller('AuthTokenController',
-    function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil) {
+    function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil,
+              localStorageService) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code
@@ -42,7 +43,12 @@ angular.module('sb.auth').controller('AuthTokenController',
             function (token) {
                 Session.updateSession(token)
                     .then(function () {
-                        $window.location.href = UrlUtil.buildApplicationUrl('');
+                        var lastPath = localStorageService.get('lastPath');
+                        if (lastPath === null) {
+                            lastPath = '';
+                        }
+                        $window.location.href =
+                            UrlUtil.buildApplicationUrl(lastPath);
                     });
             },
             function (error) {

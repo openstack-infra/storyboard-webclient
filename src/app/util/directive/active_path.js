@@ -22,7 +22,7 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.util').directive('activePath',
-    function ($location, $rootScope) {
+    function ($location, $rootScope, localStorageService) {
         'use strict';
 
         return {
@@ -31,6 +31,9 @@ angular.module('sb.util').directive('activePath',
 
                 function setActivePath() {
                     var path = $location.path();
+                    if (path.indexOf('/auth') !== 0) {
+                        localStorageService.set('lastPath', path);
+                    }
                     var isMatchedPath = path.match(activePath) !== null;
 
                     element.toggleClass('active', isMatchedPath);
