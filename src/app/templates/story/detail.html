@@ -35,16 +35,43 @@
 
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/story_detail.html">
-    <h1 ng-click="toggleEditMode()" class="editable">
+    <h1>
+
         <span ng-show="story.title">
             {{story.title}}
         </span>
         <em ng-hide="story.title" class="text-muted">
             No title
         </em>
+        <small ng-show="isLoggedIn">
+            <a href="" ng-click="toggleEditMode()" >
+                <i class="fa fa-pencil"></i>
+            </a>
+        </small>
     </h1>
-    <div ng-include src="'/inline/metadata.html'"></div>
-    <p ng-click="toggleEditMode()" class="editable">
+    <p><strong>Author:</strong>
+        <em ng-show="!story.creator_id" class="text-muted">
+            None
+        </em>
+        <span ng-show="story.creator_id && !creator.$resolved">
+            <i class="fa fa-refresh fa-spin"></i>
+        </span>
+        <span ng-show="creator.full_name">
+            {{creator.full_name}}
+        </span>
+        <br/>
+        <strong>Last updated:</strong>
+        <span ng-show="story.updated_at">
+            {{story.updated_at | date: 'longDate'}}
+        </span>
+        <span ng-show="!story.updated_at && story.created_at">
+            {{story.created_at | date: 'longDate'}}
+        </span>
+        <em ng-hide="story.updated_at || story.created_at" class="text-muted">
+            Never
+        </em>
+    </p>
+    <p>
         <span ng-show="story.description"
               class="honor-carriage-return">{{story.description}}
         </span>
@@ -109,46 +136,46 @@
     <table class="table table-striped"
            ng-controller="StoryTaskListController">
         <thead>
-            <tr>
-                <td colspan="3"><strong>Tasks</strong></td>
-                <td colspan="3" class="text-right">
-                    <small>
-                        <a href=""
-                           ng-click="showAddTaskForm = !showAddTaskForm"
-                           ng-show="isLoggedIn">
-                            <i class="fa fa-plus"></i>
-                            Add task
-                        </a>
-                    </small>
-                </td>
-            </tr>
+        <tr>
+            <td colspan="3"><strong>Tasks</strong></td>
+            <td colspan="3" class="text-right">
+                <small>
+                    <a href=""
+                       ng-click="showAddTaskForm = !showAddTaskForm"
+                       ng-show="isLoggedIn">
+                        <i class="fa fa-plus"></i>
+                        Add task
+                    </a>
+                </small>
+            </td>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="task in tasks"
-                ng-include
-                src="'/inline/task_list_item.html'"
-                ng-controller="StoryTaskListItemController">
-            </tr>
-            <tr ng-show="tasks.length == 0 && !showAddTaskForm">
-                <td colspan="6">
-                    <p class="text-muted text-center">
-                        <em>This story has no tasks.</em>
-                    </p>
-                </td>
-            </tr>
+        <tr ng-repeat="task in tasks"
+            ng-include
+            src="'/inline/task_list_item.html'"
+            ng-controller="StoryTaskListItemController">
+        </tr>
+        <tr ng-show="tasks.length == 0 && !showAddTaskForm">
+            <td colspan="6">
+                <p class="text-muted text-center">
+                    <em>This story has no tasks.</em>
+                </p>
+            </td>
+        </tr>
         </tbody>
         <tfoot ng-show="showAddTaskForm">
-            <tr>
-                <td></td>
-                <td colspan="3">
-                    <task-edit-form
+        <tr>
+            <td></td>
+            <td colspan="3">
+                <task-edit-form
                         task="newTask"
                         button-label="Add Task"
                         on-button-click="addTask()"
                         />
-                </td>
-                <td colspan="2"></td>
-            </tr>
+            </td>
+            <td colspan="2"></td>
+        </tr>
         </tfoot>
 
     </table>
@@ -335,26 +362,5 @@
 
 <!-- Template for story metadata -->
 <script type="text/ng-template" id="/inline/metadata.html">
-    <p><strong>Author:</strong>
-        <em ng-show="!story.creator_id" class="text-muted">
-            None
-        </em>
-        <span ng-show="story.creator_id && !creator.$resolved">
-            <i class="fa fa-refresh fa-spin"></i>
-        </span>
-        <span ng-show="creator.full_name">
-            {{creator.full_name}}
-        </span>
-        <br/>
-        <strong>Last updated:</strong>
-        <span ng-show="story.updated_at">
-            {{story.updated_at | date: 'longDate'}}
-        </span>
-        <span ng-show="!story.updated_at && story.created_at">
-            {{story.created_at | date: 'longDate'}}
-        </span>
-        <em ng-hide="story.updated_at || story.created_at" class="text-muted">
-            Never
-        </em>
-    </p>
+
 </script>
