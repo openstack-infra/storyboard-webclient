@@ -213,7 +213,7 @@ module.exports = function (grunt) {
                         cwd: dir.source,
                         dest: dir.output,
                         src: [
-                            '**/*.{ico,txt,eot,ttf,woff}',
+                            '**/*.{txt,eot,ttf,woff}',
                             '*.html',
                             'robots.txt'
                         ]
@@ -226,6 +226,14 @@ module.exports = function (grunt) {
                         src: [
                             'fonts/*.*'
                         ]
+                    },
+                    {
+                        src: dir.theme + '/storyboard/favicon.ico',
+                        dest: dir.output + '/favicon.ico'
+                    },
+                    {
+                        src: dir.theme + '/custom/favicon.ico',
+                        dest: dir.output + '/favicon.ico'
                     }
                 ]
             }
