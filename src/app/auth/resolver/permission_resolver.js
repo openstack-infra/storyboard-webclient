@@ -49,5 +49,28 @@ angular.module('sb.auth').constant('PermissionResolver',
                 return deferred.promise;
             };
 
+        },
+
+        /**
+         * Resolves the value of the provided permission.
+         */
+        resolvePermission: function (permName) {
+            'use strict';
+
+            return function ($q, $log, PermissionManager) {
+                var deferred = $q.defer();
+
+                PermissionManager.resolve(permName).then(
+                    function (value) {
+                        deferred.resolve(value);
+                    },
+                    function () {
+                        deferred.resolve(false);
+                    }
+                );
+
+                return deferred.promise;
+            };
+
         }
     });
