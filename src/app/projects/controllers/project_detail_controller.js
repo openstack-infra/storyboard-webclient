@@ -28,7 +28,8 @@
  * seconds. 3 is preferable.
  */
 angular.module('sb.projects').controller('ProjectDetailController',
-    function ($scope, $state, $stateParams, Project, Story) {
+    function ($scope, $state, $stateParams, Project, Story, Session,
+              isSuperuser) {
         'use strict';
 
         // Parse the ID
@@ -42,15 +43,6 @@ angular.module('sb.projects').controller('ProjectDetailController',
          * @type Project
          */
         $scope.project = {};
-
-        /**
-         * The count of stories for this project.
-         *
-         * TODO(krotscheck): Once we have proper paging requests working,
-         * this should become a count-only request, so we can delegate project
-         * story searches to the ProjectStoryListController.
-         */
-        $scope.projectStoryCount = 0;
 
         /**
          * UI flag for when we're initially loading the view.
@@ -84,39 +76,49 @@ angular.module('sb.projects').controller('ProjectDetailController',
             $scope.isUpdating = false;
         }
 
-
-        // Sanity check, do we actually have an ID? (zero is falsy)
-        if (!id && id !== 0) {
-            // We should never reach this, however that logic lives outside
-            // of this controller which could be unknowningly refactored.
-            $scope.error = {
-                error: true,
-                error_code: 404,
-                error_message: 'You did not provide a valid ID.'
-            };
+        /**
+         * Resets our loading flags.
+         */
+        function handleServiceSuccess() {
             $scope.isLoading = false;
-        } else {
-            // We've got an ID, so let's load it...
+            $scope.isUpdating = false;
+        }
+
+        /**
+         * Load the project
+         */
+        function loadProject() {
             Project.read(
                 {'id': id},
                 function (result) {
                     // We've got a result, assign it to the view and unset our
                     // loading flag.
                     $scope.project = result;
-                    $scope.isLoading = false;
-                },
-                handleServiceError
-            );
-            // Load the count of stories while we're at it...
-            Story.query({project_id: id},
-                function (result, headers) {
-                    // Only extract the total header...
-                    $scope.projectStoryCount =
-                        headers('X-List-Total') || result.length;
+
+                    handleServiceSuccess();
                 },
                 handleServiceError
             );
         }
+
+        /**
+         * Toggles the form back.
+         */
+        $scope.cancel = function () {
+            loadProject();
+            $scope.showEditForm = false;
+        };
+
+        /**
+         * Toggle/display the edit form
+         */
+        $scope.toggleEditMode = function () {
+            if (isSuperuser) {
+                $scope.showEditForm = !$scope.showEditForm;
+            } else {
+                $scope.showEditForm = false;
+            }
+        };
 
         /**
          * Scope method, invoke this when you want to update the project.
@@ -131,25 +133,12 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 function () {
                     // Unset our loading flag and navigate to the detail view.
                     $scope.isUpdating = false;
-                    $state.go('project.detail', {id: $scope.project.id});
+                    $scope.showEditForm = false;
+                    handleServiceSuccess();
                 },
                 handleServiceError
             );
         };
 
-        /**
-         * Delete method.
-         */
-        $scope.remove = function () {
-            // Set our progress flags and clear previous error conditions.
-            $scope.isUpdating = true;
-            $scope.error = {};
-
-            $scope.project.$delete(
-                function () {
-                    $state.go('project.list');
-                },
-                handleServiceError
-            );
-        };
+        loadProject();
     });
