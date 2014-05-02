@@ -18,11 +18,17 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryTaskListItemController',
-    function ($scope, $state, $modal, Project, Session, Task, User) {
+    function ($scope, $state, $modal, Project, Session, Task, User,
+              CurrentUser) {
         'use strict';
 
         var projectId = $scope.task.project_id || null;
-        var assigneeId = $scope.task.assignee_id || null;
+        var currentUser = null;
+
+        // Resolve the current user.
+        CurrentUser.resolve().then(function (user) {
+            currentUser = user;
+        });
 
         if (!!projectId) {
             Project.get({id: projectId},
@@ -33,22 +39,47 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                 });
         }
 
-        if (!!assigneeId) {
-            User.get({id: assigneeId},
-                function (assignee) {
-                    $scope.assignee = assignee;
-                }, function () {
-                    $scope.assignee = null;
-                });
-        }
-
+        /**
+         * Load the assignee.
+         */
+        $scope.loadAssignee = function () {
+            if (!!$scope.task.assignee_id) {
+                User.get({id: $scope.task.assignee_id},
+                    function (assignee) {
+                        $scope.assignee = assignee;
+                    }, function () {
+                        $scope.assignee = null;
+                    });
+            } else {
+                $scope.assignee = null;
+            }
+        };
 
         /**
          * Updates this task's status
          */
         $scope.updateStatus = function (status) {
             $scope.task.status = status;
+
+            switch (status) {
+                case 'inprogress':
+                case 'review':
+                    // If you're moving something into inprogress or review,
+                    // and it's _not_ assigned, it's assumed that you'll be
+                    // working on it. This is different from being reviewer.
+                    if (!$scope.task.assignee_id && !!currentUser) {
+                        $scope.task.assignee_id = currentUser.id;
+                    }
+                    break;
+                case 'merged':
+                case 'invalid':
+                    // merged and invalid tasks are automatically unassigned.
+                    $scope.task.assignee_id = null;
+                    break;
+            }
+
             $scope.task.$update();
+            $scope.loadAssignee();
         };
 
         /**
@@ -108,4 +139,7 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                 $scope.showTaskEditForm = false;
             });
         };
+
+        // UI Initialization.
+        $scope.loadAssignee();
     });
