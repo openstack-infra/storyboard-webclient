@@ -23,7 +23,7 @@
 
 angular.module('sb.auth').controller('AuthTokenController',
     function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil,
-              localStorageService, $location) {
+              LastLocation) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code
@@ -40,7 +40,7 @@ angular.module('sb.auth').controller('AuthTokenController',
         function buildNextPath() {
 
             // First, do we have a stored last location?
-            var location = localStorageService.get('lastPath') || '/';
+            var location = LastLocation.get();
 
             // Sanity check on the location, we don't want to bounce straight
             // back into auth.
@@ -58,7 +58,9 @@ angular.module('sb.auth').controller('AuthTokenController',
             function (token) {
                 Session.updateSession(token)
                     .then(function () {
-                        $location.path(buildNextPath());
+                        var nextPath = buildNextPath();
+                        $window.location.href =
+                            UrlUtil.buildApplicationUrl(nextPath);
                     });
             },
             function (error) {
