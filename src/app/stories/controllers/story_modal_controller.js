@@ -104,5 +104,29 @@ angular.module('sb.story').controller('StoryModalController',
             var idx = $scope.tasks.indexOf(task);
             $scope.tasks.splice(idx, 1);
         };
+
+        /**
+         * Project typeahead search method.
+         */
+        $scope.searchProjects = function (value) {
+            return Project.query({name: value, limit: 10}).$promise;
+        };
+
+        /**
+         * Formats the project name.
+         */
+        $scope.formatProjectName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Select a new project.
+         */
+        $scope.selectNewProject = function (model, task) {
+            task.project_id = model.id;
+        };
     })
 ;

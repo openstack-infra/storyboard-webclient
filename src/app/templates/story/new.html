@@ -48,17 +48,24 @@
                         <tr ng-repeat="(index, task) in tasks">
                             <td>
                                 <input type="text"
-                                       class="form-control"
+                                       class="form-control input-sm"
                                        ng-model="task.title"
                                        required
                                        placeholder="Task Title">
                             </td>
-                            <td class="col-xs-3">
-                                <select ng-model="task.project_id"
-                                        class="form-control"
-                                        required
-                                        placeholder="Project"
-                                        ng-options="p.id as p.name for p in projects"/>
+                            <td class="col-xs-4">
+                                <input id="project"
+                                       type="text"
+                                       placeholder="Select a Project"
+                                       required
+                                       ng-model="asyncProject"
+                                       typeahead-editable="false"
+                                       typeahead="project as project.name for project in searchProjects($viewValue)"
+                                       typeahead-loading="loadingProjects"
+                                       typeahead-input-formatter="formatProjectName($model)"
+                                       typeahead-on-select="selectNewProject($model, task)"
+                                       class="form-control input-sm"
+                                        />
                             </td>
                             <th class="col-xs-1"
                                 ng-show="tasks.length > 1">
