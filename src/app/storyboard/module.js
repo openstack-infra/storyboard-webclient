@@ -23,11 +23,10 @@
  * @author Michael Krotscheck
  */
 angular.module('storyboard',
-        [ 'sb.services', 'sb.templates', 'sb.pages', 'sb.projects', 'sb.auth',
-            'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap']
-    )
-    .config(function ($provide, $stateProvider, $urlRouterProvider,
-                      $locationProvider, $httpProvider) {
+    [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
+        'sb.auth', 'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap'])
+    .config(function ($provide, $urlRouterProvider, $locationProvider,
+                      $httpProvider) {
         'use strict';
 
         // Default URL hashbang route
@@ -35,14 +34,6 @@ angular.module('storyboard',
 
         // Override the hash prefix for Google's AJAX crawling.
         $locationProvider.hashPrefix('!');
-
-        // Set an initial home page.
-        $stateProvider
-            .state('index', {
-                url: '/',
-                templateUrl: 'app/templates/index.html',
-                controller: 'HomeController'
-            });
 
         // Attach common request headers out of courtesy to the API
         $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
