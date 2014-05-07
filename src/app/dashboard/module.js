@@ -19,7 +19,7 @@
  */
 angular.module('sb.dashboard',
     [ 'sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap'])
-    .config(function ($stateProvider) {
+    .config(function ($stateProvider, SessionResolver) {
         'use strict';
 
         // Set an initial home page.
@@ -27,6 +27,18 @@ angular.module('sb.dashboard',
             .state('index', {
                 url: '/',
                 templateUrl: 'app/templates/dashboard/index.html',
-                controller: 'HomeController'
+                controller: 'HomeController',
+                resolve: {
+                    sessionState: SessionResolver.resolveSessionState
+                }
+            })
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: 'app/templates/dashboard/dashboard.html',
+                controller: 'DashboardController',
+                resolve: {
+                    sessionState: SessionResolver.requireLoggedIn,
+                    currentUser: SessionResolver.requireCurrentUser
+                }
             });
     });

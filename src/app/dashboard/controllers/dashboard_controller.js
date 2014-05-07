@@ -15,14 +15,12 @@
  */
 
 /**
- * Controller for our home(index) page.
+ * A controller that manages our logged-in dashboard
  */
-angular.module('sb.dashboard').controller('HomeController',
-    function ($state, sessionState, SessionState) {
+angular.module('sb.dashboard').controller('DashboardController',
+    function ($scope, currentUser, Story) {
         'use strict';
 
-        // If we're logged in, go to the dashboard instead.
-        if (sessionState === SessionState.LOGGED_IN) {
-            $state.transitionTo('dashboard');
-        }
+        // Load the list of current assigned stories.
+        $scope.assignedStories = Story.query({assignee_id: currentUser.id});
     });
