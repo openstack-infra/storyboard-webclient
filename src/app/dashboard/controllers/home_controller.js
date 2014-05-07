@@ -18,15 +18,6 @@
  * Controller for our home(index) page, currently just a placeholder.
  */
 angular.module('sb.dashboard').controller('HomeController',
-    function ($scope, $state, $modal, NewStoryService) {
+    function () {
         'use strict';
-
-        $scope.newStory = function () {
-            NewStoryService.showNewStoryModal()
-                .then(function (story) {
-                    // On success, go to the story detail.
-                    $state.go('story.detail', {storyId: story.id});
-                }
-            );
-        };
     });
