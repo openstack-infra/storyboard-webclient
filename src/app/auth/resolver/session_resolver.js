@@ -40,6 +40,28 @@ angular.module('sb.auth').constant('SessionResolver',
 
         return {
             /**
+             * This resolver simply checks to see whether a user is logged
+             * in or not, and returns the session state.
+             */
+            resolveSessionState: function ($q, $log, Session, SessionState) {
+                var deferred = $q.defer();
+
+                $log.debug('Resolving session state...');
+                Session.resolveSessionState().then(
+                    function (sessionState) {
+                        $log.warn(sessionState);
+                        deferred.resolve(sessionState);
+                    },
+                    function (error) {
+                        $log.error(error);
+                        deferred.resolve(SessionState.LOGGED_OUT);
+                    }
+                );
+
+                return deferred.promise;
+            },
+
+            /**
              * This resolver asserts that the user is logged
              * out before allowing a route. Otherwise it fails.
              */
