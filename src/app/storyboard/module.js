@@ -24,9 +24,10 @@
  */
 angular.module('storyboard',
     [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
-        'sb.auth', 'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap'])
+        'sb.auth', 'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap',
+        'monospaced.elastic'])
     .config(function ($provide, $urlRouterProvider, $locationProvider,
-                      $httpProvider) {
+                      $httpProvider, msdElasticConfig) {
         'use strict';
 
         // Default URL hashbang route
@@ -38,6 +39,9 @@ angular.module('storyboard',
         // Attach common request headers out of courtesy to the API
         $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
 
+        // Globally set an additional amount of whitespace to the end of our
+        // textarea elastic resizing.
+        msdElasticConfig.append = '\n';
     })
     .run(function ($log, $rootScope, $state) {
         'use strict';

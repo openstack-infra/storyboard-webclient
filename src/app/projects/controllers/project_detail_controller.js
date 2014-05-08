@@ -28,8 +28,8 @@
  * seconds. 3 is preferable.
  */
 angular.module('sb.projects').controller('ProjectDetailController',
-    function ($scope, $state, $stateParams, Project, Story, Session,
-              isSuperuser) {
+    function ($scope, $rootScope, $state, $stateParams, Project, Story,
+              Session, isSuperuser) {
         'use strict';
 
         // Parse the ID
@@ -115,6 +115,13 @@ angular.module('sb.projects').controller('ProjectDetailController',
         $scope.toggleEditMode = function () {
             if (isSuperuser) {
                 $scope.showEditForm = !$scope.showEditForm;
+
+                // Deferred timeout request for a re-rendering of elastic
+                // text fields, since the size calculation breaks when
+                // visible: false
+                setTimeout(function () {
+                    $rootScope.$broadcast('elastic:adjust');
+                }, 1);
             } else {
                 $scope.showEditForm = false;
             }

@@ -18,7 +18,7 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($log, $scope, $state, $stateParams, $modal, Story,
+    function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
               Session, User) {
         'use strict';
 
@@ -72,6 +72,13 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.toggleEditMode = function () {
             if (Session.isLoggedIn()) {
                 $scope.showEditForm = !$scope.showEditForm;
+
+                // Deferred timeout request for a re-rendering of elastic
+                // text fields, since the size calculation breaks when
+                // visible: false
+                setTimeout(function () {
+                    $rootScope.$broadcast('elastic:adjust');
+                }, 1);
             } else {
                 $scope.showEditForm = false;
             }
