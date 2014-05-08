@@ -18,20 +18,23 @@
  * A service that keeps track of the last page we visited.
  */
 angular.module('sb.util')
-    .factory('LastLocation', function ($rootScope, $location) {
+    .factory('LastLocation', function ($rootScope, localStorageService) {
         'use strict';
 
         /**
          * The last detected length of the history
          */
-        var lastLocation = $location.path();
 
         // When the location changes, store the new one. Since the $location
         // object changes too quickly, we instead extract the hash manually.
-        function onLocationChange(event, toLocation, fromLocation) {
-            var url = new URL(fromLocation);
+        function onLocationChange(event, toLocation) {
+            var url = new URL(toLocation);
             var hash = url.hash || '#!/';
-            lastLocation = hash.slice(2);
+            var trimmed_hash = hash.slice(2);
+            if (trimmed_hash.indexOf('/auth') === -1) {
+                localStorageService.set('lastLocation', trimmed_hash);
+            }
+
         }
 
         // The published API.
@@ -41,7 +44,7 @@ angular.module('sb.util')
              * Get the recorded history path at the provided index.
              */
             get: function () {
-                return lastLocation;
+                return localStorageService.get('lastLocation');
             },
 
             /**

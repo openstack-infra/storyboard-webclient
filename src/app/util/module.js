@@ -14,4 +14,4 @@
  * under the License.
  */
 
-angular.module('sb.util', ['ui.router']);
+angular.module('sb.util', ['ui.router', 'LocalStorageModule']);
