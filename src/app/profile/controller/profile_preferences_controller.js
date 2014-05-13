@@ -23,9 +23,13 @@ angular.module('sb.profile').controller('ProfilePreferencesController',
         'use strict';
 
         $scope.pageSize = Preference.$get('page_size');
+        $scope.enabled_event_types = Preference.$get('display_events_filter');
 
         $scope.save = function () {
             Preference.$set('page_size', $scope.pageSize);
+            Preference.$set('display_events_filter',
+                            $scope.enabled_event_types);
+
             $scope.message = 'Preferences Saved!';
         };
     });
