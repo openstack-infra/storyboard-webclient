@@ -57,6 +57,59 @@
                 <hr/>
 
                 <div class="form-group">
+                    <label>Timeline events</label>
+
+                    <p class="help-block">
+                        Which types of Timeline events would you like to be
+                        displayed?
+                    </p>
+
+                    <div>
+                        <input type="checkbox" name="enabledTypes"
+                               id="storyCreated"
+                               ng-model="enabled_event_types.story_created">
+                        <label for="storyCreated">Story created</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="storyDetailsChanged"
+                               ng-model="enabled_event_types.story_details_changed">
+                        <label for="storyDetailsChanged">Story details changed</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskCreated"
+                               ng-model="enabled_event_types.task_created">
+                        <label for="taskCreated">Task created</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskAssigneeChanged"
+                               ng-model="enabled_event_types.task_assignee_changed">
+                        <label for="taskAssigneeChanged">Task assignee changed</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskStatusChanged"
+                               ng-model="enabled_event_types.task_status_changed">
+                        <label for="taskStatusChanged">Task status changed</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskDetailsChanged"
+                               ng-model="enabled_event_types.task_details_changed">
+                        <label for="taskDetailsChanged">Task details Changed</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskDeleted"
+                               ng-model="enabled_event_types.task_deleted">
+                        <label for="taskDeleted">Task deleted</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="userComment"
+                               ng-model="enabled_event_types.user_comment">
+                        <label for="userComment">User comment</label>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
                     <button type="button" class="btn btn-default"
                             ng-click="save()">
                         Save
