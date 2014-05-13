@@ -1,6 +1,6 @@
-# Custom Themes for StoryBoard
+# Custom Themes for Storyboard
 This folder provides an extension mechanism by which you can apply your own
-custom bootstrap theme to StoryBoard. By creating your own theme.less file in
+custom bootstrap theme to Storyboard. By creating your own theme.less file in
 this directory, your own custom adjustments will be used to compile bootstrap.
 
 ## Quickstart
@@ -9,7 +9,7 @@ this directory, your own custom adjustments will be used to compile bootstrap.
 *  Run `grunt build` or `grunt server`
 
 You can override any variables supported in the bootstrap native variables file.
- At this time, StoryBoard does not include its own variables.
+ At this time, Storyboard does not include its own variables.
 
 ## How it works
 
