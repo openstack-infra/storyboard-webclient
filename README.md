@@ -22,7 +22,7 @@ Documentation can be found here:
 
 Additional resources are linked from the project wiki page:
 
-  https://wiki.openstack.org/wiki/StoryBoard
+  https://wiki.openstack.org/wiki/Storyboard
 
 Anyone wishing to contribute to an OpenStack project should
 find plenty of helpful resources here:
