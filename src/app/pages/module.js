@@ -15,7 +15,7 @@
  */
 
 /**
- * The Storyboard pages submodule contains mostly static content pages that
+ * The StoryBoard pages submodule contains mostly static content pages that
  * require little functionality themselves.
  *
  * @author Michael Krotscheck

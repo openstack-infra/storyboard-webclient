@@ -15,7 +15,7 @@
  */
 
 /**
- * This Storyboard module contains our authentication and authorization logic.
+ * This StoryBoard module contains our authentication and authorization logic.
  */
 angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
         'sb.util', 'LocalStorageModule']

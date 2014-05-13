@@ -15,7 +15,7 @@
  */
 
 /**
- * The Storyboard Services module contains all of the necessary API resources
+ * The StoryBoard Services module contains all of the necessary API resources
  * used by the storyboard client. Its resources are available via injection to
  * any module that declares it as a dependency.
  */
