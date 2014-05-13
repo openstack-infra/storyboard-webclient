@@ -15,7 +15,7 @@
  */
 
 /**
- * The Storyboard story submodule handles most activity surrounding the
+ * The StoryBoard story submodule handles most activity surrounding the
  * creation and management of stories, their tasks, and comments.
  */
 angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',

@@ -15,7 +15,7 @@
  */
 
 /**
- * The Storyboard project submodule handles most activity surrounding the
+ * The StoryBoard project submodule handles most activity surrounding the
  * creation and management of projects.
  */
 angular.module('sb.projects',
