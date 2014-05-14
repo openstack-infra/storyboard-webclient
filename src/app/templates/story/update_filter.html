@@ -1,0 +1,80 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">Update Timeline filter</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-horizontal" role="form" name="fiterForm">
+                    <div class="form-group col-sm-10">
+                        <label>Timeline events</label>
+
+                        <p class="help-block">
+                            Which types of Timeline events would you like to be
+                            displayed?
+                        </p>
+                    </div>
+                    <div class="form-group col-sm-10">
+
+                        <input type="checkbox" name="enabledTypes"
+                               id="storyCreated"
+                               ng-model="enabled_event_types.story_created">
+                        Story created
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="storyDetailsChanged"
+                               ng-model="enabled_event_types.story_details_changed">
+                        Story details changed
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskCreated"
+                               ng-model="enabled_event_types.task_created">
+                        Task created
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskAssigneeChanged"
+                               ng-model="enabled_event_types.task_assignee_changed">
+                        Task assignee changed
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskStatusChanged"
+                               ng-model="enabled_event_types.task_status_changed">
+                        Task status changed
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskDetailsChanged"
+                               ng-model="enabled_event_types.task_details_changed">
+                        Task details changed
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="taskDeleted"
+                               ng-model="enabled_event_types.task_deleted">
+                        Task deleted
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="userComment"
+                               ng-model="enabled_event_types.user_comment">
+                        User comment
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 text-right">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="save()">
+                    Save Changes
+                </button>
+                <button type="button"
+                        ng-click="close()"
+                        class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
