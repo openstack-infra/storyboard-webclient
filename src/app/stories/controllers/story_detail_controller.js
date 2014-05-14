@@ -154,6 +154,19 @@ angular.module('sb.story').controller('StoryDetailController',
             return modalInstance.result;
         };
 
+        $scope.updateFilter = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/templates/story/update_filter.html',
+                controller: 'TimelineFilterController'
+            });
+
+            modalInstance.result.then(function(enabled_event_types) {
+               $scope.enabled_event_types = enabled_event_types;
+            });
+            // Return the modal's promise.
+            return modalInstance.result;
+        };
+
         /**
          * Initialize
          */
