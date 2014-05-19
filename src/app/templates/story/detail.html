@@ -239,6 +239,14 @@
             <i class="fa fa-caret-down fa-lg"></i>
         </a>
     </td>
+    <td ng-hide="showTaskEditForm" ng-switch="task.priority">
+        <i ng-switch-when="high"
+           class="fa fa-angle-double-up fa-lg text-danger"></i>
+        <i ng-switch-when="medium"
+           class="fa fa-angle-up fa-lg text-warning"></i>
+        <i ng-switch-when="low"
+           class="fa fa-angle-down fa-lg text-success"></i>
+    </td>
     <td ng-hide="showTaskEditForm">
         <a href=""
            ng-show="isLoggedIn"
