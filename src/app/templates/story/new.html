@@ -46,35 +46,8 @@
                 <form role="form" name="tasksForm">
                     <table class="table table-striped table-outlined">
                         <tbody>
-                        <tr ng-repeat="(index, task) in tasks">
-                            <td>
-                                <input type="text"
-                                       class="form-control input-sm"
-                                       ng-model="task.title"
-                                       required
-                                       placeholder="Task Title">
-                            </td>
-                            <td class="col-xs-4">
-                                <input id="project"
-                                       type="text"
-                                       placeholder="Select a Project"
-                                       required
-                                       ng-model="asyncProject"
-                                       typeahead-editable="false"
-                                       typeahead="project as project.name for project in searchProjects($viewValue)"
-                                       typeahead-loading="loadingProjects"
-                                       typeahead-input-formatter="formatProjectName($model)"
-                                       typeahead-on-select="selectNewProject($model, task)"
-                                       class="form-control input-sm"
-                                        />
-                            </td>
-                            <th class="col-xs-1"
-                                ng-show="tasks.length > 1">
-                                <button type="button" class="close"
-                                        ng-click="removeTask(task)">
-                                    &times;
-                                </button>
-                            </th>
+                        <tr ng-repeat="(index, task) in tasks" ng-include
+                                src="'/inline/task_row.html'">
                         </tr>
                         </tbody>
                     </table>
@@ -106,3 +79,43 @@
         </div>
     </div>
 </div>
+
+<!-- Template for story metadata -->
+<script type="text/ng-template" id="/inline/task_row.html">
+    <td>
+        <input type="text"
+               class="form-control input-sm"
+               ng-model="task.title"
+               required
+               placeholder="Task Title">
+    </td>
+    <td class="col-xs-4">
+        <div class="has-feedback has-feedback-no-label">
+            <input id="project"
+                   type="text"
+                   placeholder="Select a Project"
+                   required
+                   ng-model="asyncProject"
+                   typeahead-editable="false"
+                   typeahead="project as project.name for project
+                   in searchProjects($viewValue)"
+                   typeahead-loading="loadingProjects"
+                   typeahead-input-formatter="formatProjectName($model)"
+                   typeahead-on-select="selectNewProject($model, task)"
+                   class="form-control input-sm"
+                    />
+            <span class="form-control-feedback text-muted
+            form-control-feedback-sm">
+                <i class="fa fa-refresh fa-spin" ng-show="loadingProjects"></i>
+                <i class="fa fa-search" ng-hide="loadingProjects"></i>
+            </span>
+        </div>
+    </td>
+    <th class="col-xs-1"
+        ng-show="tasks.length > 1">
+        <button type="button" class="close"
+                ng-click="removeTask(task)">
+            &times;
+        </button>
+    </th>
+</script>
