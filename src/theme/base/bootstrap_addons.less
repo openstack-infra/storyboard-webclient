@@ -63,8 +63,10 @@ h1 {
 .has-feedback {
 
     // Sibling selectors for inputs of different sizes.
-    .input-sm + .form-control-feedback {
-        line-height: 30px;
+    .form-control-feedback {
+        &.form-control-feedback-sm {
+            line-height: (@line-height-small * @line-height-base);
+        }
     }
 
     &.has-feedback-no-label {
