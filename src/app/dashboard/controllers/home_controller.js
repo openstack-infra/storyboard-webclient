@@ -17,7 +17,7 @@
 /**
  * Controller for our home(index) page, currently just a placeholder.
  */
-angular.module('storyboard').controller('HomeController',
+angular.module('sb.dashboard').controller('HomeController',
     function ($scope, $state, $modal, NewStoryService) {
         'use strict';
 
