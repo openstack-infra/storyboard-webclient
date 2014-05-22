@@ -13,47 +13,143 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-<div class="container" ng-show="isLoading">
+
+<div class="container">
     <div class="row">
-        <p class="text-center">
-            <i class="fa fa-refresh fa-spin fa-lg"></i>
-        </p>
+        <div ng-include
+             class="col-xs-12"
+             src="'/inline/project_detail.html'"
+             ng-hide="showEditForm">
+        </div>
+        <div ng-include
+             src="'/inline/project_detail_form.html'"
+             ng-show="showEditForm">
+        </div>
+        <div ng-include src="'/inline/story_list.html'"></div>
     </div>
 </div>
 
-<div class="container" ng-hide="isLoading">
-    <div class="row">
-        <h1 class="no-border no-margin-bottom">Project detail:
+
+<!-- Template for the header and description -->
+<script type="text/ng-template" id="/inline/project_detail.html">
+    <h1>
+        <span ng-show="project.name">
             {{project.name}}
-        </h1>
-        <ul class="nav nav-tabs nav-tabs-down nav-thick">
-            <li active-path="^\/project\/[0-9]+\/overview.*">
-                <a href="#!/project/{{project.id}}/overview">
-                    Overview
-                </a>
-            </li>
-            <li active-path="^\/project\/[0-9]+\/stories.*">
-                <a href="#!/project/{{project.id}}/stories">
-                    Stories
-                    <span ng-show="!!projectStoryCount">
-                    ({{projectStoryCount}})
-                    </span>
-                </a>
-            </li>
-            <li active-path="^\/project\/[0-9]+\/edit.*"
-                permission="is_superuser">
-                <a href="#!/project/{{project.id}}/edit">
-                    Edit
-                </a>
-            </li>
-            <li active-path="^\/project\/[0-9]+\/delete.*"
-                permission="is_superuser">
-                <a href="#!/project/{{project.id}}/delete">
-                    Delete
-                </a>
-            </li>
-        </ul>
-        <br/>
+        </span>
+        <em ng-hide="project.name" class="text-muted">
+            No title
+        </em>
+        <small ng-show="isLoggedIn">
+            <a href="" ng-click="toggleEditMode()" permission="is_superuser">
+                <i class="fa fa-pencil"></i>
+            </a>
+        </small>
+    </h1>
+    <p>
+        <span ng-show="project.description"
+              class="honor-carriage-return">{{project.description}}
+        </span>
+        <em ng-hide="project.description" class="text-muted">
+            No description provided
+        </em>
+    </p>
+</script>
+
+
+<!-- Template for the header and description -->
+<script type="text/ng-template" id="/inline/project_detail_form.html">
+    <br/>
+    <form name="projectForm">
+        <div class="form-group">
+            <input type="text"
+                      class="form-control"
+                      ng-model="project.name"
+                      required
+                      ng-disabled="isUpdating"
+                      placeholder="Project Name">
+            </input>
+        </div>
+        <div class="form-group">
+            <textarea placeholder="Enter a project description here"
+                      class="form-control"
+                      rows="3"
+                      required
+                      ng-disabled="isUpdating"
+                      ng-model="project.description">
+            </textarea>
+        </div>
+
+        <div class="clearfix">
+            <div class="pull-right">
+                <div class="btn" ng-show="isUpdating">
+                    <i class="fa fa-spinner fa-lg fa-spin"></i>
+                </div>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="update()"
+                        ng-disabled="!projectForm.$valid">
+                    Save
+                </button>
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="cancel()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+    <hr/>
+</script>
+
+<!-- Template for the task list -->
+<script type="text/ng-template" id="/inline/story_list.html">
+    <div ng-controller="ProjectStoryListController">
+        <div class="col-xs-12">
+            <a href=""
+               class="btn btn-link pull-right"
+               ng-click="newStory()"
+               ng-show="isLoggedIn">
+                <i class="fa fa-plus"></i>
+                Add story
+            </a>
+            <ul class="nav nav-tabs clearfix">
+                <li ng-class="{'active': filter == 'active'}">
+                    <a href=""
+                       ng-click="setFilter('active')">Active</a>
+                </li>
+                <li ng-class="{'active': filter == 'merged'}">
+                    <a href=""
+                       ng-click="setFilter('merged')">Merged</a>
+                </li>
+                <li ng-class="{'active': filter == 'invalid'}">
+                    <a href=""
+                       ng-click="setFilter('invalid')">Invalid</a>
+                </li>
+            </ul>
+            <table class="table table-striped"
+                   ng-hide="isSearching || stories.length == 0">
+                <tbody>
+                <tr ng-repeat="story in stories"
+                    ng-controller="StoryListItemController"
+                    ng-include="'app/templates/story/story_list_item.html'">
+                </tr>
+                </tbody>
+            </table>
+
+            <div ng-show="isSearching">
+                <hr/>
+                <p class="text-center">
+                    <i class="fa fa-refresh fa-spin fa-lg"></i>
+                </p>
+            </div>
+
+            <p ng-show="!isSearching && stories.length == 0"
+               class="text-center text-warning">
+                <br/>
+                <em> We were unable to find any stories.
+                    Perhaps you would like to create one?</em>
+            </p>
+        </div>
     </div>
-    <div class="row" ui-view></div>
-</div>
+</script>
+
