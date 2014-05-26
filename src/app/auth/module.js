@@ -20,6 +20,7 @@
 angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
         'sb.util', 'LocalStorageModule']
     )
+    .constant('preExpireDelta', 10 * 3600)
     .config(function ($stateProvider, SessionResolver) {
         'use strict';
 
@@ -60,7 +61,8 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                 controller: 'AuthErrorController'
             });
     })
-    .run(function ($rootScope, SessionState, Session, PermissionManager) {
+    .run(function ($rootScope, $interval, SessionState, Session,
+                   PermissionManager, RefreshManager) {
         'use strict';
 
         // Initialize our permission manager.
@@ -73,4 +75,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
         $rootScope.$on(SessionState.LOGGED_OUT, function () {
             $rootScope.isLoggedIn = Session.isLoggedIn();
         });
+
+        RefreshManager.scheduleRefresh();
+
     });
