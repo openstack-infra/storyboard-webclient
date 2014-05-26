@@ -19,7 +19,8 @@
  * by verifying the token state returned from the OpenID service.
  */
 angular.module('sb.auth').factory('Session',
-    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User) {
+    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
+        RefreshManager) {
         'use strict';
 
         /**
@@ -35,7 +36,7 @@ angular.module('sb.auth').factory('Session',
         function initializeSession() {
             var deferred = $q.defer();
 
-            if (!AccessToken.getAccessToken() || AccessToken.isExpired()) {
+            if (!AccessToken.getAccessToken()) {
                 $log.debug('No token found');
                 updateSessionState(SessionState.LOGGED_OUT);
                 deferred.resolve();
@@ -61,18 +62,28 @@ angular.module('sb.auth').factory('Session',
          * Validate the token.
          */
         function validateToken() {
+
+            /**
+             * Try fresh call is necessary here because a User may try to
+             * validate a token after a long break in using StoryBoard.
+             * Even if refresh is not necessary right now the tryRefresh method
+             * will just resolve immediately.
+            */
+
             var deferred = $q.defer();
+            RefreshManager.tryRefresh().then(function() {
+                var id = AccessToken.getIdToken();
 
-            var id = AccessToken.getIdToken();
-
-            User.read({id: id},
-                function (user) {
-                    deferred.resolve(user);
-                }, function (error) {
-                    deferred.reject(error);
-                });
+                User.read({id: id},
+                    function (user) {
+                        deferred.resolve(user);
+                    }, function (error) {
+                        deferred.reject(error);
+                    });
+            });
             return deferred.promise;
         }
+
 
         /**
          * Handles state updates and broadcasts.
@@ -99,8 +110,14 @@ angular.module('sb.auth').factory('Session',
         initializeSession();
 
         // If we ever encounter a 401 error, make sure the session is destroyed.
-        $rootScope.$on('http_401', function () {
-            destroySession();
+        $rootScope.$on('http_401', function ($log) {
+            RefreshManager.tryRefresh().then(
+                function () {
+                    $log.info('Token refreshsed on 401');
+                }, function() {
+                    $log.info('Could not refresh token. Destroying session');
+                    destroySession();
+                });
         });
 
         // Expose the methods for this service.

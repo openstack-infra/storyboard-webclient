@@ -21,7 +21,7 @@
  * have to use this abstraction layer to store data in a cookie instead.
  */
 angular.module('sb.auth').factory('AccessToken',
-    function (localStorageService) {
+    function (localStorageService, preExpireDelta) {
         'use strict';
 
         /**
@@ -69,6 +69,17 @@ angular.module('sb.auth').factory('AccessToken',
                 var now = Math.round((new Date()).getTime() / 1000);
 
                 return issueDate + expiresIn < now;
+            },
+
+            /**
+             * Will this token expire in an hour
+             */
+            expiresSoon: function () {
+                var expiresIn = this.getExpiresIn() || 0;
+                var issueDate = this.getIssueDate() || 0;
+                var now = Math.round((new Date()).getTime() / 1000);
+
+                return issueDate + expiresIn - preExpireDelta > now;
             },
 
             /**
