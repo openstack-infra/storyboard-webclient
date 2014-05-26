@@ -29,7 +29,7 @@ angular.module('sb.auth').factory('httpAuthorizationHeader',
                 // storyboardApiBase.
                 var token = AccessToken.getAccessToken();
                 var type = AccessToken.getTokenType();
-                if (!!token && !AccessToken.isExpired()) {
+                if (!!token) {
                     request.headers.Authorization = type + ' ' + token;
                 }
                 return request;
