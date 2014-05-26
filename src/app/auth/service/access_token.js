@@ -72,6 +72,18 @@ angular.module('sb.auth').factory('AccessToken',
             },
 
             /**
+             * Will this token expire in an hour
+             */
+            expiresSoon: function () {
+                var expiresIn = this.getExpiresIn() || 0;
+                var issueDate = this.getIssueDate() || 0;
+                var now = Math.round((new Date()).getTime() / 1000);
+
+                var soonDelta = 3600;
+                return issueDate + expiresIn < now - soonDelta;
+            },
+
+            /**
              * Get the token type. Bearer, etc.
              */
             getTokenType: function () {

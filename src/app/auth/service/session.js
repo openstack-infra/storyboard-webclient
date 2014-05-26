@@ -19,7 +19,8 @@
  * by verifying the token state returned from the OpenID service.
  */
 angular.module('sb.auth').factory('Session',
-    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User) {
+    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
+        RefreshManager) {
         'use strict';
 
         /**
@@ -35,7 +36,7 @@ angular.module('sb.auth').factory('Session',
         function initializeSession() {
             var deferred = $q.defer();
 
-            if (!AccessToken.getAccessToken() || AccessToken.isExpired()) {
+            if (!AccessToken.getAccessToken()) {
                 $log.debug('No token found');
                 updateSessionState(SessionState.LOGGED_OUT);
                 deferred.resolve();
@@ -61,6 +62,11 @@ angular.module('sb.auth').factory('Session',
          * Validate the token.
          */
         function validateToken() {
+
+            if (AccessToken.isExpired() || AccessToken.expiresSoon()) {
+                RefreshManager.tryRefresh();
+            }
+
             var deferred = $q.defer();
 
             var id = AccessToken.getIdToken();
@@ -100,7 +106,9 @@ angular.module('sb.auth').factory('Session',
 
         // If we ever encounter a 401 error, make sure the session is destroyed.
         $rootScope.$on('http_401', function () {
-            destroySession();
+            if (!!RefreshManager.tryRefresh()) {
+                destroySession();
+            }
         });
 
         // Expose the methods for this service.

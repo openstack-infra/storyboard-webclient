@@ -60,7 +60,8 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                 controller: 'AuthErrorController'
             });
     })
-    .run(function ($rootScope, SessionState, Session, PermissionManager) {
+    .run(function ($rootScope, $interval, SessionState, Session,
+                   PermissionManager, RefreshManager) {
         'use strict';
 
         // Initialize our permission manager.
@@ -72,5 +73,13 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
         });
         $rootScope.$on(SessionState.LOGGED_OUT, function () {
             $rootScope.isLoggedIn = Session.isLoggedIn();
+        });
+
+        var refreshAttemptsDelay = 1800 * 1000;
+        var refreshPromise = $interval(RefreshManager.tryRefresh,
+                                       refreshAttemptsDelay);
+
+        $rootScope.$on('$destroy', function() {
+            $interval.cancel(refreshPromise);
         });
     });
