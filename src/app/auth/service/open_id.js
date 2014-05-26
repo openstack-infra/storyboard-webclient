@@ -52,17 +52,24 @@ angular.module('sb.auth').factory('OpenId',
             },
 
             /**
-             * Asks our OpenID endpoint to convert an authorization token to
-             * an access token.
+             * Asks our OpenID endpoint to convert an authorization code or a
+             * refresh token to an access token.
              */
             token: function (params) {
                 var deferred = $q.defer();
+                var grant_type = params.grant_type || 'authorization_code';
                 var authorizationCode = params.code;
+                var refreshToken = params.refresh_token;
 
                 var tokenParams = {
-                    grant_type: 'authorization_code',
-                    code: authorizationCode
+                    grant_type: grant_type
                 };
+
+                if (grant_type === 'authorization_code') {
+                    tokenParams.code = authorizationCode;
+                } else {
+                    tokenParams.refresh_token = refreshToken;
+                }
 
                 var url = tokenUrl + '?' +
                     UrlUtil.serializeParameters(tokenParams);
