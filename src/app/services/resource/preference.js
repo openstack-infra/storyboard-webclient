@@ -52,7 +52,7 @@ angular.module('sb.services').provider('Preference',
             /**
              * Get a preference.
              */
-            this.$get = function (key) {
+            this.get = function (key) {
 
                 // Is this a valid preference?
                 if (!defaults.hasOwnProperty(key)) {
@@ -67,7 +67,7 @@ angular.module('sb.services').provider('Preference',
                 // that.
                 if (value === null && defaults.hasOwnProperty(key)) {
                     var defaultValue = defaults[key];
-                    this.$set(key, defaultValue);
+                    this.set(key, defaultValue);
                     return defaultValue;
                 }
 
@@ -77,7 +77,7 @@ angular.module('sb.services').provider('Preference',
             /**
              * Set a preference.
              */
-            this.$set = function (key, value) {
+            this.set = function (key, value) {
 
                 // Is this a valid preference?
                 if (!defaults.hasOwnProperty(key)) {
