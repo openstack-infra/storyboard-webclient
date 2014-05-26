@@ -19,13 +19,15 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $scope, $state, $stateParams, $modal, Story,
-              Session, User) {
+              Session, User, Preference) {
         'use strict';
 
         // Parse the ID
         var id = $stateParams.hasOwnProperty('storyId') ?
             parseInt($stateParams.storyId, 10) :
             null;
+
+        $scope.enabled_event_types = Preference.get('display_events_filter');
 
         /**
          * Generic service error handler. Assigns errors to the view's scope,
