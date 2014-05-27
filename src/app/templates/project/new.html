@@ -23,21 +23,41 @@
     <div class="row">
         <div class="col-xs-12">
             <form class="form-horizontal" role="form" name="projectForm">
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error': projectForm.name.$invalid &&
+                      !projectForm.name.$pristine}">
                     <label for="name" class="col-sm-2 control-label">
                         Project Name:
                     </label>
 
                     <div class="col-sm-10">
                         <input id="name"
+                               name="name"
                                type="text"
                                class="form-control"
                                ng-model="newProject.name"
                                required
+                               ng-pattern="TITLE_VALIDATION_REGEX"
+                               maxlength="50"
                                placeholder="Project Name">
+
+                        <div class="help-block text-danger"
+                             ng-show="!projectForm.name.$pristine &&
+                             projectForm.name.$invalid">
+                            <span ng-show="projectForm.name.$error.required">
+                                A project name is required.
+                            </span>
+                            <span ng-show="projectForm.name.$error.pattern">
+                                A project must contain at least three letters
+                                or numbers, as well as spaces, brackets,
+                                dashes, slashes or underscores.
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"
+                     ng-class="{'has-error': projectForm.description.$invalid
+                     && !projectForm.description.$pristine}">
                     <label for="description"
                            class="col-sm-2 control-label">
                         Project Description
@@ -45,12 +65,21 @@
 
                     <div class="col-sm-10">
                         <textarea id="description"
+                                  name="description"
                                   class="form-control"
                                   ng-model="newProject.description"
                                   msd-elastic
                                   required
                                   placeholder="A brief project description">
                         </textarea>
+
+                        <div class="help-block text-danger"
+                             ng-show="!projectForm.description.$pristine &&
+                             projectForm.description.$invalid">
+                            <span ng-show="projectForm.description.$error.required">
+                                A project description is required.
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

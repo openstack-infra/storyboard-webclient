@@ -60,17 +60,35 @@
 <script type="text/ng-template" id="/inline/project_detail_form.html">
     <br/>
     <form name="projectForm">
-        <div class="form-group">
-            <input type="text"
-                      class="form-control"
-                      ng-model="project.name"
-                      required
-                      ng-disabled="isUpdating"
-                      placeholder="Project Name">
+        <div class="form-group"
+             ng-class="{'has-error': projectForm.name.$invalid}">
+            <input id="name"
+                   name="name"
+                   type="text"
+                   class="form-control"
+                   ng-model="project.name"
+                   required
+                   ng-pattern="TITLE_VALIDATION_REGEX"
+                   maxlength="50"
+                   ng-disabled="isUpdating"
+                   placeholder="Project Name">
             </input>
+            <div class="help-block text-danger"
+                 ng-show="projectForm.name.$invalid">
+                 <span ng-show="projectForm.name.$error.required">
+                     A project name is required.
+                 </span>
+                 <span ng-show="projectForm.name.$error.pattern">
+                     A project must contain at least three letters or
+                     numbers, as well as spaces, brackets, dashes, slashes or
+                     underscores.
+                 </span>
+            </div>
         </div>
-        <div class="form-group">
-            <textarea placeholder="Enter a project description here"
+        <div class="form-group"
+             ng-class="{'has-error': projectForm.description.$invalid}">
+            <textarea name="description"
+                      placeholder="Enter a project description here"
                       class="form-control"
                       rows="3"
                       msd-elastic
@@ -78,6 +96,11 @@
                       ng-disabled="isUpdating"
                       ng-model="project.description">
             </textarea>
+
+            <div ng-show="projectForm.description.$error.required"
+                 class="help-block text-danger">
+                A project description is required.
+            </div>
         </div>
 
         <div class="clearfix">
