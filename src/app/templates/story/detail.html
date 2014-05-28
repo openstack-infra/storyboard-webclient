@@ -138,8 +138,8 @@
            ng-controller="StoryTaskListController">
         <thead>
         <tr>
-            <td colspan="3"><strong>Tasks</strong></td>
-            <td colspan="3" class="text-right">
+            <td colspan="4"><strong>Tasks</strong></td>
+            <td colspan="4" class="text-right">
                 <small>
                     <a href=""
                        ng-click="showAddTaskForm = !showAddTaskForm"
@@ -168,7 +168,7 @@
         <tfoot ng-show="showAddTaskForm">
         <tr>
             <td></td>
-            <td colspan="3">
+            <td colspan="4">
                 <task-edit-form
                         task="newTask"
                         button-label="Add Task"
@@ -288,11 +288,18 @@
         </em>
     </td>
     <td ng-show="showTaskEditForm"
-        colspan="3">
+        colspan="4">
         <task-edit-form
                 task="task"
                 on-button-click="updateTask()"
                 button-label="Update"
+                />
+    </td>
+    <td class="text-right">
+        <task-priority-dropdown
+                editable="{{isLoggedIn}}"
+                on-change="updatePriority(priority)"
+                priority="{{task.priority}}"
                 />
     </td>
     <td class="text-right">
