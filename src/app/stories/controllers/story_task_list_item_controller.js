@@ -51,6 +51,16 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             $scope.task.$update();
         };
 
+
+        /**
+         * Updates this task's priority
+         */
+        $scope.updatePriority = function (priority) {
+            $scope.task.priority = priority;
+            $scope.task.$update();
+        };
+
+
         /**
          * UI Toggle for when the edit form should be displayed.
          */
