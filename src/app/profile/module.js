@@ -15,9 +15,9 @@
  */
 
 /**
- * The Storyboard root application module.
+ * The StoryBoard root application module.
  *
- * This module contains the entire, standalone application for the Storyboard
+ * This module contains the entire, standalone application for the StoryBoard
  * ticket tracking web client.
  *
  * @author Michael Krotscheck

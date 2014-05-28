@@ -15,9 +15,9 @@
  */
 
 /**
- * The Storyboard root application module.
+ * The StoryBoard root application module.
  *
- * This module contains the entire, standalone application for the Storyboard
+ * This module contains the entire, standalone application for the StoryBoard
  * ticket tracking web client.
  *
  * @author Michael Krotscheck
@@ -37,7 +37,7 @@ angular.module('storyboard',
         $locationProvider.hashPrefix('!');
 
         // Attach common request headers out of courtesy to the API
-        $httpProvider.defaults.headers.common['X-Client'] = 'Storyboard';
+        $httpProvider.defaults.headers.common['X-Client'] = 'StoryBoard';
 
         // Globally set an additional amount of whitespace to the end of our
         // textarea elastic resizing.
