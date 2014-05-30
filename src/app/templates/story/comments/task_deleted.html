@@ -1,6 +1,7 @@
 <div class="discussion-comment" ng-show="enabled_event_types.task_deleted">
     <p class="discussion-comment-author">
-         <span class="pull-right">{{event.created_at | date: 'medium'}}</span>
+         <span class="pull-right" ng-if="event.needs_timeago" am-time-ago="event.created_at" title="{{event.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}" ></span>
+         <span class="pull-right" ng-if="!event.needs_timeago">{{event.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
          <span>{{ author.full_name }} has deleted a task {{ event_info.task_title }}</span>
     </p>
 </div>

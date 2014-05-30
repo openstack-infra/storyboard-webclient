@@ -26,6 +26,11 @@ angular.module('storyboard',
     [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
         'sb.auth', 'sb.story', 'sb.profile', 'ui.router', 'ui.bootstrap',
         'monospaced.elastic'])
+        'monospaced.elastic', 'angularMoment'])
+    .constant('angularMomentConfig', {
+        preprocess: 'utc',
+        timezone: 'UTC',
+    })
     .config(function ($provide, $urlRouterProvider, $locationProvider,
                       $httpProvider, msdElasticConfig) {
         'use strict';

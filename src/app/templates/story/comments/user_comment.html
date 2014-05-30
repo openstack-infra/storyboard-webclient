@@ -1,7 +1,8 @@
 <div class="discussion-comment" ng-show="enabled_event_types.user_comment">
     <p class="discussion-comment-author">
         {{ author.full_name }}
-        <span class="pull-right">{{event.created_at | date: 'medium'}}</span>
+         <span class="pull-right" ng-if="event.needs_timeago" am-time-ago="event.created_at" title="{{event.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}" ></span>
+         <span class="pull-right" ng-if="!event.needs_timeago">{{event.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
     </p>
 
     <p ng-show="event.comment.content"
