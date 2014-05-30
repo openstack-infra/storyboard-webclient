@@ -1,7 +1,7 @@
 <div class="discussion-comment" ng-show="enabled_event_types.task_assignee_changed">
     <p class="discussion-comment-author">
-         <span class="pull-right">{{event.created_at | date: 'medium'}}</span>
-         <span>{{author.full_name}} has updated assignee for task {{ event_info.task_title }}:
-         {{ event_info.old_assignee_fullname }} ==> {{ event_info.new_assignee_fullname }}</span>
+        <span time-moment eventdate="event.created_at" class="pull-right" />
+        <span>{{author.full_name}} has updated assignee for task {{ event_info.task_title }}:
+        {{ event_info.old_assignee_fullname }} ==> {{ event_info.new_assignee_fullname }}</span>
     </p>
 </div>
