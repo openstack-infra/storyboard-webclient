@@ -61,12 +61,9 @@
         </span>
         <br/>
         <strong>Last updated:</strong>
-        <span ng-show="story.updated_at">
-            {{story.updated_at | date: 'longDate'}}
-        </span>
-        <span ng-show="!story.updated_at && story.created_at">
-            {{story.created_at | date: 'longDate'}}
-        </span>
+
+        <span time-moment eventdate="story.created_at"  ng-if="!story.updated_at" />
+        <span time-moment eventdate="story.updated_at" ng-if="story.updated_at" />
         <em ng-hide="story.updated_at || story.created_at" class="text-muted">
             Never
         </em>

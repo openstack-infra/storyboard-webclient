@@ -1,0 +1,4 @@
+<span ng-if="needsTimeAgo" am-time-ago="eventdate" title="{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}" ></span>
+<span ng-if="!needsTimeAgo">
+{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+
