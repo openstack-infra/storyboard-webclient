@@ -89,14 +89,14 @@ angular.module('sb.auth').factory('AccessToken',
              * Retrieve the date this token was issued.
              */
             getIssueDate: function () {
-                return localStorageService.get(ISSUE_DATE) || null;
+                return parseInt(localStorageService.get(ISSUE_DATE)) || null;
             },
 
             /**
              * Set the issue date for the current access token.
              */
             setIssueDate: function (value) {
-                return localStorageService.set(ISSUE_DATE, value);
+                return localStorageService.set(ISSUE_DATE, parseInt(value));
             },
 
             /**
@@ -104,7 +104,7 @@ angular.module('sb.auth').factory('AccessToken',
              * is considered expired.
              */
             getExpiresIn: function () {
-                return localStorageService.get(EXPIRES_IN) || 0;
+                return parseInt(localStorageService.get(EXPIRES_IN)) || 0;
             },
 
             /**
@@ -112,7 +112,7 @@ angular.module('sb.auth').factory('AccessToken',
              * will expire.
              */
             setExpiresIn: function (value) {
-                return localStorageService.set(EXPIRES_IN, value);
+                return localStorageService.set(EXPIRES_IN, parseInt(value));
             },
 
             /**
