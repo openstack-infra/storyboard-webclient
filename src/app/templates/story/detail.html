@@ -61,12 +61,14 @@
         </span>
         <br/>
         <strong>Last updated:</strong>
-        <span ng-show="story.updated_at">
-            {{story.updated_at | date: 'longDate'}}
+        <span ng-if="story.updated_at && story.date_updated_needs_timeago" am-time-ago="story.updated_at" title="{{story.updated_at | date:'yyyy-MM-dd HH:mm:ss Z'}}">
         </span>
-        <span ng-show="!story.updated_at && story.created_at">
-            {{story.created_at | date: 'longDate'}}
+        <span ng-if="story.updated_at && !story.date_updated_needs_timeago">
+        {{story.updated_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+        <span ng-if="!story.updated_at && story.created_at && story.date_created_needs_timeago" am-time-ago="story.created_at" title="{{story.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}">
         </span>
+        <span ng-if="!story.updated_at && story.created_at && !story.date_created_needs_timeago">
+        {{story.created_at | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
         <em ng-hide="story.updated_at || story.created_at" class="text-muted">
             Never
         </em>

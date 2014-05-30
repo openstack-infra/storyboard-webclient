@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryDiscussionController',
     function ($log, $scope, $state, $stateParams, Project, Comment,
-              TimelineEvent) {
+              TimelineEvent, DateUtil) {
         'use strict';
 
         // Parse the ID
@@ -30,7 +30,16 @@ angular.module('sb.story').controller('StoryDiscussionController',
         /**
          * The story we're manipulating right now.
          */
-        $scope.events = TimelineEvent.query({story_id: id});
+        TimelineEvent.query({story_id: id},
+            // process events to add the needs_timeago setting
+            function (result) {
+                $scope.events = result;
+                angular.forEach($scope.events, function(current_event) {
+                    current_event.needs_timeago =
+                        DateUtil.needsTimeAgo(current_event.created_at);
+                });
+            }
+        );
 
         /**
          * The new comment backing the input form.

@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference) {
+              Session, User, Preference, DateUtil) {
         'use strict';
 
         // Parse the ID
@@ -61,6 +61,12 @@ angular.module('sb.story').controller('StoryDetailController',
                     if (!!story.creator_id) {
                         $scope.creator = User.get({id: story.creator_id});
                     }
+
+                    // checks if timeago needs to be used
+                    $scope.story.date_created_needs_timeago =
+                        DateUtil.needsTimeAgo(story.created_at);
+                    $scope.story.date_updated_needs_timeago =
+                        DateUtil.needsTimeAgo(story.updated_at);
 
                     handleServiceSuccess();
                 },
