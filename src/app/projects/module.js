@@ -19,7 +19,7 @@
  * creation and management of projects.
  */
 angular.module('sb.projects',
-    ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
+    ['ui.router', 'sb.services', 'sb.util', 'sb.auth', 'angularMoment'])
     .config(function ($stateProvider, $urlRouterProvider, SessionResolver,
                       PermissionResolver) {
         'use strict';

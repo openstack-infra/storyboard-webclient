@@ -19,7 +19,7 @@
  * creation and management of stories, their tasks, and comments.
  */
 angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
-    'ui.bootstrap'])
+    'ui.bootstrap', 'angularMoment'])
     .config(function ($stateProvider, $urlRouterProvider, PreferenceProvider,
             TimelineEventTypes) {
         'use strict';

@@ -2,6 +2,6 @@
     <p class="discussion-comment-author">
         {{author.full_name}} has updated assignee for task {{ event_info.task_title }}:
         {{ event_info.old_assignee_fullname }} ==> {{ event_info.new_assignee_fullname }}
-         <span class="pull-right">{{event.created_at | date: 'medium'}}</span>
+         <span class="pull-right" am-time-ago="event.created_at"></span>
     </p>
 </div>
