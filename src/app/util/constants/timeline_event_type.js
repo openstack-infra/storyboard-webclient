@@ -21,6 +21,7 @@ angular.module('sb.util').constant('TimelineEventTypes',
         'task_created',
         'task_assignee_changed',
         'task_status_changed',
+        'task_priority_changed',
         'task_details_changed',
         'task_deleted',
         'user_comment'
