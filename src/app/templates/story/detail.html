@@ -186,8 +186,9 @@
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/discussion.html">
     <div ng-controller="StoryDiscussionController">
-        <h4>Events timeline</h4>
-
+        <h4>Events timeline
+            <a href ng-click="updateFilter()"><i class="fa fa-gear"></i></a>
+        </h4>
         <div class="discussion">
             <div class="alert alert-warning"
                  ng-show="comments.length == 0">
