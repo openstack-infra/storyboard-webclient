@@ -18,7 +18,7 @@
 // Variables from protractor.conf.js -> params: {}
 var config = browser.params;
 
-describe('Storyboard Homepage', function () {
+describe('StoryBoard Homepage', function () {
     'use strict';
 
     it('should have storyboard as the title', function () {
@@ -26,6 +26,6 @@ describe('Storyboard Homepage', function () {
         browser.get(config.buildUrl('/'));
 
         var title = element(by.tagName('title'));
-        expect(title.getInnerHtml()).toEqual('Storyboard');
+        expect(title.getInnerHtml()).toEqual('StoryBoard');
     });
 });

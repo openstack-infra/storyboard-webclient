@@ -18,7 +18,7 @@
 // Variables from protractor.conf.js -> params: {}
 var config = browser.params;
 
-describe('Storyboard Project Routes', function () {
+describe('StoryBoard Project Routes', function () {
     'use strict';
 
     it('should redirect /project to /project/list', function () {
