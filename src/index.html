@@ -51,10 +51,9 @@
     <script src="js/templates.js"></script>
 </head>
 <body ng-class="{'logged-in' : isLoggedIn}">
-<header class="navbar navbar-default navbar-fixed-left"
-        ng-include src="'app/templates/main_menu.html'">
-</header>
-<div ui-view class="main"></div>
+    <header ng-include src="'app/templates/header_menu.html'"></header>
+    <div ng-include src="'app/templates/side_menu.html'"></div>
+    <div ui-view class="main"></div>
 </footer>
 </body>
 </html>
