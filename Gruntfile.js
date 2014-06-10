@@ -179,6 +179,26 @@ module.exports = function (grunt) {
         },
 
         /**
+         * Compile our SVG's into fonts. This is a utility method only which
+         * needs to be executed manually.
+         */
+        webfont: {
+            custom_icons: {
+                src: dir.source + '/fonts/src/*.svg',
+                dest: dir.source + '/fonts',
+                destCss: dir.source + '/theme/base',
+                options: {
+                    font: 'custom_icons',
+                    syntax: 'bem',
+                    htmlDemo: false,
+                    stylesheet: 'css',
+                    relativeFontPath: '../../fonts',
+                    hashes: false
+                }
+            }
+        },
+
+        /**
          * grunt html2js
          *
          * A convenience method that converts all of the templates found in our
