@@ -1,0 +1,127 @@
+<!--
+  ~ Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ 	http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<nav class="navbar navbar-default navbar-fixed-top"
+     role="navigation"
+     ng-controller="HeaderController">
+    <div class="container-fluid visible-xs"
+         ng-include
+         src="'/inline/header_mobile.html'">
+    </div>
+    <div class="container-fluid hidden-xs"
+         ng-include
+         src="'/inline/header_regular.html'">
+    </div>
+</nav>
+
+<!-- The menu for regular sized screens -->
+<script type="text/ng-template" id="/inline/header_regular.html">
+
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#!/">StoryBoard</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li>&nbsp;&nbsp;</li>
+        <li>
+            <button type="button"
+                    class="btn btn-primary navbar-btn"
+                    ng-click="newStory()">
+                <i class="fa fa-plus-circle"></i>
+                New Story
+            </button>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="isLoggedIn">
+            <a href="#!/auth/authorize">
+                <i class="fa fa-sign-in"></i>
+                Login
+            </a>
+        </li>
+        <li class="dropdown" ng-show="isLoggedIn">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span ng-show="currentUser.$resolved">
+                    {{currentUser.full_name}}
+                </span>
+                <em class="text-muted"
+                    ng-hide="currentUser.$resolved">
+                    Loading...
+                </em>
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li active-path="^\/profile\/preferences*">
+                    <a href="#!/profile/preferences">
+                        <i class="fa fa-gear"></i>
+                        Preferences
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="#!/auth/deauthorize">
+                        <i class="fa fa-sign-out"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</script>
+
+
+<!-- The menu for xs sized screens -->
+<script type="text/ng-template" id="/inline/header_mobile.html">
+    <div class="navbar-header">
+        <button type="button"
+                class="btn btn-sm btn-primary navbar-btn pull-right"
+                data-toggle="collapse"
+                data-target="#mobile-dropdown-menu"
+                ng-show="isLoggedIn">
+            <i class="fa fa-gear"></i>
+        </button>
+        <a href="#!/auth/authorize"
+           class="btn btn-sm btn-primary navbar-btn pull-right"
+           ng-hide="isLoggedIn">
+            <i class="fa fa-sign-in"></i>
+        </a>
+        <a class="navbar-brand" href="#!/">StoryBoard</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="mobile-dropdown-menu">
+        <ul class="nav navbar-nav">
+            <li active-path="^\/profile\/preferences*">
+                <a href="#!/profile/preferences">
+                    <i class="fa fa-user"></i>
+                        <span ng-show="currentUser.$resolved">
+                            {{currentUser.full_name}}
+                        </span>
+                    <em class="text-muted"
+                        ng-hide="currentUser.$resolved">
+                        Loading...
+                    </em>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li><a href="#!/auth/deauthorize">
+                <i class="fa fa-sign-out"></i>
+                Logout
+            </a></li>
+        </ul>
+    </div>
+</script>
