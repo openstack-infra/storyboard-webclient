@@ -3,140 +3,113 @@
  */
 .navbar {
 
-    &.navbar-fixed-left {
+    .pull-right {
+        margin-right: 5px;
+    }
+
+    &.navbar-fixed-side {
+
+        // Add this class if you want to add an offset for the header.
+        &.navbar-fixed-side-header-offset {
+            top: @navbar-height;
+        }
+        // Add this class if you want to add an offset for the footer.
+        &.navbar-fixed-side-footer-offset {
+            bottom: @navbar-height;
+        }
 
         @media (max-width: @screen-xs-max) {
-            width: @navbar-fixed-left-width-xs;
+            width: @navbar-fixed-side-width-xs;
 
-            .container-fluid {
-                padding-right: 10px;
-                padding-left: 10px;
-            }
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
         }
         @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-            width: @navbar-fixed-left-width-sm;
+            width: @navbar-fixed-side-width-sm;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
         }
         @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-            width: @navbar-fixed-left-width-md;
+            width: @navbar-fixed-side-width-md;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
         }
         @media (min-width: @screen-lg-min) {
-            width: @navbar-fixed-left-width-lg;
+            width: @navbar-fixed-side-width-lg;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+        }
+
+        .container-fluid {
+            padding: 5px;
         }
 
         overflow: hidden;
         border-radius: 0px;
-        border: none;
-
         position: fixed;
-
-        box-shadow: inset -2px 0px 10px @gray-light;
-        top: 0px;
-        left: 0px;
-        bottom: 0px;
         margin: 0px;
 
-        .nav:first-of-type {
-            margin-top: 5px;
-        }
+        &.navbar-inverse .nav {
+            > li {
+                > a {
+                    color: @navbar-inverse-link-color;
+                    background: @navbar-inverse-bg;
+                    border-color: @navbar-inverse-border;
+                    padding: 10px 5px;
+                }
 
-        .navbar-header {
-            float: none;
-            text-align: center;
-            line-height: @line-height-large;
-            box-shadow: 2px 0px 8px @gray-light;
-            background: @gray-lighter;
-            > a {
-                color: @brand-primary;
+                > a:hover {
+                    color: @navbar-inverse-link-hover-color;
+                    background: @navbar-inverse-link-hover-bg;
+                    border-color: @navbar-inverse-border;
+                }
+                > a:active {
+                    color: @navbar-inverse-link-active-color;
+                    background: @navbar-inverse-link-active-bg;
+                    border-color: @navbar-inverse-border;
+                }
+
+                &.active {
+                    > a {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+
+                    > a:hover {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+                    > a:active {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+                }
+            }
+
+            li.active {
+                background-color: @navbar-inverse-bg
             }
         }
 
-        .navbar-brand {
-            float: none;
-            display: inline-block;
+        a {
+            color: @navbar-inverse-link-color;
+
+            &:hover {
+                color: @navbar-inverse-link-hover-color;
+            }
+
+            &:active {
+                color: @navbar-inverse-link-active-color;
+            }
         }
 
-        .navbar-bottom {
+        .nav-bottom {
             position: absolute;
-            bottom: 5px;
-            left: 0px;
-            right: 0px;
-        }
-
-        hr {
-            margin: 5px;
-        }
-
-        .nav-pilltabs, .nav-links {
-            margin-left: 5px;
-        }
-
-        .container-fluid {
-            margin-top: 10px;
-        }
-    }
-
-    .nav-small {
-        font-size: @font-size-small;
-        li > a {
-            padding: @padding-small-vertical @padding-small-horizontal;
-        }
-    }
-
-    .nav-links {
-        li {
-
-            & > a:hover {
-                text-decoration: underline;
-            }
-
-            & > a {
-                &,
-                &:hover,
-                &:focus {
-                    background: none;
-                }
-            }
-
-            &.active > a {
-                font-weight: bold;
-
-                &:before {
-                    font-family: FontAwesome;
-                    content: "\f0da";
-                }
-            }
-        }
-    }
-
-    .nav-pilltabs {
-
-        li {
-            margin-top: 5px;
-            text-align: right;
-
-            > a {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-
-                &:hover {
-                    border-radius: @nav-pills-border-radius 0 0 @nav-pills-border-radius;
-                    box-shadow: 0px 0px 8px @gray-light;
-                    background-color: white;
-                    text-align: right;
-                }
-            }
-
-            // Active state
-            &.active > a {
-                &,
-                &:hover,
-                &:focus {
-                    border-radius: @nav-pills-border-radius 0 0 @nav-pills-border-radius;
-                    box-shadow: 0px 0px 8px @gray-light;
-                    background-color: @body-bg;
-                }
-            }
+            bottom: 0px;
         }
     }
 }
