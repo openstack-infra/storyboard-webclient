@@ -179,6 +179,26 @@ module.exports = function (grunt) {
         },
 
         /**
+         * Compile our SVG's into fonts.
+         */
+        webfont: {
+            custom_icons: {
+                src: dir.source + '/fonts/src/*.svg',
+                dest: dir.output + '/fonts',
+                destCss: dir.output + '/styles',
+                options: {
+                    font: 'custom_icons',
+                    syntax: 'bem',
+                    htmlDemo: false,
+                    stylesheet: 'css',
+                    relativeFontPath: '../fonts',
+                    hashes: false,
+                    engine: 'node'
+                }
+            }
+        },
+
+        /**
          * grunt html2js
          *
          * A convenience method that converts all of the templates found in our
@@ -416,6 +436,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['jshint']
             },
+            webfont: {
+                files: [
+                    dir.source + '/fonts/src/*.svg',
+                    dir.test + '/**/*.js'
+                ],
+                tasks: ['webfont']
+            },
             livereload: {
                 options: {
                     livereload: config.livereload.port
@@ -541,6 +568,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile', [
         'jshint',
+        'webfont',
         'useminPrepare',
         'concat',
         'less',
