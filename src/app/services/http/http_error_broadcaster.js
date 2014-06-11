@@ -16,8 +16,8 @@
 
 /**
  * An HTTP request interceptor that broadcasts response status codes to the
- * rest of the application as events. These events are broadcast before the
- * error response itself is passed back to the receiving closure, so please
+ * rest of the application as notifications. These events are broadcast before
+ * the error response itself is passed back to the receiving closure, so please
  * keep that in mind as you base your application logic on it.
  *
  * @author Michael Krotscheck
@@ -25,16 +25,16 @@
 angular.module('sb.services')
     // Create an HTTP Error Broadcaster that intercepts requests and lets the
     // rest of the application know about what happened.
-    .factory('httpErrorBroadcaster', function ($q, $rootScope) {
+    .factory('httpErrorBroadcaster',
+    function ($q, $rootScope, Notification, Severity) {
         'use strict';
 
-        function sendEvent(status, body) {
+        function sendEvent(severity, response) {
             // Only send an event if a status is passed.
-            if (!!status) {
-                $rootScope.$broadcast('http_' + status, body || {});
+            if (!!response.status) {
+                Notification.send('http', response.status, severity, response);
             }
         }
-
 
         return {
             /**
@@ -42,7 +42,7 @@ angular.module('sb.services')
              */
             response: function (response) {
                 if (!!response) {
-                    sendEvent(response.status);
+                    sendEvent(Severity.SUCCESS, response);
                 }
                 return response;
             },
@@ -51,9 +51,8 @@ angular.module('sb.services')
              * Handle a fail response.
              */
             responseError: function (response) {
-
                 if (!!response) {
-                    sendEvent(response.status, response.data);
+                    sendEvent(Severity.ERROR, response);
                 }
 
                 return $q.reject(response);

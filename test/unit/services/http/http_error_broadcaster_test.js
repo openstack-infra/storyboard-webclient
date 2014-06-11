@@ -21,7 +21,7 @@
 describe('httpErrorBroadcaster', function () {
     'use strict';
 
-    var $rootScope, $httpBackend, $resource, MockResource;
+    var notification, $httpBackend, $resource, MockResource;
 
     var errorResponse = {
         error_code: 404,
@@ -35,31 +35,31 @@ describe('httpErrorBroadcaster', function () {
 
         inject(function ($injector) {
             // Capture various providers for later use.
-            $rootScope = $injector.get('$rootScope');
+            notification = $injector.get('Notification');
             $httpBackend = $injector.get('$httpBackend');
             $resource = $injector.get('$resource');
             MockResource = $resource('/foo/:id', {id: '@id'});
         });
 
-        // Start listening to the broadcast method.
-        spyOn($rootScope, '$broadcast');
     });
 
 
-    it('should capture events on the $rootScope', function (done) {
+    it('should dispatch events to the Notification framework',
+        function () {
+            // Start listening to the broadcast method.
+            spyOn(notification, 'send').and.callFake(
+                function(type, code, severity) {
+                    expect(type).toEqual('http');
+                    expect(code).toEqual(553);
+                    expect(severity).toEqual('error');
+                }
+            );
 
-        // Prepare the HTTP Backend
-        $httpBackend.when('GET', '/foo/99')
-            .respond(553, JSON.stringify(errorResponse));
+            // Prepare the HTTP Backend
+            $httpBackend.when('GET', '/foo/99')
+                .respond(553, JSON.stringify(errorResponse));
 
-        // Handle a result.
-        function handleResult() {
-            expect($rootScope.$broadcast)
-                .toHaveBeenCalledWith('http_553', errorResponse);
-            done();
-        }
-
-        MockResource.get({'id': 99}, handleResult, handleResult);
-        $httpBackend.flush();
-    });
+            MockResource.get({'id': 99});
+            $httpBackend.flush();
+        });
 });
