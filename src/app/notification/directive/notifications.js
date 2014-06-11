@@ -15,8 +15,16 @@
  */
 
 /**
- * The StoryBoard Services module contains all of the necessary API resources
- * used by the storyboard client. Its resources are available via injection to
- * any module that declares it as a dependency.
+ * This directive is a notification list renderer with all the trimmings.
+ * Errors broadcast throughout the system will be collected and displayed here.
  */
-angular.module('sb.services', ['ngResource', 'sb.notification']);
+angular.module('sb.notification').directive('notifications',
+    function () {
+        'use strict';
+
+        return {
+            restrict: 'E',
+            templateUrl: 'app/templates/error/notifications.html',
+            controller: 'NotificationsController'
+        };
+    });
