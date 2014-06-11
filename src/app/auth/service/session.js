@@ -20,7 +20,7 @@
  */
 angular.module('sb.auth').factory('Session',
     function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
-        RefreshManager) {
+              RefreshManager, Notification) {
         'use strict';
 
         /**
@@ -68,10 +68,10 @@ angular.module('sb.auth').factory('Session',
              * validate a token after a long break in using StoryBoard.
              * Even if refresh is not necessary right now the tryRefresh method
              * will just resolve immediately.
-            */
+             */
 
             var deferred = $q.defer();
-            RefreshManager.tryRefresh().then(function() {
+            RefreshManager.tryRefresh().then(function () {
                 var id = AccessToken.getIdToken();
 
                 User.read({id: id},
@@ -109,16 +109,21 @@ angular.module('sb.auth').factory('Session',
          */
         initializeSession();
 
-        // If we ever encounter a 401 error, make sure the session is destroyed.
-        $rootScope.$on('http_401', function ($log) {
-            RefreshManager.tryRefresh().then(
-                function () {
-                    $log.info('Token refreshsed on 401');
-                }, function() {
-                    $log.info('Could not refresh token. Destroying session');
-                    destroySession();
-                });
-        });
+        // We're using -1 as the priority, to ensure that this is intercepted
+        // before anything else happens.
+        Notification.intercept(function (message) {
+            if (message.type === 'http' && message.message === 401) {
+                RefreshManager.tryRefresh().then(
+                    function () {
+                        $log.info('Token refreshed on 401');
+                    }, function () {
+                        $log.info('Could not refresh token. ' +
+                            'Destroying session');
+                        destroySession();
+                    });
+                return true; // Stop processing this notification.
+            }
+        }, -1);
 
         // Expose the methods for this service.
         return {
