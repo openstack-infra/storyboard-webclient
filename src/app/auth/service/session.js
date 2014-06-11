@@ -19,7 +19,8 @@
  * by verifying the token state returned from the OpenID service.
  */
 angular.module('sb.auth').factory('Session',
-    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User) {
+    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
+              Notification) {
         'use strict';
 
         /**
@@ -99,9 +100,15 @@ angular.module('sb.auth').factory('Session',
         initializeSession();
 
         // If we ever encounter a 401 error, make sure the session is destroyed.
-        $rootScope.$on('http_401', function () {
-            destroySession();
-        });
+        // We're using -1 as the priority, to ensure that this is intercepted
+        // before anything else happens.
+        Notification.intercept(function (message) {
+            if (message.type === 'http' && message.message === 401) {
+                $log.debug('401 received, destroying session');
+                destroySession();
+                return true; // Stop processing this notification.
+            }
+        }, -1);
 
         // Expose the methods for this service.
         return {
