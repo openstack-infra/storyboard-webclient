@@ -86,15 +86,14 @@
             <div class="form-group has-feedback">
                 <input type="text"
                        class="form-control"
-                       placeholder="Quicknav"
+                       placeholder="Search"
                        ng-model="searchString"
-
                        typeahead-append-to-body="true"
                        typeahead-editable="false"
                        typeahead="criteria as criteria.title for criteria in quickSearch($viewValue)"
                        typeahead-loading="headerCriteriaLoading"
                        typeahead-on-select="search($model)"
-                       typeahead-template-url="app/templates/header_criteria_item.html"
+                       typeahead-template-url="app/templates/search/typeahead_criteria_item.html"
                        />
             <span class="form-control-feedback text-muted">
                 <i class="fa fa-search" ng-hide="headerCriteriaLoading"></i>
@@ -122,6 +121,11 @@
                class="btn btn-sm btn-primary navbar-btn pull-right"
                ng-hide="isLoggedIn">
                 <i class="fa fa-sign-in"></i>
+            </a>
+            <a href="#" ng-click="newStory()"
+               class="btn btn-sm btn-primary navbar-btn">
+                <i class="fa fa-plus-circle"></i>
+                New Story
             </a>
             <a class="navbar-brand" href="#!/">StoryBoard</a>
         </div>

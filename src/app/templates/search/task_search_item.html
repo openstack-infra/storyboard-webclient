@@ -1,0 +1,20 @@
+<td class="col-xs-2 col-sm-1">
+    <task-priority-dropdown
+            editable="false"
+            priority="{{task.priority}}"
+            />
+</td>
+<td>
+    <task-status-dropdown
+            editable="false"
+            status="{{task.status}}"
+            class="pull-right"
+            ></task-status-dropdown>
+    {{task.title}}
+    <br/>
+    <small class="text-muted"
+           resolve-story="task.story_id">
+        <a href="#!/story/{{story.id}}">
+            {{story.id}}: {{story.title}}</a>
+    </small>
+</td>
