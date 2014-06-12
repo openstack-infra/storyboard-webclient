@@ -20,12 +20,14 @@
      ng-controller="HeaderController">
     <div class="container-fluid">
         <ul class="nav nav-pills nav-stacked text-center">
-            <li class="visible-xs visible-sm">
-                <a href="#" ng-click="newStory()">
-                    <i class="fa fa-plus-circle"></i>
+            <li active-path="^\/search.*">
+                <a href="#!/search">
+                    <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
+                    <i class="fa fa-search fa-3x visible-lg visible-md"></i>
+                    <small class="visible-lg visible-md">Search</small>
                 </a>
             </li>
-            <li class="nav-divider visible-xs visible-sm"></li>
+            <li class="nav-divider"></li>
             <li active-path="^\/(dashboard)?$">
                 <a href="#!/">
                     <i class="fa fa-dashboard fa-lg visible-sm visible-xs"></i>
