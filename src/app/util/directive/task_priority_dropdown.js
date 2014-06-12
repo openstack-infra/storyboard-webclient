@@ -32,24 +32,17 @@ angular.module('sb.util').directive('taskPriorityDropdown',
                 onChange: '&',
                 editable: '@'
             },
-            link: function ($scope, element) {
+            link: function ($scope) {
 
                 // Initialize the style.
                 $scope.style = 'default';
 
                 // Make sure our scope can set its own priority
-                $scope.setPriority = function (newPriority, $event) {
+                $scope.setPriority = function (newPriority) {
                     if (newPriority !== $scope.priority) {
                         $scope.priority = newPriority;
                         $scope.onChange({priority: newPriority});
                     }
-
-                    // We have to manually stop propagation so the control
-                    // doesn't leak its events to other parts of the app.
-                    $event.stopPropagation();
-
-                    // This also forces us to close the dropdown manually.
-                    element.find('.dropdown').dropdown('toggle');
                 };
             }
         };

@@ -2,23 +2,23 @@
     {{priority | taskPriorityLabel}}
 </span>
 <div class="dropdown" ng-show="editable">
-    <a class="btn btn-{{style}} btn-xs dropdown-toggle" data-toggle="dropdown">
+    <a class="btn btn-{{style}} btn-xs dropdown-toggle">
         {{priority | taskPriorityLabel}}
         <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-right">
         <li ng-class="{disabled: priority == 'high'}">
-            <a href="" ng-click="setPriority('high', $event)">
+            <a href="" ng-click="setPriority('high')">
                 {{'high' | taskPriorityLabel}}
             </a>
         </li>
         <li ng-class="{disabled: priority == 'medium'}">
-            <a href="" ng-click="setPriority('medium', $event)">
+            <a href="" ng-click="setPriority('medium')">
                 {{'medium' | taskPriorityLabel}}
             </a>
         </li>
         <li ng-class="{disabled: priority == 'low'}">
-            <a href="" ng-click="setPriority('low', $event)">
+            <a href="" ng-click="setPriority('low')">
                 {{'low' | taskPriorityLabel}}
             </a>
         </li>
