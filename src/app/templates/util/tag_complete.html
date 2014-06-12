@@ -1,32 +1,42 @@
-<div class="dropdown">
-    {{model}}
+<div>
     <div class="form-control tag-input"
          ng-click="focus()">
-        <div class="tag"
-             ng-repeat="tag in selectedTags"
-             ng-click="noFocus($event)">
-            {{tag[tagLabelField]}}
-            <a class="tag-remove" ng-click="removeTag(tag)">
+        <span ng-repeat="tag in tagCompleteTags track by $index"
+              ng-click="noFocus($event)">
+            <div tag-complete-tag
+                 index="$index"
+                 tag="tag"
+                 label-field="tagCompleteLabelField"
+                 template-url="tagCompleteTagTemplateUrl"
+                 remove-tag="removeTag(tag)">
+            </div>
+            <span ng-include="getTemplateUrl()"></span>
+        </span>
+        <input name="tagInputField"
+               type="text"
+               class="tag-input"
+               autoresize-width
+               ng-delete="deletePressed()"
+               ng-model="newTagName">
+        </input>
+    </div>
+    <div typeahead-popup
+         matches="matches"
+         active="activeIdx"
+         position="position"
+         template-url="{{tagCompleteOptionTemplateUrl}}"
+         select="select(activeIdx)">
+    </div>
+
+    <!-- Default tag template -->
+    <script type="text/ng-template"
+            id="/tag_complete/default_tag_template.html">
+        <div class="tag">
+            {{tag[labelField]}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
                 &times;
             </a>
         </div>
-        <input name="tagInputField"
-               class="tag-input dropdown-toggle"
-               type="text"
-               autoresize-width
-               ng-model="newTagName"
-               ng-keydown="onKeyDown($event)"
-               ng-keyup="onKeyUp($event)"
-               ng-delete="deletePressed()"
-               ng-enter="addTag()">
-        </input>
-    </div>
-    <ul class="dropdown-menu">
-        <li ng-repeat="tag in filteredTags"
-            ng-class="{active: $index == selectedIndex}">
-            <a ng-click="addTag(tag[tagLabelField])">
-                {{tag[tagLabelField]}}
-            </a>
-        </li>
-    </ul>
+    </script>
 </div>
