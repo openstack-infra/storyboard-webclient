@@ -18,19 +18,16 @@ table.table.table-supercondensed {
 }
 
 // A table style that retains the block positioning, but otherwise
-// strips out all borders and backgrounds.
+// strips out all borders.
 table.table.table-clean {
-    background: none;
     > thead,
     > tbody,
     > tfoot {
-        background: none;
+        border: none;
         > tr {
-            background: none;
             > th,
             > td {
                 border: none;
-                background: none;
             }
         }
     }
