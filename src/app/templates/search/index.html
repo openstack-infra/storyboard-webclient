@@ -1,0 +1,253 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ 	http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Search</h1>
+        </div>
+    </div>
+    <div class="row" ng-controller="SearchCriteriaController">
+        <div class="col-sm-12">
+            <div class="form-group has-feedback has-feedback-no-label">
+                <div id="search-criteria"
+                     tag-complete="searchForCriteria($viewValue)"
+                     tag-complete-tags="criteria"
+                     tag-complete-label-field="title"
+                     tag-complete-option-template-url="'/inline/criteria_option_item.html'"
+                     tag-complete-tag-template-url="'/inline/criteria_tag_item.html'"
+                     tag-complete-loading="loadingCriteria = isLoading"
+                     tag-complete-on-select="addCriteria(tag)">
+                </div>
+                <span class="form-control-feedback text-muted">
+                    <i class="fa fa-search"
+                       ng-hide="loadingCriteria"></i>
+                    <i class="fa fa-refresh fa-spin"
+                       ng-show="loadingCriteria"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center text-muted"
+             ng-show="criteria.length == 0">
+            <em>No search criteria entered.</em>
+        </div>
+        <div class="col-xs-12"
+             search-results
+             search-resource="Project"
+             search-criteria="criteria">
+            <div ng-if="hasCriteria">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Project Name</th>
+                    <th class="text-right">Created On</th>
+                    </thead>
+                    <tbody ng-if="searchResults.length != 0">
+                    <tr ng-repeat="project in searchResults"
+                        ng-include="'app/templates/search/project_search_item.html'">
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                    <td colspan="2" class="text-center text-muted">
+                        <em>No projects found.</em>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="isSearching">
+                    <td colspan="2">
+                        <small class="fa fa-spin fa-refresh text-muted">
+                        </small>
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12"
+             search-results
+             search-resource="Story"
+             search-criteria="criteria">
+            <div ng-if="hasCriteria">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Story Title</th>
+                    <th class="text-right">Status</th>
+                    </thead>
+                    <tbody ng-if="searchResults.length != 0">
+                    <tr ng-repeat="story in searchResults"
+                        ng-include="'app/templates/search/story_search_item.html'">
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                    <td colspan="2" class="text-center text-muted">
+                        <em>No stories found.</em>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="isSearching">
+                    <td colspan="2">
+                        <small class="fa fa-spin fa-refresh text-muted">
+                        </small>
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12"
+             search-results
+             search-resource="Task"
+             search-criteria="criteria">
+            <div ng-if="hasCriteria">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Task Title</th>
+                    <th>Assigned</th>
+                    <th>Project</th>
+                    <th>Story</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    </thead>
+                    <tbody ng-if="searchResults.length != 0">
+                    <tr ng-repeat="task in searchResults"
+                        ng-include="'app/templates/search/task_search_item.html'">
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                    <td colspan="2" class="text-center text-muted">
+                        <em>No tasks found.</em>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="isSearching">
+                    <td colspan="2">
+                        <small class="fa fa-spin fa-refresh text-muted">
+                        </small>
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xs-12"
+             search-results
+             search-resource="User"
+             search-criteria="criteria">
+            <div ng-if="hasCriteria">
+                <table class="table table-striped">
+                    <thead>
+                    <th>User</th>
+                    <th>Name</th>
+                    <th class="text-right">Last Login</th>
+                    </thead>
+                    <tbody ng-if="searchResults.length != 0">
+                    <tr ng-repeat="user in searchResults"
+                        ng-include="'app/templates/search/user_search_item.html'">
+                    </tr>
+                    </tbody>
+                    <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                    <td colspan="3" class="text-center text-muted">
+                        <em>No users found.</em>
+                    </td>
+                    </tbody>
+                    <tbody ng-if="isSearching">
+                    <td colspan="3">
+                        <small class="fa fa-spin fa-refresh text-muted">
+                        </small>
+                    </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="/inline/criteria_option_item.html">
+    <a ng-switch="match.type">
+        <span ng-switch-when="text">
+            <em class="pull-right text-muted">
+                <small>&emsp;Text Search</small>
+            </em>
+            {{match.value}}&nbsp;
+        </span>
+        <span ng-switch-when="resource">
+            <em class="pull-right text-muted">
+                <small>&emsp;Type</small>
+            </em>
+            {{match.title}}
+        </span>
+        <span ng-switch-when="story">
+            <em class="pull-right text-muted">
+                <small>&emsp;Story</small>
+            </em>
+            {{match.title}}
+        </span>
+        <span ng-switch-when="project">
+            <em class="pull-right text-muted">
+                <small>&emsp;Project</small>
+            </em>
+            {{match.title}}
+        </span>
+        <span ng-switch-when="user">
+            <em class="pull-right text-muted">
+                <small>&emsp;User</small>
+            </em>
+            {{match.title}}
+        </span>
+        <span ng-switch-default>
+            UNKNOWN TYPE: {{match.type}}
+        </span>
+    </a>
+</script>
+
+<script type="text/ng-template" id="/inline/criteria_tag_item.html">
+    <span ng-switch="tag.type">
+        <div class="tag" ng-switch-when="text">
+            <strong>Text:</strong> {{tag.value}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+        <div class="tag tag-success" ng-switch-when="resource">
+            <strong>Type:</strong> {{tag.title}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+        <div class="tag tag-info" ng-switch-when="user">
+            <strong>User:</strong> {{tag.title}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+        <div class="tag tag-info" ng-switch-when="story">
+            <strong>Story:</strong> {{tag.title}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+        <div class="tag tag-info" ng-switch-when="project">
+            <strong>Project:</strong> {{tag.title}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+        <div class="tag tag-danger" ng-switch-default>
+            <strong>Unknown:</strong> {{tag.value}}
+            <a class="tag-remove"
+               ng-click="removeTag({tag:tag})">
+                &times;
+            </a>
+        </div>
+    </span>
+</script>

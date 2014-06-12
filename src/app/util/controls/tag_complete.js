@@ -19,178 +19,252 @@
  * set of source data, and restricts inputs to items in that list.
  */
 angular.module('sb.util').directive('tagComplete',
-    function () {
+    function ($q, $parse, $position) {
         'use strict';
+
+        var HOT_KEYS = [9, 13, 27, 38, 40];
 
         return {
-            restrict: 'E',
+            restrict: 'EAo',
             replace: true,
-            require: 'ngModel',
             scope: {
-                selectedTags: '=ngModel',
-                validTags: '=',
-                tagLabelField: '@'
+                tagComplete: '&',
+                tagCompleteTags: '=',
+                tagCompleteLabelField: '@',
+                tagCompleteTagTemplateUrl: '=',
+                tagCompleteOptionTemplateUrl: '=',
+                tagCompleteVerify: '&',
+                tagCompleteOnSelect: '&',
+                tagCompleteLoading: '&'
             },
-            controller: 'TagCompleteController',
-            templateUrl: 'app/templates/util/tag_complete.html'
-        };
-    });
+            templateUrl: 'app/templates/util/tag_complete.html',
+            link: function ($scope, $element, attrs) {
+                /**
+                 * Sanitize the template url.
+                 *
+                 * @type {string|*}
+                 */
+                /**
+                 * Grab our input.
+                 */
+                var $input = $element.find('input');
 
-/**
- * The controller for the above referenced Tag Complete control.
- */
-angular.module('sb.util').controller('TagCompleteController',
-    function ($element, $scope) {
-        'use strict';
+                /**
+                 * A setter that simplifies setting a property in the original
+                 * scope when an async load is kicked off.
+                 *
+                 * @type {Function}
+                 */
+                var isLoadingSetter = function (isLoading) {
+                    if (!!$scope.tagCompleteLoading) {
+                        $scope.tagCompleteLoading({isLoading: isLoading});
+                    }
+                };
 
-        /**
-         * Variable for the input field that triggers our filter.
-         */
-        $scope.newTagName = '';
+                /**
+                 * URL for the template to use for the dropdown rendering.
+                 *
+                 * @type {String}
+                 */
+                $scope.tagCompleteTemplateUrl =
+                    $parse(attrs.tagCompleteTemplateUrl);
 
-        /**
-         * List of filtered tags.
-         */
-        $scope.filteredTags = [];
+                /**
+                 * Are we focused?
+                 * @type {Boolean}
+                 */
+                var hasFocus = false;
 
-        /**
-         * The cursor.
-         */
-        $scope.selectedIndex = 0;
+                /**
+                 * Reset the matches on the scope.
+                 */
+                var resetMatches = function () {
+                    $scope.matches = [];
+                    $scope.activeIdx = -1;
+                };
 
-        /**
-         * Apply the filter.
-         */
-        function applyFilter() {
-            var newFilteredTags = [];
-            var selectedTags = $scope.selectedTags || [];
+                /**
+                 * Search for matches...
+                 *
+                 * @param inputValue
+                 */
+                var getMatchesAsync = function (inputValue) {
 
-            $scope.validTags.forEach(
-                function (tag) {
-                    var searchIndex = (tag[$scope.tagLabelField] || '')
-                        .toLowerCase()
-                        .indexOf($scope.newTagName.toLowerCase());
+                    if (!hasFocus || !inputValue) {
+                        return;
+                    }
 
-                    if (searchIndex > -1 &&
-                        selectedTags.indexOf(tag) === -1) {
+                    var locals = {$viewValue: inputValue};
+                    isLoadingSetter(true);
 
-                        newFilteredTags.push(tag);
+                    $q.when($scope.tagComplete(locals))
+                        .then(function (matches) {
+                            // Make sure that the returned query equals what's
+                            // currently being searched for: It could be that
+                            // we have multiple queries in flight...
+                            if (inputValue === $scope.newTagName && hasFocus) {
+                                if (matches.length > 0) {
+                                    $scope.activeIdx = 0;
+                                    $scope.matches = matches;
+                                    $scope.query = inputValue;
+                                } else {
+                                    resetMatches();
+                                }
+                                isLoadingSetter(false);
+
+                                // Position pop-up with matches - we need to
+                                // re-calculate its position each time we are
+                                // opening a window with matches due to other
+                                // elements being rendered
+                                $scope.position = $position.position($element);
+                                $scope.position.top = $scope.position.top +
+                                    $element.prop('offsetHeight');
+                            }
+                        }, function () {
+                            resetMatches();
+                            isLoadingSetter(false);
+                        });
+                };
+
+                // Watch the model and trigger searches when the value changes.
+                $scope.$watch(function () {
+                    return $scope.newTagName;
+                }, getMatchesAsync);
+
+                /**
+                 * Focus when the input gets focus.
+                 */
+                $input.on('focus', function () {
+                    hasFocus = true;
+                });
+
+                /**
+                 * Blur when the input gets blurred.
+                 */
+                $input.on('blur', function () {
+                    resetMatches();
+                    $scope.newTagName = '';
+                    hasFocus = false;
+                    $scope.$digest();
+                });
+
+                /**
+                 * Bind to arrow controls, escape, and return.
+                 */
+                $input.on('keydown', function (evt) {
+
+                    // Make sure we have something to react to.
+                    if ($scope.matches.length === 0 ||
+                        HOT_KEYS.indexOf(evt.which) === -1) {
+                        return;
+                    }
+
+                    evt.preventDefault();
+
+                    if (evt.which === 40) {
+                        $scope.activeIdx = ($scope.activeIdx + 1) %
+                            $scope.matches.length;
+                        $scope.$digest();
+                    } else if (evt.which === 38) {
+                        $scope.activeIdx = ($scope.activeIdx ? $scope.activeIdx
+                            : $scope.matches.length) - 1;
+                        $scope.$digest();
+                    } else if (evt.which === 13 || evt.which === 9) {
+                        $scope.$apply(function () {
+                            $scope.select($scope.activeIdx);
+                        });
+                    } else if (evt.which === 27) {
+                        evt.stopPropagation();
+
+                        resetMatches();
+                        $scope.$digest();
                     }
                 });
 
-            $scope.filteredTags = newFilteredTags;
-            $scope.selectedIndex = 0;
+                /**
+                 * Event handler when delete is pressed inside the input field.
+                 * Pops the last item off the selected list.
+                 */
+                $scope.deletePressed = function () {
+                    var selectedTags = $scope.tagCompleteTags || [];
 
-            updateDropdownAppearance();
-        }
+                    if (selectedTags.length > 0 && !$scope.newTagName) {
+                        selectedTags.pop();
+                        return true;
+                    }
+//                    return false;
+                };
 
-        /**
-         * Toggle the appearance of the dropdown.
-         */
-        function updateDropdownAppearance() {
-            if ($scope.newTagName.length === 0 ||
-                $scope.filteredTags.length === 0) {
-                $element.find('.dropdown-menu').hide();
-            } else {
-                $element.find('.dropdown-menu').show();
-            }
-        }
+                /**
+                 * When a user clicks on the background of this control, we want
+                 * to focus the text input field.
+                 */
+                $scope.focus = function () {
 
-        /**
-         * Dumb filter of our valid tag array.
-         */
-        $scope.onKeyUp = function (event) {
-            // Trap the arrow keys explicitly so they don't trigger a filter.
-            if (event.which === 38 || event.which === 40) {
-                return;
-            }
+                    $input[0].focus();
+                };
 
-            applyFilter();
-        };
+                /**
+                 * When a user clicks on the actual tag, we need to intercept
+                 * the mouse event so it doesn't refocus the cursor.
+                 */
+                $scope.noFocus = function (event) {
+                    event.stopImmediatePropagation();
+                };
 
-        /**
-         * Traps the arrow keys for filter navigation.
-         */
-        $scope.onKeyDown = function (event) {
-            var newIndex = $scope.selectedIndex;
-            if (event.which === 38) {
-                newIndex = Math.max(0, newIndex - 1);
-            } else if (event.which === 40) {
-                newIndex = Math.min($scope.filteredTags.length, newIndex + 1);
-            }
+                /**
+                 * Called when something's selected
+                 */
+                $scope.select = function (idx) {
+                    var item = $scope.matches[idx];
 
-            if (newIndex !== $scope.selectedIndex) {
-                $scope.selectedIndex = newIndex;
-                event.preventDefault();
-                event.stopImmediatePropagation();
-            }
-        };
+                    $scope.tagCompleteTags.push(item);
 
-        /**
-         * Event handler when delete is pressed inside the input field. Pops
-         * the last item off the selected list.
-         */
-        $scope.deletePressed = function () {
-            var selectedTags = $scope.selectedTags || [];
+                    $scope.newTagName = '';
+                    resetMatches();
 
-            if (selectedTags.length > 0 && $scope.newTagName.length === 0) {
-                selectedTags.pop();
-                return true;
-            }
-            return false;
-        };
+                    if (!!$scope.tagCompleteOnSelect) {
+                        $scope.tagCompleteOnSelect({tag: item});
+                    }
+                };
 
-        /**
-         * Adds a tag.
-         */
-        $scope.addTag = function () {
-            if ($scope.newTagName.length === 0) {
-                return;
-            }
+                /**
+                 * Removes a tag.
+                 */
+                $scope.removeTag = function (tag) {
+                    if (!$scope.tagCompleteTags) {
+                        return;
+                    }
+                    var idx = $scope.tagCompleteTags.indexOf(tag);
+                    if (idx > -1) {
+                        $scope.tagCompleteTags.splice(idx, 1);
+                    }
+                };
 
-            if (!$scope.selectedTags) {
-                $scope.selectedTags = [];
-            }
-
-            var selectedTag = $scope.filteredTags[$scope.selectedIndex];
-
-            if (!!selectedTag && $scope.selectedTags &&
-                $scope.selectedTags.indexOf(selectedTag) === -1) {
-
-                $scope.selectedTags.push(selectedTag);
-                $scope.newTagName = '';
-                applyFilter();
-            }
-
-        };
-
-        /**
-         * Removes a tag.
-         */
-        $scope.removeTag = function (tag) {
-            if (!$scope.selectedTags) {
-                return;
-            }
-            var idx = $scope.selectedTags.indexOf(tag);
-            if (idx > -1) {
-                $scope.selectedTags.splice(idx, 1);
+                resetMatches();
             }
         };
+    })
+    .directive('tagCompleteTag',
+    function ($http, $templateCache, $compile, $parse) {
+        'use strict';
 
-        /**
-         * When a user clicks on the background of this control, we want to
-         * focus the text input field.
-         */
-        $scope.focus = function () {
-            $element.find('input[name=tagInputField]').focus();
-        };
+        return {
+            restrict: 'EA',
+            scope: {
+                index: '=',
+                tag: '=',
+                labelField: '=',
+                removeTag: '&'
+            },
+            link: function (scope, element, attrs) {
+                var tplUrl = $parse(attrs.templateUrl)(scope.$parent) ||
+                    '/tag_complete/default_tag_template.html';
 
-        /**
-         * When a user clicks on the actual tag, we need to intercept the
-         * mouse event so it doesn't refocus the cursor.
-         */
-        $scope.noFocus = function (event) {
-            event.stopImmediatePropagation();
+                $http.get(tplUrl, {cache: $templateCache})
+                    .success(function (tplContent) {
+                        element.replaceWith($compile(tplContent.trim())(scope));
+                    });
+            }
         };
-    }
-);
+    });

@@ -42,7 +42,8 @@ angular.module('sb.util')
                 // Sane attach/detach
                 $document.find('body').append(shadow);
                 $scope.$on('$destroy', function () {
-                    $document.find('body').remove(shadow);
+                    shadow.remove();
+//                    $document.find('body').remove(shadow);
                 });
 
                 /**
@@ -64,7 +65,8 @@ angular.module('sb.util')
                     shadow.text(value);
                     shadow.css('display', 'inline-block');
                     try {
-                        $element.width(shadow.width());
+                        $element[0].offsetWidth = shadow[0].offsetWidth;
+//                        $element.width(shadow.width());
                     }
                     finally {
                         shadow.css('display', 'none');
