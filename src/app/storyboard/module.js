@@ -28,7 +28,7 @@ angular.module('storyboard',
         'ui.bootstrap', 'monospaced.elastic', 'angularMoment'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
-        timezone: 'UTC',
+        timezone: 'UTC'
     })
     .config(function ($provide, $urlRouterProvider, $locationProvider,
                       $httpProvider, msdElasticConfig) {

@@ -15,11 +15,12 @@
  */
 
 /**
- * Controller for our application header.
+ * Controller for our application header. Includes a typeahead-style quicknav
+ * and search box.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser) {
+    function ($q, $scope, $rootScope, $state, NewStoryService, Session,
+              SessionState, CurrentUser, Browse, Criteria) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -59,11 +60,62 @@ angular.module('storyboard').controller('HeaderController',
             Session.destroySession();
         };
 
-        // Watch for changes to the session state.
-        $rootScope.$on(SessionState.LOGGED_IN, function () {
-            resolveCurrentUser();
-        });
-        $rootScope.$on(SessionState.LOGGED_OUT, function () {
-            $scope.currentUser = null;
-        });
+        /**
+         * Initialize the search string.
+         */
+        $scope.searchString = '';
+
+        /**
+         * Send the user to search and clear the header search string.
+         */
+        $scope.search = function (criteria) {
+
+            switch (criteria.type) {
+                case 'text':
+                    $state.go('search', {q: criteria.value});
+                    break;
+                case 'project':
+                    $state.go('project.detail', {id: criteria.value});
+                    break;
+                case 'story':
+                    $state.go('story.detail', {storyId: criteria.value});
+                    break;
+            }
+
+            $scope.searchString = '';
+        };
+
+        /**
+         * Filter down the search string to actual resources that we can
+         * browse to directly (Explicitly not including users here).
+         */
+        $scope.quickSearch = function (searchString) {
+            var deferred = $q.defer();
+
+            searchString = searchString || '';
+
+            $q.all({
+                projects: Browse.project(searchString),
+                stories: Browse.story(searchString)
+            }).then(function (results) {
+
+                var criteria = [
+                    Criteria.create('text', searchString)
+                ];
+
+                // Add the returned projects to the results list.
+                results.projects.forEach(function (item) {
+                    criteria.push(item);
+                });
+                // Add the returned stories to the results list.
+                results.stories.forEach(function (item) {
+                    criteria.push(item);
+                });
+
+                deferred.resolve(criteria);
+            });
+
+            // Return the search promise.
+            return deferred.promise;
+        };
     });
