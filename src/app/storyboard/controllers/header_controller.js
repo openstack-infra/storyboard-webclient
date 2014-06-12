@@ -59,6 +59,20 @@ angular.module('storyboard').controller('HeaderController',
             Session.destroySession();
         };
 
+        /**
+         * Initialize the search string.
+         */
+        $scope.searchString = '';
+
+        /**
+         * Send the user to search and clear the header searchstring.
+         */
+        $scope.search = function () {
+            var q = $scope.searchString;
+            $scope.searchString = '';
+            $state.go('search', {name: q});
+        };
+
         // Watch for changes to the session state.
         $rootScope.$on(SessionState.LOGGED_IN, function () {
             resolveCurrentUser();

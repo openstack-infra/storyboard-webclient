@@ -1,0 +1,87 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ 	http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Task</th>
+        <th>Project</th>
+        <th>Assigned</th>
+        <th class="text-right">Priority</th>
+        <th class="text-right">Status</th>
+    </tr>
+    </thead>
+
+    <!-- Results list -->
+    <tbody ng-show="tasks.$resolved && tasks.length > 0">
+    <tr ng-repeat="task in tasks">
+        <td>
+            <a href="#!/story/{{task.story_id}}">
+                {{task.title}}
+            </a>
+        </td>
+        <td>
+            <a href="#!/project/{{task.project_id}}" ng-show="project">
+                {{project.name}}
+            </a>
+            <em class="text-muted" ng-hide="project">
+                Project not found
+            </em>
+        </td>
+        <td>
+            <span ng-show="assignee">
+                {{assignee.full_name}}
+            </span>
+            <em class="text-muted" ng-hide="assignee">
+                Not assigned
+            </em>
+        </td>
+        <td class="text-right">
+            <task-priority-dropdown
+                    editable="{{isLoggedIn}}"
+                    on-change="updatePriority(priority)"
+                    priority="{{task.priority}}"
+                    />
+        </td>
+        <td class="text-right">
+            <task-status-dropdown
+                    editable="{{isLoggedIn}}"
+                    on-change="updateStatus(status)"
+                    status="{{task.status}}"
+                    />
+        </td>
+    </tr>
+    </tbody>
+
+    <!-- Loading display -->
+    <tbody ng-show="!tasks.$resolved">
+    <tr>
+        <td class="text-center text-muted" colspan="5">
+            <i class="fa fa-refresh fa-lg fa-spin"></i>
+        </td>
+    </tr>
+    </tbody>
+
+    <!-- No results display -->
+    <tbody ng-hide="!tasks.$resolved || tasks.length > 0">
+    <tr>
+        <td class="text-center text-muted" colspan="5">
+            <em>
+                We were unable to find any tasks.
+            </em>
+        </td>
+    </tr>
+    </tbody>
+</table>
