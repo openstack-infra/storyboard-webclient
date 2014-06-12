@@ -15,8 +15,7 @@
   -->
 
 <nav class="navbar navbar-default navbar-fixed-top"
-     role="navigation"
-     ng-controller="HeaderController">
+     role="navigation">
     <div class="container-fluid visible-xs"
          ng-include
          src="'/inline/header_mobile.html'">
@@ -29,99 +28,120 @@
 
 <!-- The menu for regular sized screens -->
 <script type="text/ng-template" id="/inline/header_regular.html">
+    <div ng-controller="HeaderController">
 
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#!/">StoryBoard</a>
-    </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#!/">StoryBoard</a>
+        </div>
 
-    <ul class="nav navbar-nav">
-        <li>&nbsp;&nbsp;</li>
-        <li>
-            <button type="button"
-                    class="btn btn-primary navbar-btn"
-                    ng-click="newStory()">
-                <i class="fa fa-plus-circle"></i>
-                New Story
-            </button>
-        </li>
-    </ul>
+        <ul class="nav navbar-nav">
+            <li>&nbsp;&nbsp;</li>
+            <li>
+                <button type="button"
+                        class="btn btn-primary navbar-btn"
+                        ng-click="newStory()">
+                    <i class="fa fa-plus-circle"></i>
+                    New Story
+                </button>
+            </li>
+        </ul>
 
-    <ul class="nav navbar-nav navbar-right">
-        <li ng-hide="isLoggedIn">
-            <a href="#!/auth/authorize">
-                <i class="fa fa-sign-in"></i>
-                Login
-            </a>
-        </li>
-        <li class="dropdown" ng-show="isLoggedIn">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-hide="isLoggedIn">
+                <a href="#!/auth/authorize">
+                    <i class="fa fa-sign-in"></i>
+                    Login
+                </a>
+            </li>
+            <li class="dropdown" ng-show="isLoggedIn">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span ng-show="currentUser.$resolved">
                     {{currentUser.full_name}}
                 </span>
-                <em class="text-muted"
-                    ng-hide="currentUser.$resolved">
-                    Loading...
-                </em>
-                <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li active-path="^\/profile\/preferences*">
-                    <a href="#!/profile/preferences">
-                        <i class="fa fa-gear"></i>
-                        Preferences
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#!/auth/deauthorize">
-                        <i class="fa fa-sign-out"></i>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+                    <em class="text-muted"
+                        ng-hide="currentUser.$resolved">
+                        Loading...
+                    </em>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li active-path="^\/profile\/preferences*">
+                        <a href="#!/profile/preferences">
+                            <i class="fa fa-gear"></i>
+                            Preferences
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#!/auth/deauthorize">
+                            <i class="fa fa-sign-out"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
+        <form class="navbar-form navbar-right" role="search">
+            <div class="form-group has-feedback">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Search"
+                       ng-model="searchString"
+                       ng-enter="search()">
+            <span class="form-control-feedback text-muted">
+                <i class="fa fa-search"></i>
+            </span>
+            </div>
+        </form>
+    </div>
 </script>
 
 
 <!-- The menu for xs sized screens -->
 <script type="text/ng-template" id="/inline/header_mobile.html">
-    <div class="navbar-header">
-        <button type="button"
-                class="btn btn-sm btn-primary navbar-btn pull-right"
-                data-toggle="collapse"
-                data-target="#mobile-dropdown-menu"
-                ng-show="isLoggedIn">
-            <i class="fa fa-gear"></i>
-        </button>
-        <a href="#!/auth/authorize"
-           class="btn btn-sm btn-primary navbar-btn pull-right"
-           ng-hide="isLoggedIn">
-            <i class="fa fa-sign-in"></i>
-        </a>
-        <a class="navbar-brand" href="#!/">StoryBoard</a>
-    </div>
+    <div ng-controller="HeaderController">
+        <div class="navbar-header">
+            <button type="button"
+                    class="btn btn-sm btn-primary navbar-btn pull-right"
+                    data-toggle="collapse"
+                    data-target="#mobile-dropdown-menu"
+                    ng-show="isLoggedIn">
+                <i class="fa fa-gear"></i>
+            </button>
+            <a href="#!/auth/authorize"
+               class="btn btn-sm btn-primary navbar-btn pull-right"
+               ng-hide="isLoggedIn">
+                <i class="fa fa-sign-in"></i>
+            </a>
+            <a href="#" ng-click="newStory()"
+               class="btn btn-sm btn-primary navbar-btn">
+                <i class="fa fa-plus-circle"></i>
+                New Story
+            </a>
+            <a class="navbar-brand" href="#!/">StoryBoard</a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="mobile-dropdown-menu">
-        <ul class="nav navbar-nav">
-            <li active-path="^\/profile\/preferences*">
-                <a href="#!/profile/preferences">
-                    <i class="fa fa-user"></i>
+        <div class="collapse navbar-collapse" id="mobile-dropdown-menu">
+            <ul class="nav navbar-nav">
+                <li active-path="^\/profile\/preferences*">
+                    <a href="#!/profile/preferences">
+                        <i class="fa fa-user"></i>
                         <span ng-show="currentUser.$resolved">
                             {{currentUser.full_name}}
                         </span>
-                    <em class="text-muted"
-                        ng-hide="currentUser.$resolved">
-                        Loading...
-                    </em>
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li><a href="#!/auth/deauthorize">
-                <i class="fa fa-sign-out"></i>
-                Logout
-            </a></li>
-        </ul>
+                        <em class="text-muted"
+                            ng-hide="currentUser.$resolved">
+                            Loading...
+                        </em>
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#!/auth/deauthorize">
+                    <i class="fa fa-sign-out"></i>
+                    Logout
+                </a></li>
+            </ul>
+        </div>
     </div>
 </script>
