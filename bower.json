@@ -2,7 +2,6 @@
   "name": "storyboard-webclient",
   "version": "0.0.1",
   "dependencies": {
-    "jquery": "2.0.3",
     "font-awesome": "4.0",
     "angular": "1.2.13",
     "angular-resource": "1.2.13",

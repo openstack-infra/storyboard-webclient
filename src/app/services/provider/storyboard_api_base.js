@@ -40,9 +40,8 @@ angular.module('sb.services')
                 return;
             }
         }
-
         // If there is a <base> tag, then we can use that.
-        if ($('base').length > 0) {
+        if (document.getElementsByTagName('base').length > 0) {
             $provide.constant(propertyName, '');
             return;
         }
