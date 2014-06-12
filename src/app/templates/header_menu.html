@@ -86,9 +86,8 @@
             <div class="form-group has-feedback">
                 <input type="text"
                        class="form-control"
-                       placeholder="Quicknav"
+                       placeholder="Search"
                        ng-model="searchString"
-
                        typeahead-append-to-body="true"
                        typeahead-editable="false"
                        typeahead="criteria as criteria.title for criteria in quickSearch($viewValue)"
@@ -122,6 +121,11 @@
                class="btn btn-sm btn-primary navbar-btn pull-right"
                ng-hide="isLoggedIn">
                 <i class="fa fa-sign-in"></i>
+            </a>
+            <a href="#" ng-click="newStory()"
+               class="btn btn-sm btn-primary navbar-btn">
+                <i class="fa fa-plus-circle"></i>
+                New Story
             </a>
             <a class="navbar-brand" href="#!/">StoryBoard</a>
         </div>
