@@ -32,10 +32,12 @@ angular.module('sb.util')
                 // Clone the created element and attach it to our DOM.
                 var shadow = angular.element('<span></span>');
                 shadow.attr('class', $element.attr('class'));
-                shadow.css('display', 'none')
-                    .css('white-space', 'pre')
-                    .css('width', 'auto')
-                    .css('visibility', 'hidden');
+                shadow.css({
+                    display: 'none',
+                    'white-space': 'pre',
+                    width: 'auto',
+                    visibility: 'hidden'
+                });
 
                 // Sane attach/detach
                 $document.find('body').append(shadow);
