@@ -20,6 +20,6 @@
  */
 angular.module('sb.util').run(function ($rootScope) {
     'use strict';
-    var regex = '^[a-zA-Z0-9][a-zA-Z0-9\\-\\.\\/]*$';
+    var regex = '^[a-zA-Z0-9]+([\\-\\./]?[a-zA-Z0-9]+)*$';
     $rootScope.PROJECT_NAME_REGEX = new RegExp(regex);
 });
