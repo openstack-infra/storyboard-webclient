@@ -70,6 +70,7 @@
                    required
                    ng-pattern="PROJECT_NAME_REGEX"
                    maxlength="50"
+                   ng-minlength="3"
                    ng-disabled="isUpdating"
                    placeholder="Project Name">
             </input>
@@ -81,7 +82,11 @@
                  <span ng-show="projectForm.name.$error.pattern">
                      A project name must begin with a letter, and may only
                      contain letters, numbers, forward slashes, periods, and
-                     dashes.
+                     dashes. It should not start or end with a separator and
+                     must not contain two or more sequential separators.
+                 </span>
+                 <span ng-show="projectForm.name.$error.minlength">
+                     A project name must have at least 3 characters.
                  </span>
             </div>
         </div>
