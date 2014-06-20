@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Thierry Carrez <thierry@openstack.org>
+Code-Review+2: Michael Krotscheck <krotscheck@gmail.com>
+Workflow+1: Michael Krotscheck <krotscheck@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 20 Jun 2014 17:50:06 +0000
+Reviewed-on: https://review.openstack.org/100458
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
