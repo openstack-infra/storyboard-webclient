@@ -20,7 +20,7 @@
  */
 angular.module('sb.auth').factory('Session',
     function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
-              RefreshManager, Notification) {
+              RefreshManager) {
         'use strict';
 
         /**
@@ -108,22 +108,6 @@ angular.module('sb.auth').factory('Session',
          * Initialize and test our current session token.
          */
         initializeSession();
-
-        // We're using -1 as the priority, to ensure that this is intercepted
-        // before anything else happens.
-        Notification.intercept(function (message) {
-            if (message.type === 'http' && message.message === 401) {
-                RefreshManager.tryRefresh().then(
-                    function () {
-                        $log.info('Token refreshed on 401');
-                    }, function () {
-                        $log.info('Could not refresh token. ' +
-                            'Destroying session');
-                        destroySession();
-                    });
-                return true; // Stop processing this notification.
-            }
-        }, -1);
 
         // Expose the methods for this service.
         return {
