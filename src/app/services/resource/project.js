@@ -31,10 +31,11 @@ angular.module('sb.services').factory('Project',
             {id: '@id'}
         );
 
-        ResourceFactory.applyBrowse(
+        ResourceFactory.applySearch(
             'Project',
             resource,
-            {Text: 'name'}
+            'name',
+            {Text: 'q'}
         );
 
         return resource;
