@@ -37,54 +37,79 @@ angular.module('sb.search').directive('searchResults',
                 $scope.isSearching = false;
                 $scope.searchResults = [];
 
-                // Watch for changing criteria
-                $scope.$watchCollection($parse(args.searchCriteria),
-                    function (criteria) {
+                /**
+                 * Handle error result.
+                 */
+                function handleErrorResult() {
+                    $scope.isSearching = false;
+                }
 
-                        // Extract the valid critera from the provided ones.
-                        $scope.validCriteria = Criteria
-                            .filterCriteria(resourceName, criteria);
+                /**
+                 * Handle search result.
+                 *
+                 * @param results
+                 */
+                function handleSearchResult(results) {
+                    $scope.searchResults = results;
+                    $scope.isSearching = false;
+                }
 
-                        // You have criteria, but they may not be valid.
-                        $scope.hasCriteria = criteria.length > 0;
+                /**
+                 * Update the results when the criteria change
+                 */
+                function updateResults(criteria) {
 
-                        // You have criteria, and all of them are valid for
-                        // this resource.
-                        $scope.hasValidCriteria =
-                            searchWithoutCriteria ||
-                            ($scope.validCriteria.length === criteria.length &&
-                                $scope.hasCriteria);
+                    // Extract the valid criteria from the provided ones.
+                    $scope.validCriteria = Criteria
+                        .filterCriteria(resourceName, criteria);
 
-                        // No need to search if our criteria aren't valid.
-                        if (!$scope.hasValidCriteria) {
-                            $scope.searchResults = [];
-                            $scope.isSearching = false;
-                            return;
-                        }
+                    // You have criteria, but they may not be valid.
+                    $scope.hasCriteria = criteria.length > 0;
 
-                        var params = Criteria.mapCriteria(resourceName,
-                            $scope.validCriteria);
-                        var resource = $injector.get(resourceName);
+                    // You have criteria, and all of them are valid for
+                    // this resource.
+                    $scope.hasValidCriteria =
+                        searchWithoutCriteria ||
+                        ($scope.validCriteria.length === criteria.length &&
+                            $scope.hasCriteria);
 
-                        if (!resource) {
-                            $log.error('Invalid resource name: ' +
-                                resourceName);
-                            return;
-                        }
+                    // No need to search if our criteria aren't valid.
+                    if (!$scope.hasValidCriteria) {
+                        $scope.searchResults = [];
+                        $scope.isSearching = false;
+                        return;
+                    }
 
-                        // Apply paging.
-                        params.limit = pageSize;
+                    var params = Criteria.mapCriteria(resourceName,
+                        $scope.validCriteria);
+                    var resource = $injector.get(resourceName);
 
+                    if (!resource) {
+                        $log.error('Invalid resource name: ' +
+                            resourceName);
+                        return;
+                    }
+
+                    // Apply paging.
+                    params.limit = pageSize;
+
+                    // If we don't actually have search criteria, issue a
+                    // browse. Otherwise, issue a search.
+                    if (!params.hasOwnProperty('q')) {
                         resource.query(params,
-                            function (results) {
-                                $scope.searchResults = results;
-                                $scope.isSearching = false;
-                            },
-                            function () {
-                                $scope.isSearching = false;
-                            }
-                        );
-                    });
+                            handleSearchResult,
+                            handleErrorResult);
+                    } else {
+                        resource.search(params,
+                            handleSearchResult,
+                            handleErrorResult);
+                    }
+                }
+
+                // Watch for changing criteria
+                $scope.$watchCollection(
+                    $parse(args.searchCriteria),
+                    updateResults);
             }
         };
     });

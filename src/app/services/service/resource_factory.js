@@ -103,27 +103,23 @@ angular.module('sb.services')
 
             /**
              * This method takes an already configured resource, and applies
-             * the static methods necessary to support the criteria browse API.
+             * the static methods necessary to support the criteria search API.
              * Browse parameters should be formatted as an object containing
              * 'injector name': 'param'. For example, {'Project': 'project_id'}.
              *
              * @param resourceName The explicit resource name of this resource
              * within the injection scope.
              * @param resource The configured resource.
-             * @param browseParameters The browse parameters to apply.
+             * @param nameField The name field to use while browsing criteria.
+             * @param searchParameters The search parameters to apply.
              */
-            applyBrowse: function (resourceName, resource, browseParameters) {
+            applySearch: function (resourceName, resource, nameField,
+                                   searchParameters) {
 
                 // List of criteria resolvers which we're building.
                 var criteriaResolvers = [];
-                var browseParameter = null; // Default is ''
 
-                for (var type in browseParameters) {
-
-                    // Store the browse parameter for later.
-                    if (type === 'Text') {
-                        browseParameter = browseParameters[type];
-                    }
+                for (var type in searchParameters) {
 
                     // If the requested type exists and has a criteriaResolver
                     // method, add it to the list of resolvable browse criteria.
@@ -147,7 +143,7 @@ angular.module('sb.services')
 
                 // If we found a browse parameter, add the ability to use
                 // this resource as a source of criteria.
-                if (!!browseParameter) {
+                if (!!nameField) {
                     /**
                      * Add the criteria resolver method.
                      */
@@ -157,7 +153,7 @@ angular.module('sb.services')
 
                         // build the query parameters.
                         var queryParams = {};
-                        queryParams[browseParameter] = searchString;
+                        queryParams[nameField] = searchString;
 
                         resource.query(queryParams,
                             function (result) {
@@ -167,7 +163,7 @@ angular.module('sb.services')
                                     criteriaResults.push(
                                         Criteria.create(resourceName,
                                             item.id,
-                                            item[browseParameter])
+                                            item[nameField])
                                     );
                                 });
                                 deferred.resolve(criteriaResults);
@@ -185,13 +181,13 @@ angular.module('sb.services')
                  * The criteria filter.
                  */
                 resource.criteriaFilter = Criteria
-                    .buildCriteriaFilter(browseParameters);
+                    .buildCriteriaFilter(searchParameters);
 
                 /**
                  * The criteria map.
                  */
                 resource.criteriaMap = Criteria
-                    .buildCriteriaMap(browseParameters);
+                    .buildCriteriaMap(searchParameters);
 
             }
         };
