@@ -24,10 +24,11 @@ angular.module('sb.services').factory('Comment',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
+        var commentsSearchUrl = storyboardApiBase + '/stories/0/search';
         return $resource(storyboardApiBase + '/stories/:story_id/comments/:id',
             {
                 id: '@id',
                 story_id: '@story_id'
             },
-            storyboardApiSignature);
+            storyboardApiSignature(commentsSearchUrl));
     });

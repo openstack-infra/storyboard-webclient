@@ -25,7 +25,8 @@ angular.module('sb.services').factory('User',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
+        var userSearchUrl = storyboardApiBase + '/users/search';
         return $resource(storyboardApiBase + '/users/:id',
             {id: '@id'},
-            storyboardApiSignature);
+            storyboardApiSignature(userSearchUrl));
     });

@@ -111,6 +111,23 @@ angular.module('sb.services').service('Criteria',
             },
 
             /**
+             * Does the same mapping as mapCriteria, but the text field is
+             * passed as 'q' parameter.
+             *
+             * @param resourceName
+             * @param criteria
+             * @returns A map of params
+             */
+            mapSearchCriteria: function(resourceName, criteria) {
+                var params = this.mapCriteria(resourceName, criteria);
+                params.q = params[resourceParams[resourceName].text];
+
+                delete params[resourceParams[resourceName].text];
+
+                return params;
+            },
+
+            /**
              * Create a new build criteria object.
              *
              * @param type The type of the criteria tag.

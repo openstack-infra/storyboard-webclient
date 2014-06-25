@@ -59,7 +59,7 @@ angular.module('sb.search').directive('searchResults',
                             return;
                         }
 
-                        var params = Criteria.mapCriteria(resourceName,
+                        var params = Criteria.mapSearchCriteria(resourceName,
                             $scope.validCriteria);
                         var resource = $injector.get(resourceName);
 
@@ -72,7 +72,8 @@ angular.module('sb.search').directive('searchResults',
                         // Apply paging.
                         params.limit = pageSize;
 
-                        resource.query(params,
+                        resource.search(params,
+
                             function (results) {
                                 $scope.searchResults = results;
                                 $scope.isSearching = false;

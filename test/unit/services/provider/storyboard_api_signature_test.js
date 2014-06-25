@@ -31,47 +31,47 @@ describe('storyboardApiSignature', function () {
 
     it('should declare CRUD methods', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.create).toBeTruthy();
-            expect(storyboardApiSignature.read).toBeTruthy();
-            expect(storyboardApiSignature.update).toBeTruthy();
-            expect(storyboardApiSignature.delete).toBeTruthy();
+            expect(storyboardApiSignature().create).toBeTruthy();
+            expect(storyboardApiSignature().read).toBeTruthy();
+            expect(storyboardApiSignature().update).toBeTruthy();
+            expect(storyboardApiSignature().delete).toBeTruthy();
         });
     });
 
     it('should declare a query method', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.query).toBeTruthy();
+            expect(storyboardApiSignature().query).toBeTruthy();
         });
     });
 
     it('should use POST to create', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.create).toBeTruthy();
-            expect(storyboardApiSignature.create.method).toEqual('POST');
+            expect(storyboardApiSignature().create).toBeTruthy();
+            expect(storyboardApiSignature().create.method).toEqual('POST');
         });
     });
     it('should use GET to read', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.read).toBeTruthy();
-            expect(storyboardApiSignature.read.method).toEqual('GET');
+            expect(storyboardApiSignature().read).toBeTruthy();
+            expect(storyboardApiSignature().read.method).toEqual('GET');
         });
     });
     it('should use PUT to update', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.update).toBeTruthy();
-            expect(storyboardApiSignature.update.method).toEqual('PUT');
+            expect(storyboardApiSignature().update).toBeTruthy();
+            expect(storyboardApiSignature().update.method).toEqual('PUT');
         });
     });
     it('should use DELETE to delete', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.delete).toBeTruthy();
-            expect(storyboardApiSignature.delete.method).toEqual('DELETE');
+            expect(storyboardApiSignature().delete).toBeTruthy();
+            expect(storyboardApiSignature().delete.method).toEqual('DELETE');
         });
     });
     it('should use GET to query', function () {
         inject(function (storyboardApiSignature) {
-            expect(storyboardApiSignature.query).toBeTruthy();
-            expect(storyboardApiSignature.query.method).toEqual('GET');
+            expect(storyboardApiSignature().query).toBeTruthy();
+            expect(storyboardApiSignature().query.method).toEqual('GET');
         });
     });
 
@@ -80,7 +80,7 @@ describe('storyboardApiSignature', function () {
 
             var Resource =  $resource('/path/:id',
                 {id: '@id'},
-                storyboardApiSignature);
+                storyboardApiSignature());
             expect(Resource.query).toBeTruthy();
             expect(Resource.read).toBeTruthy();
 

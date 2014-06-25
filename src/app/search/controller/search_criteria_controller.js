@@ -21,7 +21,7 @@
  * or plain strings.
  */
 angular.module('sb.search').controller('SearchCriteriaController',
-    function ($log, $q, $scope, Criteria, Browse, $stateParams) {
+    function ($log, $q, $scope, Criteria, Search, $stateParams) {
         'use strict';
 
         /**
@@ -104,7 +104,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
 
             searchString = searchString || '';
 
-            Browse.all(searchString).then(function (results) {
+            Search.all(searchString).then(function (results) {
 
                 // Add text.
                 results.unshift(Criteria.create('text', searchString));
