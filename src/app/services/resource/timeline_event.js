@@ -29,5 +29,5 @@ angular.module('sb.services').factory('TimelineEvent',
                 id: '@id',
                 story_id: '@story_id'
             },
-            storyboardApiSignature);
+            storyboardApiSignature());
     });
