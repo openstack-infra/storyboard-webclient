@@ -25,7 +25,8 @@ angular.module('sb.services').factory('Project',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
+        var projectSearchUrl = storyboardApiBase + '/projects/search';
         return $resource(storyboardApiBase + '/projects/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+                         {id: '@id'},
+                         storyboardApiSignature(projectSearchUrl));
     });

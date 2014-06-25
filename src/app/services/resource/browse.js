@@ -36,7 +36,7 @@ angular.module('sb.services').factory('Browse',
                 // Search for projects...
                 var deferred = $q.defer();
 
-                Project.query({name: searchString},
+                Project.search({q: searchString},
                     function (result) {
                         // Transform the results to criteria tags.
                         var projResults = [];
@@ -64,7 +64,7 @@ angular.module('sb.services').factory('Browse',
 
                 // Search for users...
                 var deferred = $q.defer();
-                User.query({full_name: searchString},
+                User.search({q: searchString},
                     function (result) {
                         // Transform the results to criteria tags.
                         var userResults = [];
@@ -92,7 +92,7 @@ angular.module('sb.services').factory('Browse',
 
                 // Search for stories...
                 var deferred = $q.defer();
-                Story.query({title: searchString},
+                Story.search({q: searchString},
                     function (result) {
                         // Transform the results to criteria tags.
                         var storyResults = [];
