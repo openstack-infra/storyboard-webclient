@@ -24,7 +24,8 @@ angular.module('sb.services').factory('Task',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
+        var taskSearchUrl = storyboardApiBase + '/tasks/search';
         return $resource(storyboardApiBase + '/tasks/:id',
             {id: '@id'},
-            storyboardApiSignature);
+            storyboardApiSignature(taskSearchUrl));
     });
