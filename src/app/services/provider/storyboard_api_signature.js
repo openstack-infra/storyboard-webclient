@@ -24,28 +24,44 @@ angular.module('sb.services')
     .factory('storyboardApiSignature', function (pageSize) {
         'use strict';
 
-        return {
-            'create': {
-                method: 'POST'
-            },
-            'read': {
-                method: 'GET',
-                cache: false
-            },
-            'update': {
-                method: 'PUT'
-            },
-            'delete': {
-                method: 'DELETE'
-            },
-            'query': {
-                method: 'GET',
-                isArray: true,
-                responseType: 'json',
-                params: {
-                    limit: pageSize
+        return function(searchUrl) {
+            var methods = {
+                'create': {
+                    method: 'POST'
+                },
+                'read': {
+                    method: 'GET',
+                    cache: false
+                },
+                'update': {
+                    method: 'PUT'
+                },
+                'delete': {
+                    method: 'DELETE'
+                },
+                'query': {
+                    method: 'GET',
+                    isArray: true,
+                    responseType: 'json',
+                    params: {
+                        limit: pageSize
+                    }
                 }
+            };
+
+            if (!!searchUrl) {
+                methods.search = {
+                    method: 'GET',
+                    url: searchUrl,
+                    isArray: true,
+                    responseType: 'json',
+                    params: {
+                        limit: pageSize
+                    }
+                };
             }
+
+            return methods;
         };
     }
 );

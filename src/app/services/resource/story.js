@@ -23,7 +23,8 @@ angular.module('sb.services').factory('Story',
     function ($resource, storyboardApiBase, storyboardApiSignature) {
         'use strict';
 
+        var storySearchUrl = storyboardApiBase + '/stories/search';
         return $resource(storyboardApiBase + '/stories/:id',
             {id: '@id'},
-            storyboardApiSignature);
+            storyboardApiSignature(storySearchUrl));
     });

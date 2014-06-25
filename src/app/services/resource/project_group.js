@@ -26,5 +26,5 @@ angular.module('sb.services').factory('ProjectGroup',
 
         return $resource(storyboardApiBase + '/project_groups/:id',
             {id: '@id'},
-            storyboardApiSignature);
+            storyboardApiSignature());
     });

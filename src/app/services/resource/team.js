@@ -27,5 +27,5 @@ angular.module('sb.services').factory('Team',
 
         return $resource(storyboardApiBase + '/teams/:id',
             {id: '@id'},
-            storyboardApiSignature);
+            storyboardApiSignature());
     });
