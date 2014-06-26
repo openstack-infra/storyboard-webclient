@@ -144,7 +144,8 @@ module.exports = function (grunt) {
                         mainPath,
                         dir.theme + '/custom/',
                         dir.theme + '/storyboard/',
-                        dir.bower + '/bootstrap/less/'
+                        dir.bower + '/bootstrap/less/',
+                        dir.bower + '/font-awesome/less/'
                     ];
                 },
                 cleancss: true,
