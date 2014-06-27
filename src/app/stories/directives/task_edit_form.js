@@ -26,7 +26,7 @@ angular.module('sb.story').directive('taskEditForm',
 
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/story/task_edit_form.html',
+            templateUrl: 'app/stories/template/task_edit_form.html',
             scope: {
                 task: '=',
                 onButtonClick: '&',

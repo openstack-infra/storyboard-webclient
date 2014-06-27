@@ -82,7 +82,7 @@ angular.module('sb.story').controller('StoryTaskListItemController',
          */
         $scope.removeTask = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'app/templates/story/delete_task.html',
+                templateUrl: 'app/stories/template/delete_task.html',
                 controller: 'StoryTaskDeleteController',
                 resolve: {
                     task: function () {

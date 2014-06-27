@@ -26,7 +26,7 @@ angular.module('sb.util').directive('taskPriorityDropdown',
 
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/util/task_priority_dropdown.html',
+            templateUrl: 'app/util/template/task_priority_dropdown.html',
             scope: {
                 priority: '@',
                 onChange: '&',
