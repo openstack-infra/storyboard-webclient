@@ -36,12 +36,12 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
             })
             .state('story.list', {
                 url: '/list',
-                templateUrl: 'app/templates/story/list.html',
+                templateUrl: 'app/stories/template/list.html',
                 controller: 'StoryListController'
             })
             .state('story.detail', {
                 url: '/{storyId:[0-9]+}',
-                templateUrl: 'app/templates/story/detail.html'
+                templateUrl: 'app/stories/template/detail.html'
             });
 
         // Register a preference for filtering timeline events.
