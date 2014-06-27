@@ -19,13 +19,13 @@
  * set of source data, and restricts inputs to items in that list.
  */
 angular.module('sb.util').directive('tagComplete',
-    function ($q, $parse, $position, typeaheadParser) {
+    function ($q, $parse, $rootScope, $position, typeaheadParser) {
         'use strict';
 
         var HOT_KEYS = [9, 13, 27, 38, 40];
 
         return {
-            restrict: 'EAo',
+            restrict: 'EA',
             replace: true,
             scope: {
                 tagCompleteTags: '=',
@@ -42,6 +42,14 @@ angular.module('sb.util').directive('tagComplete',
                  * Grab our input.
                  */
                 var $input = $element.find('input');
+
+                /**
+                 * Override the element's focus method, use it to focus our
+                 * input instead.
+                 */
+                $element[0].focus = function () {
+                    $input[0].focus();
+                };
 
                 /**
                  * The typeahead query parser, used for our selection syntax.
@@ -72,7 +80,7 @@ angular.module('sb.util').directive('tagComplete',
                  * Are we focused?
                  * @type {Boolean}
                  */
-                var hasFocus = false;
+                $scope.hasFocus = false;
 
                 /**
                  * Reset the matches on the scope.
@@ -89,7 +97,7 @@ angular.module('sb.util').directive('tagComplete',
                  */
                 var getMatchesAsync = function (inputValue) {
 
-                    if (!hasFocus || !inputValue) {
+                    if (!$scope.hasFocus || !inputValue) {
                         return;
                     }
 
@@ -103,7 +111,8 @@ angular.module('sb.util').directive('tagComplete',
                             // Make sure that the returned query equals what's
                             // currently being searched for: It could be that
                             // we have multiple queries in flight...
-                            if (inputValue === $scope.newTagName && hasFocus) {
+                            if (inputValue === $scope.newTagName &&
+                                $scope.hasFocus) {
 
                                 // Transform Matches
                                 $scope.matches = [];
@@ -146,7 +155,10 @@ angular.module('sb.util').directive('tagComplete',
                  * Focus when the input gets focus.
                  */
                 $input.on('focus', function () {
-                    hasFocus = true;
+                    $scope.hasFocus = true;
+                    if (!$rootScope.$$phase) {
+                        $scope.$digest();
+                    }
                 });
 
                 /**
@@ -155,8 +167,10 @@ angular.module('sb.util').directive('tagComplete',
                 $input.on('blur', function () {
                     resetMatches();
                     $scope.newTagName = '';
-                    hasFocus = false;
-                    $scope.$digest();
+                    $scope.hasFocus = false;
+                    if (!$rootScope.$$phase) {
+                        $scope.$digest();
+                    }
                 });
 
                 /**
@@ -203,7 +217,6 @@ angular.module('sb.util').directive('tagComplete',
                         selectedTags.pop();
                         return true;
                     }
-//                    return false;
                 };
 
                 /**
