@@ -24,7 +24,7 @@ angular.module('sb.notification').directive('notifications',
 
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/error/notifications.html',
+            templateUrl: 'app/notification/template/notifications.html',
             controller: 'NotificationsController'
         };
     });
