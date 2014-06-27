@@ -44,7 +44,7 @@ angular.module('sb.profile',
             })
             .state('profile.preferences', {
                 url: '/preferences',
-                templateUrl: 'app/templates/profile/preferences.html',
+                templateUrl: 'app/profile/template/preferences.html',
                 controller: 'ProfilePreferencesController'
             });
     });

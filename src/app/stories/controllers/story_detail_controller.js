@@ -148,7 +148,7 @@ angular.module('sb.story').controller('StoryDetailController',
          */
         $scope.remove = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'app/templates/story/delete.html',
+                templateUrl: 'app/stories/template/delete.html',
                 controller: 'StoryDeleteController',
                 resolve: {
                     story: function () {
@@ -163,7 +163,7 @@ angular.module('sb.story').controller('StoryDetailController',
 
         $scope.updateFilter = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'app/templates/story/update_filter.html',
+                templateUrl: 'app/stories/template/update_filter.html',
                 controller: 'TimelineFilterController'
             });
 
