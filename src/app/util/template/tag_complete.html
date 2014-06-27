@@ -1,4 +1,5 @@
-<div>
+<div class="tag-complete"
+     ng-class="{'focused': hasFocus}">
     <div class="form-control tag-input"
          ng-click="focus()">
         <span ng-repeat="tag in tagCompleteTags track by $index"
