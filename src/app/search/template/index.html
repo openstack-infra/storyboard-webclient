@@ -26,7 +26,7 @@
                      tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
                      tag-complete-tags="criteria"
                      tag-complete-label-field="title"
-                     tag-complete-option-template-url="'app/templates/search/typeahead_criteria_item.html'"
+                     tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
                      tag-complete-tag-template-url="'/inline/criteria_tag_item.html'"
                      tag-complete-loading="loadingCriteria = isLoading"
                      tag-complete-on-select="addCriteria(tag)">
@@ -74,7 +74,7 @@
             <table class="table table-condensed table-striped table-clean">
                 <tbody ng-if="searchResults.length != 0">
                 <tr ng-repeat="project in searchResults"
-                    ng-include="'app/templates/search/project_search_item.html'">
+                    ng-include="'app/search/template/project_search_item.html'">
                 </tr>
                 </tbody>
 
@@ -119,7 +119,7 @@
             <table class="table table-condensed table-striped table-clean">
                 <tbody ng-if="searchResults.length != 0">
                 <tr ng-repeat="story in searchResults"
-                    ng-include="'app/templates/search/story_search_item.html'">
+                    ng-include="'app/search/template/story_search_item.html'">
                 </tr>
                 </tbody>
 
@@ -164,7 +164,7 @@
             <table class="table table-condensed table-striped table-clean">
                 <tbody ng-if="searchResults.length != 0">
                 <tr ng-repeat="task in searchResults"
-                    ng-include="'app/templates/search/task_search_item.html'">
+                    ng-include="'app/search/template/task_search_item.html'">
                 </tr>
                 </tbody>
 
@@ -209,7 +209,7 @@
             <table class="table table-condensed table-striped table-clean">
                 <tbody ng-if="searchResults.length != 0">
                 <tr ng-repeat="user in searchResults"
-                    ng-include="'app/templates/search/user_search_item.html'">
+                    ng-include="'app/search/template/user_search_item.html'">
                 </tr>
                 </tbody>
 

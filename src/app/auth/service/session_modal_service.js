@@ -31,7 +31,7 @@ angular.module('sb.auth')
             showLoginRequiredModal: function () {
                 var modalInstance = $modal.open(
                     {
-                        templateUrl: 'app/templates/auth' +
+                        templateUrl: 'app/auth/template' +
                             '/modal/login_required.html',
                         controller: 'LoginRequiredModalController'
                     }

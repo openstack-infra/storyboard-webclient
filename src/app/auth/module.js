@@ -31,7 +31,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
             })
             .state('auth.authorize', {
                 url: '/authorize?error&error_description',
-                templateUrl: 'app/templates/auth/busy.html',
+                templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthAuthorizeController',
                 resolve: {
                     isLoggedOut: SessionResolver.requireLoggedOut
@@ -39,7 +39,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
             })
             .state('auth.deauthorize', {
                 url: '/deauthorize',
-                templateUrl: 'app/templates/auth/busy.html',
+                templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthDeauthorizeController',
                 resolve: {
                     isLoggedIn: SessionResolver.requireLoggedIn
@@ -47,7 +47,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
             })
             .state('auth.token', {
                 url: '/token?code&state&error&error_description',
-                templateUrl: 'app/templates/auth/busy.html',
+                templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthTokenController',
                 resolve: {
                     isLoggedOut: SessionResolver.requireLoggedOut
@@ -55,7 +55,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
             })
             .state('auth.error', {
                 url: '/error?error&error_description',
-                templateUrl: 'app/templates/auth/error.html',
+                templateUrl: 'app/auth/template/error.html',
                 controller: 'AuthErrorController'
             });
     })
