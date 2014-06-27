@@ -30,6 +30,6 @@ angular.module('sb.util').directive('timelineEvent', function($log) {
                     scope.event_type = 'unknown';
                 }
             },
-            templateUrl: 'app/templates/story/comments/template_switch.html'
+            templateUrl: 'app/stories/template/comments/template_switch.html'
         };
 });
