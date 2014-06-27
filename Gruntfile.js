@@ -193,7 +193,7 @@ module.exports = function (grunt) {
                 base: dir.source
             },
             main: {
-                src: [dir.source + '/app/templates/**/*.html'],
+                src: [dir.source + '/app/*/template/**.html'],
                 dest: dir.output + '/js/templates.js'
             }
         },
@@ -404,7 +404,7 @@ module.exports = function (grunt) {
             },
             templates: {
                 files: [
-                    dir.source + '/app/templates/**/*.html'
+                    dir.source + '/app/**/*.html'
                 ],
                 tasks: ['html2js']
             },

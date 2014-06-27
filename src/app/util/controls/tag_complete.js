@@ -36,7 +36,7 @@ angular.module('sb.util').directive('tagComplete',
                 tagCompleteOnSelect: '&',
                 tagCompleteLoading: '&'
             },
-            templateUrl: 'app/templates/util/tag_complete.html',
+            templateUrl: 'app/util/template/tag_complete.html',
             link: function ($scope, $element, attrs) {
                 /**
                  * Grab our input.

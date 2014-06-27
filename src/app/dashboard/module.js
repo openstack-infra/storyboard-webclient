@@ -26,7 +26,7 @@ angular.module('sb.dashboard',
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'app/templates/dashboard/index.html',
+                templateUrl: 'app/dashboard/template/index.html',
                 controller: 'HomeController',
                 resolve: {
                     sessionState: SessionResolver.resolveSessionState
@@ -34,7 +34,7 @@ angular.module('sb.dashboard',
             })
             .state('dashboard', {
                 url: '/dashboard',
-                templateUrl: 'app/templates/dashboard/dashboard.html',
+                templateUrl: 'app/dashboard/template/dashboard.html',
                 controller: 'DashboardController',
                 resolve: {
                     sessionState: SessionResolver.requireLoggedIn,

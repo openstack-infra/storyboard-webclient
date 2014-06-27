@@ -50,7 +50,7 @@ angular.module('sb.util').directive('taskStatusDropdown',
 
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/util/task_status_dropdown.html',
+            templateUrl: 'app/util/template/task_status_dropdown.html',
             scope: {
                 status: '@',
                 onChange: '&',

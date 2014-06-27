@@ -24,7 +24,7 @@ angular.module('sb.util').directive('storyStatusLabel',
 
         return {
             restrict: 'E',
-            templateUrl: 'app/templates/util/story_status_label.html',
+            templateUrl: 'app/util/template/story_status_label.html',
             scope: {
                 story: '='
             },

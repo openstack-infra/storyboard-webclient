@@ -40,17 +40,17 @@ angular.module('sb.projects',
             })
             .state('project.list', {
                 url: '/list',
-                templateUrl: 'app/templates/project/list.html',
+                templateUrl: 'app/projects/template/list.html',
                 controller: 'ProjectListController'
             })
             .state('project.detail', {
                 url: '/{id:[0-9]+}',
-                templateUrl: 'app/templates/project/detail.html',
+                templateUrl: 'app/projects/template/detail.html',
                 controller: 'ProjectDetailController'
             })
             .state('project.new', {
                 url: '/new',
-                templateUrl: 'app/templates/project/new.html',
+                templateUrl: 'app/projects/template/new.html',
                 controller: 'ProjectNewController',
                 resolve: {
                     isLoggedIn: SessionResolver.requireLoggedIn,

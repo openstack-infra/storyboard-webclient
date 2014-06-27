@@ -26,7 +26,7 @@ angular.module('sb.story').factory('NewStoryService',
                 } else {
                     var modalInstance = $modal.open(
                         {
-                            templateUrl: 'app/templates/story/new.html',
+                            templateUrl: 'app/stories/template/new.html',
                             controller: 'StoryModalController',
                             resolve: {
                                 params: function () {
