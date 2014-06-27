@@ -35,6 +35,6 @@ angular.module('sb.pages',
             })
             .state('page.about', {
                 url: '/about',
-                templateUrl: 'app/templates/page/about.html'
+                templateUrl: 'app/pages/template/about.html'
             });
     });

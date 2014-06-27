@@ -29,7 +29,7 @@ angular.module('sb.util').directive('tagInput',
             },
             require: 'ngModel',
             controller: 'TagInputController',
-            templateUrl: 'app/templates/util/tag_input.html'
+            templateUrl: 'app/util/template/tag_input.html'
         };
     });
 
