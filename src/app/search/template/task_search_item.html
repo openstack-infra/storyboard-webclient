@@ -5,11 +5,6 @@
             />
 </td>
 <td>
-    <task-status-dropdown
-            editable="false"
-            status="{{task.status}}"
-            class="pull-right"
-            ></task-status-dropdown>
     {{task.title}}
     <br/>
     <small class="text-muted"
@@ -18,3 +13,15 @@
             {{story.id}}: {{story.title}}</a>
     </small>
 </td>
+<td>
+    <task-status-dropdown
+            editable="false"
+            status="{{task.status}}"
+            ></task-status-dropdown>
+</td>
+<td>
+    <subscribe class="pull-right"
+               resource="story"
+               resource-id="story.id"></subscribe>
+</td>
+        
