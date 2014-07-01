@@ -2,7 +2,7 @@
     <a href="#!/story/{{story.id}}">
         {{story.id}}: {{story.title}}
     </a>
-    <br />
+    <br/>
     <span class="text-muted">
         {{story.description}}
     </span>
@@ -17,4 +17,9 @@
 </td>
 <td class="text-right">
     <story-status-label story="story"/>
+</td>
+<td class="text-right">
+    <subscribe class="pull-right"
+               resource="story"
+               resource-id="story.id"></subscribe>
 </td>
