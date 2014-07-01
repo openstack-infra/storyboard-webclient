@@ -20,7 +20,8 @@
  */
 angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser, Browse, Criteria) {
+              SessionState, CurrentUser, Browse, Criteria, Notification,
+              Priority) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -118,4 +119,18 @@ angular.module('storyboard').controller('HeaderController',
             // Return the search promise.
             return deferred.promise;
         };
+
+        // Watch for changes to the session state.
+        Notification.intercept(function (message) {
+            switch (message.type) {
+                case SessionState.LOGGED_IN:
+                    resolveCurrentUser();
+                    break;
+                case SessionState.LOGGED_OUT:
+                    $scope.currentUser = null;
+                    break;
+                default:
+                    break;
+            }
+        }, Priority.LAST);
     });
