@@ -29,7 +29,7 @@
  * interceptors.
  */
 angular.module('sb.notification').factory('Notification',
-    function ($log, Severity) {
+    function ($log, Severity, Priority) {
         'use strict';
 
         var subscribers = [];
@@ -100,7 +100,7 @@ angular.module('sb.notification').factory('Notification',
             intercept: function (interceptor, priority) {
 
                 var i = {
-                    'priority': priority || 999,
+                    'priority': priority || Priority.LAST,
                     'method': interceptor
                 };
 

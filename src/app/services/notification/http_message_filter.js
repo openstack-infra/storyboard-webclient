@@ -18,7 +18,7 @@
  * Notification interceptors for this library.
  */
 angular.module('sb.services')
-    .run(function (Notification) {
+    .run(function (Notification, Priority) {
         'use strict';
 
         /**
@@ -86,7 +86,7 @@ angular.module('sb.services')
         }
 
         // Apply the interceptors.
-        Notification.intercept(filterTemplateRequests, -1);
-        Notification.intercept(filterSuccessful, 999);
-        Notification.intercept(rewriteHttpStatus, 1000);
+        Notification.intercept(filterTemplateRequests, Priority.BEFORE);
+        Notification.intercept(filterSuccessful, Priority.LAST);
+        Notification.intercept(rewriteHttpStatus, Priority.AFTER);
     });
