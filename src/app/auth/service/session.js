@@ -20,7 +20,7 @@
  */
 angular.module('sb.auth').factory('Session',
     function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
-              RefreshManager) {
+              RefreshManager, Notification, Severity) {
         'use strict';
 
         /**
@@ -91,7 +91,7 @@ angular.module('sb.auth').factory('Session',
         function updateSessionState(newState) {
             if (newState !== sessionState) {
                 sessionState = newState;
-                $rootScope.$broadcast(sessionState);
+                Notification.send(newState, newState, Severity.SUCCESS);
             }
         }
 

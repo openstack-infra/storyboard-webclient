@@ -19,7 +19,7 @@
  */
 angular.module('storyboard').controller('HeaderController',
     function ($scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser) {
+              SessionState, CurrentUser, Notification, Priority) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -60,10 +60,16 @@ angular.module('storyboard').controller('HeaderController',
         };
 
         // Watch for changes to the session state.
-        $rootScope.$on(SessionState.LOGGED_IN, function () {
-            resolveCurrentUser();
-        });
-        $rootScope.$on(SessionState.LOGGED_OUT, function () {
-            $scope.currentUser = null;
-        });
+        Notification.intercept(function (message) {
+            switch (message.type) {
+                case SessionState.LOGGED_IN:
+                    resolveCurrentUser();
+                    break;
+                case SessionState.LOGGED_OUT:
+                    $scope.currentUser = null;
+                    break;
+                default:
+                    break;
+            }
+        }, Priority.LAST);
     });
