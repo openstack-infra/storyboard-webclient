@@ -113,7 +113,8 @@ angular.module('sb.notification').factory('Notification',
                 });
 
                 return function () {
-                    interceptors.remove(i);
+                    var idx = interceptors.indexOf(i);
+                    interceptors.splice(idx, 1);
                 };
             },
 

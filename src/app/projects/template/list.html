@@ -52,6 +52,9 @@
                 <tbody>
                 <tr ng-repeat="project in projects">
                     <td>
+                        <subscribe class="pull-right"
+                                resource="project"
+                                resource-id="project.id"></subscribe>
                         <p><strong>
                             <a href="#!/project/{{project.id}}">
                                 {{project.name}}
