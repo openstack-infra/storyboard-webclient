@@ -1,0 +1,20 @@
+<span ng-if="!enabled && !resolving"
+      class="text-muted">
+    <i ng-if="subscribed"
+       class="fa fa-star"></i>
+    <i ng-if="!subscribed"
+       class="fa fa-star-o"></i>
+</span>
+<span ng-if="resolving"
+      class="text-muted">
+    <i class="fa fa-spin fa-refresh"></i>
+</span>
+<a ng-if="enabled && !resolving"
+   href=""
+   title="Subscribe"
+   ng-click="toggleSubscribe()">
+    <i ng-if="subscribed"
+       class="fa fa-star"></i>
+    <i ng-if="!subscribed"
+       class="fa fa-star-o"></i>
+</a>
