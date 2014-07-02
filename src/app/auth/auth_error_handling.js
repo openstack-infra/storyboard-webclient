@@ -15,7 +15,7 @@
  */
 
 angular.module('sb.auth').run(
-    function($log, $modal, Notification, RefreshManager, Session) {
+    function($log, $modal, Notification, RefreshManager, Session, Priority) {
         'use strict';
 
         function handle_401() {
@@ -58,7 +58,7 @@ angular.module('sb.auth').run(
 
                 return true; // Stop processing this notifications.
             }
-        }, -1);
+        }, Priority.BEFORE);
 
     }
 );
