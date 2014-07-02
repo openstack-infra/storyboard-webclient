@@ -20,7 +20,7 @@
  * phase is run)
  */
 angular.module('sb.util').directive('focus',
-    function () {
+    function ($timeout) {
         'use strict';
 
         return {
@@ -29,8 +29,10 @@ angular.module('sb.util').directive('focus',
                 // Extract the element...
                 var e = $element[0];
 
-                if (!!e && e.hasOwnProperty('focus')) {
-                    e.focus();
+                if (!!e && !!e.focus) {
+                    $timeout(function () {
+                        e.focus();
+                    }, 10);
                 }
             }
         };
