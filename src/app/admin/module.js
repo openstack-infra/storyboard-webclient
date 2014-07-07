@@ -17,12 +17,13 @@
 /**
  * The StoryBoard administration module.
  */
-angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'ui.router'])
+angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
+    'ui.router'])
     .config(function ($stateProvider, $urlRouterProvider, PermissionResolver) {
         'use strict';
 
         // Routing Defaults.
-        $urlRouterProvider.when('/admin', '/admin/index');
+        $urlRouterProvider.when('/admin', '/admin/project_group');
 
         // Declare the states for this module.
         $stateProvider
@@ -35,8 +36,24 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'ui.router'])
                         .requirePermission('is_superuser', true)
                 }
             })
-            .state('admin.index', {
-                url: '/index',
-                templateUrl: 'app/admin/template/index.html'
+            .state('admin.project_group', {
+                url: '/project_group',
+                templateUrl: 'app/admin/template/project_group.html',
+                controller: 'ProjectGroupAdminController'
+            })
+            .state('admin.project_group_edit', {
+                url: '/project_group/:id',
+                templateUrl: 'app/admin/template/project_group_edit.html',
+                controller: 'ProjectGroupEditController',
+                resolve: {
+                    projectGroup: function ($stateParams, ProjectGroup) {
+                        return ProjectGroup.get({id: $stateParams.id}).$promise;
+                    },
+                    projects: function ($stateParams, ProjectGroupItem) {
+                        return ProjectGroupItem.query(
+                            {projectGroupId: $stateParams.id}
+                        ).$promise;
+                    }
+                }
             });
     });
