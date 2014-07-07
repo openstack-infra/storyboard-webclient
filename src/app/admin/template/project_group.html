@@ -1,0 +1,121 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1><i class="fa fa-sb-project-group"></i> Project Groups</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-10">
+            <div class="has-feedback has-feedback-no-label">
+                <input id="projectInput"
+                       type="text"
+                       class="form-control"
+                       ng-model="filterQuery"
+                       required
+                       ng-disabled="isSearching"
+                       placeholder="Search Project Groups">
+                <span class="form-control-feedback text-muted
+                form-control-feedback-sm">
+                    <i class="fa fa-refresh fa-spin"
+                       ng-show="loadingProjects"></i>
+                    <i class="fa fa-search" ng-hide="loadingProjects"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-5 hidden-xs">
+            <div class="form form-horizontal">
+                <p class="form-control-static text-muted">
+                    ({{projectGroups.length}} found)
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-2">
+            <button class="btn btn-primary pull-right"
+                    ng-click="addProjectGroup()">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-xs">Add Project Group</span>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Spacer -->
+            <br/>
+            <table class="table table-condensed table-striped">
+                <tbody>
+                <tr ng-repeat="projectGroup in projectGroups">
+                    <td class="col-sm-3 col-xs-4">
+                        <i class="fa fa-sb-project-group text-muted"></i>
+                        <a href="#!/admin/project_group/{{projectGroup.id}}">
+                            {{projectGroup.title}}
+                        </a>
+                    </td>
+                    <td class="col-sm-9 col-xs-8"
+                        ng-controller="ProjectGroupItemController">
+                        <div class="pull-right btn-group btn-group-xs">
+                            <a class="btn btn-link "
+                               href="#!/admin/project_group/{{projectGroup.id}}">
+                                <i class="fa fa-edit fa-lg"></i>
+                            </a>
+                            <a class="btn btn-link "
+                               href=""
+                               ng-click="deleteProjectGroup(projectGroup)">
+                                <i class="fa fa-times fa-lg"></i>
+                            </a>
+                        </div>
+                        <table>
+                            <tbody ng-if="loadingProjectGroupItems">
+                            <tr>
+                                <td>
+                                    <span class="text-muted text-center">
+                                        <i class="fa fa-spin fa-refresh"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <tbody ng-if="projectGroupItems.length == 0 && !loadingProjectGroupItems">
+                            <tr>
+                                <td>
+                                    <em class="text-muted">
+                                        This group does not contain any
+                                        projects.
+                                    </em>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <tbody ng-if="projectGroupItems.length > 0">
+                            <tr ng-repeat="project in projectGroupItems">
+                                <td>
+                                    <a href="#!/project/{{project.id}}">
+                                        <i class="fa fa-sb-project text-muted"></i>
+                                        {{project.name}}
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
