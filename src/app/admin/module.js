@@ -22,7 +22,7 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'ui.router'])
         'use strict';
 
         // Routing Defaults.
-        $urlRouterProvider.when('/admin', '/admin/index');
+        $urlRouterProvider.when('/admin', '/admin/project_group');
 
         // Declare the states for this module.
         $stateProvider
@@ -35,8 +35,9 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'ui.router'])
                         .requirePermission('is_superuser', true)
                 }
             })
-            .state('admin.index', {
-                url: '/index',
-                templateUrl: 'app/admin/template/index.html'
+            .state('admin.project_group', {
+                url: '/project_group',
+                templateUrl: 'app/admin/template/project_group.html',
+                controller: 'ProjectGroupAdminController'
             });
     });

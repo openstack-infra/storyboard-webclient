@@ -1,0 +1,54 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Project Groups</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="has-feedback has-feedback-no-label">
+                <input id="projectInput"
+                       type="text"
+                       class="form-control"
+                       ng-model="filterQuery"
+                       required
+                       ng-disabled="isSearching"
+                       placeholder="Search Project Groups">
+                <span class="form-control-feedback text-muted
+                form-control-feedback-sm">
+                    <i class="fa fa-refresh fa-spin" ng-show="loadingProjects"></i>
+                    <i class="fa fa-search" ng-hide="loadingProjects"></i>
+                </span>
+            </div>
+
+            <button class="btn btn-primary"
+                    ng-click="addProjectGroup()">
+                <i class="fa fa-plus"></i> Add Project Group
+            </button>
+            <ul>
+                <li ng-repeat="group in projectGroups">
+                    {{group}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+
+        </div>
+    </div>
+</div>

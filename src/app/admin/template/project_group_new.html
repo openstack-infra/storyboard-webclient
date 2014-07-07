@@ -1,0 +1,136 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">New Project Group</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-horizontal"
+                      role="form"
+                      name="projectGroupForm">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">
+                            Title:
+                        </label>
+
+                        <div class="col-sm-10">
+                            <input id="title"
+                                   type="text"
+                                   class="form-control"
+                                   ng-model="projectGroup.title"
+                                   required
+                                   ng-disabled="isSaving"
+                                   placeholder="Project Group Title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">
+                            Name:
+                        </label>
+
+                        <div class="col-sm-10">
+                            <input id="name"
+                                   type="text"
+                                   class="form-control"
+                                   ng-model="projectGroup.name"
+                                   required
+                                   ng-disabled="isSaving"
+                                   placeholder="URL Stub for the project group">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <form role="form" name="projectsForm">
+                    <table class="table table-striped table-outlined">
+                        <tbody>
+                        <tr ng-repeat="(index, project) in projects"
+                            ng-include
+                            src="'/inline/project_row.html'">
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-disabled="isSaving"
+                        ng-click="addProject()">
+                    &plus;
+                    Add another project
+                </button>
+            </div>
+            <div class="col-xs-6 text-right">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="save()"
+                        ng-disabled="!projectGroupForm.$valid || !projectsForm.$valid || isSaving">
+                    Save Changes
+                </button>
+                <button type="button"
+                        ng-click="close()"
+                        ng-disabled="isSaving"
+                        class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template for story metadata -->
+<script type="text/ng-template" id="/inline/project_row.html">
+    <td class="col-xs-11">
+        <div class="has-feedback has-feedback-no-label">
+            <input id="project"
+                   type="text"
+                   placeholder="Select a Project"
+                   required
+                   ng-model="project"
+                   typeahead-editable="false"
+                   typeahead="project as project.name for project
+                   in searchProjects($viewValue)"
+                   typeahead-loading="loadingProjects"
+                   typeahead-on-select="selectNewProject(index, $model)"
+                   typeahead-input-formatter="formatProjectName($model)"
+                   ng-disabled="isSaving"
+                   class="form-control input-sm"
+                    />
+            <span class="form-control-feedback text-muted
+            form-control-feedback-sm">
+                <i class="fa fa-refresh fa-spin" ng-show="loadingProjects"></i>
+                <i class="fa fa-search" ng-hide="loadingProjects"></i>
+            </span>
+        </div>
+    </td>
+    <th class="col-xs-1"
+        ng-show="projects.length > 1">
+        <button type="button" class="close"
+                ng-click="removeProject(index)">
+            &times;
+        </button>
+    </th>
+</script>
