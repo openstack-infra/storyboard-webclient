@@ -1,7 +1,7 @@
 <div class="discussion-comment" ng-show="enabled_event_types.task_status_changed">
     <p class="discussion-comment-author">
         <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{author.full_name}} has updated a task {{ event_info.task_title }} status:
-        {{ event_info.old_status }} ==> {{ event_info.new_status }}</span>
+        <span>{{author.full_name}} updated "{{ event_info.task_title }}" status:
+        {{ event_info.old_status }} ==> {{ event_info.new_status }}.</span>
     </p>
 </div>
