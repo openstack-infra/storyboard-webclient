@@ -1,7 +1,7 @@
 <div class="discussion-comment" ng-show="enabled_event_types.task_priority_changed">
     <p class="discussion-comment-author">
         <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{author.full_name}} has updated a task {{ event_info.task_title }} priority:
-        {{ event_info.old_priority }} ==> {{ event_info.new_priority }}</span>
+        <span>{{author.full_name}} updated "{{ event_info.task_title }}" priority:
+        {{ event_info.old_priority }} ==> {{ event_info.new_priority }}.</span>
     </p>
 </div>
