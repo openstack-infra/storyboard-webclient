@@ -44,7 +44,8 @@
     <script src="js/storyboard.js"></script>
     <script src="js/templates.js"></script>
 </head>
-<body ng-class="{'logged-in' : isLoggedIn}">
+<body ng-class="{'logged-in' : isLoggedIn, 'submenu': hasSubmenu}"
+      ng-controller="ApplicationController">
 
 <header ng-include src="'app/storyboard/template/header_menu.html'"></header>
 <div ng-include src="'app/storyboard/template/side_menu.html'"></div>

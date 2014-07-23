@@ -17,8 +17,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-side
         navbar-fixed-side-header-offset"
      role="navigation"
-     ng-controller="HeaderController">
-    <div class="container-fluid">
+     ng-class="{'navbar-fixed-side-has-submenu': hasSubmenu}">
+    <div class="nav-main">
         <ul class="nav nav-pills nav-stacked text-center">
             <li active-path="^\/search.*">
                 <a href="#!/search">
@@ -73,6 +73,8 @@
                 </a>
             </li>
         </ul>
-
+    </div>
+    <div ui-view="submenu"
+         class="nav-submenu">
     </div>
 </nav>

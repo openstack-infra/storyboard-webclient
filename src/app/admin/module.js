@@ -29,7 +29,14 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
         $stateProvider
             .state('admin', {
                 abstract: true,
-                template: '<div ui-view></div>',
+                views: {
+                    'submenu@': {
+                        templateUrl: 'app/admin/template/admin_submenu.html'
+                    },
+                    '@': {
+                        template: '<div ui-view></div>'
+                    }
+                },
                 url: '/admin',
                 resolve: {
                     isSuperuser: PermissionResolver
