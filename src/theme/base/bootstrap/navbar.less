@@ -21,31 +21,101 @@
         @media (max-width: @screen-xs-max) {
             width: @navbar-fixed-side-width-xs;
 
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-xs + @navbar-fixed-side-submenu-width-xs);
+            }
+
             top: 0px;
             right: 0px;
             bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
         }
         @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
             width: @navbar-fixed-side-width-sm;
+
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-sm + @navbar-fixed-side-submenu-width-sm);
+            }
+
             top: 0px;
             left: 0px;
             bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
         }
         @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
             width: @navbar-fixed-side-width-md;
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-md + @navbar-fixed-side-submenu-width-md);
+            }
+
             top: 0px;
             left: 0px;
             bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
         }
         @media (min-width: @screen-lg-min) {
             width: @navbar-fixed-side-width-lg;
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-lg + @navbar-fixed-side-submenu-width-lg);
+            }
+
             top: 0px;
             left: 0px;
             bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
         }
 
-        .container-fluid {
-            padding: 5px;
+        .nav-main {
+            padding: 5px 0px 5px 0px;
+        }
+
+        .nav-submenu {
+            display: none;
+            background-color: @navbar-inverse-link-active-bg;
+
+            .nav.nav-pills {
+                > li {
+                    margin-right: 0px;
+                    margin-left: 0px;
+
+                    > a {
+                        border-radius: 0px;
+                        background: none;
+
+                        &:hover {
+                            background: none;
+                        }
+                    }
+                }
+            }
         }
 
         overflow: hidden;
@@ -54,7 +124,12 @@
         margin: 0px;
 
         &.navbar-inverse .nav {
+
             > li {
+
+                margin-right: 5px;
+                margin-left: 5px;
+
                 > a {
                     color: @navbar-inverse-link-color;
                     background: @navbar-inverse-bg;
@@ -91,7 +166,7 @@
             }
 
             li.active {
-                background-color: @navbar-inverse-bg
+                background-color: @navbar-inverse-bg;
             }
         }
 
@@ -111,9 +186,69 @@
             position: absolute;
             bottom: 0px;
         }
+
+        &.navbar-fixed-side-has-submenu {
+
+            .nav-submenu {
+                display: inherit;
+            }
+
+            @media (max-width: @screen-xs-max) {
+                .nav-main {
+                    margin-left: @navbar-fixed-side-submenu-width-xs;
+
+                    a {
+                        border-top-left-radius: 0px;
+                        border-bottom-left-radius: 0px;
+                    }
+
+                    li {
+                        &.active {
+                            margin-left: 0px;
+
+                            a {
+                                padding-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+            @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-sm;
+                }
+            }
+            @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-md;
+                }
+            }
+            @media (min-width: @screen-lg-min) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-lg;
+                }
+            }
+
+            @media (min-width: @screen-sm-min) {
+                .nav-main {
+                    li {
+                        &.active {
+                            margin-right: 0px;
+
+                            a {
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    a {
+                        border-top-right-radius: 0px;
+                        border-bottom-right-radius: 0px;
+                    }
+                }
+            }
+        }
     }
 }
-
 
 // Stacked pills
 .nav-stacked {
