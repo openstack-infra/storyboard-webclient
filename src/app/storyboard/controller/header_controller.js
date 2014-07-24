@@ -96,8 +96,8 @@ angular.module('storyboard').controller('HeaderController',
             searchString = searchString || '';
 
             $q.all({
-                projects: Project.criteriaResolver(searchString),
-                stories: Story.criteriaResolver(searchString)
+                projects: Project.criteriaResolver(searchString, 5),
+                stories: Story.criteriaResolver(searchString, 5)
             }).then(function (results) {
 
                 var criteria = [
