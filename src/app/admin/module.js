@@ -43,6 +43,22 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                         .requirePermission('is_superuser', true)
                 }
             })
+            .state('admin.user', {
+                url: '/user',
+                templateUrl: 'app/admin/template/user.html',
+                controller: 'UserAdminController'
+            })
+            .state('admin.user_edit', {
+                url: '/user/:id',
+                templateUrl: 'app/admin/template/user_edit.html',
+                controller: 'UserEditController',
+                resolve: {
+                    user: function ($stateParams, User) {
+                        console.warn($stateParams);
+                        return User.get({id: $stateParams.id}).$promise;
+                    }
+                }
+            })
             .state('admin.project_group', {
                 url: '/project_group',
                 templateUrl: 'app/admin/template/project_group.html',
