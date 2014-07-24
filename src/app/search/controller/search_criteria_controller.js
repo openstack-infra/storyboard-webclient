@@ -48,7 +48,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
             resourceTypes = types || resourceTypes;
             $scope.criteria = defaultCriteria || [];
             $scope.searchForCriteria =
-                Criteria.buildCriteriaSearch(resourceTypes);
+                Criteria.buildCriteriaSearch(resourceTypes, 5);
         };
 
         /**
