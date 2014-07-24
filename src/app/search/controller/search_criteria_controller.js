@@ -104,7 +104,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
 
             searchString = searchString || '';
 
-            Browse.all(searchString).then(function (results) {
+            Browse.all(searchString, 5).then(function (results) {
 
                 // Add text.
                 results.unshift(Criteria.create('text', searchString));
