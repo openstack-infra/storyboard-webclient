@@ -35,11 +35,18 @@ angular.module('sb.profile',
         $stateProvider
             .state('profile', {
                 abstract: true,
-                template: '<div ui-view></div>',
                 url: '/profile',
                 resolve: {
                     isLoggedIn: SessionResolver.requireLoggedIn,
                     currentUser: SessionResolver.requireCurrentUser
+                },
+                views : {
+                    'submenu@': {
+                        templateUrl: 'app/profile/template/profile_submenu.html'
+                    },
+                    '@': {
+                        template: '<div ui-view></div>'
+                    }
                 }
             })
             .state('profile.preferences', {
