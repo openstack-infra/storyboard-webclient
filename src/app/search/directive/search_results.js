@@ -20,7 +20,7 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector) {
+    function ($log, $parse, Criteria, $injector, Preference) {
         'use strict';
 
         return {
@@ -30,7 +30,8 @@ angular.module('sb.search').directive('searchResults',
 
                 // Extract the resource type.
                 var resourceName = args.searchResource;
-                var pageSize = args.searchPageSize || 20;
+                var pageSize = args.searchPageSize ||
+                    Preference.get('page_size');
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
                 var criteria = [];
@@ -142,7 +143,7 @@ angular.module('sb.search').directive('searchResults',
                 // Watch for changing criteria
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
-                    function(results){
+                    function (results) {
                         criteria = results;
                         updateResults();
                     });

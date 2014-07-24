@@ -19,7 +19,7 @@
  * validation, filtering, criteria-to-parameter mapping, and more.
  */
 angular.module('sb.services').service('Criteria',
-    function ($q, $log, $injector) {
+    function ($q, $log, $injector, Preference) {
         'use strict';
 
         return {
@@ -91,8 +91,12 @@ angular.module('sb.services').service('Criteria',
              * customized lambda that will perform our browse search for us.
              *
              * @param types An array of resource types to browse.
+             * @param pageSize An optional page size for the criteria. Defaults
+             * to the global page_size preference.
              */
-            buildCriteriaSearch: function (types) {
+            buildCriteriaSearch: function (types, pageSize) {
+                pageSize = pageSize || Preference.get('page_size');
+
                 var resolvers = [];
                 types.forEach(function (type) {
                     // Retrieve an instance of the declared resource.
@@ -122,7 +126,7 @@ angular.module('sb.services').service('Criteria',
                     var promises = [];
 
                     resolvers.forEach(function (resolver) {
-                        promises.push(resolver(searchString));
+                        promises.push(resolver(searchString, pageSize));
                     });
 
                     // Wrap everything into a collective promise
