@@ -17,7 +17,7 @@
 /**
  * Controller for the project group delete modal popup.
  */
-angular.module('sb.profile').controller('ProjectGroupDeleteController',
+angular.module('sb.admin').controller('ProjectGroupDeleteController',
     function ($scope, projectGroup, $modalInstance) {
         'use strict';
 
