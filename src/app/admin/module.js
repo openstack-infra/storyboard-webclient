@@ -62,5 +62,13 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                         ).$promise;
                     }
                 }
+            })
+            .state('admin.team', {
+                url: '/team',
+                templateUrl: 'app/admin/template/team.html'
+            })
+            .state('admin.team_edit', {
+                url: '/team/:id',
+                templateUrl: 'app/admin/template/team_edit.html'
             });
     });
