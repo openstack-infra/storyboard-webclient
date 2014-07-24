@@ -32,11 +32,16 @@ angular.module('sb.services').factory('Browse',
              * @param searchString A string to search by.
              * @return A promise that will resolve with the search results.
              */
-            project: function (searchString) {
+            project: function (searchString, pageSize) {
+                pageSize = pageSize || 10;
+
                 // Search for projects...
                 var deferred = $q.defer();
 
-                Project.query({name: searchString},
+                Project.query({
+                        name: searchString,
+                        limit: pageSize
+                    },
                     function (result) {
                         // Transform the results to criteria tags.
                         var projResults = [];
@@ -60,11 +65,15 @@ angular.module('sb.services').factory('Browse',
              * @param searchString A string to search by.
              * @return A promise that will resolve with the search results.
              */
-            user: function (searchString) {
+            user: function (searchString, pageSize) {
+                pageSize = pageSize || 10;
 
                 // Search for users...
                 var deferred = $q.defer();
-                User.query({full_name: searchString},
+                User.query({
+                        full_name: searchString,
+                        limit: pageSize
+                    },
                     function (result) {
                         // Transform the results to criteria tags.
                         var userResults = [];
@@ -88,11 +97,15 @@ angular.module('sb.services').factory('Browse',
              * @param searchString A string to search by.
              * @return A promise that will resolve with the search results.
              */
-            story: function (searchString) {
+            story: function (searchString, pageSize) {
+                pageSize = pageSize || 10;
 
                 // Search for stories...
                 var deferred = $q.defer();
-                Story.query({title: searchString},
+                Story.query({
+                        title: searchString,
+                        limit: pageSize
+                    },
                     function (result) {
                         // Transform the results to criteria tags.
                         var storyResults = [];
