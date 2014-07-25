@@ -18,9 +18,20 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryListController',
-    function ($scope, $modal, $state, NewStoryService, Story) {
+    function ($scope, $state, NewStoryService, Criteria) {
         'use strict';
 
+        // search results must be of type "story"
+        $scope.resourceTypes = ['Story'];
+
+        // Search result criteria default must be "active"
+        $scope.defaultCriteria = [
+            Criteria.create('storyStatus', 'active', 'Active')
+        ];
+
+        /**
+         * Creates a new story.
+         */
         $scope.newStory = function () {
             NewStoryService.showNewStoryModal()
                 .then(function (story) {
@@ -29,57 +40,4 @@ angular.module('sb.story').controller('StoryListController',
                 }
             );
         };
-
-
-        // Variables and methods available to the template...
-        function resetScope() {
-            $scope.storyCount = 0;
-            $scope.stories = [];
-            $scope.error = {};
-        }
-
-        $scope.searchQuery = '';
-        $scope.isSearching = false;
-        $scope.filter = 'active';
-
-        /**
-         * Set the filter and refresh the search.
-         */
-        $scope.setFilter = function (state) {
-            $scope.filter = state;
-            $scope.search();
-        };
-
-        /**
-         * The search method.
-         */
-        $scope.search = function () {
-            // Clear the scope and set the progress flag.
-            resetScope();
-            $scope.isSearching = true;
-
-            // Execute the story query.
-            Story.query(
-                // Enable this once the API accepts search queries.
-                {status: $scope.filter || null},
-                function (result, headers) {
-
-                    // Successful search results, apply the results to the
-                    // scope and unset our progress flag.
-                    $scope.storyCount = headers('X-Total') || result.length;
-                    $scope.stories = result;
-                    $scope.isSearching = false;
-                },
-                function (error) {
-                    // Error search results, show the error in the UI and
-                    // unset our progress flag.
-                    $scope.error = error;
-                    $scope.isSearching = false;
-                }
-            );
-        };
-
-        // Initialize the view with a default search.
-        resetScope();
-        $scope.search();
     });
