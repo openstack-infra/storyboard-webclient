@@ -22,10 +22,64 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('User',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function ($q, $resource, storyboardApiBase, storyboardApiSignature,
+              Criteria, textCriteriaResolver) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/users/:id',
+        var parameters = {
+            text: 'full_name'
+        };
+
+        // Build the resource off of our global API signature.
+        var resource = $resource(storyboardApiBase + '/users/:id',
             {id: '@id'},
             storyboardApiSignature);
+
+        /**
+         * This method will resolve the project as a search criteria type.
+         */
+        resource.criteriaResolver = function (searchString) {
+            var deferred = $q.defer();
+
+            resource.query({full_name: searchString},
+                function (result) {
+                    // Transform the results to criteria tags.
+                    var userResults = [];
+                    result.forEach(function (item) {
+                        userResults.push(
+                            Criteria.create('user', item.id, item.full_name)
+                        );
+                    });
+                    deferred.resolve(userResults);
+                }, function () {
+                    deferred.resolve([]);
+                }
+            );
+
+            return deferred.promise;
+        };
+
+        /**
+         * Return a list of promise-returning methods that, given a search
+         * string, will provide a list of search criteria.
+         *
+         * @returns {*[]}
+         */
+        resource.criteriaResolvers = function () {
+            return [
+                textCriteriaResolver
+            ];
+        };
+
+        /**
+         * The criteria filter.
+         */
+        resource.criteriaFilter = Criteria.buildCriteriaFilter(parameters);
+
+        /**
+         * The criteria map.
+         */
+        resource.criteriaMap = Criteria.buildCriteriaMap(parameters);
+
+        return resource;
     });

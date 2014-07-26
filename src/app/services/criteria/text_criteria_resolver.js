@@ -14,20 +14,20 @@
  * under the License.
  */
 
+
 /**
- * The StoryBoard search module, providing both generic and advanced
- * discovery mechanisms.
+ * This criteria resolver may be injected by individual resources that accept a
+ * plain text search parameter.
  */
-angular.module('sb.search',
-    ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
-    .config(function ($stateProvider) {
+angular.module('sb.services').factory('textCriteriaResolver',
+    function (Criteria) {
         'use strict';
 
-        // Set our page routes.
-        $stateProvider
-            .state('search', {
-                url: '/search?q',
-                templateUrl: 'app/search/template/index.html',
-                controller: 'SearchController'
-            });
+        /**
+         * Return a text search parameter constructed from the passed search
+         * string.
+         */
+        return function (searchString) {
+            return [Criteria.create('text', searchString)];
+        };
     });
