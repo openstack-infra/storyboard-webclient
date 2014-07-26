@@ -20,10 +20,110 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('Story',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function ($q, $resource, storyboardApiBase, storyboardApiSignature,
+              Criteria, textCriteriaResolver, Project, User) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/stories/:id',
+        var parameters = {
+            project: 'project_id',
+            text: 'title',
+            user: 'assignee_id',
+            storyStatus: 'status'
+        };
+
+        /**
+         * The story resource, build on our base API signature.
+         */
+        var resource = $resource(storyboardApiBase + '/stories/:id',
             {id: '@id'},
             storyboardApiSignature);
+
+        /**
+         * A list of valid story status items.
+         *
+         * @type {*[]}
+         */
+        var validStatusCriteria = [
+            Criteria.create('storyStatus', 'active', 'Active'),
+            Criteria.create('storyStatus', 'merged', 'Merged'),
+            Criteria.create('storyStatus', 'invalid', 'Invalid')
+        ];
+
+        /**
+         * This function acts as a criteria "loader" for the
+         * story status enum.
+         *
+         * @returns {*}
+         */
+        function storyStatusCriteriaResolver(searchString) {
+            var deferred = $q.defer();
+            searchString = searchString || ''; // Sanity check
+            searchString = searchString.toLowerCase(); // Lowercase for search
+
+            var criteria = [];
+            validStatusCriteria.forEach(function (criteriaItem) {
+                var title = criteriaItem.title.toLowerCase();
+
+                // If we match the title, OR someone is explicitly typing in
+                // 'status'
+                if (title.indexOf(searchString) > -1 ||
+                    'status'.indexOf(searchString) === 0) {
+                    criteria.push(criteriaItem);
+                }
+            });
+            deferred.resolve(criteria);
+
+            return deferred.promise;
+        }
+
+        /**
+         * This method will resolve the story as a search criteria type.
+         */
+        resource.criteriaResolver = function (searchString) {
+            var deferred = $q.defer();
+
+            resource.query({title: searchString},
+                function (result) {
+                    // Transform the results to criteria tags.
+                    var storyResults = [];
+                    result.forEach(function (item) {
+                        storyResults.push(
+                            Criteria.create('story', item.id, item.title)
+                        );
+                    });
+                    deferred.resolve(storyResults);
+                }, function () {
+                    deferred.resolve([]);
+                }
+            );
+
+            return deferred.promise;
+        };
+
+        /**
+         * Return a list of promise-returning methods that, given a search
+         * string, will provide a list of search criteria.
+         *
+         * @returns {*[]}
+         */
+        resource.criteriaResolvers = function () {
+            return [
+                textCriteriaResolver,
+                storyStatusCriteriaResolver,
+                Project.criteriaResolver,
+                User.criteriaResolver
+            ];
+        };
+
+        /**
+         * The criteria filter.
+         */
+        resource.criteriaFilter = Criteria.buildCriteriaFilter(parameters);
+
+        /**
+         * The criteria map.
+         */
+        resource.criteriaMap = Criteria.buildCriteriaMap(parameters);
+
+        return resource;
     });

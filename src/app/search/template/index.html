@@ -13,7 +13,8 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-<div class="container" ng-controller="SearchCriteriaController">
+<div class="container" ng-controller="SearchCriteriaController"
+     ng-init="init(resourceTypes, defaultCriteria)">
     <div class="row">
         <div class="col-xs-12">
             <h1>Search</h1>
@@ -23,12 +24,11 @@
         <div class="col-sm-12">
             <div class="form-group has-feedback has-feedback-no-label">
                 <div id="search-criteria"
-                     focus
                      tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
                      tag-complete-tags="criteria"
                      tag-complete-label-field="title"
                      tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
-                     tag-complete-tag-template-url="'/inline/criteria_tag_item.html'"
+                     tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
                      tag-complete-loading="loadingCriteria = isLoading"
                      tag-complete-on-select="addCriteria(tag)">
                 </div>
@@ -200,11 +200,11 @@
         </div>
         <div class="col-xs-2 text-center text-muted" ng-if="hasValidCriteria">
             <span class="hidden-xs">
-                <i class="fa fa-3x fa-sb-user"></i>
+                <i class="fa fa-3x fa-users"></i>
                 <br/>
                 <small>Users</small>
             </span>
-            <i class="fa fa-2x fa-sb-user visible-xs"></i>
+            <i class="fa fa-2x fa-users visible-xs"></i>
         </div>
         <div class="col-xs-10" ng-if="hasValidCriteria">
             <table class="table table-condensed table-striped table-clean">
@@ -236,43 +236,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/ng-template" id="/inline/criteria_tag_item.html">
-    <span ng-switch="tag.type">
-        <div class="tag" ng-switch-when="text">
-            {{tag.value}}
-            <a class="tag-remove"
-               ng-click="removeTag({tag:tag})">
-                &times;
-            </a>
-        </div>
-        <div class="tag tag-success" ng-switch-when="user">
-            <i class="fa fa-user"></i> {{tag.title}}
-            <a class="tag-remove"
-               ng-click="removeTag({tag:tag})">
-                &times;
-            </a>
-        </div>
-        <div class="tag tag-warning" ng-switch-when="story">
-            <i class="fa fa-sb-story"></i> {{tag.title}}
-            <a class="tag-remove"
-               ng-click="removeTag({tag:tag})">
-                &times;
-            </a>
-        </div>
-        <div class="tag tag-info" ng-switch-when="project">
-            <i class="fa fa-sb-project"></i> {{tag.title}}
-            <a class="tag-remove"
-               ng-click="removeTag({tag:tag})">
-                &times;
-            </a>
-        </div>
-        <div class="tag tag-danger" ng-switch-default>
-            <i class="fa fa-question"></i> {{tag.type}}: {{tag.value}}
-            <a class="tag-remove"
-               ng-click="removeTag({tag:tag})">
-                &times;
-            </a>
-        </div>
-    </span>
-</script>
