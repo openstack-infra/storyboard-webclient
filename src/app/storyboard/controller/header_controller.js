@@ -20,8 +20,8 @@
  */
 angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser, Browse, Criteria, Notification,
-              Priority) {
+              SessionState, CurrentUser, Criteria, Notification,
+              Priority, Project, Story) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -96,8 +96,8 @@ angular.module('storyboard').controller('HeaderController',
             searchString = searchString || '';
 
             $q.all({
-                projects: Browse.project(searchString),
-                stories: Browse.story(searchString)
+                projects: Project.criteriaResolver(searchString),
+                stories: Story.criteriaResolver(searchString)
             }).then(function (results) {
 
                 var criteria = [
