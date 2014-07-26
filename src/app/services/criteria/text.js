@@ -5,7 +5,7 @@
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -14,30 +14,26 @@
  * under the License.
  */
 
+
 /**
- * The angular resource abstraction that allows us to create and modify tasks.
- *
- * @see storyboardApiSignature
- * @author Michael Krotscheck
+ * This criteria resolver may be injected by individual resources that accept a
+ * plain text search parameter.
  */
-angular.module('sb.services').factory('Task',
-    function (ResourceFactory) {
+angular.module('sb.services').factory('Text',
+    function (Criteria, $q) {
         'use strict';
 
-        var resource = ResourceFactory.build(
-            '/tasks/:id',
-            '/tasks/search',
-            {id: '@id'}
-        );
+        /**
+         * Return a text search parameter constructed from the passed search
+         * string.
+         */
+        return {
+            criteriaResolver: function (searchString) {
+                var deferred = $q.defer();
 
-        ResourceFactory.applyBrowse(
-            'Task',
-            resource,
-            {
-                Story: 'story_id',
-                User: 'assignee_id'
+                deferred.resolve([Criteria.create('Text', searchString)]);
+
+                return deferred.promise;
             }
-        );
-
-        return resource;
+        };
     });

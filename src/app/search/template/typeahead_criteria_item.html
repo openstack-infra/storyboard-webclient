@@ -1,16 +1,20 @@
 <a ng-switch="match.model.type"
    class="header-criteria-item">
-    <span ng-switch-when="text">
+    <span ng-switch-when="Text">
         <i class="fa fa-search text-muted"></i>&emsp;{{match.model.title}}
     </span>
-    <span ng-switch-when="story">
+    <span ng-switch-when="Story">
         <i class="fa fa-sb-story text-muted"></i>&emsp;{{match.model.value}}:
         {{match.model.title}}
     </span>
-    <span ng-switch-when="project">
+    <span ng-switch-when="StoryStatus">
+        <i class="fa fa-flag text-muted"></i>&emsp;Story Status:
+        {{match.model.title}}
+    </span>
+    <span ng-switch-when="Project">
         <i class="fa fa-sb-project text-muted"></i>&emsp;{{match.model.title}}
     </span>
-    <span ng-switch-when="user">
+    <span ng-switch-when="User">
         <i class="fa fa-sb-user text-muted"></i>&emsp;{{match.model.title}}
     </span>
     <span ng-switch-default>

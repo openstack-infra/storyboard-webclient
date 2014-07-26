@@ -18,14 +18,24 @@
  * The angular resource abstraction that allows us to access projects and their
  * details.
  *
- * @see storyboardApiSignature
+ * @see ResourceFactory
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('Project',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/projects/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        var resource = ResourceFactory.build(
+            '/projects/:id',
+            '/projects/search',
+            {id: '@id'}
+        );
+
+        ResourceFactory.applyBrowse(
+            'Project',
+            resource,
+            {Text: 'name'}
+        );
+
+        return resource;
     });

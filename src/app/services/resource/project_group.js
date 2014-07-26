@@ -17,14 +17,16 @@
 /**
  * The angular resource abstraction that allows us to access projects groups.
  *
- * @see storyboardApiSignature
+ * @see ResourceFactory
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('ProjectGroup',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/project_groups/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        return ResourceFactory.build(
+            '/project_groups/:id',
+            '/project_groups/search',
+            {id: '@id'}
+        );
     });

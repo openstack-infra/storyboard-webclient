@@ -27,6 +27,7 @@ angular.module('sb.search',
         $stateProvider
             .state('search', {
                 url: '/search?q',
-                templateUrl: 'app/search/template/index.html'
+                templateUrl: 'app/search/template/index.html',
+                controller: 'SearchController'
             });
     });

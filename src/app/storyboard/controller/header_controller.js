@@ -20,8 +20,8 @@
  */
 angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser, Browse, Criteria, Notification,
-              Priority) {
+              SessionState, CurrentUser, Criteria, Notification,
+              Priority, Project, Story) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -72,13 +72,13 @@ angular.module('storyboard').controller('HeaderController',
         $scope.search = function (criteria) {
 
             switch (criteria.type) {
-                case 'text':
+                case 'Text':
                     $state.go('search', {q: criteria.value});
                     break;
-                case 'project':
+                case 'Project':
                     $state.go('project.detail', {id: criteria.value});
                     break;
-                case 'story':
+                case 'Story':
                     $state.go('story.detail', {storyId: criteria.value});
                     break;
             }
@@ -96,12 +96,12 @@ angular.module('storyboard').controller('HeaderController',
             searchString = searchString || '';
 
             $q.all({
-                projects: Browse.project(searchString),
-                stories: Browse.story(searchString)
+                projects: Project.criteriaResolver(searchString),
+                stories: Story.criteriaResolver(searchString)
             }).then(function (results) {
 
                 var criteria = [
-                    Criteria.create('text', searchString)
+                    Criteria.create('Text', searchString)
                 ];
 
                 // Add the returned projects to the results list.

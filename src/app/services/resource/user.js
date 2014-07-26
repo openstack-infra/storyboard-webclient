@@ -18,14 +18,24 @@
  * The angular resource abstraction that allows us to search, access, and
  * modify users.
  *
- * @see storyboardApiSignature
+ * @see ResourceFactory
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('User',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/users/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        var resource = ResourceFactory.build(
+            '/users/:id',
+            '/users/search',
+            {id: '@id'}
+        );
+
+        ResourceFactory.applyBrowse(
+            'User',
+            resource,
+            {Text: 'full_name'}
+        );
+
+        return resource;
     });
