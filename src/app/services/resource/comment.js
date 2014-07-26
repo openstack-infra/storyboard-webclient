@@ -21,13 +21,15 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('Comment',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/stories/:story_id/comments/:id',
+        return ResourceFactory.build(
+            '/stories/:story_id/comments/:id',
+            '/stories/0/search',
             {
                 id: '@id',
                 story_id: '@story_id'
-            },
-            storyboardApiSignature);
+            }
+        );
     });

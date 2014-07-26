@@ -16,18 +16,19 @@
 
 /**
  * The sole purpose of this controller is to allow a user to search for valid
- * search/filter criteria, and expose chosen criteria to the scope. These
- * criteria may either be resources, resource identifiers (type/id pairs),
- * or plain strings.
+ * search/filter criteria for various resources, and expose chosen criteria
+ * to the scope. These criteria may be static or asynchronously loaded, and
+ * may be property filters (title = foo) or resource filters (story_id = 22).
  */
 angular.module('sb.search').controller('SearchCriteriaController',
-    function ($log, $q, $scope, Criteria, Browse, $stateParams) {
+    function ($log, $q, $scope, Criteria) {
         'use strict';
 
         /**
-         * Valid sets of resources that can be searched on.
+         * Valid sets of resources that can be searched on. The default
+         * assumes no resources may be searched.
          */
-        var resourceTypes = ['Story', 'Project', 'User', 'Task'];
+        var resourceTypes = [];
 
         /**
          * Managed list of active criteria tags.
@@ -37,32 +38,34 @@ angular.module('sb.search').controller('SearchCriteriaController',
         $scope.criteria = [];
 
         /**
-         * When a criteria is added, make sure we remove duplicates - the
-         * control doesn't handle that for us.
+         * Initialize this controller with different resource types and
+         * default search criteria.
+         *
+         * @param types
+         * @param defaultCriteria
+         */
+        $scope.init = function (types, defaultCriteria) {
+            resourceTypes = types || resourceTypes;
+            $scope.criteria = defaultCriteria || [];
+            $scope.searchForCriteria =
+                Criteria.buildCriteriaSearch(resourceTypes);
+        };
+
+        /**
+         * When a criteria is added, make sure we remove all previous criteria
+         * that have the same type.
          */
         $scope.addCriteria = function (item) {
-            var idx = $scope.criteria.indexOf(item);
-
-            for (var i = 0; i < $scope.criteria.length; i++) {
+            for (var i = $scope.criteria.length - 1; i >= 0; i--) {
                 var cItem = $scope.criteria[i];
 
                 // Don't remove exact duplicates.
-                if (idx === i) {
+                if (cItem === item) {
                     continue;
                 }
 
-                // We can only search for one text type at a time.
-                if (item.type === 'text' &&
-                    cItem.type === 'text') {
+                if (item.type === cItem.type) {
                     $scope.criteria.splice(i, 1);
-                    break;
-                }
-
-                // Remove any duplicate value types.
-                if (item.type === cItem.type &&
-                    item.value === cItem.value) {
-                    $scope.criteria.splice(i, 1);
-                    break;
                 }
             }
         };
@@ -99,30 +102,10 @@ angular.module('sb.search').controller('SearchCriteriaController',
         /**
          * Search for available search criteria.
          */
-        $scope.searchForCriteria = function (searchString) {
+        $scope.searchForCriteria = function () {
             var deferred = $q.defer();
-
-            searchString = searchString || '';
-
-            Browse.all(searchString).then(function (results) {
-
-                // Add text.
-                results.unshift(Criteria.create('text', searchString));
-
-                deferred.resolve(results);
-            });
-
-            // Return the search promise.
+            deferred.resolve([]);
             return deferred.promise;
         };
-
-        /**
-         * If a 'q' exists in the state params, go ahead and add it.
-         */
-        if ($stateParams.hasOwnProperty('q') && !!$stateParams.q) {
-            $scope.criteria.push(
-                Criteria.create('text', $stateParams.q)
-            );
-        }
     }
 );

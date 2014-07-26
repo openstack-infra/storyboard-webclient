@@ -22,10 +22,14 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('Team',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/teams/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        return ResourceFactory.build(
+            '/teams/:id',
+            '/teams/search', // Not implemented.
+            {
+                id: '@id'
+            }
+        );
     });

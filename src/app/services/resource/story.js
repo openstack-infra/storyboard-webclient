@@ -20,10 +20,25 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('Story',
-    function ($resource, storyboardApiBase, storyboardApiSignature) {
+    function (ResourceFactory) {
         'use strict';
 
-        return $resource(storyboardApiBase + '/stories/:id',
-            {id: '@id'},
-            storyboardApiSignature);
+        var resource = ResourceFactory.build(
+            '/stories/:id',
+            '/stories/search',
+            {id: '@id'}
+        );
+
+        ResourceFactory.applyBrowse(
+            'Story',
+            resource,
+            {
+                Text: 'title',
+                StoryStatus: 'status',
+                Project: 'project_id',
+                User: 'assignee_id'
+            }
+        );
+
+        return resource;
     });
