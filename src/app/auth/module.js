@@ -19,7 +19,7 @@
  */
 angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
         'sb.util', 'LocalStorageModule']
-    ).config(function ($stateProvider, SessionResolver) {
+).config(function ($stateProvider, SessionResolver) {
         'use strict';
 
         // Declare the states for this module.
@@ -59,21 +59,26 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                 controller: 'AuthErrorController'
             });
     })
-    .run(function ($rootScope, SessionState, Session,
-                   PermissionManager, RefreshManager) {
+    .run(function ($rootScope, SessionState, Session, PermissionManager,
+                   RefreshManager, Notification, Priority) {
         'use strict';
 
         // Initialize our permission manager.
         PermissionManager.initialize();
 
         // Always record the logged in state on the root scope.
-        $rootScope.$on(SessionState.LOGGED_IN, function () {
-            $rootScope.isLoggedIn = Session.isLoggedIn();
-        });
-        $rootScope.$on(SessionState.LOGGED_OUT, function () {
-            $rootScope.isLoggedIn = Session.isLoggedIn();
-        });
+        Notification.intercept(function (message) {
+            switch (message.type) {
+                case SessionState.LOGGED_IN:
+                    $rootScope.isLoggedIn = true;
+                    break;
+                case SessionState.LOGGED_OUT:
+                    $rootScope.isLoggedIn = false;
+                    break;
+                default:
+                    break;
+            }
+        }, Priority.LAST);
 
         RefreshManager.scheduleRefresh();
-
     });

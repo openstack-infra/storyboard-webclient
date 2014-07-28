@@ -20,7 +20,8 @@
  * session is detected.
  */
 angular.module('sb.auth').factory('CurrentUser',
-    function (SessionState, Session, AccessToken, $rootScope, $log, $q, User) {
+    function (SessionState, Session, AccessToken, $rootScope, $log, $q, User,
+              Notification, Priority) {
         'use strict';
 
         /**
@@ -110,10 +111,18 @@ angular.module('sb.auth').factory('CurrentUser',
         }
 
         // Add event listeners.
-        $rootScope.$on(SessionState.LOGGED_IN, resolveCurrentUser);
-        $rootScope.$on(SessionState.LOGGED_OUT, function () {
-            currentUser = null;
-        });
+        Notification.intercept(function (message) {
+            switch (message.type) {
+                case SessionState.LOGGED_IN:
+                    resolveCurrentUser();
+                    break;
+                case SessionState.LOGGED_OUT:
+                    currentUser = null;
+                    break;
+                default:
+                    break;
+            }
+        }, Priority.LAST);
 
         // Expose the methods for this service.
         return {

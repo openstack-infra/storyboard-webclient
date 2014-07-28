@@ -34,7 +34,8 @@
  * looks like.
  */
 angular.module('sb.auth').factory('PermissionManager',
-    function ($log, $q, $rootScope, Session, SessionState, CurrentUser) {
+    function ($log, $q, $rootScope, Session, SessionState, CurrentUser,
+              Notification, Priority) {
         'use strict';
 
         // Our permission resolution cache.
@@ -98,14 +99,20 @@ angular.module('sb.auth').factory('PermissionManager',
             initialize: function () {
                 $log.debug('Initializing permissions');
 
-                $rootScope.$on('$destroy',
-                    $rootScope.$on(SessionState.LOGGED_IN,
-                        clearPermissionCache)
-                );
-                $rootScope.$on('$destroy',
-                    $rootScope.$on(SessionState.LOGGED_OUT,
-                        clearPermissionCache)
-                );
+
+                // Always record the logged in state on the root scope.
+                var removeNotifier = Notification.intercept(function (message) {
+                    switch (message.type) {
+                        case SessionState.LOGGED_IN:
+                        case SessionState.LOGGED_OUT:
+                            clearPermissionCache();
+                            break;
+                        default:
+                            break;
+                    }
+                }, Priority.LAST);
+
+                $rootScope.$on('$destroy', removeNotifier);
 
                 // Run update if the session state has already resolved.
                 // Otherwise wait for the above listeners.
