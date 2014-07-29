@@ -31,6 +31,8 @@ angular.module('sb.search').directive('searchResults',
                 // Extract the resource type.
                 var resourceName = args.searchResource;
                 var pageSize = args.searchPageSize || 20;
+                var searchWithoutCriteria =
+                    args.searchWithoutCriteria === 'true';
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
@@ -49,8 +51,9 @@ angular.module('sb.search').directive('searchResults',
                         // You have criteria, and all of them are valid for
                         // this resource.
                         $scope.hasValidCriteria =
-                            $scope.validCriteria.length ===
-                            criteria.length && $scope.hasCriteria;
+                            searchWithoutCriteria ||
+                            ($scope.validCriteria.length === criteria.length &&
+                                $scope.hasCriteria);
 
                         // No need to search if our criteria aren't valid.
                         if (!$scope.hasValidCriteria) {

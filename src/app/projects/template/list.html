@@ -13,54 +13,87 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-<div class="container">
+<div class="container"
+     ng-controller="SearchCriteriaController"
+     ng-init="init(resourceTypes, defaultCriteria)"
+     search-results
+     search-resource="Project"
+     search-criteria="criteria"
+     search-without-criteria="true">
     <div class="row">
         <div class="col-xs-12">
-            <h1>{{projectCount}} Projects</h1>
+            <h1><i class="fa fa-sb-project"></i> Projects</h1>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-sm-9 col-sm-offset-3 col-xs-2 col-xs-offset-10">
-            <a href="#!/project/new" permission="is_superuser"
-               class="pull-right btn btn-default btn-sm">
+        <div class="col-lg-9 col-sm-8 col-xs-10">
+            <div class="form-group has-feedback has-feedback-no-label">
+                <div id="search-criteria"
+                     tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
+                     tag-complete-tags="criteria"
+                     tag-complete-label-field="title"
+                     tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
+                     tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
+                     tag-complete-loading="loadingCriteria = isLoading"
+                     tag-complete-on-select="addCriteria(tag)"
+                     placeholder="Search Projects">
+                </div>
+                <span class="form-control-feedback text-muted">
+                    <i class="fa fa-search"
+                       ng-hide="loadingCriteria"></i>
+                    <i class="fa fa-refresh fa-spin"
+                       ng-show="loadingCriteria"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-1 col-sm-2 hidden-xs">
+            <div class="form form-horizontal">
+                <p class="form-control-static text-muted">
+                    ({{searchResults.length}} found)
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-2" permission="is_superuser">
+            <a class="btn btn-primary pull-right"
+               href="#!/project/new">
                 <i class="fa fa-plus"></i>
-                <span class="hidden-xs">New Project</span>
+                <span class="hidden-xs">Create Project</span>
             </a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div ng-show="isSearching">
-                <hr/>
-                <p class="text-center">
-                    <i class="fa fa-refresh fa-spin fa-lg"></i>
-                </p>
-            </div>
 
-            <p ng-show="!isSearching && projects.length == 0"
-               class="text-center text-warning">
-                <em> We were unable to find any projects.</em>
-            </p>
+    <div class="row"
+         ng-if="!hasValidCriteria">
+        <div class="col-xs-12 text-muted text-center">
+            <em>What would you like to search by?</em>
+        </div>
+    </div>
 
-            <table class="table table-striped"
-                   ng-hide="isSearching || projects.length == 0">
-                <thead>
-                <tr>
-                    <th class="col-sm-10">&nbsp;</th>
+    <div class="row"
+         ng-if="hasValidCriteria">
+        <div class="col-xs-12">
+            <hr/>
+        </div>
+        <div class="col-xs-12">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="searchResults.length != 0">
+                <tr ng-repeat="project in searchResults"
+                    ng-include="'app/search/template/project_search_item.html'">
                 </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="project in projects">
-                    <td>
-                        <p><strong>
-                            <a href="#!/project/{{project.id}}">
-                                {{project.name}}
-                            </a>
-                        </strong></p>
-                        <small class="text-muted honor-carriage-return"
-                                >{{project.description}}</small>
-                    </td>
-                </tr>
+                </tbody>
+
+                <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                <td class="text-center text-muted">
+                    <em>No projects found.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="isSearching">
+                <td colspan="2">
+                    <small class="fa fa-spin fa-refresh text-muted">
+                    </small>
+                </td>
                 </tbody>
             </table>
         </div>

@@ -20,50 +20,12 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, Project) {
+    function ($scope) {
         'use strict';
 
-        // Variables and methods available to the template...
+        // search results must be of type "project"
+        $scope.resourceTypes = ['Project'];
 
-        function resetScope() {
-            $scope.projectCount = 0;
-            $scope.projects = [];
-            $scope.error = {};
-        }
-
-        $scope.searchQuery = '';
-        $scope.isSearching = false;
-
-        /**
-         * The search method.
-         */
-        $scope.search = function () {
-            // Clear the scope and set the progress flag.
-            resetScope();
-            $scope.isSearching = true;
-
-            // Execute the project query.
-            Project.query(
-                // Enable this once the API accepts search queries.
-                { /*q: $scope.searchQuery || ''*/},
-                function (result, headers) {
-
-                    // Successful search results, apply the results to the
-                    // scope and unset our progress flag.
-                    $scope.projectCount = headers('X-Total') || result.length;
-                    $scope.projects = result;
-                    $scope.isSearching = false;
-                },
-                function (error) {
-                    // Error search results, show the error in the UI and
-                    // unset our progress flag.
-                    $scope.error = error;
-                    $scope.isSearching = false;
-                }
-            );
-        };
-
-        // Initialize the view with a default search.
-        resetScope();
-        $scope.search();
+        // Projects have no default criteria
+        $scope.defaultCriteria = [];
     });
