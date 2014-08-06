@@ -33,9 +33,24 @@ angular.module('sb.search').directive('searchResults',
                 var pageSize = args.searchPageSize || 20;
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
+                var criteria = [];
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
+
+                /**
+                 * The field to sort on.
+                 *
+                 * @type {string}
+                 */
+                $scope.sortField = 'id';
+
+                /**
+                 * The direction to sort on.
+                 *
+                 * @type {string}
+                 */
+                $scope.sortDirection = 'asc';
 
                 /**
                  * Handle error result.
@@ -55,9 +70,25 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
+                 * Toggle the filter ID and direction in the UI.
+                 *
+                 * @param fieldName
+                 */
+                $scope.toggleFilter = function (fieldName) {
+                    if ($scope.sortField === fieldName) {
+                        $scope.sortDirection =
+                                $scope.sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        $scope.sortField = fieldName;
+                        $scope.sortDirection = 'desc';
+                    }
+                    updateResults();
+                };
+
+                /**
                  * Update the results when the criteria change
                  */
-                function updateResults(criteria) {
+                function updateResults() {
 
                     // Extract the valid criteria from the provided ones.
                     $scope.validCriteria = Criteria
@@ -92,6 +123,8 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
+                    params.sort_field = $scope.sortField;
+                    params.sort_dir = $scope.sortDirection;
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
@@ -109,7 +142,10 @@ angular.module('sb.search').directive('searchResults',
                 // Watch for changing criteria
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
-                    updateResults);
+                    function(results){
+                        criteria = results;
+                        updateResults();
+                    });
             }
         };
     });

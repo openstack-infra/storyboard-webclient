@@ -73,10 +73,47 @@
     <div class="row"
          ng-if="hasValidCriteria">
         <div class="col-xs-12">
-            <hr/>
+            <br/>
         </div>
         <div class="col-xs-12">
-            <table class="table table-condensed table-striped table-clean">
+            <table class="table table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        <a ng-click="toggleFilter('name')">
+                            Project
+                            <i class="fa fa-caret-down"
+                               ng-if="sortField == 'name' && sortDirection == 'desc'">
+                            </i>
+                            <i class="fa fa-caret-up"
+                               ng-if="sortField == 'name' && sortDirection == 'asc'">
+                            </i>
+                        </a>
+                    </th>
+                    <th>
+                        <a ng-click="toggleFilter('created_at')">
+                            Created
+                            <i class="fa fa-caret-down"
+                               ng-if="sortField == 'created_at' && sortDirection == 'desc'">
+                            </i>
+                            <i class="fa fa-caret-up"
+                               ng-if="sortField == 'created_at' && sortDirection == 'asc'">
+                            </i>
+                        </a>
+                    </th>
+                    <th>
+                        <a ng-click="toggleFilter('updated_at')">
+                            Updated
+                            <i class="fa fa-caret-down"
+                               ng-if="sortField == 'updated_at' && sortDirection == 'desc'">
+                            </i>
+                            <i class="fa fa-caret-up"
+                               ng-if="sortField == 'updated_at' && sortDirection == 'asc'">
+                            </i>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
                 <tbody ng-if="searchResults.length != 0">
                 <tr ng-repeat="project in searchResults"
                     ng-include="'app/search/template/project_search_item.html'">
@@ -84,13 +121,13 @@
                 </tbody>
 
                 <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
-                <td class="text-center text-muted">
+                <td class="text-center text-muted" colspan="3">
                     <em>No projects found.</em>
                 </td>
                 </tbody>
 
                 <tbody ng-if="isSearching">
-                <td colspan="2">
+                <td colspan="3">
                     <small class="fa fa-spin fa-refresh text-muted">
                     </small>
                 </td>
