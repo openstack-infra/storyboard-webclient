@@ -24,10 +24,40 @@ angular.module('sb.story').controller('StoryListController',
         // search results must be of type "story"
         $scope.resourceTypes = ['Story'];
 
+        /**
+         * The field to sort on.
+         *
+         * @type {string}
+         */
+        $scope.sortField = 'id';
+
+        /**
+         * The direction to sort on.
+         *
+         * @type {string}
+         */
+        $scope.sortDirection = 'asc';
+
         // Search result criteria default must be "active"
         $scope.defaultCriteria = [
             Criteria.create('StoryStatus', 'active', 'Active')
         ];
+
+
+        /**
+         * Toggle the filter ID and direction in the UI.
+         *
+         * @param fieldName
+         */
+        $scope.toggleFilter = function (fieldName) {
+            if ($scope.sortField === fieldName) {
+                $scope.sortDirection =
+                        $scope.sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                $scope.sortField = fieldName;
+                $scope.sortDirection = 'desc';
+            }
+        };
 
         /**
          * Creates a new story.

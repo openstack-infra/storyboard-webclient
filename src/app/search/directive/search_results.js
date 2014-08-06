@@ -33,6 +33,9 @@ angular.module('sb.search').directive('searchResults',
                 var pageSize = args.searchPageSize || 20;
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
+                var criteria = [];
+                var sortField = 'id';
+                var sortDirection = 'asc';
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
@@ -57,7 +60,7 @@ angular.module('sb.search').directive('searchResults',
                 /**
                  * Update the results when the criteria change
                  */
-                function updateResults(criteria) {
+                function updateResults() {
 
                     // Extract the valid criteria from the provided ones.
                     $scope.validCriteria = Criteria
@@ -92,6 +95,8 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
+                    params.sort_field = sortField;
+                    params.sort_dir = sortDirection;
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
@@ -109,7 +114,20 @@ angular.module('sb.search').directive('searchResults',
                 // Watch for changing criteria
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
-                    updateResults);
+                    function(results){
+                        criteria = results;
+                        updateResults();
+                    });
+                $scope.$watch($parse(args.searchSortDirection),
+                    function (direction) {
+                        sortDirection = direction;
+                        updateResults();
+                    });
+                $scope.$watch($parse(args.searchSortField),
+                    function (field) {
+                        sortField = field;
+                        updateResults();
+                    });
             }
         };
     });
