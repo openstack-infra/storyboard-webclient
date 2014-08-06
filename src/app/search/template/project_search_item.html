@@ -1,9 +1,17 @@
 <td>
     <a href="#!/project/{{project.id}}">
-    {{project.name}}
+        {{project.name}}
     </a>
     <br/>
     <span class="text-muted">
         {{project.description}}
+    </span>
+</td>
+<td>
+    <span time-moment eventdate="project.created_at">
+    </span>
+</td>
+<td>
+    <span time-moment eventdate="project.updated_at">
     </span>
 </td>
