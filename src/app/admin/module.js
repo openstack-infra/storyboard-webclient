@@ -23,7 +23,7 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
         'use strict';
 
         // Routing Defaults.
-        $urlRouterProvider.when('/admin', '/admin/project_group');
+        $urlRouterProvider.when('/admin', '/admin/user');
 
         // Declare the states for this module.
         $stateProvider
