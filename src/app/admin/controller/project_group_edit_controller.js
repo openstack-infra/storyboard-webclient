@@ -17,7 +17,7 @@
 /**
  * New Project Group edit controller.
  */
-angular.module('sb.profile').controller('ProjectGroupEditController',
+angular.module('sb.admin').controller('ProjectGroupEditController',
     function ($q, $log, $scope, $state, projectGroup, projects, Project,
               ProjectGroupItem, ArrayUtil) {
         'use strict';

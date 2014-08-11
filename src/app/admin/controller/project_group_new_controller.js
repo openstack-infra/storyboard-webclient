@@ -17,7 +17,7 @@
 /**
  * New Project Group modal controller.
  */
-angular.module('sb.profile').controller('ProjectGroupNewController',
+angular.module('sb.admin').controller('ProjectGroupNewController',
     function ($q, $log, $scope, $modalInstance, ProjectGroup, ProjectGroupItem,
               Project) {
         'use strict';
@@ -117,8 +117,6 @@ angular.module('sb.profile').controller('ProjectGroupNewController',
 
             // Create a new project group
             $scope.projectGroup.$save(function (projectGroup) {
-                $modalInstance.close(projectGroup);
-
                 var promises = [];
                 $scope.projects.forEach(
                     function (project) {
