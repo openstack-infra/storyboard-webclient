@@ -3,7 +3,9 @@
         <div class="col-sm-12">
             <h1>Dashboard</h1>
         </div>
-        <div class="col-sm-12">
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             <table class="table table-striped">
                 <thead>
                 <th colspan="2">Stories assigned to me</th>
@@ -30,6 +32,33 @@
                 <td colspan="3" class="text-center text-muted">
                     <em>
                         There are no active stories currently assigned to you.
+                    </em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <table class="table table-striped">
+                <thead>
+                <th colspan="2">Subscribed Events</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="event in subscriptionEvents">
+                    <td>
+                        {{event}}
+                    </td>
+                    <td>
+                        <button type="button" class="close"
+                                ng-click="removeEvent(event)">
+                            &times;
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="subscriptionEvents.length == 0">
+                <td colspan="2" class="text-center text-muted">
+                    <em>
+                        There are no recent events on your subscriptions.
                     </em>
                 </td>
                 </tbody>
