@@ -18,7 +18,7 @@
  * A controller that manages our logged-in dashboard
  */
 angular.module('sb.dashboard').controller('DashboardController',
-    function ($scope, currentUser, Story) {
+    function ($scope, currentUser, Story, SubscriptionEvent) {
         'use strict';
 
         // Load the list of current assigned stories.
@@ -26,4 +26,16 @@ angular.module('sb.dashboard').controller('DashboardController',
             assignee_id: currentUser.id,
             status: 'active'
         });
+
+        // Load the user's subscription events.
+        $scope.subscriptionEvents = SubscriptionEvent.query({
+            subscriber_id: currentUser.id
+        });
+
+        $scope.removeEvent = function (event) {
+            event.$delete(function () {
+                var idx = $scope.subscriptionEvents.indexOf(event);
+                $scope.subscriptionEvents.splice(idx, 1);
+            });
+        }
     });
