@@ -1,0 +1,29 @@
+<div ng-switch="event_type">
+    <div ng-switch-when="story_created">
+        <div ng-include src="'app/dashboard/template/event/story_created.html'"></div>
+    </div>
+    <div ng-switch-when="story_details_changed">
+        <div ng-include src="'app/dashboard/template/event/story_details_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_assignee_changed">
+        <div ng-include src="'app/dashboard/template/event/task_assignee_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_created">
+        <div ng-include src="'app/dashboard/template/event/task_created.html'"></div>
+    </div>
+    <div ng-switch-when="task_deleted">
+        <div ng-include src="'app/dashboard/template/event/task_deleted.html'"></div>
+    </div>
+    <div ng-switch-when="task_details_changed">
+        <div ng-include src="'app/dashboard/template/event/task_details_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_status_changed">
+        <div ng-include src="'app/dashboard/template/event/task_status_changed.html'"></div>
+    </div>
+    <div ng-switch-when="task_priority_changed">
+        <div ng-include src="'app/dashboard/template/event/task_priority_changed.html'"></div>
+    </div>
+    <div ng-switch-when="user_comment">
+        <div ng-include src="'app/dashboard/template/event/user_comment.html'"></div>
+    </div>
+</div>
