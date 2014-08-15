@@ -1,0 +1,10 @@
+<div>
+    <p>
+        {{ author.full_name }} left a comment
+        <span time-moment eventdate="created_at"></span>:
+    </p>
+
+    <p>
+        <em>{{event_info.comment_content || 'The author left a blank comment.'}}
+        </em></p>
+</div>
