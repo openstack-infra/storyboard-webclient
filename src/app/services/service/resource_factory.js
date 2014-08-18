@@ -21,7 +21,8 @@
  */
 angular.module('sb.services')
     .service('ResourceFactory',
-    function ($q, $log, $injector, Criteria, $resource, storyboardApiBase) {
+    function ($q, $log, $injector, Criteria, $resource, storyboardApiBase,
+              Preference) {
         'use strict';
 
         /**
@@ -147,33 +148,36 @@ angular.module('sb.services')
                     /**
                      * Add the criteria resolver method.
                      */
-                    resource.criteriaResolver = function (searchString) {
+                    resource.criteriaResolver =
+                        function (searchString, pageSize) {
+                            pageSize = pageSize || Preference.get('page_size');
 
-                        var deferred = $q.defer();
+                            var deferred = $q.defer();
 
-                        // build the query parameters.
-                        var queryParams = {};
-                        queryParams[nameField] = searchString;
+                            // build the query parameters.
+                            var queryParams = {};
+                            queryParams[nameField] = searchString;
+                            queryParams.limit = pageSize;
 
-                        resource.query(queryParams,
-                            function (result) {
-                                // Transform the results to criteria tags.
-                                var criteriaResults = [];
-                                result.forEach(function (item) {
-                                    criteriaResults.push(
-                                        Criteria.create(resourceName,
-                                            item.id,
-                                            item[nameField])
-                                    );
-                                });
-                                deferred.resolve(criteriaResults);
-                            }, function () {
-                                deferred.resolve([]);
-                            }
-                        );
+                            resource.query(queryParams,
+                                function (result) {
+                                    // Transform the results to criteria tags.
+                                    var criteriaResults = [];
+                                    result.forEach(function (item) {
+                                        criteriaResults.push(
+                                            Criteria.create(resourceName,
+                                                item.id,
+                                                item[nameField])
+                                        );
+                                    });
+                                    deferred.resolve(criteriaResults);
+                                }, function () {
+                                    deferred.resolve([]);
+                                }
+                            );
 
-                        return deferred.promise;
-                    };
+                            return deferred.promise;
+                        };
                 }
 
 
