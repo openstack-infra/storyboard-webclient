@@ -124,12 +124,13 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
-                    params.sort_field = $scope.sortField;
-                    params.sort_dir = $scope.sortDirection;
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
                     if (!params.hasOwnProperty('q')) {
+                        params.sort_field = $scope.sortField;
+                        params.sort_dir = $scope.sortDirection;
+
                         resource.query(params,
                             handleSearchResult,
                             handleErrorResult);
