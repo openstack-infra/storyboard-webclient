@@ -20,8 +20,8 @@
  */
 angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser, Criteria, Notification,
-              Priority, Project, Story) {
+              SessionState, CurrentUser, Criteria, Notification, Priority,
+              Project, Story) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -88,30 +88,74 @@ angular.module('storyboard').controller('HeaderController',
 
         /**
          * Filter down the search string to actual resources that we can
-         * browse to directly (Explicitly not including users here).
+         * browse to directly (Explicitly not including users here). If the
+         * search string is entirely numeric, we'll also do a check against
+         * a plain GET :id
          */
         $scope.quickSearch = function (searchString) {
             var deferred = $q.defer();
 
             searchString = searchString || '';
 
-            $q.all({
-                projects: Project.criteriaResolver(searchString, 5),
-                stories: Story.criteriaResolver(searchString, 5)
-            }).then(function (results) {
+            var searches = [];
 
+            if (searchString.match(/^[0-9]+$/)) {
+                var getProjectDeferred = $q.defer();
+                var getStoryDeferred = $q.defer();
+
+                Project.get({id: searchString},
+                    function (result) {
+                        getProjectDeferred.resolve(Criteria.create(
+                            'Project', result.id, result.name
+                        ));
+                    }, function () {
+                        getProjectDeferred.resolve(null);
+                    });
+                Story.get({id: searchString},
+                    function (result) {
+                        getStoryDeferred.resolve(Criteria.create(
+                            'Story', result.id, result.title
+                        ));
+                    }, function () {
+                        getStoryDeferred.resolve(null);
+                    });
+
+                // If the search string is entirely numeric, do a GET.
+                searches.push(getProjectDeferred.promise);
+                searches.push(getStoryDeferred.promise);
+
+            } else {
+                searches.push(Project.criteriaResolver(searchString, 5));
+                searches.push(Story.criteriaResolver(searchString, 5));
+            }
+            $q.all(searches).then(function (searchResults) {
                 var criteria = [
                     Criteria.create('Text', searchString)
                 ];
 
-                // Add the returned projects to the results list.
-                results.projects.forEach(function (item) {
+
+                /**
+                 * Add a result to the returned criteria.
+                 */
+                var addResult = function (item) {
                     criteria.push(item);
-                });
-                // Add the returned stories to the results list.
-                results.stories.forEach(function (item) {
-                    criteria.push(item);
-                });
+                };
+
+                for (var i = 0; i < searchResults.length; i++) {
+                    var results = searchResults[i];
+
+                    if (!results) {
+                        continue;
+                    }
+
+                    if (!!results.forEach) {
+
+                        // If it's iterable, do that. Otherwise just add it.
+                        results.forEach(addResult);
+                    } else {
+                        addResult(results);
+                    }
+                }
 
                 deferred.resolve(criteria);
             });
