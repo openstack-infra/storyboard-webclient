@@ -140,7 +140,8 @@
                     <a href=""
                        ng-click="showAddTaskForm = !showAddTaskForm"
                        ng-show="isLoggedIn">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
+                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
                         Add task
                     </a>
                 </small>
