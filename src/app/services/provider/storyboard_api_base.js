@@ -15,38 +15,10 @@
  */
 
 /**
- * This provider attempts to discover the API URI base for storyboard, by
- * checking various expected configuration parameters.
+ * This provider injects a sane default for the storyboardApiBase property. It
+ * may be overridden simply by injecting a constant of the same name in any
+ * module which lists sb.services as a dependency.
  *
  * @author Michael Krotscheck
  */
-angular.module('sb.services')
-    .config(function ($provide, $injector) {
-        'use strict';
-
-        var propertyName = 'storyboardApiBase';
-
-        // First to see whether something's already been injected.
-        if ($injector.has(propertyName)) {
-            // We've already got one, exit.
-            return;
-        }
-
-        // Do we have a global ENV property with something we can use?
-        if (window.hasOwnProperty('ENV')) {
-            var ENV = window.ENV;
-            if (ENV !== null && ENV.hasOwnProperty(propertyName)) {
-                $provide.constant(propertyName, ENV[propertyName]);
-                return;
-            }
-        }
-        // If there is a <base> tag, then we can use that.
-        if (document.getElementsByTagName('base').length > 0) {
-            $provide.constant(propertyName, '');
-            return;
-        }
-
-        // Neither of those work, so default to something sane on the current
-        // domain
-        $provide.constant(propertyName, '/api/v1');
-    });
+angular.module('sb.services').constant('storyboardApiBase', '/api/v1');

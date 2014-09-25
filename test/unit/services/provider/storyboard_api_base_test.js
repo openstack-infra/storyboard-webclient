@@ -29,20 +29,6 @@ describe('storyboardApiBase', function () {
         });
     });
 
-    it('should detect a value in window.ENV', function () {
-        window.ENV = {
-            storyboardApiBase: 'https://localhost:8080/api/v1'
-        };
-
-        module('sb.services');
-
-        inject(function (storyboardApiBase) {
-            expect(storyboardApiBase).toEqual('https://localhost:8080/api/v1');
-        });
-
-        delete window.ENV;
-    });
-
     it('should defer to properties injected at the parent level.', function () {
         angular.module('testModule', ['sb.services'])
             .config(function ($provide) {
