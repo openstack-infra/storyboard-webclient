@@ -1,20 +1,20 @@
-<td>
+<td class="col-xs-7" style="word-wrap: break-word">
     <a href="#!/story/{{story.id}}">
-        {{story.id}}: {{story.title}}
+        {{story.id}}: {{story.title | truncate: 97}}
     </a>
-    <br />
+    <br/>
     <span class="text-muted">
-        {{story.description}}
+        {{story.description | truncate: 97}}
     </span>
 </td>
-<td>
+<td class="col-sm-2 hidden-xs">
     <span time-moment eventdate="story.created_at">
     </span>
 </td>
-<td>
+<td class="col-sm-2 hidden-xs">
     <span time-moment eventdate="story.updated_at">
     </span>
 </td>
-<td class="text-right">
+<td class="text-right col-xs-1">
     <story-status-label story="story"/>
 </td>

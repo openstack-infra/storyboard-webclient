@@ -1,17 +1,23 @@
 <td>
     <a href="#!/project/{{project.id}}">
-        {{project.name}}
+        {{project.name | truncate: 97}}
     </a>
     <br/>
     <span class="text-muted">
-        {{project.description}}
+        {{project.description | truncate: 97}}
     </span>
 </td>
-<td>
+<td class="hidden-xs">
     <span time-moment eventdate="project.created_at">
     </span>
 </td>
-<td>
-    <span time-moment eventdate="project.updated_at">
+<td class="hidden-xs">
+    <span time-moment
+          ng-if="project.updated_at"
+          eventdate="project.updated_at">
     </span>
+    <em ng-if="!project.updated_at"
+        class="text-muted">
+        Not updated
+    </em>
 </td>
