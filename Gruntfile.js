@@ -257,6 +257,19 @@ module.exports = function (grunt) {
                         dest: dir.output + '/favicon.ico'
                     }
                 ]
+            },
+            draft: {
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: dir.test + '/draft',
+                        dest: dir.output,
+                        src: [
+                            '*.json'
+                        ]
+                    }
+                ]
             }
         },
 
@@ -413,7 +426,7 @@ module.exports = function (grunt) {
                 files: [
                     dir.source + '/**/*.{ico,txt,eot,ttf,woff}'
                 ],
-                tasks: ['copy']
+                tasks: ['copy:dist']
             },
             index: {
                 files: [
@@ -566,7 +579,7 @@ module.exports = function (grunt) {
         'less',
         'imagemin',
         'html2js',
-        'copy',
+        'copy:dist',
         'usemin'
     ]);
 
@@ -585,6 +598,16 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'compile',
         'package'
+    ]);
+
+
+    /**
+     * Compile and packages our code.
+     */
+    grunt.registerTask('build:draft', [
+        'compile',
+        'package',
+        'copy:draft'
     ]);
 
     /**
