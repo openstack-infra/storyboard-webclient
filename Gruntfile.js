@@ -58,12 +58,6 @@ module.exports = function (grunt) {
             rewrite: {
                 '^/api/v1': '/v1'
             }
-        },
-        production: {
-            context: '/api/v1',
-            host: 'storyboard.openstack.org',
-            port: 443,
-            https: true
         }
     };
 
@@ -506,19 +500,6 @@ module.exports = function (grunt) {
                     }
                 },
                 proxies: [proxies.localhost]
-            },
-            prod: {
-                options: {
-                    port: 9000,
-                    keepalive: true,
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, dir.output),
-                            proxySnippet
-                        ];
-                    }
-                },
-                proxies: [proxies.production]
             }
         },
 
@@ -622,21 +603,6 @@ module.exports = function (grunt) {
         'open',
         'configureProxies:dist',
         'connect:dist'
-    ]);
-
-    /**
-     * This task is identical to 'server:dist', with the exception that it
-     * will proxy the API requests against the production API.
-     *
-     * USE WITH CAUTION
-     */
-    grunt.registerTask('server:prod', [
-        'clean',
-        'compile',
-        'package',
-        'open',
-        'configureProxies:prod',
-        'connect:prod'
     ]);
 
     /**
