@@ -270,12 +270,31 @@
         </span>
     </td>
     <td ng-hide="showTaskEditForm">
-        <span ng-show="assignee">
-            {{assignee.full_name}}
-        </span>
-        <em class="text-muted" ng-hide="assignee">
-            Not assigned
-        </em>
+        <div class="has-feedback" ng-show="isLoggedIn" ng-click="displayAssigneeForm();">
+            <span class="expandable back-index"
+                ng-hide="task.showAssigneeForm"
+                ng-if="assignee != null">
+            {{assignee.full_name}}</span>
+            <em class="expandable text-muted back-index"
+                ng-hide="task.showAssigneeForm" ng-if="assignee == null">
+            Please click to assign</em>
+            <input type="text"
+                   typeahead-editable="false"
+                   typeahead="user as user.full_name for user in searchUsers($viewValue)"
+                   typeahead-loading="loadingUsers"
+                   typeahead-input-formatter="formatUserName($model)"
+                   typeahead-on-select="selectNewUser($model)"
+                   ng-model="assignee"
+                   ng-show="task.showAssigneeForm" />
+        </div>
+        <div ng-show="!isLoggedIn">
+            <span ng-show="assignee">
+                {{assignee.full_name}}
+            </span>
+            <em class="text-muted" ng-hide="assignee">
+                Not assigned
+            </em>
+        </div>
     </td>
     <td ng-show="showTaskEditForm"
         colspan="3">
@@ -310,4 +329,11 @@
 <!-- Template for story metadata -->
 <script type="text/ng-template" id="/inline/metadata.html">
 
+</script>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("
+});
 </script>
