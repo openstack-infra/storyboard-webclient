@@ -270,12 +270,31 @@
         </span>
     </td>
     <td ng-hide="showTaskEditForm">
-        <span ng-show="assignee">
-            {{assignee.full_name}}
-        </span>
-        <em class="text-muted" ng-hide="assignee">
-            Not assigned
-        </em>
+        <div class="form-group has-feedback" ng-show="isLoggedIn">
+            <input id="assignee"
+                   type="text"
+                   ng-model="assignee"
+                   placeholder="Choose a user."
+                   typeahead-editable="false"
+                   typeahead="user as user.full_name for user in searchUsers($viewValue)"
+                   typeahead-loading="loadingUsers"
+                   typeahead-input-formatter="formatUserName($model)"
+                   typeahead-on-select="selectNewUser($model)"
+                   class="form-control input-sm"
+                    />
+            <span class="form-control-inline-feedback text-muted form-control-feedback-sm">
+                <i class="fa fa-refresh fa-spin" ng-show="loadingUsers"></i>
+                <i class="fa fa-search" ng-hide="loadingUsers"></i>
+            </span>
+        </div>
+        <div ng-show="!isLoggedIn">
+            <span ng-show="assignee">
+                {{assignee.full_name}}
+            </span>
+            <em class="text-muted" ng-hide="assignee">
+                Not assigned
+            </em>
+        </div>
     </td>
     <td ng-show="showTaskEditForm"
         colspan="3">
