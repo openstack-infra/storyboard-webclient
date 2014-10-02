@@ -60,6 +60,16 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             $scope.task.$update();
         };
 
+        /**
+         * Select a new user.
+         */
+        $scope.selectNewUser = function (model) {
+            $scope.task.assignee_id = model.id;
+            if ($scope.task.status === 'todo') {
+                $scope.task.status = 'inprogress';
+            }
+            $scope.task.$update();
+        };
 
         /**
          * UI Toggle for when the edit form should be displayed.
