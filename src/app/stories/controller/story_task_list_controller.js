@@ -88,6 +88,16 @@ angular.module('sb.story').controller('StoryTaskListController',
             });
         };
 
+        $scope.disableAssigneeInTasks = function() {
+            // first hide all assignee inputs
+            for (var i=0;i<$scope.tasks.length;i++)
+            {
+                var task = $scope.tasks[i];
+                task.showAssigneeForm = false;
+            }
+        };
+
         // Initialize our view
         $scope.loadTasks();
+
     });

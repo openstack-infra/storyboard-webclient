@@ -60,11 +60,24 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             $scope.task.$update();
         };
 
+        /**
+         * Select a new user.
+         */
+        $scope.selectNewUser = function (model) {
+            $scope.task.assignee_id = model.id;
+            if ($scope.task.status === 'todo') {
+                $scope.task.status = 'inprogress';
+            }
+            $scope.task.$update();
+            $scope.task.showAssigneeForm = false;
+        };
 
         /**
          * UI Toggle for when the edit form should be displayed.
          */
         $scope.showTaskEditForm = false;
+
+        $scope.showAssigneeForm = false;
 
         /**
          * Scope method to toggle said edit form.
@@ -118,4 +131,16 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                 $scope.showTaskEditForm = false;
             });
         };
+
+        /***
+         * Scope method to show assignee form.
+         */
+        $scope.displayAssigneeForm = function () {
+            $scope.disableAssigneeInTasks();
+
+            if (!$scope.task.showAssigneeForm) {
+                $scope.task.showAssigneeForm = true;
+            }
+        };
+
     });

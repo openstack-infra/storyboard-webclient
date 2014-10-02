@@ -87,6 +87,23 @@ angular.module('sb.story').controller('StoryDetailController',
         };
 
         /**
+        * Formats the user name.
+        */
+        $scope.formatUserName = function (model) {
+            if (!!model) {
+                return model.full_name;
+            }
+            return '';
+        };
+
+        /**
+        * User typeahead search method.
+        */
+        $scope.searchUsers = function (value) {
+            return User.query({full_name: value, limit: 10}).$promise;
+        };
+
+        /**
          * UI Flag for when we're in edit mode.
          */
         $scope.showEditForm = false;
