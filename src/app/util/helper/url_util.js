@@ -20,7 +20,7 @@
  * @author Nikita Konovalov
  */
 angular.module('sb.util').factory('UrlUtil',
-    function ($location) {
+    function ($window) {
         'use strict';
 
         return {
@@ -29,11 +29,9 @@ angular.module('sb.util').factory('UrlUtil',
              * component.
              */
             getFullUrlPrefix: function () {
-                var protocol = $location.protocol();
-                var host = $location.host();
-                var port = $location.port();
-
-                return protocol + '://' + host + ':' + port;
+                var origin = $window.location.origin;
+                var path = $window.location.pathname;
+                return origin + path;
             },
 
             /**
@@ -41,7 +39,7 @@ angular.module('sb.util').factory('UrlUtil',
              * fragment.
              */
             buildApplicationUrl: function (fragment) {
-                return this.getFullUrlPrefix() + '/#!' + fragment;
+                return this.getFullUrlPrefix() + '#!' + fragment;
             },
 
             /**
@@ -55,7 +53,7 @@ angular.module('sb.util').factory('UrlUtil',
                         continue;
                     }
                     pairs.push(
-                        encodeURIComponent(prop) +
+                            encodeURIComponent(prop) +
                             '=' +
                             encodeURIComponent(params[prop])
                     );
