@@ -17,9 +17,9 @@
 // A reference configuration file.
 exports.config = {
     seleniumServerJar: './node_modules/selenium-standalone/' +
-        '.selenium/2.39.0/server.jar',
+        '.selenium/2.43.1/server.jar',
     chromeDriver: './node_modules/selenium-standalone/' +
-        '.selenium/2.39.0/chromedriver',
+        '.selenium/2.43.1/chromedriver',
 
     chromeOnly: false,
     // Additional command line options to pass to selenium. For example,
