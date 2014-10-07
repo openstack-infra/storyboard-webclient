@@ -85,6 +85,8 @@ angular.module('sb.story').controller('StoryTaskListController',
             $scope.newTask.$save(function (savedTask) {
                 $scope.tasks.push(savedTask);
                 $scope.newTask = new Task({story_id: id});
+                $scope.$parent.loadEvents();
+                $scope.showAddTaskForm = false;
             });
         };
 

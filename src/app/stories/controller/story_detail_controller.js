@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference) {
+              Session, User, Preference, Event, Comment) {
         'use strict';
 
         // Parse the ID
@@ -28,6 +28,20 @@ angular.module('sb.story').controller('StoryDetailController',
             null;
 
         $scope.enabled_event_types = Preference.get('display_events_filter');
+
+        /**
+         * The story we're manipulating right now.
+         */
+        $scope.loadEvents = function() {
+            Event.search(id).then(function(events) {
+  	        $scope.events = events;
+            });
+        };
+
+        /**
+         * The new comment backing the input form.
+         */
+        $scope.newComment = new Comment({story_id: id});
 
         /**
          * Generic service error handler. Assigns errors to the view's scope,
@@ -61,7 +75,7 @@ angular.module('sb.story').controller('StoryDetailController',
                     if (!!story.creator_id) {
                         $scope.creator = User.get({id: story.creator_id});
                     }
-
+                    $scope.loadEvents();
                     handleServiceSuccess();
                 },
                 handleServiceError
@@ -109,6 +123,13 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {boolean}
          */
         $scope.isUpdating = false;
+
+        /**
+         * UI view for when we're trying to save a comment.
+         * 
+         * @type {boolean}
+         */
+        $scope.isSavingComment = false;
 
         /**
          * Any error objects returned from the services.
@@ -173,6 +194,35 @@ angular.module('sb.story').controller('StoryDetailController',
             // Return the modal's promise.
             return modalInstance.result;
         };
+
+        /**
+         * Add a comment
+         */
+        $scope.addComment = function () {
+
+            function resetSavingFlag() {
+                $scope.isSavingComment = false;
+            }
+
+            // Do nothing if the comment is empty
+            if (!$scope.newComment.content) {
+                $log.warn('No content in comment, discarding submission');
+                return;
+            }
+
+            $scope.isSavingComment = true;
+
+            // Author ID will be automatically attached by the service, so
+            // don't inject it into the conversation until it comes back.
+            $scope.newComment.$create(
+                function () {
+                    $scope.newComment = new Comment({story_id: id});
+                    resetSavingFlag();
+                    $scope.loadEvents();
+                }
+            );
+        };
+
 
         /**
          * Initialize
