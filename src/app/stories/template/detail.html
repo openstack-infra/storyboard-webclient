@@ -182,7 +182,7 @@
 
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/discussion.html">
-    <div ng-controller="StoryDiscussionController">
+    <div>
         <h4>Events timeline
             <a href ng-click="updateFilter()"><i class="fa fa-gear"></i></a>
         </h4>
@@ -191,15 +191,13 @@
                  ng-show="comments.length == 0">
                 The discussion hasn't started yet
             </div>
-            <div ng-repeat="event in events"
-                 ng-controller="StoryDiscussionItemController">
+            <div ng-repeat="event in events">
                 <timeline-event tl_event={{event}} />
             </div>
 
             <form class="discussion-comment-form comment"
                   id="commentForm"
-                  name="commentForm"
-                  ng-show="isLoggedIn">
+                  name="commentForm" ng-show="isLoggedIn">
                 <div class="form-group">
                     <textarea id="comment"
                               placeholder="Enter your comment here"
