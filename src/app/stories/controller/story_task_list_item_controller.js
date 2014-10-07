@@ -18,7 +18,8 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryTaskListItemController',
-    function ($scope, $state, $modal, Project, Session, Task, User) {
+    function ($rootScope, $scope, $state, $modal, Project, Session,
+              Task, User) {
         'use strict';
 
         var projectId = $scope.task.project_id || null;
@@ -48,7 +49,7 @@ angular.module('sb.story').controller('StoryTaskListItemController',
          */
         $scope.updateStatus = function (status) {
             $scope.task.status = status;
-            $scope.task.$update();
+            $scope.updateTaskInline();
         };
 
 
@@ -57,7 +58,7 @@ angular.module('sb.story').controller('StoryTaskListItemController',
          */
         $scope.updatePriority = function (priority) {
             $scope.task.priority = priority;
-            $scope.task.$update();
+            $scope.updateTaskInline();
         };
 
 
@@ -94,6 +95,8 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             modalInstance.result.then(
                 function () {
                     $scope.loadTasks();
+                   $rootScope.$broadcast('refreshEvents',
+                       {'storyId':$scope.task.story_id});
                 }
             );
         };
@@ -116,6 +119,15 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             $scope.task.$update(function () {
                 $scope.loadTasks(); // Reload
                 $scope.showTaskEditForm = false;
+                $rootScope.$broadcast('refreshEvents',
+                    {'storyId':$scope.task.story_id});
+
+            });
+        };
+        $scope.updateTaskInline = function () {
+            $scope.task.$update(function () {
+                $rootScope.$broadcast('refreshEvents',
+                    {'storyId':$scope.task.story_id});
             });
         };
     });

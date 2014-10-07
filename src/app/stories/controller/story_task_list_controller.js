@@ -18,7 +18,7 @@
  * Controller that provides methods that allow editing of a story.
  */
 angular.module('sb.story').controller('StoryTaskListController',
-    function ($log, $scope, $state, $stateParams, Task) {
+    function ($log, $rootScope, $scope, $state, $stateParams, Task) {
         'use strict';
 
         // Parse the ID
@@ -85,6 +85,9 @@ angular.module('sb.story').controller('StoryTaskListController',
             $scope.newTask.$save(function (savedTask) {
                 $scope.tasks.push(savedTask);
                 $scope.newTask = new Task({story_id: id});
+
+                $rootScope.$broadcast('refreshEvents',
+                    {'storyId': savedTask.id});
             });
         };
 

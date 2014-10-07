@@ -18,7 +18,8 @@
  * Controller for the "new story" modal popup.
  */
 angular.module('sb.story').controller('StoryModalController',
-    function ($scope, $modalInstance, params, Project, Story, Task) {
+    function ($rootScope, $scope, $modalInstance, params, Project,
+              Story, Task) {
         'use strict';
 
         $scope.projects = Project.query({});
@@ -91,6 +92,9 @@ angular.module('sb.story').controller('StoryModalController',
             $scope.tasks.push(new Task({
                 project_id: lastTask.project_id
             }));
+            $rootScope.$broadcast('refreshEvents',
+                {'storyId': lastTask.id});
+
         };
 
         /**

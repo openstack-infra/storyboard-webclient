@@ -18,8 +18,8 @@
  * Controller used for the comments section on the story detail page.
  */
 angular.module('sb.story').controller('StoryDiscussionController',
-    function ($log, $scope, $state, $stateParams, Project, Comment,
-              TimelineEvent) {
+    function ($log, $rootScope, $scope, $state, $stateParams, Project,
+              Comment, TimelineEvent) {
         'use strict';
 
         // Parse the ID
@@ -30,7 +30,18 @@ angular.module('sb.story').controller('StoryDiscussionController',
         /**
          * The story we're manipulating right now.
          */
-        $scope.events = TimelineEvent.query({story_id: id});
+        $scope.sortField = 'created_at';
+        $scope.sortDirection = 'desc';
+
+        function loadEvents() {
+            var params = {};
+
+            params.sort_field = $scope.sortField;
+            params.sort_dir = $scope.sortDirection;
+            params.story_id = id;
+            $scope.events = TimelineEvent.query(params);
+        }
+        loadEvents();
 
         /**
          * The new comment backing the input form.
@@ -78,12 +89,18 @@ angular.module('sb.story').controller('StoryDiscussionController',
             // Author ID will be automatically attached by the service, so
             // don't inject it into the conversation until it comes back.
             $scope.newComment.$create(
-                function (event) {
-                    $scope.events.push(event);
+                function () {
                     $scope.newComment = new Comment({story_id: id});
                     resetSavingFlag();
+                    $rootScope.$broadcast('refreshEvents',
+                        {'storyId': id});
                 },
                 resetSavingFlag
             );
         };
+
+        $rootScope.$on('refreshEvents', function(events, args) {
+            // reload events
+            loadEvents(args.storyId);
+        });
     });
