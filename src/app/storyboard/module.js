@@ -25,8 +25,8 @@
 angular.module('storyboard',
     [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
         'sb.auth', 'sb.story', 'sb.profile', 'sb.notification', 'sb.search',
-        'sb.admin', 'ui.router', 'ui.bootstrap', 'monospaced.elastic',
-        'angularMoment'])
+        'sb.admin', 'sb.subscription', 'ui.router', 'ui.bootstrap',
+        'monospaced.elastic', 'angularMoment'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
         timezone: 'UTC'
