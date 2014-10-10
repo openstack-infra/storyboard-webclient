@@ -43,8 +43,29 @@
             &times;
         </a>
     </div>
+    <div class="tag tag-default" ng-switch-when="TaskStatus">
+        <i class="fa fa-flag"></i> Task Status: {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
+    <div class="tag tag-default" ng-switch-when="TaskPriority">
+        <i class="fa fa-flag"></i> Task Priority: {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
     <div class="tag tag-info" ng-switch-when="Project">
         <i class="fa fa-sb-project"></i> {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
+    <div class="tag tag-info" ng-switch-when="ProjectGroup">
+        <i class="fa fa-sb-project-group"></i> {{tag.title}}
         <a class="tag-remove"
            ng-click="removeTag({tag:tag})">
             &times;
