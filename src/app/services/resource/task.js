@@ -36,8 +36,12 @@ angular.module('sb.services').factory('Task',
             null,
             {
                 Text: 'q',
+                TaskStatus: 'status',
+                TaskPriority: 'priority',
                 Story: 'story_id',
-                User: 'assignee_id'
+                User: 'assignee_id',
+                Project: 'project_id',
+                ProjectGroup: 'project_group_id'
             }
         );
 
