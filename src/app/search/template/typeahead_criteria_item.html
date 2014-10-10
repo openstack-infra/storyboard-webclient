@@ -11,8 +11,20 @@
         <i class="fa fa-flag text-muted"></i>&emsp;Story Status:
         {{match.model.title}}
     </span>
+    <span ng-switch-when="TaskStatus">
+        <i class="fa fa-flag text-muted"></i>&emsp;Task Status:
+        {{match.model.title}}
+    </span>
+    <span ng-switch-when="TaskPriority">
+        <i class="fa fa-flag text-muted"></i>&emsp;Task Priority:
+        {{match.model.title}}
+    </span>
     <span ng-switch-when="Project">
         <i class="fa fa-sb-project text-muted"></i>&emsp;{{match.model.title}}
+    </span>
+    <span ng-switch-when="ProjectGroup">
+        <i class="fa fa-sb-project-group text-muted">
+        </i>&emsp;{{match.model.title}}
     </span>
     <span ng-switch-when="User">
         <i class="fa fa-sb-user text-muted"></i>&emsp;{{match.model.title}}
