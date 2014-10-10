@@ -24,9 +24,18 @@ angular.module('sb.services').factory('ProjectGroup',
     function (ResourceFactory) {
         'use strict';
 
-        return ResourceFactory.build(
+        var resource = ResourceFactory.build(
             '/project_groups/:id',
             '/project_groups/search',
             {id: '@id'}
         );
+
+        ResourceFactory.applySearch(
+            'ProjectGroup',
+            resource,
+            'title',
+            {Text: 'title'}
+        );
+
+        return resource;
     });
