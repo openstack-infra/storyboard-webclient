@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>
+                <i class="fa fa-sb-project-group"></i>
+                {{projectGroup.name}}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 text-center text-muted">
+            <span class="hidden-xs">
+                <i class="fa fa-3x fa-sb-project"></i>
+                <br/>
+                <small>Projects</small>
+            </span>
+            <i class="fa fa-2x fa-sb-project visible-xs"></i>
+        </div>
+        <div class="col-xs-10">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="projects.length != 0">
+                <tr ng-repeat="project in projects"
+                    ng-include="'app/search/template/project_search_item.html'">
+                </tr>
+                </tbody>
+
+                <tbody ng-if=\projects.length == 0">
+                <td class="text-center text-muted">
+                    <em>No projects found.</em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <hr/>
+        </div>
+        <div class="col-xs-2 text-center text-muted">
+            <span class="hidden-xs">
+                <i class="fa fa-3x fa-sb-story"></i>
+                <br/>
+                <small>Stories</small>
+            </span>
+            <i class="fa fa-2x fa-sb-story visible-xs"></i>
+        </div>
+        <div class="col-xs-10">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="stories.length != 0">
+                <tr ng-repeat="story in stories"
+                    ng-include="'app/search/template/story_search_item.html'">
+                </tr>
+                </tbody>
+
+                <tbody ng-if="stories.length == 0">
+                <td class="text-center text-muted">
+                    <em>No stories found.</em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

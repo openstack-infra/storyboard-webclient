@@ -1,0 +1,24 @@
+<td>
+    <a href="#!/project_group/{{projectGroup.id}}">
+        {{projectGroup.name | truncate: 97}}
+    </a>
+</td>
+<td class="hidden-xs">
+    <span time-moment eventdate="projectGroup.created_at">
+    </span>
+</td>
+<td class="hidden-xs">
+    <span time-moment
+          ng-if="projectGroup.updated_at"
+          eventdate="projectGroup.updated_at">
+    </span>
+    <em ng-if="!projectGroup.updated_at"
+        class="text-muted">
+        Not updated
+    </em>
+</td>
+<td>
+    <subscribe class="pull-right"
+               resource="project_group"
+               resource-id="projectGroup.id"></subscribe>
+</td>
