@@ -55,7 +55,7 @@ angular.module('sb.admin').controller('UserAdminController',
         $scope.search = function () {
             var searchQuery = $scope.filterQuery || '';
 
-            $scope.users = User.query({
+            $scope.users = User.browse({
                 full_name: searchQuery
             });
         };

@@ -22,13 +22,13 @@ angular.module('sb.dashboard').controller('DashboardController',
         'use strict';
 
         // Load the list of current assigned stories.
-        $scope.assignedStories = Story.query({
+        $scope.assignedStories = Story.browse({
             assignee_id: currentUser.id,
             status: 'active'
         });
 
         // Load the user's subscription events.
-        $scope.subscriptionEvents = SubscriptionEvent.query({
+        $scope.subscriptionEvents = SubscriptionEvent.browse({
             subscriber_id: currentUser.id
         });
 

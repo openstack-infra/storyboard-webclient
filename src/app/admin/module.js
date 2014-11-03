@@ -73,7 +73,7 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                         return ProjectGroup.get({id: $stateParams.id}).$promise;
                     },
                     projects: function ($stateParams, ProjectGroupItem) {
-                        return ProjectGroupItem.query(
+                        return ProjectGroupItem.browse(
                             {projectGroupId: $stateParams.id}
                         ).$promise;
                     }

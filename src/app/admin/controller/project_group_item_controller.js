@@ -31,7 +31,7 @@ angular.module('sb.admin').controller('ProjectGroupItemController',
         var id = $scope.projectGroup.id;
 
         $scope.loadingProjectGroupItems = true;
-        ProjectGroupItem.query({
+        ProjectGroupItem.browse({
                 projectGroupId: id
             },
             function (results) {

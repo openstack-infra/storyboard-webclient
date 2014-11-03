@@ -30,7 +30,7 @@ angular.module('sb.story').controller('StoryDiscussionController',
         /**
          * The story we're manipulating right now.
          */
-        $scope.events = TimelineEvent.query({story_id: id});
+        $scope.events = TimelineEvent.browse({story_id: id});
 
         /**
          * The new comment backing the input form.

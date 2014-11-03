@@ -61,7 +61,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             $scope.isSearching = true;
 
             // Execute the story query.
-            Story.query(
+            Story.browse(
                 {project_id: id, status: $scope.filter || null},
                 function (result, headers) {
 

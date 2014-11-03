@@ -95,14 +95,14 @@ angular.module('sb.story').directive('taskEditForm',
                  * User typeahead search method.
                  */
                 $scope.searchUsers = function (value) {
-                    return User.query({full_name: value, limit: 10}).$promise;
+                    return User.browse({full_name: value, limit: 10}).$promise;
                 };
 
                 /**
                  * Project typeahead search method.
                  */
                 $scope.searchProjects = function (value) {
-                    return Project.query({name: value, limit: 10}).$promise;
+                    return Project.browse({name: value, limit: 10}).$promise;
                 };
             }
         };
