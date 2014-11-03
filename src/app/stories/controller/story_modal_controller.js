@@ -21,7 +21,7 @@ angular.module('sb.story').controller('StoryModalController',
     function ($scope, $modalInstance, params, Project, Story, Task) {
         'use strict';
 
-        $scope.projects = Project.query({});
+        $scope.projects = Project.browse({});
         $scope.story = new Story({title: ''});
         $scope.tasks = [new Task({
             title: '',
@@ -109,7 +109,7 @@ angular.module('sb.story').controller('StoryModalController',
          * Project typeahead search method.
          */
         $scope.searchProjects = function (value) {
-            return Project.query({name: value, limit: 10}).$promise;
+            return Project.browse({name: value, limit: 10}).$promise;
         };
 
         /**

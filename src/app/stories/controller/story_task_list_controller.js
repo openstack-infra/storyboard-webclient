@@ -64,7 +64,7 @@ angular.module('sb.story').controller('StoryTaskListController',
         $scope.loadTasks = function() {
             $scope.tasks = [];
 
-            Task.query(
+            Task.browse(
                 {story_id: id},
                 function (result) {
                     $scope.tasks = result;

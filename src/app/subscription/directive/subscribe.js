@@ -118,7 +118,7 @@ angular.module('sb.util').directive('subscribe',
 
                     cuPromise.then(
                         function (user) {
-                            Subscription.query({
+                            Subscription.browse({
                                     user_id: user.id,
                                     target_type: $scope.resource,
                                     target_id: $scope.resourceId

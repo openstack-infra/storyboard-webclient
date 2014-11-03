@@ -54,7 +54,7 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
          */
         $scope.searchProjects = function (value) {
             var deferred = $q.defer();
-            Project.query({name: value, limit: 10},
+            Project.browse({name: value, limit: 10},
                 function (results) {
                     // Dedupe the results.
                     var idxList = [];

@@ -79,7 +79,7 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
         $scope.search = function () {
             var searchQuery = $scope.filterQuery || '';
 
-            $scope.projectGroups = ProjectGroup.query({
+            $scope.projectGroups = ProjectGroup.browse({
                 title: searchQuery
             });
         };
