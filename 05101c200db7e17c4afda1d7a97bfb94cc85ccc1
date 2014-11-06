@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Joshua Hesketh <joshua.hesketh@rackspace.com>
+Code-Review+2: Nikita Konovalov <nkonovalov@mirantis.com>
+Workflow+1: Michael Krotscheck <krotscheck@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Thu, 06 Nov 2014 15:46:52 +0000
+Reviewed-on: https://review.openstack.org/132606
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
