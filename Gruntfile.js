@@ -596,7 +596,7 @@ module.exports = function (grunt) {
      * source in a local web server. It does no watching, it simply hosts the
      * files.
      */
-    grunt.registerTask('server:dist', [
+    grunt.registerTask('serve:dist', [
         'clean',
         'compile',
         'package',
@@ -610,7 +610,7 @@ module.exports = function (grunt) {
      * will automatically lint, test, and refresh
      * the code when a change is detected.
      */
-    grunt.registerTask('server', [
+    grunt.registerTask('serve', [
         'clean',
         'compile',
         'configureProxies:livereload',
@@ -618,6 +618,17 @@ module.exports = function (grunt) {
         'open',
         'watch'
     ]);
+
+    /**
+     * Support the old non-verb form of invoking `serve` but warn.
+     */
+    grunt.registerTask('server',
+        'DEPRECATED TASK. Use the "serve" task instead',
+        function (target) {
+            grunt.log.warn('The `server` task has been deprecated. Use ' +
+                '`grunt serve` to start a server.');
+            grunt.task.run(['serve:' + target]);
+    });
 
     /**
      * grunt test:integration
