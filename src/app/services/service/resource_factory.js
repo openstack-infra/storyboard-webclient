@@ -159,7 +159,7 @@ angular.module('sb.services')
                             queryParams[nameField] = searchString;
                             queryParams.limit = pageSize;
 
-                            resource.query(queryParams,
+                            resource.browse(queryParams,
                                 function (result) {
                                     // Transform the results to criteria tags.
                                     var criteriaResults = [];

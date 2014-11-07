@@ -131,7 +131,7 @@ angular.module('sb.search').directive('searchResults',
                         params.sort_field = $scope.sortField;
                         params.sort_dir = $scope.sortDirection;
 
-                        resource.query(params,
+                        resource.browse(params,
                             handleSearchResult,
                             handleErrorResult);
                     } else {
