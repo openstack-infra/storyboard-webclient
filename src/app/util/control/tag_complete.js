@@ -165,12 +165,14 @@ angular.module('sb.util').directive('tagComplete',
                  * Blur when the input gets blurred.
                  */
                 $input.on('blur', function () {
-                    resetMatches();
-                    $scope.newTagName = '';
-                    $scope.hasFocus = false;
-                    if (!$rootScope.$$phase) {
-                        $scope.$digest();
-                    }
+                    $timeout(function() {
+                        resetMatches();
+                        $scope.newTagName = '';
+                        $scope.hasFocus = false;
+                        if (!$rootScope.$$phase) {
+                            $scope.$digest();
+                        }
+                    }, 200);
                 });
 
                 /**
