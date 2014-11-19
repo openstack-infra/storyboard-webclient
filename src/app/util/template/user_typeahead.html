@@ -1,0 +1,56 @@
+<div class="form-group"
+     ng-if="!enabled || !showForm">
+
+    <p class="form-control-static">
+        <i class="fa fa-sb-user text-muted"
+           ng-if="!user || user.$resolved"></i>
+        <i class="fa fa-spin fa-refresh text-muted"
+           ng-if="user && !user.$resolved"></i>
+        &nbsp;
+
+        <a href=""
+           ng-focus="toggleForm()"
+           ng-click="toggleForm()"
+           ng-if="!showForm && enabled">
+            <span ng-if="user">
+                {{user.full_name}}
+                <i class="fa fa-edit"></i>
+            </span>
+            <em ng-if="!user" class="text-muted">
+                {{emptyPrompt}}
+                <i class="fa fa-edit"></i>
+            </em>
+        </a>
+
+        <span ng-if="user && !enabled">
+            {{user.full_name}}
+        </span>
+
+        <em class="text-muted"
+            ng-if="!user && !enabled">
+            {{emptyDisabledPrompt}}
+        </em>
+    </p>
+
+</div>
+
+
+<div class="form-group has-feedback has-feedback-no-label"
+     ng-if="enabled && showForm">
+    <input id="input"
+           type="text"
+           class="form-control"
+           focus="autoFocus"
+           ng-blur="updateViewValue(selectedUser.id); toggleForm()"
+           typeahead-editable="false"
+           typeahead="user as user.full_name for user in searchUsers($viewValue)"
+           typeahead-loading="loadingUsers"
+           typeahead-input-formatter="formatUserName($model)"
+           typeahead-on-select="updateViewValue($model.id);"
+           ng-model="selectedUser"/>
+
+    <span class="form-control-feedback text-muted">
+        <i class="fa fa-search" ng-if="!loadingUsers"></i>
+        <i class="fa fa-spin fa-refresh" ng-if="loadingUsers"></i>
+    </span>
+</div>

@@ -24,7 +24,17 @@ angular.module('sb.util').directive('focus',
         'use strict';
 
         return {
-            link: function ($scope, $element) {
+            link: function ($scope, $element, $attrs) {
+
+                var focus = $scope.$eval($attrs.focus);
+                if (focus === undefined) {
+                    focus = true;
+                }
+
+                // If focus is set to false, don't actually do anything.
+                if (!focus) {
+                    return;
+                }
 
                 // Extract the element...
                 var e = $element[0];
