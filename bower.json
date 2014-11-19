@@ -8,7 +8,7 @@
     "angular-sanitize": "1.2.25",
     "bootstrap": "3.2.0",
     "angular-ui-router": "0.2.11",
-    "angular-bootstrap": "0.11.2",
+    "angular-bootstrap": "0.12.0",
     "angular-local-storage": "0.0.7",
     "angular-elastic": "2.4.0",
     "angular-moment": "0.8.2"

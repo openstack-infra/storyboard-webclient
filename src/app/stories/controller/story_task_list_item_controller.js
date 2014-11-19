@@ -18,30 +18,8 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryTaskListItemController',
-    function ($scope, $state, $modal, Project, Session, Task, User) {
+    function ($scope, $state, $modal) {
         'use strict';
-
-        var projectId = $scope.task.project_id || null;
-        var assigneeId = $scope.task.assignee_id || null;
-
-        if (!!projectId) {
-            Project.get({id: projectId},
-                function (project) {
-                    $scope.project = project;
-                }, function () {
-                    $scope.project = null;
-                });
-        }
-
-        if (!!assigneeId) {
-            User.get({id: assigneeId},
-                function (assignee) {
-                    $scope.assignee = assignee;
-                }, function () {
-                    $scope.assignee = null;
-                });
-        }
-
 
         /**
          * Updates this task's status
@@ -60,35 +38,6 @@ angular.module('sb.story').controller('StoryTaskListItemController',
             $scope.updateTaskInline();
         };
 
-        /**
-         * Select a new user.
-         */
-        $scope.selectNewUser = function (model) {
-            $scope.task.assignee_id = model.id;
-            if ($scope.task.status === 'todo') {
-                $scope.task.status = 'inprogress';
-            }
-            $scope.task.$update();
-            $scope.task.showAssigneeForm = false;
-        };
-
-        /**
-         * UI Toggle for when the edit form should be displayed.
-         */
-        $scope.showTaskEditForm = false;
-
-        $scope.showAssigneeForm = false;
-
-        /**
-         * Scope method to toggle said edit form.
-         */
-        $scope.toggleEditForm = function () {
-            if (Session.isLoggedIn()) {
-                $scope.showTaskEditForm = !$scope.showTaskEditForm;
-            } else {
-                $scope.showTaskEditForm = false;
-            }
-        };
 
         /**
          * Removes this task
@@ -113,17 +62,6 @@ angular.module('sb.story').controller('StoryTaskListItemController',
         };
 
         /**
-         * Cancel the edit form
-         */
-        $scope.cancelTask = function () {
-            Task.read({id: $scope.task.id},
-                function (task) {
-                    $scope.task = task;
-                });
-            $scope.showTaskEditForm = false;
-        };
-
-        /**
          * Updates the task list.
          */
         $scope.updateTask = function () {
@@ -139,16 +77,4 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                 $scope.$parent.$parent.loadEvents();
             });
         };
-
-        /***
-         * Scope method to show assignee form.
-         */
-        $scope.displayAssigneeForm = function () {
-            $scope.disableAssigneeInTasks();
-
-            if (!$scope.task.showAssigneeForm) {
-                $scope.task.showAssigneeForm = true;
-            }
-        };
-
     });

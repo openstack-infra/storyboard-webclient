@@ -154,28 +154,18 @@
             src="'/inline/task_list_item.html'"
             ng-controller="StoryTaskListItemController">
         </tr>
-        <tr ng-show="tasks.length == 0 && !showAddTaskForm">
+        <tr ng-if="tasks.length == 0 && !showAddTaskForm">
             <td colspan="6">
                 <p class="text-muted text-center">
                     <em>This story has no tasks.</em>
                 </p>
             </td>
         </tr>
-        </tbody>
-        <tfoot ng-show="showAddTaskForm">
-        <tr>
-            <td></td>
-            <td colspan="3">
-                <task-edit-form
-                        task="newTask"
-                        button-label="Add Task"
-                        on-button-click="addTask()"
-                        />
-            </td>
-            <td colspan="2"></td>
+        <tr ng-if="showAddTaskForm"
+            ng-include
+            src="'/inline/task_edit_form.html'">
         </tr>
-        </tfoot>
-
+        </tbody>
     </table>
 </script>
 
@@ -225,98 +215,52 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
-    <td ng-show="isLoggedIn">
-        <a href=""
-           ng-click="showTaskEditForm = true"
-           ng-hide="showTaskEditForm">
-            <i class="fa fa-caret-right fa-lg"></i>
-        </a>
-        <a href=""
-           ng-click="showTaskEditForm = false"
-           ng-show="showTaskEditForm">
-            <i class="fa fa-caret-down fa-lg"></i>
-        </a>
-    </td>
-    <td ng-hide="showTaskEditForm">
-        <a href=""
-           ng-show="isLoggedIn"
-           ng-click="showTaskEditForm = true">
-            {{task.title}}
-        </a>
-        <span ng-hide="isLoggedIn">
-            {{task.title}}
-        </span>
-    </td>
-    <td ng-hide="showTaskEditForm">
-        <a href=""
-           ng-click="showTaskEditForm = true"
-           ng-show="isLoggedIn">
-            <span ng-show="project">
-                {{project.name}}
-            </span>
-            <em class="text-muted" ng-hide="project">
-                Project not found
-            </em>
-        </a>
-        <span ng-hide="isLoggedIn">
-            <span ng-show="project">
-                {{project.name}}
-            </span>
-            <em class="text-muted" ng-hide="project">
-                Project not found
-            </em>
-        </span>
-    </td>
-    <td ng-hide="showTaskEditForm">
-        <div class="has-feedback" ng-show="isLoggedIn" ng-click="displayAssigneeForm();">
-            <span class="expandable back-index"
-                ng-hide="task.showAssigneeForm"
-                ng-if="assignee != null">
-            {{assignee.full_name}}</span>
-            <em class="expandable text-muted back-index"
-                ng-hide="task.showAssigneeForm" ng-if="assignee == null">
-            Please click to assign</em>
-            <input type="text"
-                   typeahead-editable="false"
-                   typeahead="user as user.full_name for user in searchUsers($viewValue)"
-                   typeahead-loading="loadingUsers"
-                   typeahead-input-formatter="formatUserName($model)"
-                   typeahead-on-select="selectNewUser($model)"
-                   ng-model="assignee"
-                   ng-show="task.showAssigneeForm" />
-        </div>
-        <div ng-show="!isLoggedIn">
-            <span ng-show="assignee">
-                {{assignee.full_name}}
-            </span>
-            <em class="text-muted" ng-hide="assignee">
-                Not assigned
-            </em>
-        </div>
-    </td>
-    <td ng-show="showTaskEditForm"
-        colspan="3">
-        <task-edit-form
-                task="task"
-                on-button-click="updateTask()"
-                button-label="Update"
+    <td class="col-xs-4">
+        <input-inline
+                ng-model="task.title"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                max-length="100"
+                as-inline="true"
                 />
     </td>
-    <td class="text-right">
+    <td class="col-xs-3">
+        <project-typeahead
+                ng-model="task.project_id"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                as-inline="true"
+                />
+    </td>
+    <td class="col-xs-2">
+        <user-typeahead
+                ng-model="task.assignee_id"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                as-inline="true"
+                />
+    </td>
+    <td class="text-center col-xs-1">
         <task-priority-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updatePriority(priority)"
                 priority="{{task.priority}}"
                 />
     </td>
-    <td class="text-right">
+    <td class="text-center col-xs-1">
         <task-status-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updateStatus(status)"
                 status="{{task.status}}"
                 />
     </td>
-    <td class="text-right">
+    <td class="text-right col-xs-1">
         <a ng-show="isLoggedIn"
            ng-click="removeTask()">
             <i class="fa fa-times fa-lg"></i>
@@ -324,14 +268,58 @@
     </td>
 </script>
 
-<!-- Template for story metadata -->
-<script type="text/ng-template" id="/inline/metadata.html">
-
-</script>
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-	$("
-});
+<!-- Template for the task add form. -->
+<script type="text/ng-template" id="/inline/task_edit_form.html">
+    <td class="col-xs-4">
+        <input-inline
+                auto-focus="true"
+                ng-model="newTask.title"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                max-length="100"
+                as-inline="false"
+                />
+    </td>
+    <td class="col-xs-3">
+        <project-typeahead
+                auto-focus="false"
+                ng-model="newTask.project_id"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                as-inline="false"
+                />
+    </td>
+    <td class="col-xs-2">
+        <user-typeahead
+                auto-focus="false"
+                ng-model="newTask.assignee_id"
+                enabled="isLoggedIn"
+                on-change="updateTaskInline()"
+                empty-prompt="Click to assign."
+                empty-disabled-prompt="Not assigned."
+                as-inline="false"
+                />
+    </td>
+    <td class="text-center col-xs-1">
+        <task-priority-dropdown
+                priority="{{newTask.priority}}"
+                editable="true"
+                />
+    </td>
+    <td class="text-center col-xs-1">
+        <task-status-dropdown
+                status="{{newTask.status}}"
+                editable="true"
+                />
+    </td>
+    <td class="text-right col-xs-1">
+        <button ng-click="saveTask()"
+                class="btn btn-primary">
+            Save
+        </button>
+    </td>
 </script>
