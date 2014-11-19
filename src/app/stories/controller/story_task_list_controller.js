@@ -42,7 +42,11 @@ angular.module('sb.story').controller('StoryTaskListController',
         /**
          * The new task for the task form.
          */
-        $scope.newTask = new Task({ story_id: id });
+        $scope.newTask = new Task({
+            story_id: id,
+            status: 'todo',
+            priority: 'medium'
+        });
 
         /**
          * UI flag for when we're initially loading the view.
@@ -81,22 +85,14 @@ angular.module('sb.story').controller('StoryTaskListController',
         /**
          * Adds a task.
          */
-        $scope.addTask = function () {
-            $scope.newTask.$save(function (savedTask) {
+        $scope.saveTask = function () {
+            // Make a copy to save, so that the next task retains the
+            // old information (for easier continuous editing).
+            var savingTask = new Task(angular.copy($scope.newTask));
+            savingTask.$save(function (savedTask) {
                 $scope.tasks.push(savedTask);
-                $scope.newTask = new Task({story_id: id});
                 $scope.$parent.loadEvents();
-                $scope.showAddTaskForm = false;
             });
-        };
-
-        $scope.disableAssigneeInTasks = function() {
-            // first hide all assignee inputs
-            for (var i=0;i<$scope.tasks.length;i++)
-            {
-                var task = $scope.tasks[i];
-                task.showAssigneeForm = false;
-            }
         };
 
         // Initialize our view
