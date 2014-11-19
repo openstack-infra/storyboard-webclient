@@ -21,7 +21,7 @@ First of all be sure to have tox installed on your machine then:
 
   - Install the virtualenv containing nodejs: `tox -evenv`
   - Source the new path containing grunt:
-`source .tox/grunt_no_api/bin/activate`
+`source .tox/venv/bin/activate`
   - Now you can launch the grunt tasks of storyboard-webclient, by default run
 the development server with the following command: `grunt server`
 
