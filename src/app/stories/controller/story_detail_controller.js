@@ -83,46 +83,6 @@ angular.module('sb.story').controller('StoryDetailController',
         }
 
         /**
-         * Toggle/display the edit form
-         */
-        $scope.toggleEditMode = function () {
-            if (Session.isLoggedIn()) {
-                $scope.showEditForm = !$scope.showEditForm;
-
-                // Deferred timeout request for a re-rendering of elastic
-                // text fields, since the size calculation breaks when
-                // visible: false
-                setTimeout(function () {
-                    $rootScope.$broadcast('elastic:adjust');
-                }, 1);
-            } else {
-                $scope.showEditForm = false;
-            }
-        };
-
-        /**
-        * Formats the user name.
-        */
-        $scope.formatUserName = function (model) {
-            if (!!model) {
-                return model.full_name;
-            }
-            return '';
-        };
-
-        /**
-        * User typeahead search method.
-        */
-        $scope.searchUsers = function (value) {
-            return User.browse({full_name: value, limit: 10}).$promise;
-        };
-
-        /**
-         * UI Flag for when we're in edit mode.
-         */
-        $scope.showEditForm = false;
-
-        /**
          * The user record for the author
          */
         $scope.creator = null;

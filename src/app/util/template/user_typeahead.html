@@ -1,0 +1,35 @@
+<span ng-if="!enabled">
+    <span ng-if="user">
+        {{user.full_name}}
+    </span>
+    <em class="text-muted"
+        ng-if="!user">
+        Not assigned
+    </em>
+</span>
+<a href=""
+   ng-focus="toggleForm()"
+   ng-if="enabled && !showForm"
+   ng-click="toggleForm()">
+    <span ng-if="user">
+        {{user.full_name}}
+    </span>
+    <em class="text-muted"
+        ng-if="!user">
+        Click to assign
+    </em>
+    <i class="fa fa-edit text-muted"></i>
+</a>
+
+<input id="input"
+       type="text"
+       class="form-control"
+       focus="autoFocus"
+       ng-blur="updateViewValue(selectedUser.id); toggleForm()"
+       typeahead-editable="false"
+       typeahead="user as user.full_name for user in searchUsers($viewValue)"
+       typeahead-loading="loadingUsers"
+       typeahead-input-formatter="formatUserName($model)"
+       typeahead-on-select="updateViewValue($model.id);"
+       ng-model="selectedUser"
+       ng-if="showForm"/>

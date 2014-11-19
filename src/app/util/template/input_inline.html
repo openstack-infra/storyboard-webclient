@@ -1,0 +1,30 @@
+<span ng-if="!enabled">
+    <span ng-if="user">
+        {{user.full_name}}
+    </span>
+    <em class="text-muted"
+        ng-if="!user">
+        Not assigned
+    </em>
+</span>
+<a href=""
+   ng-focus="toggleForm()"
+   ng-if="enabled && !showForm"
+   ng-click="toggleForm()">
+    <span ng-if="inputText">
+        {{inputText}}
+    </span>
+    <em class="text-muted"
+        ng-if="!inputText">
+        Click to edit
+    </em>
+    <i class="fa fa-edit text-muted"></i>
+</a>
+<input id="input"
+       type="text"
+       class="form-control"
+       focus="autoFocus"
+       ng-blur="onInputBlur(inputText)"
+       ng-model="inputText"
+       ng-if="showForm"
+       maxlength="{{maxLength}}"/>
