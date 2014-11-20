@@ -50,7 +50,7 @@ angular.module('sb.services')
                 },
                 'get': {
                     method: 'GET',
-                    cache: false
+                    cache: true
                 },
                 'update': {
                     method: 'PUT'
