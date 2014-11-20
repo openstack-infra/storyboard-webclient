@@ -50,7 +50,7 @@ angular.module('sb.services')
                 },
                 'get': {
                     method: 'GET',
-                    cache: false
+                    cache: true
                 },
                 'update': {
                     method: 'PUT'
@@ -62,6 +62,7 @@ angular.module('sb.services')
                     method: 'GET',
                     isArray: true,
                     responseType: 'json',
+                    cache: false,
                     params: {
                         limit: getLimit
                     }
@@ -71,6 +72,7 @@ angular.module('sb.services')
                     url: searchUrl,
                     isArray: true,
                     responseType: 'json',
+                    cache: false,
                     params: {
                         limit: getLimit
                     }
