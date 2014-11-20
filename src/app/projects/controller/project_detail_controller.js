@@ -88,7 +88,7 @@ angular.module('sb.projects').controller('ProjectDetailController',
          * Load the project
          */
         function loadProject() {
-            Project.read(
+            Project.get(
                 {'id': id},
                 function (result) {
                     // We've got a result, assign it to the view and unset our
