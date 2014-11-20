@@ -26,7 +26,8 @@ angular.module('storyboard',
     [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
         'sb.auth', 'sb.story', 'sb.profile', 'sb.notification', 'sb.search',
         'sb.admin', 'sb.subscription', 'sb.project_group', 'ui.router',
-        'ui.bootstrap', 'monospaced.elastic', 'angularMoment'])
+        'ui.bootstrap', 'monospaced.elastic', 'angularMoment',
+        'angular-data.DSCacheFactory'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
         timezone: 'UTC'
@@ -57,4 +58,16 @@ angular.module('storyboard',
             function () {
                 $state.go('index');
             });
+    })
+    .run(function ($http, DSCacheFactory) {
+        'use strict';
+
+        DSCacheFactory.createCache('defaultCache', {
+            // Items added to this cache expire after 1 minute.
+            maxAge: 60000,
+            // Items will be deleted from this cache right when they expire.
+            deleteOnExpire: 'passive'
+        });
+
+        $http.defaults.cache = DSCacheFactory.get('defaultCache');
     });
