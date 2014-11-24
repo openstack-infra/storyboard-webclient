@@ -48,7 +48,7 @@ angular.module('sb.services')
                 'create': {
                     method: 'POST'
                 },
-                'read': {
+                'get': {
                     method: 'GET',
                     cache: false
                 },

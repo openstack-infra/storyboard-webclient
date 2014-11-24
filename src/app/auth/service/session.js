@@ -74,7 +74,7 @@ angular.module('sb.auth').factory('Session',
             RefreshManager.tryRefresh().then(function () {
                 var id = AccessToken.getIdToken();
 
-                User.read({id: id},
+                User.get({id: id},
                     function (user) {
                         deferred.resolve(user);
                     }, function (error) {
