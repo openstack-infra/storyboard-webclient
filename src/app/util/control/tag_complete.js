@@ -19,7 +19,7 @@
  * set of source data, and restricts inputs to items in that list.
  */
 angular.module('sb.util').directive('tagComplete',
-    function ($q, $parse, $rootScope, $position, typeaheadParser) {
+    function ($q, $parse, $rootScope, $position, typeaheadParser, $timeout) {
         'use strict';
 
         var HOT_KEYS = [9, 13, 27, 38, 40];
@@ -165,12 +165,14 @@ angular.module('sb.util').directive('tagComplete',
                  * Blur when the input gets blurred.
                  */
                 $input.on('blur', function () {
-                    resetMatches();
-                    $scope.newTagName = '';
-                    $scope.hasFocus = false;
-                    if (!$rootScope.$$phase) {
-                        $scope.$digest();
-                    }
+                    $timeout(function() {
+                        resetMatches();
+                        $scope.newTagName = '';
+                        $scope.hasFocus = false;
+                        if (!$rootScope.$$phase) {
+                            $scope.$digest();
+                        }
+                    }, 200);
                 });
 
                 /**
