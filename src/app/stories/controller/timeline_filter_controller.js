@@ -15,12 +15,30 @@
  */
 
 angular.module('sb.story').controller('TimelineFilterController',
-    function($scope, $modalInstance, Preference) {
+    function($scope, $modalInstance, $http, Preference, loggedUser,
+             CurrentUser) {
         'use strict';
 
         function init() {
-            $scope.enabled_event_types =
-                Preference.get('display_events_filter');
+            var cache = $http.defaults.cache.get('userPreferences');
+            if (cache) {
+                $scope.pageSize = cache.page_size;
+                $scope.enabled_event_types = angular.fromJson(
+                    cache.display_events_filter);
+            }
+            else {
+                // get from current user
+                CurrentUser.getUserPreferences(loggedUser.id).then(
+                    function(preferences) {
+                        $scope.pageSize = preferences.page_size;
+                        $scope.enabled_event_types = angular.fromJson(
+                            preferences.display_events_filter);
+                        CurrentUser.setCacheUserPreferences(preferences);
+                    }, function() {
+                        $scope.enabled_event_types = null;
+                    }
+                );               
+            }
         }
 
         $scope.close = function () {
@@ -28,8 +46,14 @@ angular.module('sb.story').controller('TimelineFilterController',
         };
 
         $scope.save = function () {
-            Preference.set('display_events_filter',
-                           $scope.enabled_event_types);
+            var event_str = angular.toJson($scope.enabled_event_types);
+            Preference.set({id: loggedUser.id},
+                {'display_events_filter': event_str}
+            );
+            var preferences = {'page_size': $scope.pageSize,
+                           'display_events_filter': event_str};
+            CurrentUser.setCacheUserPreferences(preferences);
+
             return $modalInstance.close($scope.enabled_event_types);
         };
 

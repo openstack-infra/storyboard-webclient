@@ -19,7 +19,7 @@
  * validation, filtering, criteria-to-parameter mapping, and more.
  */
 angular.module('sb.services').service('Criteria',
-    function ($q, $log, $injector, Preference) {
+    function ($q, $log, $injector, $http) {
         'use strict';
 
         return {
@@ -95,7 +95,14 @@ angular.module('sb.services').service('Criteria',
              * to the global page_size preference.
              */
             buildCriteriaSearch: function (types, pageSize) {
-                pageSize = pageSize || Preference.get('page_size');
+                if (!pageSize) {
+                    // Apply paging.
+                    var preferences = $http.defaults.cache.get(
+                        'userPreferences');
+                    if (preferences && preferences.page_size) {
+                        pageSize = preferences.page_size;
+                    }
+                }
 
                 var resolvers = [];
                 types.forEach(function (type) {

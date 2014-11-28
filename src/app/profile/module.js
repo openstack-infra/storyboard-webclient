@@ -38,7 +38,7 @@ angular.module('sb.profile',
                 url: '/profile',
                 resolve: {
                     isLoggedIn: SessionResolver.requireLoggedIn,
-                    currentUser: SessionResolver.requireCurrentUser
+                    loggedUser: SessionResolver.requireCurrentUser
                 },
                 views : {
                     'submenu@': {
