@@ -19,16 +19,26 @@
  * individual preferences.
  */
 angular.module('sb.profile').controller('ProfilePreferencesController',
-    function ($scope, Preference) {
+    function ($scope, Preference, UserPreferences, currentUser) {
         'use strict';
 
-        $scope.pageSize = Preference.get('page_size');
-        $scope.enabled_event_types = Preference.get('display_events_filter');
+        UserPreferences.get().then(
+            function (preferences) {
+                $scope.pageSize = preferences.page_size;
+                $scope.enabled_event_types = angular.fromJson(
+                    preferences.display_events_filter);
+            }, function() {
+                $scope.pageSize = null;
+                $scope.enabled_event_types = null;
+            }
+        );
 
         $scope.save = function () {
-            Preference.set('page_size', $scope.pageSize);
-            Preference.set('display_events_filter',
-                            $scope.enabled_event_types);
+            var event_str = angular.toJson($scope.enabled_event_types);
+            Preference.set({id: currentUser.id},
+                {'page_size': $scope.pageSize,
+                 'display_events_filter': event_str}
+            );
 
             $scope.message = 'Preferences Saved!';
         };
