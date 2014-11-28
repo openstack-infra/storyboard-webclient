@@ -15,12 +15,19 @@
  */
 
 angular.module('sb.story').controller('TimelineFilterController',
-    function($scope, $modalInstance, Preference) {
+    function($scope, $modalInstance, UserPreferences, Preference, currentUser) {
         'use strict';
 
         function init() {
-            $scope.enabled_event_types =
-                Preference.get('display_events_filter');
+            UserPreferences.get().then(
+                function (preferences) {
+                    if (preferences) {
+                        $scope.enabled_event_types =
+                            angular.fromJson(preferences.display_events_filter);
+                    }
+                }
+            );
+
         }
 
         $scope.close = function () {
@@ -28,8 +35,10 @@ angular.module('sb.story').controller('TimelineFilterController',
         };
 
         $scope.save = function () {
-            Preference.set('display_events_filter',
-                           $scope.enabled_event_types);
+            var event_str = angular.toJson($scope.enabled_event_types);
+            Preference.set({id: currentUser.id},
+                {'display_events_filter': event_str}
+            );
             return $modalInstance.close($scope.enabled_event_types);
         };
 

@@ -19,7 +19,7 @@
  * and search box.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($q, $scope, $rootScope, $state, NewStoryService, Session,
+    function ($q, $scope, $state, NewStoryService, Session,
               SessionState, CurrentUser, Criteria, Notification, Priority,
               Project, Story, ProjectGroup) {
         'use strict';

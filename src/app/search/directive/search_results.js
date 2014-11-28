@@ -20,18 +20,18 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, UserPreferences) {
         'use strict';
 
         return {
             restrict: 'A',
             scope: true,
             link: function ($scope, $element, args) {
+                var pageSize = args.searchPageSize;
 
                 // Extract the resource type.
                 var resourceName = args.searchResource;
-                var pageSize = args.searchPageSize ||
-                    Preference.get('page_size');
+
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
                 var criteria = [];
@@ -70,6 +70,23 @@ angular.module('sb.search').directive('searchResults',
                     $scope.isSearching = false;
                 }
 
+                function searchResults(params, resource) {
+                    // If we don't actually have search criteria, issue a
+                    // browse. Otherwise, issue a search.
+                    if (!params.hasOwnProperty('q')) {
+                        params.sort_field = $scope.sortField;
+                        params.sort_dir = $scope.sortDirection;
+                        resource.browse(params,
+                            handleSearchResult,
+                            handleErrorResult);
+                    } else {
+                        resource.search(params,
+                        handleSearchResult,
+                        handleErrorResult);
+                    }
+                }
+
+
                 /**
                  * Toggle the filter ID and direction in the UI.
                  *
@@ -85,6 +102,7 @@ angular.module('sb.search').directive('searchResults',
                     }
                     updateResults();
                 };
+
 
                 /**
                  * Update the results when the criteria change
@@ -124,20 +142,18 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
+                    if (!pageSize) {
+                        var preferences = UserPreferences.get();
+                        preferences.then(function(prefs) {
+                            if (prefs && prefs.page_size) {
+                                params.limit = prefs.page_size;
+                            }
+                            searchResults(params, resource);
 
-                    // If we don't actually have search criteria, issue a
-                    // browse. Otherwise, issue a search.
-                    if (!params.hasOwnProperty('q')) {
-                        params.sort_field = $scope.sortField;
-                        params.sort_dir = $scope.sortDirection;
-
-                        resource.browse(params,
-                            handleSearchResult,
-                            handleErrorResult);
-                    } else {
-                        resource.search(params,
-                            handleSearchResult,
-                            handleErrorResult);
+                        });
+                    }
+                    else {
+                        searchResults(params, resource);
                     }
                 }
 
