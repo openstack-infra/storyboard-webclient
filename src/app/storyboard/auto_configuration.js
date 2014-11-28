@@ -46,5 +46,6 @@ angular.element(document)
                 initializeApplication({});
             }
         );
+
     }
 );

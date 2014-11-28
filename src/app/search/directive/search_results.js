@@ -20,18 +20,18 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, UserPreferences) {
         'use strict';
 
         return {
             restrict: 'A',
             scope: true,
             link: function ($scope, $element, args) {
+                var pageSize = args.searchPageSize;
 
                 // Extract the resource type.
                 var resourceName = args.searchResource;
-                var pageSize = args.searchPageSize ||
-                    Preference.get('page_size');
+
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
                 var criteria = [];
@@ -124,6 +124,15 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
+                    if (!pageSize) {
+                        UserPreferences.get().then(
+                            function (preferences) {
+                                if (preferences) {
+                                    params.limit = preferences.page_size;
+                                }
+                            }
+                        );
+                    }
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.

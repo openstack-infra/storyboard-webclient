@@ -18,7 +18,7 @@
  * A controller that manages our logged-in dashboard
  */
 angular.module('sb.dashboard').controller('DashboardController',
-    function ($scope, currentUser, Story, SubscriptionEvent) {
+    function ($scope, Story, currentUser, SubscriptionEvent) {
         'use strict';
 
         // Load the list of current assigned stories.

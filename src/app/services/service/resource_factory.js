@@ -21,8 +21,7 @@
  */
 angular.module('sb.services')
     .service('ResourceFactory',
-    function ($q, $log, $injector, Criteria, $resource, storyboardApiBase,
-              Preference) {
+    function ($q, $log, $injector, Criteria, $resource, storyboardApiBase) {
         'use strict';
 
         /**
@@ -150,7 +149,17 @@ angular.module('sb.services')
                      */
                     resource.criteriaResolver =
                         function (searchString, pageSize) {
-                            pageSize = pageSize || Preference.get('page_size');
+                            if (!pageSize) {
+                                var UserPreferences = $injector.get(
+                                    'UserPreferences');
+                                UserPreferences.get().then(
+                                    function (preferences) {
+                                        if (preferences) {
+                                            pageSize = preferences.page_size;
+                                        }
+                                    }
+                                );
+                            }
 
                             var deferred = $q.defer();
 
