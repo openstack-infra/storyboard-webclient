@@ -57,4 +57,8 @@ angular.module('storyboard',
             function () {
                 $state.go('index');
             });
+    })
+    .run(function (AccessToken) {
+        'use strict';
+        AccessToken.setIssueDate(0);
     });
