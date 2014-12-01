@@ -11,3 +11,4 @@ cover
 .tox
 src/theme/custom/**.less
 src/theme/custom/**.ico
+src/config.json
