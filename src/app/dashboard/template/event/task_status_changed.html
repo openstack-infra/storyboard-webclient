@@ -1,7 +1,7 @@
 <div class="discussion-comment">
     <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{author.full_name}} updated "{{ event_info.task_title }}" status:
+        <span time-moment eventdate="evt.created_at" class="pull-right"></span>
+        <span>{{author.full_name}} updated <a href="#!/story/{{ event_info.story_id }}">{{ event_info.task_title }}</a> status:
         {{ event_info.old_status }} ==> {{ event_info.new_status }}.</span>
     </p>
 </div>

@@ -1,8 +1,8 @@
 <div class="discussion-comment">
     <p class="discussion-comment-author">
         <span time-moment
-              eventdate="event.created_at"
+              eventdate="evt.created_at"
               class="pull-right"></span>
-        <span>{{ author.full_name }} created this story.</span>
+        <span>{{ author.full_name }} created the story <a href="#!/story/{{event_info.story_id}}">{{event_info.story_title}}</a>.</span>
     </p>
 </div>
