@@ -1,36 +1,14 @@
 <span class="label label-{{style}}" ng-hide="editable">
-    {{status | taskStatusLabel}}
+    {{statusName}}
 </span>
 <div class="dropdown" ng-show="editable">
     <a class="btn btn-{{style}} btn-xs dropdown-toggle">
-        {{status | taskStatusLabel}}
+        {{ statusName }}
         <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-menu-right">
-        <li ng-class="{disabled: status == 'invalid'}">
-            <a href="" ng-click="setStatus('invalid')">
-                {{'invalid' | taskStatusLabel}}
-            </a>
-        </li>
-        <li ng-class="{disabled: status == 'todo'}">
-            <a href="" ng-click="setStatus('todo')">
-                {{'todo' | taskStatusLabel}}
-            </a>
-        </li>
-        <li ng-class="{disabled: status == 'inprogress'}">
-            <a href="" ng-click="setStatus('inprogress')">
-                {{'inprogress' | taskStatusLabel}}
-            </a>
-        </li>
-        <li ng-class="{disabled: status == 'review'}">
-            <a href="" ng-click="setStatus('review')">
-                {{'review' | taskStatusLabel}}
-            </a>
-        </li>
-        <li ng-class="{disabled: status == 'merged'}">
-            <a href="" ng-click="setStatus('merged')">
-                {{'merged' | taskStatusLabel}}
-            </a>
+        <li ng-repeat="task_status in taskStatuses" ng-class="{disabled: status == task_status.key}">
+            <a href="" ng-click="setStatus(task_status.key)">{{task_status.name}}</a>
         </li>
     </ul>
 </div>
