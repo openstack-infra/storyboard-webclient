@@ -1,0 +1,11 @@
+Verified+2: Jenkins
+Code-Review+2: Thierry Carrez <thierry@openstack.org>
+Code-Review+1: yolanda.robla <info@ysoft.biz>
+Code-Review+2: Nikita Konovalov <nkonovalov@mirantis.com>
+Workflow+1: Nikita Konovalov <nkonovalov@mirantis.com>
+Code-Review+1: Mike Heald <mike.heald@hp.com>
+Submitted-by: Jenkins
+Submitted-at: Tue, 02 Dec 2014 20:33:12 +0000
+Reviewed-on: https://review.openstack.org/136149
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
