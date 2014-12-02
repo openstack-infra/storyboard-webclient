@@ -98,6 +98,7 @@ angular.module('sb.story').controller('StoryModalController',
             // item in the list.
 
             var lastTask = $scope.tasks[$scope.tasks.length - 1];
+            console.log(lastTask);
             var project_id = lastTask.project_id;
 
             if (! project_id ) {

@@ -25,8 +25,9 @@
  * mapping too, because it might be possible to genericize this.
  */
 angular.module('sb.util').directive('taskStatusDropdown',
-    function () {
+    function (TaskStatuses) {
         'use strict';
+
 
         /**
          * Map our task status to a display style.
@@ -57,6 +58,19 @@ angular.module('sb.util').directive('taskStatusDropdown',
                 editable: '@'
             },
             link: function ($scope) {
+                TaskStatuses.get({}, function (items) {
+                        $scope.taskStatuses = items;
+                        $scope.statusName = $scope.status;
+
+                        // check if we can set current status name
+                        for (var i = 0;i < items.length; i++) {
+                            if (items[i].key === $scope.status) {
+                                $scope.statusName = items[i].name;
+                            }
+                        }
+                    }, function () {
+                    }
+                );        
 
                 // Initialize the style.
                 $scope.style = setStyle($scope.status);
@@ -66,6 +80,14 @@ angular.module('sb.util').directive('taskStatusDropdown',
                     if (newStatus !== $scope.status) {
                         $scope.style = setStyle(newStatus);
                         $scope.status = newStatus;
+
+                        // update status name as well
+                        for (var i = 0;i < $scope.taskStatuses.length; i++) {
+                            if ($scope.taskStatuses[i].key === $scope.status) {
+                                $scope.statusName = $scope.taskStatuses[i].name;
+                            }
+                        }
+
                         $scope.onChange({status: newStatus});
                     }
                 };
