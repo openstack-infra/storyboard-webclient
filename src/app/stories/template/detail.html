@@ -174,7 +174,7 @@
 <script type="text/ng-template" id="/inline/discussion.html">
     <div>
         <h4>Events timeline
-            <a href ng-click="updateFilter()"><i class="fa fa-gear"></i></a>
+            <a href ng-click="updateFilter()" ng-show="isLoggedIn"><i class="fa fa-gear"></i></a>
         </h4>
         <div class="discussion">
             <div class="alert alert-warning"
