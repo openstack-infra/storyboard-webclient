@@ -11,8 +11,8 @@ Project Resources
   - [Source code](https://git.openstack.org/cgit/openstack-infra/storyboard-webclient)
   - [Documentation](http://ci.openstack.org/storyboard)
   - [Additional resources are linked from the project wiki page](https://wiki.openstack.org/wiki/StoryBoard)
-  - [How to contribute to OpenStack](https://wiki.openstack.org/wiki/HowToContribute)
-  - [Code reviews workflow](https://wiki.openstack.org/wiki/GerritWorkflow)
+  - [How to contribute to OpenStack](http://docs.openstack.org/infra/manual/developers.html)
+  - [Code reviews workflow](http://docs.openstack.org/infra/manual/developers.html#development-workflow)
 
 Getting Started
 ---------------
