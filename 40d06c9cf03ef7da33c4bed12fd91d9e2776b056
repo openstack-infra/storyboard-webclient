@@ -1,0 +1,11 @@
+Verified+2: Jenkins
+Code-Review+1: yolanda.robla <info@ysoft.biz>
+Code-Review+1: Elizabeth K. Joseph <lyz@princessleia.com>
+Code-Review+2: Joshua Hesketh <joshua.hesketh@rackspace.com>
+Code-Review+2: Michael Krotscheck <krotscheck@gmail.com>
+Workflow+1: Michael Krotscheck <krotscheck@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 05 Dec 2014 20:18:05 +0000
+Reviewed-on: https://review.openstack.org/139433
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
