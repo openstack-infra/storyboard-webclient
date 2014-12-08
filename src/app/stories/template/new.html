@@ -97,6 +97,7 @@
                    placeholder="Select a Project"
                    required
                    ng-model="asyncProject"
+                   typeahead-wait-ms="200"
                    typeahead-editable="false"
                    typeahead="project as project.name for project
                    in searchProjects($viewValue)"
