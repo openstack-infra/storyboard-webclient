@@ -26,6 +26,7 @@ angular.module('sb.story').controller('StoryModalController',
             project_id: params.projectId || null});
 
         $scope.tasks = [new Task({
+            title: '',
             project_id: params.projectId || null
         })];
 
