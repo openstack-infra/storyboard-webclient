@@ -230,7 +230,8 @@ module.exports = function (grunt) {
                         src: [
                             '**/*.{txt,eot,ttf,woff}',
                             '*.html',
-                            'robots.txt'
+                            'robots.txt',
+                            'config.json'
                         ]
                     },
                     {
