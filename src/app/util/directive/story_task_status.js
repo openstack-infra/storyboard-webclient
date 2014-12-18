@@ -19,7 +19,7 @@
  * the bound-in story.
  */
 angular.module('sb.util').directive('storyTaskStatus',
-    function () {
+    function (TaskStatus) {
         'use strict';
 
         return {
@@ -27,6 +27,16 @@ angular.module('sb.util').directive('storyTaskStatus',
             templateUrl: 'app/util/template/story_task_status.html',
             scope: {
                 story: '='
+            },
+            link: function ($scope) {
+                TaskStatus.query({}, function (items) {
+                    var statuses = [];
+                    for (var i = 0;i < items.length; i++) {
+                        statuses[items[i].key] = items[i].name;
+                    }
+
+                    $scope.status_texts = statuses;
+                });
             }
         };
     });

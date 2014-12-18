@@ -41,9 +41,13 @@ angular.module('sb.services')
          * don't use it :).
          *
          * @param searchUrl
+         * @param cacheSearchResults
          * @returns An API signature that may be used with a $resource.
          */
-        function buildSignature(searchUrl) {
+        function buildSignature(searchUrl, cacheSearchResults) {
+            // Cast to boolean.
+            cacheSearchResults = !!cacheSearchResults;
+
             return {
                 'create': {
                     method: 'POST'
@@ -62,7 +66,7 @@ angular.module('sb.services')
                     method: 'GET',
                     isArray: true,
                     responseType: 'json',
-                    cache: false,
+                    cache: cacheSearchResults,
                     params: {
                         limit: getLimit
                     }
@@ -72,7 +76,7 @@ angular.module('sb.services')
                     url: searchUrl,
                     isArray: true,
                     responseType: 'json',
-                    cache: false,
+                    cache: cacheSearchResults,
                     params: {
                         limit: getLimit
                     }
@@ -89,9 +93,11 @@ angular.module('sb.services')
              * @param restUri
              * @param searchUri
              * @param resourceParameters
+             * @param cacheSearchResults
              * @returns {*}
              */
-            build: function (restUri, searchUri, resourceParameters) {
+            build: function (restUri, searchUri, resourceParameters,
+                             cacheSearchResults) {
 
                 if (!restUri) {
                     $log.error('Cannot use resource factory ' +
@@ -99,7 +105,11 @@ angular.module('sb.services')
                     return null;
                 }
 
-                var signature = buildSignature(storyboardApiBase + searchUri);
+                // Cast results
+                cacheSearchResults = !!cacheSearchResults;
+
+                var signature = buildSignature(storyboardApiBase + searchUri,
+                    cacheSearchResults);
                 return $resource(storyboardApiBase + restUri,
                     resourceParameters, signature);
             },
