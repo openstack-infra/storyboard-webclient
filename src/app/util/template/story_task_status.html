@@ -1,26 +1,7 @@
-<small>
+<small ng-repeat="task_status in story.task_statuses">
 <span class="badge"
-      ng-class="{'badge-primary': story.todo  > 0}">
-    {{story.todo}}
-</span> ToDo
+      ng-class="{'badge-primary': task_status.count > 0}">
+    {{task_status.count}}
+</span> {{status_texts[task_status.key]}}
     &nbsp;
-<span class="badge"
-      ng-class="{'badge-primary': story.inprogress  > 0}">
-    {{story.inprogress}}
-</span> In Progress
-    &nbsp;
-<span class="badge"
-      ng-class="{'badge-primary': story.review  > 0}">
-    {{story.review}}
-</span> In Review
-    &nbsp;
-<span class="badge"
-      ng-class="{'badge-primary': story.merged  > 0}">
-    {{story.merged}}
-</span> Merged
-    &nbsp;
-<span class="badge"
-      ng-class="{'badge-primary': story.invalid  > 0}">
-    {{story.invalid}}
-</span> Invalid
 </small>
