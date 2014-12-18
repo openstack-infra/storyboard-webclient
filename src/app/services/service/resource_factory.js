@@ -22,7 +22,7 @@
 angular.module('sb.services')
     .service('ResourceFactory',
     function ($q, $log, $injector, Criteria, $resource, storyboardApiBase,
-              Preference) {
+              $http) {
         'use strict';
 
         /**
@@ -119,6 +119,34 @@ angular.module('sb.services')
             applySearch: function (resourceName, resource, nameField,
                                    searchParameters) {
 
+                function startQuery(searchString, pageSize) {
+                    var deferred = $q.defer();
+
+                    // build the query parameters.
+                    var queryParams = {};
+                    queryParams[nameField] = searchString;
+                    queryParams.limit = pageSize;
+
+                    resource.browse(queryParams,
+                        function (result) {
+                            // Transform the results to criteria tags.
+                            var criteriaResults = [];
+                            result.forEach(function (item) {
+                                criteriaResults.push(
+                                    Criteria.create(resourceName,
+                                        item.id,
+                                        item[nameField])
+                                );
+                            });
+                            deferred.resolve(criteriaResults);
+                        }, function () {
+                            deferred.resolve([]);
+                        }
+                    );
+
+                    return deferred.promise;
+                }
+
                 // List of criteria resolvers which we're building.
                 var criteriaResolvers = [];
 
@@ -152,33 +180,14 @@ angular.module('sb.services')
                      */
                     resource.criteriaResolver =
                         function (searchString, pageSize) {
-                            pageSize = pageSize || Preference.get('page_size');
-
-                            var deferred = $q.defer();
-
-                            // build the query parameters.
-                            var queryParams = {};
-                            queryParams[nameField] = searchString;
-                            queryParams.limit = pageSize;
-
-                            resource.browse(queryParams,
-                                function (result) {
-                                    // Transform the results to criteria tags.
-                                    var criteriaResults = [];
-                                    result.forEach(function (item) {
-                                        criteriaResults.push(
-                                            Criteria.create(resourceName,
-                                                item.id,
-                                                item[nameField])
-                                        );
-                                    });
-                                    deferred.resolve(criteriaResults);
-                                }, function () {
-                                    deferred.resolve([]);
+                            if (!pageSize) {
+                                var preferences = $http.defaults.cache.get(
+                                    'userPreferences');
+                                if (preferences && preferences.page_size) {
+                                    pageSize = preferences.page_size;
                                 }
-                            );
-
-                            return deferred.promise;
+                            }
+                            return startQuery(searchString, pageSize);
                         };
                 }
 
