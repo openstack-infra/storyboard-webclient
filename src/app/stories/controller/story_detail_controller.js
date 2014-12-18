@@ -19,7 +19,8 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference, Event, Comment) {
+              Session, User, Event, Comment, SessionResolver,
+              TimelineEventTypes, $http) {
         'use strict';
 
         // Parse the ID
@@ -27,7 +28,19 @@ angular.module('sb.story').controller('StoryDetailController',
             parseInt($stateParams.storyId, 10) :
             null;
 
-        $scope.enabled_event_types = Preference.get('display_events_filter');
+        var preferences = $http.defaults.cache.get('userPreferences');
+        if (preferences && preferences.display_events_filter) {
+            $scope.enabled_event_types =
+                angular.fromJson(preferences.display_events_filter);
+        }
+        else {
+            // default filters
+            var events_filter_defaults = {};
+            TimelineEventTypes.forEach(function(type) {
+                events_filter_defaults[type] = true;
+                    });
+            $scope.enabled_event_types = events_filter_defaults;
+        }
 
         /**
          * The events associated to the story
@@ -185,7 +198,11 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.updateFilter = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/update_filter.html',
-                controller: 'TimelineFilterController'
+                controller: 'TimelineFilterController',
+                resolve: {
+                    sessionState: SessionResolver.requireLoggedIn,
+                    loggedUser: SessionResolver.requireCurrentUser
+                }
             });
 
             modalInstance.result.then(function(enabled_event_types) {

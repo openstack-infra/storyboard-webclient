@@ -21,7 +21,7 @@
  */
 angular.module('sb.auth').factory('CurrentUser',
     function (SessionState, Session, AccessToken, $rootScope, $log, $q, User,
-              Notification, Priority) {
+              Notification, Priority, Preference, $http) {
         'use strict';
 
         /**
@@ -29,6 +29,51 @@ angular.module('sb.auth').factory('CurrentUser',
          */
         var currentUser = null;
         var currentPromise = null;
+
+        /**
+         * Retrieves the user preferences for a given user.
+         */
+        function getUserPreferences(user_id) {
+            var defer = $q.defer();
+            Preference.get({id: user_id}, function (result) {
+                defer.resolve(result);
+            }, function() {
+                defer.resolve(null);
+            });
+            return defer.promise;
+        }
+
+        /**
+         * Sets the cache for user preferences
+         */
+        function setCacheUserPreferences(preferences) {
+            if (preferences) {
+                $http.defaults.cache.put('userPreferences', preferences);
+            }
+            else {
+                $http.defaults.cache.remove('userPreferences');
+            }
+        }
+
+        /**
+         * Gets the preferences for a given user and caches it
+         */
+        function cacheUserPreferences(user) {
+
+            // if no user arrived, remove from cache
+            if (! user) {
+                $http.defaults.cache.remove('userPreferences');
+                return null;
+            }
+            else {
+                getUserPreferences(user.id).then(function(preferences) {
+                    // cache the preferences in the default cache
+                    setCacheUserPreferences(preferences);
+                }, function() {
+                    setCacheUserPreferences(null);
+                });
+            }
+        }
 
         /**
          * Resolve a current user.
@@ -58,11 +103,13 @@ angular.module('sb.auth').factory('CurrentUser',
                                 id: AccessToken.getIdToken()
                             },
                             function (user) {
+                                cacheUserPreferences(user);
                                 currentUser = user;
                                 deferred.resolve(user);
                             },
                             function (error) {
                                 currentUser = null;
+                                setCacheUserPreferences(null);
                                 deferred.reject(error);
                             }
                         );
@@ -70,6 +117,7 @@ angular.module('sb.auth').factory('CurrentUser',
                 },
                 function (error) {
                     currentUser = null;
+                    setCacheUserPreferences(null);
                     deferred.reject(error);
                 }
             );
@@ -132,6 +180,12 @@ angular.module('sb.auth').factory('CurrentUser',
              */
             resolve: function () {
                 return resolveCurrentUser();
+            },
+            getUserPreferences: function(user_id) {
+                return getUserPreferences(user_id);
+            },
+            setCacheUserPreferences: function(preferences) {
+                setCacheUserPreferences(preferences);
             }
         };
     });
