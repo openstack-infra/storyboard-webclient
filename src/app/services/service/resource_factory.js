@@ -67,6 +67,12 @@ angular.module('sb.services')
                         limit: getLimit
                     }
                 },
+                'getall': {
+                    method: 'GET',
+                    isArray: true,
+                    responseType: 'json',
+                    cache: true
+                },
                 'search': {
                     method: 'GET',
                     url: searchUrl,
