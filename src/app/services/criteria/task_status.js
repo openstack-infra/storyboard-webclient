@@ -20,7 +20,7 @@
  * Task Status search parameters.
  */
 angular.module('sb.services').factory('TaskStatus',
-    function (Criteria, $q) {
+    function (Criteria, $q, TaskStatusResource) {
         'use strict';
 
         /**
@@ -28,13 +28,14 @@ angular.module('sb.services').factory('TaskStatus',
          *
          * @type {*[]}
          */
-        var validStatusCriteria = [
-            Criteria.create('TaskStatus', 'todo', 'Todo'),
-            Criteria.create('TaskStatus', 'merged', 'Merged'),
-            Criteria.create('TaskStatus', 'invalid', 'Invalid'),
-            Criteria.create('TaskStatus', 'review', 'Review'),
-            Criteria.create('TaskStatus', 'inprogress', 'Progress')
-        ];
+        var validStatusCriteria = [];
+        TaskStatusResource.getall({}, function(items) {
+            for (var i = 0; i < items.length; i++) {
+                var criteria = Criteria.create('TaskStatus',
+                    items[i].key, items[i].name);
+                validStatusCriteria.push(criteria);
+            }
+        });
 
         /**
          * Return a criteria resolver for story status.
@@ -61,4 +62,3 @@ angular.module('sb.services').factory('TaskStatus',
                 return deferred.promise;
             }
         };
-    });
