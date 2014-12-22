@@ -111,6 +111,7 @@
                    required
                    ng-model="project"
                    typeahead-editable="false"
+                   typeahead-wait-ms="200"
                    typeahead="project as project.name for project
                    in searchProjects($viewValue)"
                    typeahead-loading="loadingProjects"

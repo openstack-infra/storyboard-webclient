@@ -43,6 +43,7 @@
            focus="autoFocus"
            ng-blur="updateViewValue(selectedUser.id); toggleForm()"
            typeahead-editable="false"
+           typeahead-wait-ms="200"
            typeahead="user as user.full_name for user in searchUsers($viewValue)"
            typeahead-loading="loadingUsers"
            typeahead-input-formatter="formatUserName($model)"

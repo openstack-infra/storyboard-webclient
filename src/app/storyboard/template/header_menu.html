@@ -84,6 +84,7 @@
                        class="form-control"
                        placeholder="Search"
                        ng-model="searchString"
+                       typeahead-wait-ms="200"
                        typeahead-append-to-body="true"
                        typeahead-editable="false"
                        typeahead="criteria as criteria.title for criteria in quickSearch($viewValue)"
