@@ -23,8 +23,8 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.profile',
-        ['sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap']
-    )
+    ['sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap']
+)
     .config(function ($stateProvider, SessionResolver, $urlRouterProvider) {
         'use strict';
 
@@ -40,7 +40,7 @@ angular.module('sb.profile',
                     isLoggedIn: SessionResolver.requireLoggedIn,
                     currentUser: SessionResolver.requireCurrentUser
                 },
-                views : {
+                views: {
                     'submenu@': {
                         templateUrl: 'app/profile/template/profile_submenu.html'
                     },
@@ -53,5 +53,32 @@ angular.module('sb.profile',
                 url: '/preferences',
                 templateUrl: 'app/profile/template/preferences.html',
                 controller: 'ProfilePreferencesController'
+            })
+            .state('profile.tokens', {
+                url: '/tokens',
+                templateUrl: 'app/profile/template/tokens.html',
+                controller: 'ProfileTokensController',
+                resolve: {
+                    tokens: function (CurrentUser, UserToken, $q) {
+                        var deferred = $q.defer();
+
+                        CurrentUser.resolve().then(
+                            function (currentUser) {
+                                UserToken.query({
+                                        user_id: currentUser.id
+                                    }, function (results) {
+                                        deferred.resolve(results);
+                                    }, function (error) {
+                                        deferred.reject(error);
+                                    }
+                                );
+                            },
+                            function (error) {
+                                deferred.reject(error);
+                            }
+                        );
+                        return deferred.promise;
+                    }
+                }
             });
     });
