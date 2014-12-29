@@ -42,7 +42,7 @@
            type="text"
            class="form-control"
            focus="autoFocus"
-           ng-blur="updateViewValue(selectedProject.id); toggleForm()"
+           ng-blur="toggleForm()"
            typeahead-editable="false"
            typeahead-wait-ms="200"
            typeahead="project as project.name for project in searchProjects($viewValue)"

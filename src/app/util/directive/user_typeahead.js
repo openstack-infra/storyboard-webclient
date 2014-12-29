@@ -18,7 +18,7 @@
  * A directive which encapsulates typeahead logic for inline user selection.
  */
 angular.module('sb.util').directive('userTypeahead',
-    function (User) {
+    function (User, $timeout) {
         'use strict';
 
         return {
@@ -46,8 +46,15 @@ angular.module('sb.util').directive('userTypeahead',
                  */
                 $scope.toggleForm = function () {
                     if (!!$scope.asInline) {
-                        $scope.showForm =
-                            $scope.enabled ? !$scope.showForm : false;
+                        if ($scope.showForm) {
+                            $timeout(function () {
+                                $scope.showForm =
+                                    $scope.enabled ? !$scope.showForm : false;
+                                }, 200);
+                        }
+                        else {
+                            $scope.showForm = true;
+                        }
                     } else {
                         $scope.showForm = true;
                     }

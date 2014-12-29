@@ -18,7 +18,7 @@
  * A directive which encapsulates typeahead logic for inline project selection.
  */
 angular.module('sb.util').directive('projectTypeahead',
-    function (Project) {
+    function (Project, $timeout) {
         'use strict';
 
         return {
@@ -46,8 +46,15 @@ angular.module('sb.util').directive('projectTypeahead',
                  */
                 $scope.toggleForm = function () {
                     if (!!$scope.asInline) {
-                        $scope.showForm =
-                            $scope.enabled ? !$scope.showForm : false;
+                        if ($scope.showForm) {
+                            $timeout(function () {
+                                $scope.showForm =
+                                    $scope.enabled ? !$scope.showForm : false;
+                            }, 200);
+                        }
+                        else {
+                            $scope.showForm = true;
+                        }
                     } else {
                         $scope.showForm = true;
                     }
