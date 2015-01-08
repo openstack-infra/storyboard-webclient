@@ -1,6 +1,6 @@
 <div>
     <p ng-if="event_info.story_id">
-        {{ author.full_name }} left a comment on <a href="#!/story/{{event_info.story_id}}">{{event_info.story_title}}</a>
+        {{ author.full_name }} left a comment on <a href="#!/story/{{evt.event_info.story_id}}">{{evt.event_info.story_title}}</a>
         <span time-moment eventdate="created_at"></span>:
     </p>
     <p ng-if="!event_info.story_id">
@@ -8,6 +8,6 @@
     </p>
 
     <p>
-        <em>{{event_info.comment_content || 'The author left a blank comment.'}}
+        <em>{{evt.event_info.comment_content || 'The author left a blank comment.'}}
         </em></p>
 </div>

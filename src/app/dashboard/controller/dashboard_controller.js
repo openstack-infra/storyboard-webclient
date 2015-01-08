@@ -29,10 +29,24 @@ angular.module('sb.dashboard').controller('DashboardController',
 
         function loadEvents() {
             // Load the user's subscription events.
-            $scope.subscriptionEvents = SubscriptionEvent.browse({
+            $scope.subscriptionEvents = null;
+            SubscriptionEvent.browse({
                 subscriber_id: currentUser.id
+            }, function (results) {
+
+                // First go through the results and decode the event info.
+                results.forEach(function (row) {
+                    if (row.hasOwnProperty('event_info')) {
+                        row.event_info = JSON.parse(row.event_info);
+                    } else {
+                        row.event_info = {};
+                    }
+                });
+
+                $scope.subscriptionEvents = results;
             });
         }
+
         loadEvents();
 
         $scope.removeEvent = function (event) {
@@ -48,7 +62,7 @@ angular.module('sb.dashboard').controller('DashboardController',
         $scope.removeAllEvents = function () {
             // delete all events
             var promises = [];
-            for (var i = 0;i < $scope.subscriptionEvents.length; i++) {
+            for (var i = 0; i < $scope.subscriptionEvents.length; i++) {
                 var event = $scope.subscriptionEvents[i];
                 var promise = $scope.removeEvent(event);
                 promises.push(promise);
