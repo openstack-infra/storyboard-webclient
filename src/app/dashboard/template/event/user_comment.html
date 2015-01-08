@@ -1,7 +1,10 @@
 <div>
-    <p>
-        {{ author.full_name }} left a comment
+    <p ng-if="event_info.story_id">
+        {{ author.full_name }} left a comment on <a href="#!/story/{{event_info.story_id}}">{{event_info.story_title}}</a>
         <span time-moment eventdate="created_at"></span>:
+    </p>
+    <p ng-if="!event_info.story_id">
+        {{ author.full_name }} left a comment <span time-moment eventdate="created_at"></span>:
     </p>
 
     <p>
