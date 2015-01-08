@@ -28,8 +28,21 @@ angular.module('sb.dashboard').controller('DashboardController',
         });
 
         // Load the user's subscription events.
-        $scope.subscriptionEvents = SubscriptionEvent.browse({
+        $scope.subscriptionEvents = null;
+        SubscriptionEvent.browse({
             subscriber_id: currentUser.id
+        }, function (results) {
+
+            // First go through the results and decode the event info.
+            results.forEach(function (row) {
+                if (row.hasOwnProperty('event_info')) {
+                    row.event_info = JSON.parse(row.event_info);
+                } else {
+                    row.event_info = {};
+                }
+            });
+
+            $scope.subscriptionEvents = results;
         });
 
         $scope.removeEvent = function (event) {

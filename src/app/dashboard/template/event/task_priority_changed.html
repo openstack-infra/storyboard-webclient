@@ -16,7 +16,7 @@
 <div class="discussion-comment">
     <p class="discussion-comment-author">
         <span time-moment eventdate="evt.created_at" class="pull-right"></span>
-        <span>{{author.full_name}} updated <a href="#!/story/{{ event_info.story_id }}">{{ event_info.task_title }}</a> priority:
-        {{ event_info.old_priority }} ==> {{ event_info.new_priority }}.</span>
+        <span>{{author.full_name}} updated <a href="#!/story/{{ evt.event_info.story_id }}">{{ evt.event_info.task_title }}</a> priority:
+        {{ evt.event_info.old_priority }} ==> {{ evt.event_info.new_priority }}.</span>
     </p>
 </div>
