@@ -87,6 +87,7 @@
                       ng-model="story.title"
                       required
                       ng-disabled="isUpdating"
+                      maxlength="255"
                       placeholder="Story Title">
             </textarea>
         </div>
@@ -222,7 +223,7 @@
                 on-change="updateTaskInline()"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
-                max-length="100"
+                maxlength="255"
                 as-inline="true"
                 />
     </td>
@@ -278,7 +279,7 @@
                 on-change="updateTaskInline()"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
-                max-length="100"
+                maxlength="255"
                 as-inline="false"
                 />
     </td>
