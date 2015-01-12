@@ -122,6 +122,25 @@ module.exports = function (grunt) {
         },
 
         /**
+         * grunt newlines
+         *
+         * Checks that all js files end with a newline
+         */
+        lintspaces: {
+            dist: {
+                src: [
+                    dir.source + '/**/*.js',
+                    dir.test + '/**/*.js',
+                    './*.js'
+                ],
+                options: {
+                    newline: true,
+                    trailingspaces: true
+                }
+            },
+        },
+
+        /**
          * grunt recess
          *
          * Compiles our .less CSS files into real CSS, linting as it goes. We
@@ -444,6 +463,14 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['jshint']
             },
+            lintspaces: {
+                files: [
+                    'Gruntfile.js',
+                    dir.source + '/**/*.js',
+                    dir.test + '/**/*.js'
+                ],
+                tasks: ['lintspaces']
+            },
             livereload: {
                 options: {
                     livereload: config.livereload.port
@@ -559,6 +586,7 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concat',
         'less',
+        'lintspaces',
         'imagemin',
         'html2js',
         'copy:dist',

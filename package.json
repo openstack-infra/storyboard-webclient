@@ -55,6 +55,7 @@
         "selenium-standalone": "2.43.1-2.9.0-1",
         "karma-html-reporter": "0.2.4",
         "grunt-connect-proxy": "0.1.11",
-        "grunt-webfont": "0.4.8"
+        "grunt-webfont": "0.4.8",
+        "grunt-lintspaces": "0.6.0"
   }
 }
