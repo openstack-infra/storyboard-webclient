@@ -32,10 +32,22 @@ angular.module('sb.dashboard').controller('DashboardController',
             subscriber_id: currentUser.id
         });
 
-        $scope.removeEvent = function (event) {
+        function deleteEvent(event) {
             event.$delete(function () {
                 var idx = $scope.subscriptionEvents.indexOf(event);
                 $scope.subscriptionEvents.splice(idx, 1);
             });
+        }
+
+        $scope.removeEvent = function (event) {
+            deleteEvent(event);
+        };
+
+        $scope.removeAllEvents = function () {
+            // delete all events
+            for (var i = 0;i < $scope.subscriptionEvents.length; i++) {
+                var event = $scope.subscriptionEvents[i];
+                deleteEvent(event);
+            }
         };
     });
