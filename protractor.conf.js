@@ -43,7 +43,7 @@ exports.config = {
     // For a full list of available capabilities, see
     // https://code.google.com/p/selenium/wiki/DesiredCapabilities
     capabilities: {
-        'browserName': 'firefox'
+        'browserName': 'chrome'
     },
 
     // ----- More information for your tests ----
