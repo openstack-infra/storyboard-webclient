@@ -32,7 +32,9 @@ angular.module('sb.dashboard').directive('subscriptionEvent',
                 try {
                     var evt = JSON.parse(scope.subscriptionEvent);
                     scope.evt = evt;
-                    scope.author = User.get({id:evt.author_id});
+                    if (evt.hasOwnProperty('author_id')) {
+                        scope.author = User.get({id: evt.author_id});
+                    }
                     scope.event_type = evt.event_type;
                     scope.created_at = evt.created_at;
                 } catch (e) {
