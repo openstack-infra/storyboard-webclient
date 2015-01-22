@@ -1,6 +1,3 @@
-<div class="discussion-comment">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="evt.created_at" class="pull-right"></span>
-        <span>{{ author.full_name }} created the task <a href="#!/story/{{evt.event_info.story_id}}">{{evt.event_info.task_title}}</a>.</span>
-    </p>
-</div>
+<i class="fa-li fa fa-sb-task text-muted"></i>
+<span class="text-muted"> Task Created by {{ author.full_name }}:    </span>
+<a href="#!/story/{{evt.event_info.story_id}}">{{evt.event_info.task_title}}</a>

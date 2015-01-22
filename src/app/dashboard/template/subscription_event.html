@@ -1,4 +1,7 @@
 <div ng-switch="event_type">
+    <div ng-switch-when="story_events">
+        <div ng-include src="'app/dashboard/template/event/story_events.html'"></div>
+    </div>
     <div ng-switch-when="story_created">
         <div ng-include src="'app/dashboard/template/event/story_created.html'"></div>
     </div>
