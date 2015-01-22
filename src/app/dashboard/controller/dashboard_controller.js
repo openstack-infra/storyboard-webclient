@@ -33,6 +33,9 @@ angular.module('sb.dashboard').controller('DashboardController',
             subscriber_id: currentUser.id
         }, function (results) {
 
+            var story_event_map = {};
+            var events = [];
+
             // First go through the results and decode the event info.
             results.forEach(function (row) {
                 if (row.hasOwnProperty('event_info')) {
@@ -42,7 +45,26 @@ angular.module('sb.dashboard').controller('DashboardController',
                 }
             });
 
-            $scope.subscriptionEvents = results;
+            results.forEach(function (row) {
+                // Sort by story_id found in the event info.
+                if (row.event_info.hasOwnProperty('story_id')) {
+                    var story_id = row.event_info.story_id;
+                    if (!story_event_map.hasOwnProperty(story_id)) {
+                        story_event_map[story_id] = {
+                            story_id: story_id,
+                            story_title: row.event_info.story_title,
+                            event_type: 'story_events',
+                            events: []
+                        };
+                        events.push(story_event_map[story_id]);
+                    }
+                    story_event_map[story_id].events.push(row);
+                } else {
+                    events.push(row);
+                }
+            });
+
+            $scope.subscriptionEvents = events;
         });
 
         $scope.removeEvent = function (event) {

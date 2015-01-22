@@ -1,0 +1,38 @@
+<p><i class="fa fa-sb-story fa-lg" title="Story"></i>&nbsp;
+    <a href="#!/story/{{evt.story_id}}">{{evt.story_title}}</a>
+</p>
+
+<ul class="fa-ul story-event-list">
+    <li ng-repeat="evt in evt.events"
+        ng-controller="StoryEventItemController"
+        ng-init="init(evt)"
+        ng-switch="evt.event_type">
+        <span ng-switch-when="story_created">
+            <span ng-include src="'app/dashboard/template/event/story_created.html'"></span>
+        </span>
+        <span ng-switch-when="story_details_changed">
+            <span ng-include src="'app/dashboard/template/event/story_details_changed.html'"></span>
+        </span>
+        <span ng-switch-when="task_assignee_changed">
+            <span ng-include src="'app/dashboard/template/event/task_assignee_changed.html'"></span>
+        </span>
+        <span ng-switch-when="task_created">
+            <span ng-include src="'app/dashboard/template/event/task_created.html'"></span>
+        </span>
+        <span ng-switch-when="task_deleted">
+            <span ng-include src="'app/dashboard/template/event/task_deleted.html'"></span>
+        </span>
+        <span ng-switch-when="task_details_changed">
+            <span ng-include src="'app/dashboard/template/event/task_details_changed.html'"></span>
+        </span>
+        <span ng-switch-when="task_status_changed">
+            <span ng-include src="'app/dashboard/template/event/task_status_changed.html'"></span>
+        </span>
+        <span ng-switch-when="task_priority_changed">
+            <span ng-include src="'app/dashboard/template/event/task_priority_changed.html'"></span>
+        </span>
+        <span ng-switch-when="user_comment">
+            <span ng-include src="'app/dashboard/template/event/user_comment.html'"></span>
+        </span>
+    </li>
+</ul>
