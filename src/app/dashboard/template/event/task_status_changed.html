@@ -1,7 +1,14 @@
-<div class="discussion-comment">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="evt.created_at" class="pull-right"></span>
-        <span>{{author.full_name}} updated <a href="#!/story/{{ evt.event_info.story_id }}">{{ evt.event_info.task_title }}</a> status:
-        {{ evt.event_info.old_status }} ==> {{ evt.event_info.new_status }}.</span>
-    </p>
-</div>
+<i class="fa-li fa fa-sb-task text-muted"></i>
+<span class="text-muted"> Task status changed by {{ author.full_name }}</span>
+<br/>
+<task-status-dropdown
+        editable="false"
+        status="{{evt.event_info.old_status}}"
+        ></task-status-dropdown>
+&nbsp;
+<i class="fa fa-arrow-right text-muted"></i>
+&nbsp;
+<task-status-dropdown
+        editable="false"
+        status="{{evt.event_info.new_status}}"
+        ></task-status-dropdown>
