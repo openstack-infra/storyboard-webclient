@@ -1,0 +1,11 @@
+Verified+2: Jenkins
+Code-Review+2: yolanda.robla <info@ysoft.biz>
+Code-Review+2: Nikita Konovalov <nkonovalov@mirantis.com>
+Code-Review+1: Allison Randal <allison@lohutok.net>
+Code-Review+2: Michael Krotscheck <krotscheck@gmail.com>
+Workflow+1: Michael Krotscheck <krotscheck@gmail.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 23 Jan 2015 19:21:09 +0000
+Reviewed-on: https://review.openstack.org/138389
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
