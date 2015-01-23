@@ -18,10 +18,11 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryTaskDeleteController',
-    function ($log, $scope, $state, task, $modalInstance) {
+    function ($log, $scope, $state, task, $modalInstance, params) {
         'use strict';
 
         $scope.task = task;
+        $scope.params = params;
 
         // Set our progress flags and clear previous error conditions.
         $scope.isUpdating = true;

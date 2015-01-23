@@ -49,6 +49,11 @@ angular.module('sb.story').controller('StoryTaskListItemController',
                 resolve: {
                     task: function () {
                         return $scope.task;
+                    },
+                    params: function () {
+                        return {
+                            lastTask: ($scope.tasks.length === 1)
+                        };
                     }
                 }
             });
