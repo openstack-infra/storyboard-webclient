@@ -14,8 +14,10 @@
 </td>
 <td>
     <p>
-        <subscribe resource="story"
+        <small ng-show="isLoggedIn">
+            <subscribe resource="story"
                    resource-id="story.id"></subscribe>
+        </small>
         <strong>
             <a href="#!/story/{{story.id}}">
                 {{story.title}}

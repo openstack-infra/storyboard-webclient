@@ -19,7 +19,9 @@
     <story-status-label story="story"/>
 </td>
 <td class="text-right">
-    <subscribe class="pull-right"
+    <small ng-show="isLoggedIn">
+        <subscribe class="pull-right"
                resource="story"
                resource-id="story.id"></subscribe>
+    </small>
 </td>
