@@ -38,53 +38,14 @@
     </p>
     <table ng-show="expandRow"
            class="table table-clean table-supercondensed">
-        <tr>
+
+        <tr ng-repeat="task_status in story.task_statuses" class="{{status_classes[task_status.key]}}">
             <th>
-                <small>Todo:</small>
+                <small>{{status_texts[task_status.key]}}:</small>
             </th>
             <td>
                 <strong>
-                    <small>{{story.todo || 0}}</small>
-                </strong>
-            </td>
-        </tr>
-        <tr class="text-info">
-            <th>
-                <small>Progress:</small>
-            </th>
-            <td>
-                <strong>
-                    <small>{{story.inprogress || 0}}</small>
-                </strong>
-            </td>
-        </tr>
-        <tr class="text-warning">
-            <th>
-                <small>Review:</small>
-            </th>
-            <td>
-                <strong>
-                    <small>{{story.review || 0}}</small>
-                </strong>
-            </td>
-        </tr>
-        <tr class="text-success">
-            <th>
-                <small>Merged:</small>
-            </th>
-            <td>
-                <strong>
-                    <small>{{story.merged || 0}}</small>
-                </strong>
-            </td>
-        </tr>
-        <tr class="text-muted">
-            <th>
-                <small>Invalid:</small>
-            </th>
-            <td>
-                <strong>
-                    <small>{{story.invalid || 0}}</small>
+                    <small>{{task_status.count || 0}}</small>
                 </strong>
             </td>
         </tr>

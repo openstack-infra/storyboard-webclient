@@ -18,13 +18,48 @@
  * Controller for items in the story list.
  */
 angular.module('sb.story').controller('StoryListItemController',
-    function ($scope) {
+    function ($scope, TaskStatus) {
         'use strict';
+
+        /**
+         * Gets the status for the task count texts
+         */
+        function getStatusClass(status) {
+            var className = '';
+            switch(status) {
+                case 'inprogress':
+                    className = 'text-info';
+                    break;
+                case 'review':
+                    className = 'text-warning';
+                    break;
+                case 'merged':
+                    className = 'text-success';
+                    break;
+                case 'invalid':
+                    className = 'muted';
+                    break;
+                default:
+                    className = '';
+                    break;
+            }
+            return className;
+        }
 
         /**
          * UI toggle, show row details?
          */
         $scope.expandRow = false;
+
+        $scope.status_texts = [];
+        $scope.status_classes = [];
+        TaskStatus.query({}, function (items) {
+            for (var i = 0;i < items.length; i++) {
+                $scope.status_texts[items[i].key] = items[i].name;
+                $scope.status_classes[items[i].key] = getStatusClass(
+                    items[i].key);
+            }
+        });
 
         /**
          * Figure out what color we're labeling ourselves as...
