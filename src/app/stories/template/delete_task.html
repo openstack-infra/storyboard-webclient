@@ -30,6 +30,10 @@
                     This action cannot be undone.
                 </p>
 
+                <p class="text-center lead" ng-show="params.lastTask">
+                    This is the last task of the story. If you remove it, the story will change to Invalid status.
+                </p>
+
                 <div class="text-center">
                     <a href="" class="btn btn-danger" ng-click="remove()">
                         Remove this task
