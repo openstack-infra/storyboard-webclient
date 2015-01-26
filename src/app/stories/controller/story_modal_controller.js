@@ -22,8 +22,7 @@ angular.module('sb.story').controller('StoryModalController',
         'use strict';
 
         $scope.projects = Project.browse({});
-        $scope.story = new Story({title: '',
-            project_id: params.projectId || null});
+        $scope.story = new Story({title: ''});
 
         $scope.tasks = [new Task({
             title: '',
