@@ -23,6 +23,7 @@
 angular.module('sb.services').factory('ProjectGroupItem',
     function ($resource, storyboardApiBase) {
         'use strict';
+
         return $resource(storyboardApiBase +
                 '/project_groups/:projectGroupId/projects/:id',
             {
@@ -44,6 +45,12 @@ angular.module('sb.services').factory('ProjectGroupItem',
                     method: 'GET',
                     isArray: true,
                     responseType: 'json'
+                },
+                'browse': {
+                    method: 'GET',
+                    isArray: true,
+                    responseType: 'json',
+                    cache: false
                 }
             }
         );
