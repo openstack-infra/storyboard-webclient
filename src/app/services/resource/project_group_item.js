@@ -21,8 +21,12 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.services').factory('ProjectGroupItem',
-    function ($resource, storyboardApiBase) {
+    function ($resource, storyboardApiBase, $injector) {
         'use strict';
+
+        function getLimit() {
+            return $injector.get('pageSize');
+        }
         return $resource(storyboardApiBase +
                 '/project_groups/:projectGroupId/projects/:id',
             {
@@ -44,6 +48,12 @@ angular.module('sb.services').factory('ProjectGroupItem',
                     method: 'GET',
                     isArray: true,
                     responseType: 'json'
+                },
+                'browse': {
+                    method: 'GET',
+                    isArray: true,
+                    responseType: 'json',
+                    cache: false
                 }
             }
         );
