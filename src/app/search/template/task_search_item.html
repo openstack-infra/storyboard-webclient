@@ -20,8 +20,10 @@
             ></task-status-dropdown>
 </td>
 <td>
-    <subscribe class="pull-right"
+    <small ng-show="isLoggedIn">
+        <subscribe class="pull-right"
                resource="story"
                resource-id="story.id"></subscribe>
+    </small>
 </td>
 
