@@ -35,6 +35,39 @@ angular.module('sb.services')
             return $injector.get('pageSize');
         }
 
+        function getReadOnlyFields() {
+            var db_managed_fields = ['id', 'created_at', 'updated_at'];
+            var author_related_fields = ['creator_id', 'author_id'];
+
+            return db_managed_fields.concat(author_related_fields);
+        }
+
+        /**
+         * The backend API validation is supposed to raise errors when it
+         * receives readonly fields.
+         *
+         * This method is removing readonly fields from request body when
+         * creating or updating an object.
+         *
+         * @param data
+         * @param headersGetter
+         * @returns {*}
+         */
+        function cleanPutPostBody(data) {
+            var clean_data = angular.copy(data);
+
+            var readonly_fields = getReadOnlyFields();
+            readonly_fields.forEach(function(field_name) {
+               if (!!clean_data[field_name]) {
+                   delete clean_data[field_name];
+               }
+            });
+
+            console.log(clean_data);
+
+            return JSON.stringify(clean_data);
+        }
+
         /**
          * Construct a full API signature for a specific resource. Includes
          * CRUD, Browse, and Search. If the resource doesn't support it,
@@ -50,14 +83,16 @@ angular.module('sb.services')
 
             return {
                 'create': {
-                    method: 'POST'
+                    method: 'POST',
+                    transformRequest: cleanPutPostBody
                 },
                 'get': {
                     method: 'GET',
                     cache: true
                 },
                 'update': {
-                    method: 'PUT'
+                    method: 'PUT',
+                    transformRequest: cleanPutPostBody
                 },
                 'delete': {
                     method: 'DELETE'
