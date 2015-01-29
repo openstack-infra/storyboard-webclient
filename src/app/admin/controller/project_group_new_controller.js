@@ -143,7 +143,7 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
                 );
 
                 // Wait for all the promises to finish.
-                $q.all(promises, function () {
+                $q.all(promises).then(function () {
                     $modalInstance.close(projectGroup);
                 }, function (error) {
                     $log.error(error);
