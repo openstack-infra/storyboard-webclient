@@ -34,9 +34,7 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
          *
          * @type {{}[]}
          */
-        $scope.projects = [
-            {}
-        ];
+        $scope.projects = [{}];
 
         /**
          * The new project group.
@@ -45,6 +43,7 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
          */
         $scope.projectGroup = new ProjectGroup();
 
+        $scope.error = {};
         /**
          * Project typeahead search method.
          */
@@ -72,7 +71,8 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
                 },
                 function (error) {
                     $log.error(error);
-                    deferred.resolve([]);
+                    // We've encountered an error.
+                    $scope.isSaving = false;
                 });
             return deferred.promise;
         };
@@ -146,14 +146,18 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
                 $q.all(promises).then(function () {
                     $modalInstance.close(projectGroup);
                 }, function (error) {
-                    $log.error(error);
-                    $modalInstance.dismiss(error);
+                    $log.error(error.data.faultstring);
+                    $scope.error = error.data.faultstring;
+                    $modalInstance.dismiss('cancel');
+                    $scope.isSaving = false;
                 });
 
 
             }, function (error) {
+                $modalInstance.dismiss('cancel');
+                $log.error(error.data.faultstring);
+                $scope.error = error.data.faultString;
                 $scope.isSaving = false;
-                $log.error(error);
             });
         };
 
@@ -162,6 +166,24 @@ angular.module('sb.admin').controller('ProjectGroupNewController',
          */
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
+        };
+
+        /**
+         * Check that we have valid projects on the list
+         */
+        $scope.checkValidProjects = function() {
+            if ($scope.projects.length === 0) {
+                return false;
+            }
+
+            // check if projects contain a valid project_id
+            for (var i = 0; i < $scope.projects.length ; i++) {
+                var project = $scope.projects[i];
+                if ( !project.id ) {
+                    return false;
+                }
+            }
+            return true;
         };
 
     });

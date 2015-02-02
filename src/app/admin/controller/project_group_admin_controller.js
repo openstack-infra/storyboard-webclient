@@ -39,11 +39,13 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
          * Launches the add-project-group modal.
          */
         $scope.addProjectGroup = function () {
-            $modal.open(
+            $scope.modalInstance = $modal.open(
                 {
                     templateUrl: 'app/admin/template/project_group_new.html',
                     controller: 'ProjectGroupNewController'
-                }).result.then(function () {
+                });
+
+            $scope.modalInstance.result.then(function () {
                     // On success, reload the page.
                     $scope.search();
                 });
