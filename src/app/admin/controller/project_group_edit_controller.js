@@ -200,4 +200,23 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
             // Put our model into the array
             $scope.projects[index] = model;
         };
+
+        /**
+         * Check that we have valid projects on the list
+         */
+        $scope.checkValidProjects = function() {
+            if ($scope.projects.length === 0) {
+                return false;
+            }
+
+            // check if projects contain a valid project_id
+            for (var i = 0; i < $scope.projects.length ; i++) {
+                var project = $scope.projects[i];
+                if ( !project.id ) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
     });
