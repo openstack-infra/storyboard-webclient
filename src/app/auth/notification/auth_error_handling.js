@@ -56,7 +56,7 @@ angular.module('sb.auth').run(
                     handle_403();
                 }
 
-                return true; // Stop processing this notifications.
+                return false; // Stop processing this notifications.
             }
         }, Priority.BEFORE);
 
