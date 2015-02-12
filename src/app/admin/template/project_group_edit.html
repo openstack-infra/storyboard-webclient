@@ -26,7 +26,8 @@
         <div class="col-xs-12">
             <form class="form-horizontal"
                   role="form"
-                  name="projectGroupForm">
+                  name="projectGroupForm"
+                  ng-class="{'has-error': projectGroupForm.title.$invalid}">
                 <div class="form-group">
                     <label for="title" class="col-sm-2 control-label">
                         Title:
@@ -34,13 +35,32 @@
 
                     <div class="col-sm-10">
                         <input id="title"
+                               name="title"
                                type="text"
                                class="form-control"
                                ng-model="projectGroup.title"
                                required
                                ng-disabled="isSaving"
                                maxlength="255"
+                               ng-minlength="3"
+                               ng-pattern="PROJECT_NAME_REGEX"
                                placeholder="Project Group Title">
+                        </input>
+                        <div class="help-block text-danger"
+                            ng-show="projectGroupForm.title.$invalid">
+                            <span ng-show="projectGroupForm.title.$error.required">
+                            A project group title is required.
+                            </span>
+                            <span ng-show="projectGroupForm.title.$error.pattern">
+                                A project group title must begin with a letter, and may only
+                                contain letters, numbers, forward slashes, periods, and
+                                dashes. It should not start or end with a separator and
+                                must not contain two or more sequential separators.
+                            </span>
+                            <span ng-show="projectGroupForm.title.$error.minlength">
+                                A project group title must have at least 3 characters.
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,6 +70,7 @@
 
                     <div class="col-sm-10">
                         <input id="name"
+                               name="name"
                                type="text"
                                class="form-control"
                                ng-model="projectGroup.name"
@@ -57,6 +78,17 @@
                                ng-disabled="isSaving"
                                maxlength="50"
                                placeholder="URL Stub for the project group">
+                        </input>
+                        <div class="help-block text-danger"
+                            ng-show="projectGroupForm.name.$invalid">
+                            <span ng-show="projectGroupForm.name.$error.required">
+                                A project group URL is required.
+                            </span>
+                            <span ng-show="projectGroupForm.name.$error.minlength">
+                                A project group URL must have at least 5 characters.
+                            </span>
+                        </div>
+
                     </div>
                 </div>
             </form>
@@ -95,7 +127,7 @@
             <button type="button"
                     class="btn btn-primary"
                     ng-click="save()"
-                    ng-disabled="!projectGroupForm.$valid || !projectsForm.$valid || isSaving">
+                    ng-disabled="!projectGroupForm.$valid || !projectsForm.$valid || !checkValidProjects() || isSaving">
                 Save
             </button>
             <a href="#!/admin/project_group"
@@ -116,15 +148,15 @@
                    placeholder="Select a Project"
                    required
                    ng-model="project"
-                   typeahead-editable="false"
                    typeahead-wait-ms="200"
+                   typeahead-editable="false"
                    typeahead="project as project.name for project
                    in searchProjects($viewValue)"
                    typeahead-loading="loadingProjects"
-                   typeahead-on-select="selectNewProject(index, $model)"
                    typeahead-input-formatter="formatProjectName($model)"
-                   ng-disabled="isSaving"
+                   typeahead-on-select="selectNewProject(index, $model)"
                    class="form-control input-sm"
+                   ng-disabled="isSaving"
                     />
             <span class="form-control-feedback text-muted
             form-control-feedback-sm">
