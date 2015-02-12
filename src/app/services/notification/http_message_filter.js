@@ -49,8 +49,10 @@ angular.module('sb.services')
                 return;
             }
 
-            // All 200 requests are filtered out.
-            if (response.status === 200) {
+            // All successful requests are filtered out.
+            var successful_requests = [200, 201, 202, 203, 204,
+                                       205, 206, 207, 208, 226];
+            if (successful_requests.indexOf(response.status) >= 0 ) {
                 return true;
             }
         }
@@ -78,8 +80,12 @@ angular.module('sb.services')
 
             message.message = httpStatus + ': ' + method + ' ' + url + ': ';
 
+            console.log(data);
             if (data.hasOwnProperty('faultstring')) {
                 message.message += data.faultstring;
+            } else if (data.hasOwnProperty('field') &&
+                       data.hasOwnProperty('message')) {
+                message.message += data.field + ': ' + data.message;
             } else {
                 message.message += 'No error details available.';
             }
