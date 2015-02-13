@@ -19,8 +19,8 @@
  * by verifying the token state returned from the OpenID service.
  */
 angular.module('sb.auth').factory('Session',
-    function (SessionState, AccessToken, $rootScope, $log, $q, $state, User,
-              RefreshManager, Notification, Severity) {
+    function (SessionState, AccessToken, $rootScope, $log, $q, $state,
+              SystemInfo, RefreshManager, Notification, Severity) {
         'use strict';
 
         /**
@@ -72,11 +72,9 @@ angular.module('sb.auth').factory('Session',
 
             var deferred = $q.defer();
             RefreshManager.tryRefresh().then(function () {
-                var id = AccessToken.getIdToken();
-
-                User.get({id: id},
-                    function (user) {
-                        deferred.resolve(user);
+                SystemInfo.get({},
+                    function (info) {
+                        deferred.resolve(info);
                     }, function (error) {
                         deferred.reject(error);
                     });
