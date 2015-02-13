@@ -36,7 +36,7 @@ angular.module('sb.story').controller('StoryListController',
             NewStoryService.showNewStoryModal()
                 .then(function (story) {
                     // On success, go to the story detail.
-                    $state.go('story.detail', {storyId: story.id});
+                    $state.go('sb.story.detail', {storyId: story.id});
                 }
             );
         };

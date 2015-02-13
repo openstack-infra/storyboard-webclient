@@ -32,7 +32,7 @@ angular.module('sb.auth').controller('AuthAuthorizeController',
         // we should still catch it.
         if (!!$stateParams.error) {
             $log.debug('Error received, redirecting to auth.error.');
-            $state.go('auth.error', $stateParams);
+            $state.go('sb.auth.error', $stateParams);
             return;
         }
 

@@ -25,11 +25,11 @@ angular.module('sb.admin').controller('UserEditController',
 
         $scope.save = function () {
             $scope.user.$update(function () {
-                $state.go('admin.user');
+                $state.go('sb.admin.user');
             });
         };
 
         $scope.cancel = function () {
-            $state.go('admin.user');
+            $state.go('sb.admin.user');
         };
     });

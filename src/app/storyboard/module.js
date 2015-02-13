@@ -32,8 +32,8 @@ angular.module('storyboard',
         preprocess: 'utc',
         timezone: 'UTC'
     })
-    .config(function ($provide, $urlRouterProvider, $locationProvider,
-                      $httpProvider, msdElasticConfig) {
+    .config(function ($urlRouterProvider, $locationProvider, $httpProvider,
+                      msdElasticConfig, $stateProvider, SessionResolver) {
         'use strict';
 
         // Default URL hashbang route
@@ -48,6 +48,18 @@ angular.module('storyboard',
         // Globally set an additional amount of whitespace to the end of our
         // textarea elastic resizing.
         msdElasticConfig.append = '\n';
+
+        // Create a root state (named 'sb') that will not resolve until
+        // necessary application data has been loaded.
+        $stateProvider
+            .state('sb', {
+                abstract: true,
+                url: '',
+                template: '<div ui-view></div>',
+                resolve: {
+                    sessionState: SessionResolver.resolveSessionState
+                }
+            });
     })
     .run(function ($log, $rootScope, $state) {
         'use strict';
@@ -56,7 +68,7 @@ angular.module('storyboard',
         // changes (i.e. a 404) take the user back to the index.
         $rootScope.$on('$stateChangeError',
             function () {
-                $state.go('index');
+                $state.go('sb.index');
             });
     })
     .run(function ($http, DSCacheFactory) {

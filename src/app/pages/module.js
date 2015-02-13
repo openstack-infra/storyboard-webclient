@@ -28,12 +28,12 @@ angular.module('sb.pages',
 
         // Set our page routes.
         $stateProvider
-            .state('page', {
+            .state('sb.page', {
                 abstract: true,
                 url: '/page',
                 template: '<div ui-view></div>'
             })
-            .state('page.about', {
+            .state('sb.page.about', {
                 url: '/about',
                 templateUrl: 'app/pages/template/about.html'
             });

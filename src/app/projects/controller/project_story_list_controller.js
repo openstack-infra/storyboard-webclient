@@ -29,7 +29,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             null;
 
         if (id === null) {
-            $state.go('index');
+            $state.go('sb.index');
             return;
         }
 

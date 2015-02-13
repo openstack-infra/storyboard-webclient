@@ -31,7 +31,7 @@ angular.module('sb.story').controller('StoryDeleteController',
             $scope.story.$delete(
                 function () {
                     $modalInstance.dismiss('success');
-                    $state.go('project.list');
+                    $state.go('sb.project.list');
                 }
             );
         };

@@ -24,5 +24,5 @@ angular.module('sb.auth').controller('AuthDeauthorizeController',
 
         $log.debug('Logging out');
         Session.destroySession();
-        $state.go('index');
+        $state.go('sb.index');
     });

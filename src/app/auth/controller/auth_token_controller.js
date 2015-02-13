@@ -32,7 +32,7 @@ angular.module('sb.auth').controller('AuthTokenController',
         // we should still catch it.
         if (!!$searchParams.error) {
             $log.debug('Error received, redirecting to auth.error.');
-            $state.go('auth.error', $searchParams);
+            $state.go('sb.auth.error', $searchParams);
             return;
         }
 
@@ -65,7 +65,7 @@ angular.module('sb.auth').controller('AuthTokenController',
             },
             function (error) {
                 Session.destroySession();
-                $state.go('auth.error', error);
+                $state.go('sb.auth.error', error);
             }
         );
     });
