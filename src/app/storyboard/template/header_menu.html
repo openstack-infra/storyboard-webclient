@@ -56,8 +56,8 @@
                     Login
                 </a>
             </li>
-            <li class="dropdown" ng-show="isLoggedIn">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <li class="dropdown" dropdown ng-show="isLoggedIn">
+                <a href="#" class="dropdown-toggle" dropdown-toggle>
                 <span ng-show="currentUser.$resolved">
                     {{currentUser.full_name}}
                 </span>
@@ -91,7 +91,7 @@
                        typeahead-loading="headerCriteriaLoading"
                        typeahead-on-select="search($model)"
                        typeahead-template-url="app/search/template/typeahead_criteria_item.html"
-                       />
+                        />
             <span class="form-control-feedback text-muted">
                 <i class="fa fa-search" ng-hide="headerCriteriaLoading"></i>
                 <i class="fa fa-spin fa-refresh"
@@ -109,8 +109,7 @@
         <div class="navbar-header">
             <button type="button"
                     class="btn btn-sm btn-primary navbar-btn pull-right"
-                    data-toggle="collapse"
-                    data-target="#mobile-dropdown-menu"
+                    ng-click="showMobileMenu = !showMobileMenu"
                     ng-show="isLoggedIn">
                 <i class="fa fa-gear"></i>
             </button>
@@ -127,10 +126,11 @@
             <a class="navbar-brand" href="#!/">StoryBoard</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="mobile-dropdown-menu">
+        <div collapse="!showMobileMenu" id="mobile-dropdown-menu">
             <ul class="nav navbar-nav">
                 <li active-path="^\/profile\/preferences*">
-                    <a href="#!/profile/preferences">
+                    <a href="#!/profile/preferences"
+                       ng-click="showMobileMenu = false">
                         <i class="fa fa-user"></i>
                         <span ng-show="currentUser.$resolved">
                             {{currentUser.full_name}}
@@ -142,7 +142,8 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#!/auth/deauthorize">
+                <li><a href="#!/auth/deauthorize"
+                       ng-click="showMobileMenu = false">
                     <i class="fa fa-sign-out"></i>
                     Logout
                 </a></li>
