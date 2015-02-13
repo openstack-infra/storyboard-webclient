@@ -23,7 +23,7 @@ angular.module('sb.auth').controller('LoginRequiredModalController',
         'use strict';
 
         $scope.login = function () {
-            $state.go('auth.authorize');
+            $state.go('sb.auth.authorize');
             $modalInstance.dismiss('success');
         };
 

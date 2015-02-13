@@ -29,17 +29,17 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
 
         // Set our page routes.
         $stateProvider
-            .state('story', {
+            .state('sb.story', {
                 abstract: true,
                 url: '/story',
                 template: '<div ui-view></div>'
             })
-            .state('story.list', {
+            .state('sb.story.list', {
                 url: '/list',
                 templateUrl: 'app/stories/template/list.html',
                 controller: 'StoryListController'
             })
-            .state('story.detail', {
+            .state('sb.story.detail', {
                 url: '/{storyId:[0-9]+}',
                 templateUrl: 'app/stories/template/detail.html'
             });

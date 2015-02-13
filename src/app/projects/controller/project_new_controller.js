@@ -42,7 +42,7 @@ angular.module('sb.projects').controller('ProjectNewController',
             $scope.newProject.$create(
                 function () {
                     // Success!
-                    $state.go('project.list');
+                    $state.go('sb.project.list');
                 },
                 function (error) {
                     // Error received. Ho hum.

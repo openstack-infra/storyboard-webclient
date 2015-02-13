@@ -29,7 +29,7 @@ angular.module('sb.project_group',
 
         // Set our page routes.
         $stateProvider
-            .state('project_group', {
+            .state('sb.project_group', {
                 abstract: true,
                 url: '/project_group',
                 template: '<div ui-view></div>',
@@ -38,12 +38,12 @@ angular.module('sb.project_group',
                         .resolvePermission('is_superuser', true)
                 }
             })
-            .state('project_group.list', {
+            .state('sb.project_group.list', {
                 url: '/list',
                 templateUrl: 'app/project_group/template/list.html',
                 controller: 'ProjectGroupListController'
             })
-            .state('project_group.detail', {
+            .state('sb.project_group.detail', {
                 url: '/{id:[0-9]+}',
                 templateUrl: 'app/project_group/template/detail.html',
                 controller: 'ProjectGroupDetailController',
