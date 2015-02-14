@@ -19,19 +19,29 @@
  * individual preferences.
  */
 angular.module('sb.profile').controller('ProfilePreferencesController',
-    function ($scope, Preference) {
+    function ($scope, Preference, Notification, Severity) {
         'use strict';
 
         $scope.preferences = Preference.getAll();
 
+        /**
+         * Save all the preferences.
+         */
         $scope.save = function () {
+            $scope.saving = true;
 
-            for (var key in $scope.preferences) {
-                if (Preference.get(key) !== $scope.preferences[key]) {
-                    Preference.set(key, $scope.preferences[key]);
+            Preference.saveAll($scope.preferences).then(
+                function () {
+                    Notification.send(
+                        'preferences',
+                        'Preferences Saved!',
+                        Severity.SUCCESS
+                    );
+                    $scope.saving = false;
+                },
+                function () {
+                    $scope.saving = false;
                 }
-            }
-
-            $scope.message = 'Preferences Saved!';
+            );
         };
     });

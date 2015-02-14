@@ -57,7 +57,8 @@ angular.module('storyboard',
                 url: '',
                 template: '<div ui-view></div>',
                 resolve: {
-                    sessionState: SessionResolver.resolveSessionState
+                    sessionState: SessionResolver.resolveSessionState,
+                    preferences: SessionResolver.resolvePreferences
                 }
             });
     })
