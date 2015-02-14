@@ -17,129 +17,133 @@
 <div class="container" ng-hide="isLoading">
     <div class="row">
         <div class="col-xs-12">
-            <h1><i class="fa fa-sb-profile-preferences"></i> Preferences</h1>
+            <h1><i class="fa fa-sb-profile-preferences"
+                   ng-if="!saving"></i>
+                <i class="fa fa-spin fa-sb-profile-preferences"
+                   ng-if="saving"></i>
+                Preferences
+            </h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <form name="preferencesForm">
-                <div class="form-group">
-                    <label>Page size</label>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Timeline events</label>
 
-                    <p class="help-block">
-                        How many results would you like to see when viewing
-                        lists?
-                    </p>
+                <p class="help-block">
+                    Which types of Timeline events would you like to be
+                    displayed?
+                </p>
 
-                    <div>
-                        <input type="radio" name="pageSize"
-                               id="pageSize10" value="10"
-                               ng-model="preferences.page_size">
-                        <label for="pageSize10">10</label>
-                        &nbsp;
-                        <input type="radio" name="pageSize"
-                               id="pageSize25" value="25"
-                               ng-model="preferences.page_size">
-                        <label for="pageSize25">25</label>
-                        &nbsp;
-                        <input type="radio" name="pageSize"
-                               id="pageSize50" value="50"
-                               ng-model="preferences.page_size">
-                        <label for="pageSize50">50</label>
-                        &nbsp;
-                        <input type="radio" name="pageSize"
-                               id="pageSize100" value="100"
-                               ng-model="preferences.page_size">
-                        <label for="pageSize100">100</label>
-                    </div>
+                <div>
+                    <input type="checkbox" name="enabledTypes"
+                           id="storyCreated"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_story_created">
+                    <label for="storyCreated">Story created</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="storyDetailsChanged"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_story_details_changed">
+                    <label for="storyDetailsChanged">Story details
+                        changed</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskCreated"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_created">
+                    <label for="taskCreated">Task created</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskAssigneeChanged"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_assignee_changed">
+                    <label for="taskAssigneeChanged">Task assignee
+                        changed</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskStatusChanged"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_status_changed">
+                    <label for="taskStatusChanged">Task status changed</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskPriorityChanged"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_priority_changed">
+                    <label for="taskStatusChanged">Task priority changed</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskDetailsChanged"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_details_changed">
+                    <label for="taskDetailsChanged">Task details changed</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="taskDeleted"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_task_deleted">
+                    <label for="taskDeleted">Task deleted</label>
+                    <br/>
+                    <input type="checkbox" name="enabledTypes"
+                           id="userComment"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.display_events_user_comment">
+                    <label for="userComment">User comment</label>
                 </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <hr class="visible-xs"/>
+            <div class="form-group">
+                <label>Page size</label>
 
-                <hr/>
+                <p class="help-block">
+                    How many results would you like to see when viewing
+                    lists?
+                </p>
 
-                <div class="form-group">
-                    <label>Timeline events</label>
-
-                    <p class="help-block">
-                        Which types of Timeline events would you like to be
-                        displayed?
-                    </p>
-
-                    <div>
-                        <input type="checkbox" name="enabledTypes"
-                               id="storyCreated"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_story_created">
-                        <label for="storyCreated">Story created</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="storyDetailsChanged"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_story_details_changed">
-                        <label for="storyDetailsChanged">Story details changed</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskCreated"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_created">
-                        <label for="taskCreated">Task created</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskAssigneeChanged"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_assignee_changed">
-                        <label for="taskAssigneeChanged">Task assignee changed</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskStatusChanged"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_status_changed">
-                        <label for="taskStatusChanged">Task status changed</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskPriorityChanged"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_priority_changed">
-                        <label for="taskStatusChanged">Task priority changed</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskDetailsChanged"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_details_changed">
-                        <label for="taskDetailsChanged">Task details changed</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="taskDeleted"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_task_deleted">
-                        <label for="taskDeleted">Task deleted</label>
-                        <br/>
-                        <input type="checkbox" name="enabledTypes"
-                               id="userComment"
-                               ng-true-value="'true'"
-                               ng-false-value="'false'"
-                               ng-model="preferences.display_events_user_comment">
-                        <label for="userComment">User comment</label>
-                    </div>
+                <div>
+                    <input type="radio" name="pageSize"
+                           id="pageSize10" value="10"
+                           ng-model="preferences.page_size">
+                    <label for="pageSize10">10</label>
+                    &nbsp;
+                    <input type="radio" name="pageSize"
+                           id="pageSize25" value="25"
+                           ng-model="preferences.page_size">
+                    <label for="pageSize25">25</label>
+                    &nbsp;
+                    <input type="radio" name="pageSize"
+                           id="pageSize50" value="50"
+                           ng-model="preferences.page_size">
+                    <label for="pageSize50">50</label>
+                    &nbsp;
+                    <input type="radio" name="pageSize"
+                           id="pageSize100" value="100"
+                           ng-model="preferences.page_size">
+                    <label for="pageSize100">100</label>
                 </div>
-
-                <hr/>
-
-                <div class="form-group">
-                    <button type="button" class="btn btn-default"
-                            ng-click="save()">
-                        Save
-                    </button>
-                    <p class="help-block text-success">{{message}}</p>
-                </div>
-            </form>
+            </div>
+        </div>
+        </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <hr />
+            <button class="btn btn-primary"
+                    ng-disabled="saving"
+                    ng-click="save()"
+                    >Save</button>
         </div>
     </div>
 </div>
