@@ -49,6 +49,18 @@ angular.module('sb.services').provider('Preference',
          * The actual preference implementation.
          */
         function Preference($log, localStorageService) {
+
+            /**
+             * Get all the preferences.
+             */
+            this.getAll = function () {
+                var result = {};
+                for (var key in defaults) {
+                    result[key] = this.get(key);
+                }
+                return result;
+            };
+
             /**
              * Get a preference.
              */
