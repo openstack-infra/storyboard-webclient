@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference, Event, Comment) {
+              Session, User, Preference, Event, Comment, TimelineEventTypes) {
         'use strict';
 
         // Parse the ID
@@ -27,14 +27,25 @@ angular.module('sb.story').controller('StoryDetailController',
             parseInt($stateParams.storyId, 10) :
             null;
 
-        $scope.enabled_event_types = Preference.get('display_events_filter');
+
+        // Load the preference for each display event.
+        function reloadPagePreferences() {
+            TimelineEventTypes.forEach(function (type) {
+                // Prefs are stored as strings, UI tests on booleans, so we
+                // convert here.
+                var pref_name = 'display_events_' + type;
+                $scope[pref_name] = Preference.get(pref_name) === 'true';
+            });
+        }
+
+        reloadPagePreferences();
 
         /**
          * The events associated to the story
          */
-        $scope.loadEvents = function() {
-            Event.search(id).then(function(events) {
-                  $scope.events = events;
+        $scope.loadEvents = function () {
+            Event.search(id).then(function (events) {
+                $scope.events = events;
             });
         };
 
@@ -188,11 +199,7 @@ angular.module('sb.story').controller('StoryDetailController',
                 controller: 'TimelineFilterController'
             });
 
-            modalInstance.result.then(function(enabled_event_types) {
-                $scope.enabled_event_types = enabled_event_types;
-            });
-            // Return the modal's promise.
-            return modalInstance.result;
+            modalInstance.result.then(reloadPagePreferences);
         };
 
         /**
