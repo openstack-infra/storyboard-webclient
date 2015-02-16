@@ -389,6 +389,7 @@ module.exports = function (grunt) {
             server: {
                 url: 'http://localhost:9000'
             }
+
         },
 
         /**
@@ -491,6 +492,7 @@ module.exports = function (grunt) {
                     port: 9005,
                     middleware: function (connect) {
                         return [
+                            lrSnippet,
                             mountFolder(connect, dir.output),
                             proxySnippet
                         ];
@@ -508,9 +510,6 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: './karma-unit.conf.js'
-            },
-            integration: {
-                configFile: './karma-integration.conf.js'
             }
         },
 
@@ -543,8 +542,14 @@ module.exports = function (grunt) {
                 args: {
                 }
             },
-            dist: {}
+            dist: {},
+            integration: {
+                options: {
+                    configFile: './protractor-integration.conf.js'
+                }
+            }
         }
+
     });
 
     /**
@@ -629,7 +634,7 @@ module.exports = function (grunt) {
     );
 
     /**
-     * grunt test:integration
+     * grunt test:unit
      *
      * This command will create a clean build against which our unit
      * tests will be run. For more information, please see
@@ -647,15 +652,14 @@ module.exports = function (grunt) {
      * grunt test:integration
      *
      * This command will create a clean build against which our integration
-     * tests will be run. For more information, please see
-     * karma-integration.conf.js
+     * tests will be run.
      */
     grunt.registerTask('test:integration', [
         'clean',
         'compile',
-        'useminPrepare',
-        'concat',
-        'karma:integration'
+        'configureProxies:test',
+        'connect:test',
+        'protractor:integration'
     ]);
 
     /**
