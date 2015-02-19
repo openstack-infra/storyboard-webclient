@@ -49,7 +49,7 @@ angular.module('storyboard').controller('HeaderController',
             NewStoryService.showNewStoryModal()
                 .then(function (story) {
                     // On success, go to the story detail.
-                    $state.go('story.detail', {storyId: story.id});
+                    $state.go('sb.story.detail', {storyId: story.id});
                 }
             );
         };
@@ -73,16 +73,16 @@ angular.module('storyboard').controller('HeaderController',
 
             switch (criteria.type) {
                 case 'Text':
-                    $state.go('search', {q: criteria.value});
+                    $state.go('sb.search', {q: criteria.value});
                     break;
                 case 'ProjectGroup':
-                    $state.go('project_group.detail', {id: criteria.value});
+                    $state.go('sb.project_group.detail', {id: criteria.value});
                     break;
                 case 'Project':
-                    $state.go('project.detail', {id: criteria.value});
+                    $state.go('sb.project.detail', {id: criteria.value});
                     break;
                 case 'Story':
-                    $state.go('story.detail', {storyId: criteria.value});
+                    $state.go('sb.story.detail', {storyId: criteria.value});
                     break;
             }
 

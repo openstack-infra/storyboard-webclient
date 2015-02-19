@@ -24,12 +24,12 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
 
         // Declare the states for this module.
         $stateProvider
-            .state('auth', {
+            .state('sb.auth', {
                 abstract: true,
                 template: '<div ui-view></div>',
                 url: '/auth'
             })
-            .state('auth.authorize', {
+            .state('sb.auth.authorize', {
                 url: '/authorize?error&error_description',
                 templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthAuthorizeController',
@@ -37,7 +37,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                     isLoggedOut: SessionResolver.requireLoggedOut
                 }
             })
-            .state('auth.deauthorize', {
+            .state('sb.auth.deauthorize', {
                 url: '/deauthorize',
                 templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthDeauthorizeController',
@@ -45,7 +45,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                     isLoggedIn: SessionResolver.requireLoggedIn
                 }
             })
-            .state('auth.token', {
+            .state('sb.auth.token', {
                 url: '/token?code&state&error&error_description',
                 templateUrl: 'app/auth/template/busy.html',
                 controller: 'AuthTokenController',
@@ -53,7 +53,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                     isLoggedOut: SessionResolver.requireLoggedOut
                 }
             })
-            .state('auth.error', {
+            .state('sb.auth.error', {
                 url: '/error?error&error_description',
                 templateUrl: 'app/auth/template/error.html',
                 controller: 'AuthErrorController'

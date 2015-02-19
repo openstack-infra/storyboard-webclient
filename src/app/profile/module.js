@@ -33,7 +33,7 @@ angular.module('sb.profile',
 
         // Declare the states for this module.
         $stateProvider
-            .state('profile', {
+            .state('sb.profile', {
                 abstract: true,
                 url: '/profile',
                 resolve: {
@@ -49,12 +49,12 @@ angular.module('sb.profile',
                     }
                 }
             })
-            .state('profile.preferences', {
+            .state('sb.profile.preferences', {
                 url: '/preferences',
                 templateUrl: 'app/profile/template/preferences.html',
                 controller: 'ProfilePreferencesController'
             })
-            .state('profile.tokens', {
+            .state('sb.profile.tokens', {
                 url: '/tokens',
                 templateUrl: 'app/profile/template/tokens.html',
                 controller: 'ProfileTokensController',

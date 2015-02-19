@@ -178,7 +178,7 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
             // Roll all the promises into one big happy promise.
             $q.all(promises).then(
                 function () {
-                    $state.go('admin.project_group', {});
+                    $state.go('sb.admin.project_group', {});
                 },
                 function (error) {
                     $log.error(error);

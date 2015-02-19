@@ -24,7 +24,7 @@ angular.module('sb.dashboard',
 
         // Set an initial home page.
         $stateProvider
-            .state('index', {
+            .state('sb.index', {
                 url: '/',
                 templateUrl: 'app/dashboard/template/index.html',
                 controller: 'HomeController',
@@ -32,7 +32,7 @@ angular.module('sb.dashboard',
                     sessionState: SessionResolver.resolveSessionState
                 }
             })
-            .state('dashboard', {
+            .state('sb.dashboard', {
                 url: '/dashboard',
                 templateUrl: 'app/dashboard/template/dashboard.html',
                 controller: 'DashboardController',

@@ -27,7 +27,7 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
 
         // Declare the states for this module.
         $stateProvider
-            .state('admin', {
+            .state('sb.admin', {
                 abstract: true,
                 views: {
                     'submenu@': {
@@ -43,12 +43,12 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                         .requirePermission('is_superuser', true)
                 }
             })
-            .state('admin.user', {
+            .state('sb.admin.user', {
                 url: '/user',
                 templateUrl: 'app/admin/template/user.html',
                 controller: 'UserAdminController'
             })
-            .state('admin.user_edit', {
+            .state('sb.admin.user_edit', {
                 url: '/user/:id',
                 templateUrl: 'app/admin/template/user_edit.html',
                 controller: 'UserEditController',
@@ -59,12 +59,12 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                     }
                 }
             })
-            .state('admin.project_group', {
+            .state('sb.admin.project_group', {
                 url: '/project_group',
                 templateUrl: 'app/admin/template/project_group.html',
                 controller: 'ProjectGroupAdminController'
             })
-            .state('admin.project_group_edit', {
+            .state('sb.admin.project_group_edit', {
                 url: '/project_group/:id',
                 templateUrl: 'app/admin/template/project_group_edit.html',
                 controller: 'ProjectGroupEditController',
@@ -79,11 +79,11 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                     }
                 }
             })
-            .state('admin.team', {
+            .state('sb.admin.team', {
                 url: '/team',
                 templateUrl: 'app/admin/template/team.html'
             })
-            .state('admin.team_edit', {
+            .state('sb.admin.team_edit', {
                 url: '/team/:id',
                 templateUrl: 'app/admin/template/team_edit.html'
             });
