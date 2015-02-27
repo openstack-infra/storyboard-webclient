@@ -20,8 +20,11 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope) {
+    function ($scope, isSuperuser) {
         'use strict';
+
+        // inject superuser flag to properly adjust UI.
+        $scope.is_superuser = isSuperuser;
 
         // search results must be of type "project"
         $scope.resourceTypes = ['Project'];
