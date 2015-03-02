@@ -19,14 +19,23 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference, Event, Comment, TimelineEventTypes) {
+              Session, User, Preference, Event, Comment, TimelineEventTypes,
+              story, creator) {
         'use strict';
 
-        // Parse the ID
-        var id = $stateParams.hasOwnProperty('storyId') ?
-            parseInt($stateParams.storyId, 10) :
-            null;
+        /**
+         * The story, resolved in the state.
+         *
+         * @type {Story}
+         */
+        $scope.story = story;
 
+        /**
+         * The user record for the author, resolved in the state.
+         *
+         * @type {User}
+         */
+        $scope.creator = creator;
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
@@ -44,15 +53,16 @@ angular.module('sb.story').controller('StoryDetailController',
          * The events associated to the story
          */
         $scope.loadEvents = function () {
-            Event.search(id).then(function (events) {
+            Event.search($scope.story.id).then(function (events) {
                 $scope.events = events;
             });
         };
+        $scope.loadEvents();
 
         /**
          * The new comment backing the input form.
          */
-        $scope.newComment = new Comment({story_id: id});
+        $scope.newComment = new Comment({story_id: $scope.story.id});
 
         /**
          * Generic service error handler. Assigns errors to the view's scope,
@@ -71,26 +81,6 @@ angular.module('sb.story').controller('StoryDetailController',
         function handleServiceSuccess() {
             $scope.isLoading = false;
             $scope.isUpdating = false;
-        }
-
-        /**
-         * Load the story
-         */
-        function loadStory() {
-            Story.get(
-                {'id': id},
-                function (story) {
-                    $scope.story = story;
-
-                    // Load the creator if one exists.
-                    if (!!story.creator_id) {
-                        $scope.creator = User.get({id: story.creator_id});
-                    }
-                    $scope.loadEvents();
-                    handleServiceSuccess();
-                },
-                handleServiceError
-            );
         }
 
         /**
@@ -115,11 +105,6 @@ angular.module('sb.story').controller('StoryDetailController',
          * UI Flag for when we're in edit mode.
          */
         $scope.showEditForm = false;
-
-        /**
-         * The user record for the author
-         */
-        $scope.creator = null;
 
         /**
          * UI flag for when we're initially loading the view.
@@ -171,7 +156,6 @@ angular.module('sb.story').controller('StoryDetailController',
          * Resets any changes and toggles the form back.
          */
         $scope.cancel = function () {
-            loadStory(); // Reload.
             $scope.showEditForm = false;
         };
 
@@ -223,16 +207,12 @@ angular.module('sb.story').controller('StoryDetailController',
             // don't inject it into the conversation until it comes back.
             $scope.newComment.$create(
                 function () {
-                    $scope.newComment = new Comment({story_id: id});
+                    $scope.newComment = new Comment({
+                        story_id: $scope.story.id
+                    });
                     resetSavingFlag();
                     $scope.loadEvents();
                 }
             );
         };
-
-
-        /**
-         * Initialize
-         */
-        loadStory();
     });

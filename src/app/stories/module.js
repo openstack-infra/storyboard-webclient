@@ -41,7 +41,23 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
             })
             .state('sb.story.detail', {
                 url: '/{storyId:[0-9]+}',
-                templateUrl: 'app/stories/template/detail.html'
+                templateUrl: 'app/stories/template/detail.html',
+                controller: 'StoryDetailController',
+                resolve: {
+                    story: function (Story, $stateParams) {
+                        // Pre-resolve the story.
+                        return Story.get({
+                            id: $stateParams.storyId
+                        }).$promise;
+                    },
+                    creator: function (story, User) {
+                        // Pre-resolve the creator after the story has been
+                        // resolved.
+                        return User.get({
+                            id: story.creator_id
+                        }).$promise;
+                    }
+                }
             });
 
         // Register a preference for filtering timeline events.
