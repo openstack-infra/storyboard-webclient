@@ -62,6 +62,28 @@ angular.module('storyboard',
                 }
             });
     })
+    .run(function ($log, $rootScope, $document) {
+        'use strict';
+
+        var resolvingClassName = 'resolving';
+        var body = $document.find('body');
+
+        // Apply a global class to the application when we're in the middle of
+        // a state resolution, as well as a global scope variable that UI views
+        // can switch on.
+        $rootScope.$on('$stateChangeStart', function () {
+            body.addClass(resolvingClassName);
+            $rootScope.isResolving = true;
+        });
+        $rootScope.$on('$stateChangeSuccess', function () {
+            body.removeClass(resolvingClassName);
+            $rootScope.isResolving = false;
+        });
+        $rootScope.$on('$stateChangeError', function () {
+            body.removeClass(resolvingClassName);
+            $rootScope.isResolving = false;
+        });
+    })
     .run(function ($log, $rootScope, $state) {
         'use strict';
 

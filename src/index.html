@@ -50,7 +50,19 @@
 
 <header ng-include src="'app/storyboard/template/header_menu.html'"></header>
 <div ng-include src="'app/storyboard/template/side_menu.html'"></div>
-<div ui-view class="main"></div>
+<div ng-if="isResolving">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="text-center text-muted">
+                    <br/>
+                    <i class="fa fa-refresh fa-lg fa-spin"></i>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div ui-view class="main" ng-if="!isResolving"></div>
 <notifications></notifications>
 </body>
 </html>
