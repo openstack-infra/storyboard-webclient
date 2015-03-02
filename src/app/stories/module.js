@@ -21,7 +21,7 @@
 angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
     'ui.bootstrap'])
     .config(function ($stateProvider, $urlRouterProvider, PreferenceProvider,
-            TimelineEventTypes) {
+                      TimelineEventTypes) {
         'use strict';
 
         // URL Defaults.
@@ -47,11 +47,7 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
         // Register a preference for filtering timeline events.
         // By default all types of events should be displayed.
 
-        var events_filter_defaults = {};
-        TimelineEventTypes.forEach(function(type) {
-            events_filter_defaults[type] = true;
+        TimelineEventTypes.forEach(function (type) {
+            PreferenceProvider.addPreference('display_events_' + type, 'true');
         });
-
-        PreferenceProvider.addPreference('display_events_filter',
-                                         events_filter_defaults);
     });

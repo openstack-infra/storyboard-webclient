@@ -1,4 +1,4 @@
-<div class="discussion-comment" ng-show="enabled_event_types.user_comment">
+<div class="discussion-comment" ng-if="display_events_user_comment">
     <p class="discussion-comment-author">
         {{ event.author.full_name }}
         <span time-moment eventdate="event.created_at" class="pull-right"></span>

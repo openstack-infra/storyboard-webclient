@@ -1,4 +1,4 @@
-<div class="discussion-comment" ng-show="enabled_event_types.task_deleted">
+<div class="discussion-comment" ng-if="display_events_task_deleted">
     <p class="discussion-comment-author">
         <span time-moment eventdate="event.created_at" class="pull-right"></span>
         <span>{{ event.author.full_name }} deleted "{{ event.event_info.task_title }}".</span>

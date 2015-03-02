@@ -1,4 +1,4 @@
-<div class="discussion-comment" ng-show="enabled_event_types.story_created">
+<div class="discussion-comment" ng-if="display_events_story_created">
     <p class="discussion-comment-author">
         <span time-moment eventdate="event.created_at" class="pull-right"></span>
         <span>{{ event.author.full_name }} created this story.</span>
