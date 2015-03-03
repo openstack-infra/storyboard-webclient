@@ -134,8 +134,7 @@
 
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/task_list.html">
-    <table class="table table-striped table-supercondensed"
-           ng-controller="StoryTaskListController">
+    <table class="table table-striped table-supercondensed">
         <thead>
         <tr>
             <td colspan="3"><strong>Tasks</strong></td>
@@ -155,8 +154,7 @@
         <tbody>
         <tr ng-repeat="task in tasks"
             ng-include
-            src="'/inline/task_list_item.html'"
-            ng-controller="StoryTaskListItemController">
+            src="'/inline/task_list_item.html'">
         </tr>
         <tr ng-if="tasks.length == 0 && !showAddTaskForm">
             <td colspan="6">
@@ -223,7 +221,7 @@
         <input-inline
                 ng-model="task.title"
                 enabled="isLoggedIn"
-                on-change="updateTaskInline()"
+                on-change="updateTask(task)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 maxlength="255"
@@ -234,7 +232,7 @@
         <project-typeahead
                 ng-model="task.project_id"
                 enabled="isLoggedIn"
-                on-change="updateTaskInline()"
+                on-change="updateTask(task)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 as-inline="true"
@@ -244,7 +242,7 @@
         <user-typeahead
                 ng-model="task.assignee_id"
                 enabled="isLoggedIn"
-                on-change="updateTaskInline()"
+                on-change="updateTask(task)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 as-inline="true"
@@ -253,20 +251,20 @@
     <td class="text-center col-xs-1">
         <task-priority-dropdown
                 editable="{{isLoggedIn}}"
-                on-change="updatePriority(priority)"
+                on-change="updateTask(task, 'priority', priority)"
                 priority="{{task.priority}}"
                 />
     </td>
     <td class="text-center col-xs-1">
         <task-status-dropdown
                 editable="{{isLoggedIn}}"
-                on-change="updateStatus(status)"
+                on-change="updateTask(task, 'status', status)"
                 status="{{task.status}}"
                 />
     </td>
     <td class="text-right col-xs-1">
         <a ng-show="isLoggedIn"
-           ng-click="removeTask()">
+           ng-click="removeTask(task)">
             <i class="fa fa-times fa-lg"></i>
         </a>
     </td>
@@ -321,7 +319,7 @@
                 />
     </td>
     <td class="text-right col-xs-1">
-        <button ng-click="saveTask()"
+        <button ng-click="createTask()"
                 class="btn btn-primary">
             Save
         </button>

@@ -56,6 +56,11 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                         return User.get({
                             id: story.creator_id
                         }).$promise;
+                    },
+                    tasks: function (Task, $stateParams) {
+                        return Task.browse({
+                            story_id: $stateParams.storyId
+                        }).$promise;
                     }
                 }
             });

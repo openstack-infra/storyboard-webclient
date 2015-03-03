@@ -18,9 +18,9 @@
  * Story detail &  manipulation controller.
  */
 angular.module('sb.story').controller('StoryDetailController',
-    function ($log, $rootScope, $scope, $state, $stateParams, $modal, Story,
-              Session, User, Preference, Event, Comment, TimelineEventTypes,
-              story, creator) {
+    function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
+              Preference, Event, Comment, TimelineEventTypes, story, creator,
+              tasks, Task) {
         'use strict';
 
         /**
@@ -36,6 +36,13 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {User}
          */
         $scope.creator = creator;
+
+        /**
+         * All tasks associated with this story, resolved in the state.
+         *
+         * @type {[Task]}
+         */
+        $scope.tasks = tasks;
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
@@ -211,6 +218,79 @@ angular.module('sb.story').controller('StoryDetailController',
                         story_id: $scope.story.id
                     });
                     resetSavingFlag();
+                    $scope.loadEvents();
+                }
+            );
+        };
+
+        // ###################################################################
+        // Task Management
+        // ###################################################################
+
+        /**
+         * The new task for the task form.
+         */
+        $scope.newTask = new Task({
+            story_id: $scope.story.id,
+            status: 'todo',
+            priority: 'medium'
+        });
+
+        /**
+         * Adds a task.
+         */
+        $scope.createTask = function () {
+            // Make a copy to save, so that the next task retains the
+            // old information (for easier continuous editing).
+            var savingTask = new Task(angular.copy($scope.newTask));
+            savingTask.$save(function (savedTask) {
+                $scope.tasks.push(savedTask);
+                $scope.loadEvents();
+            });
+        };
+
+        /**
+         * Updates the task list.
+         */
+        $scope.updateTask = function (task, fieldName, value) {
+
+            if(!!fieldName) {
+                task[fieldName] = value;
+            }
+
+            task.$update(function () {
+                $scope.showTaskEditForm = false;
+                $scope.loadEvents();
+
+            });
+        };
+
+
+        /**
+         * Removes this task
+         */
+        $scope.removeTask = function (task) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/stories/template/delete_task.html',
+                controller: 'StoryTaskDeleteController',
+                resolve: {
+                    task: function () {
+                        return task;
+                    },
+                    params: function () {
+                        return {
+                            lastTask: ($scope.tasks.length === 1)
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(
+                function () {
+                    var taskIndex = $scope.tasks.indexOf(task);
+                    if (taskIndex > -1) {
+                        $scope.tasks.splice(taskIndex, 1);
+                    }
                     $scope.loadEvents();
                 }
             );
