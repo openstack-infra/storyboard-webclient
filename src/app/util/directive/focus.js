@@ -27,7 +27,7 @@ angular.module('sb.util').directive('focus',
             link: function ($scope, $element, $attrs) {
 
                 var focus = $scope.$eval($attrs.focus);
-                if (focus === undefined) {
+                if (typeof focus === 'undefined') {
                     focus = true;
                 }
 
