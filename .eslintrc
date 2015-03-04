@@ -63,7 +63,7 @@
         "key-spacing": 0,
 
         // Stylistic
-        "indent": [1, 4],
+        "indent": [2, 4],
         "max-len": [2, 80],
         "no-undefined": 2
     }
