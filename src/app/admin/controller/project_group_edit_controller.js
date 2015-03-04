@@ -204,15 +204,15 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
         /**
          * Check that we have valid projects on the list
          */
-        $scope.checkValidProjects = function() {
+        $scope.checkValidProjects = function () {
             if ($scope.projects.length === 0) {
                 return false;
             }
 
             // check if projects contain a valid project_id
-            for (var i = 0; i < $scope.projects.length ; i++) {
+            for (var i = 0; i < $scope.projects.length; i++) {
                 var project = $scope.projects[i];
-                if ( !project.id ) {
+                if (!project.id) {
                     return false;
                 }
             }
