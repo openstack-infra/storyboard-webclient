@@ -50,7 +50,7 @@ angular.module('sb.util')
             /**
              * Initialize this service.
              */
-            _initialize: function () {
+            initialize: function () {
                 // Register (and disconnect) our listener.
                 $rootScope.$on('$destroy',
                     $rootScope.$on('$locationChangeStart', onLocationChange)
@@ -62,5 +62,5 @@ angular.module('sb.util')
         'use strict';
 
         // Initialize this service.
-        LastLocation._initialize();
+        LastLocation.initialize();
     });

@@ -58,7 +58,6 @@
         "space-unary-ops": 0,
         "no-console": 0,
         "strict": 0,
-        "no-underscore-dangle": 0,
 
         // Stylistic
         "indent": [2, 4],
