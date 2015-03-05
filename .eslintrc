@@ -50,9 +50,6 @@
         "camelcase": 0,
         "no-extra-boolean-cast": 0,
 
-        // Rules to be processed.
-        "no-use-before-define": 0,
-
         // Stylistic
         "indent": [2, 4],
         "max-len": [2, 80],

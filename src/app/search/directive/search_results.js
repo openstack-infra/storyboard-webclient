@@ -71,22 +71,6 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
-                 * Toggle the filter ID and direction in the UI.
-                 *
-                 * @param fieldName
-                 */
-                $scope.toggleFilter = function (fieldName) {
-                    if ($scope.sortField === fieldName) {
-                        $scope.sortDirection =
-                                $scope.sortDirection === 'asc' ? 'desc' : 'asc';
-                    } else {
-                        $scope.sortField = fieldName;
-                        $scope.sortDirection = 'desc';
-                    }
-                    updateResults();
-                };
-
-                /**
                  * Update the results when the criteria change
                  */
                 function updateResults() {
@@ -140,6 +124,22 @@ angular.module('sb.search').directive('searchResults',
                             handleErrorResult);
                     }
                 }
+
+                /**
+                 * Toggle the filter ID and direction in the UI.
+                 *
+                 * @param fieldName
+                 */
+                $scope.toggleFilter = function (fieldName) {
+                    if ($scope.sortField === fieldName) {
+                        $scope.sortDirection =
+                                $scope.sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        $scope.sortField = fieldName;
+                        $scope.sortDirection = 'desc';
+                    }
+                    updateResults();
+                };
 
                 // Watch for changing criteria
                 $scope.$watchCollection(

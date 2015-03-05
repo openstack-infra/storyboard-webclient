@@ -85,24 +85,6 @@ angular.module('sb.util').directive('subscribe',
                     $scope.subscribed = !!$scope.subscription;
                 }
 
-                // Subscribe to login/logout events for enable/disable/resolve.
-                var removeNotifier = Notification.intercept(function (message) {
-                    switch (message.type) {
-                        case SessionState.LOGGED_IN:
-                            $scope.enabled = true;
-                            resolveSubscription();
-                            break;
-                        case SessionState.LOGGED_OUT:
-                            $scope.enabled = false;
-                            $scope.subscribed = false;
-                            break;
-                    }
-
-                }, Priority.LAST);
-
-                // Remove the notifier when this scope is destroyed.
-                $scope.$on('$destroy', removeNotifier);
-
                 /**
                  * Resolve whether the current user already has a subscription
                  * to this resource.
@@ -136,6 +118,24 @@ angular.module('sb.util').directive('subscribe',
                         }
                     );
                 }
+
+                // Subscribe to login/logout events for enable/disable/resolve.
+                var removeNotifier = Notification.intercept(function (message) {
+                    switch (message.type) {
+                        case SessionState.LOGGED_IN:
+                            $scope.enabled = true;
+                            resolveSubscription();
+                            break;
+                        case SessionState.LOGGED_OUT:
+                            $scope.enabled = false;
+                            $scope.subscribed = false;
+                            break;
+                    }
+
+                }, Priority.LAST);
+
+                // Remove the notifier when this scope is destroyed.
+                $scope.$on('$destroy', removeNotifier);
 
                 /**
                  * When the user clicks on this control, activate/deactivate the

@@ -31,6 +31,29 @@ angular.module('sb.auth').factory('CurrentUser',
         var currentPromise = null;
 
         /**
+         * A promise that only resolves if we're currently logged in.
+         */
+        function resolveLoggedInSession() {
+            var deferred = $q.defer();
+
+            Session.resolveSessionState().then(
+                function (sessionState) {
+
+                    if (sessionState === SessionState.LOGGED_IN) {
+                        deferred.resolve(sessionState);
+                    } else {
+                        deferred.reject(sessionState);
+                    }
+                },
+                function (error) {
+                    deferred.reject(error);
+                }
+            );
+
+            return deferred.promise;
+        }
+
+        /**
          * Resolve a current user.
          */
         function resolveCurrentUser() {
@@ -85,29 +108,6 @@ angular.module('sb.auth').factory('CurrentUser',
             );
 
             return currentPromise;
-        }
-
-        /**
-         * A promise that only resolves if we're currently logged in.
-         */
-        function resolveLoggedInSession() {
-            var deferred = $q.defer();
-
-            Session.resolveSessionState().then(
-                function (sessionState) {
-
-                    if (sessionState === SessionState.LOGGED_IN) {
-                        deferred.resolve(sessionState);
-                    } else {
-                        deferred.reject(sessionState);
-                    }
-                },
-                function (error) {
-                    deferred.reject(error);
-                }
-            );
-
-            return deferred.promise;
         }
 
         // Add event listeners.
