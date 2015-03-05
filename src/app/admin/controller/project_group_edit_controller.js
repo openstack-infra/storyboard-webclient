@@ -118,7 +118,7 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
             idsToDelete.forEach(function (id) {
 
                 // Get a deferred promise...
-                var deferred = $q.defer();
+                var removeProjectDeferred = $q.defer();
 
                 // Construct the item.
                 var item = new ProjectGroupItem({
@@ -128,23 +128,23 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
 
                 // Delete the item.
                 item.$delete(function (result) {
-                        deferred.resolve(result);
+                        removeProjectDeferred.resolve(result);
                     },
                     function (error) {
-                        deferred.reject(error);
+                        removeProjectDeferred.reject(error);
                     }
                 );
 
-                promises.push(deferred.promise);
+                promises.push(removeProjectDeferred.promise);
             });
 
             // Intersect current vs. loaded to get a list of project
-            // reference to delete.
+            // reference to add.
             var idsToAdd = ArrayUtil.difference(desiredIds, loadedIds);
             idsToAdd.forEach(function (id) {
 
                 // Get a deferred promise...
-                var deferred = $q.defer();
+                var addProjectDeferred = $q.defer();
 
                 // Construct the item.
                 var item = new ProjectGroupItem({
@@ -154,14 +154,14 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
 
                 // Delete the item.
                 item.$create(function (result) {
-                        deferred.resolve(result);
+                        addProjectDeferred.resolve(result);
                     },
                     function (error) {
-                        deferred.reject(error);
+                        addProjectDeferred.reject(error);
                     }
                 );
 
-                promises.push(deferred.promise);
+                promises.push(addProjectDeferred.promise);
             });
 
 

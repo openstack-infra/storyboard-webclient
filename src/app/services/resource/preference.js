@@ -41,8 +41,8 @@ angular.module('sb.services').provider('Preference',
          * phase, inject the Preference Provider and call 'addPreference()' to
          * do so. An example is available at the bottom of this file.
          */
-        this.addPreference = function (preferenceName, preferenceDefault) {
-            defaults[preferenceName] = preferenceDefault;
+        this.addPreference = function (name, preferenceDefault) {
+            defaults[name] = preferenceDefault;
         };
 
         /**
