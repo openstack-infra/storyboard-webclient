@@ -21,11 +21,11 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.util').filter('debug',
-    function () {
+    function ($log) {
         'use strict';
 
         return function (value) {
-            console.warn('DEBUG', value);
+            $log.debug('DEBUG', value);
             return value;
         };
     });
