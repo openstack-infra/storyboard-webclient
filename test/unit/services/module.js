@@ -20,8 +20,8 @@ describe('sb.services', function () {
     var module;
     var dependencies = [];
 
-    var hasModule = function (module) {
-        return dependencies.indexOf(module) >= 0;
+    var hasModule = function (moduleName) {
+        return dependencies.indexOf(moduleName) >= 0;
     };
 
     beforeEach(function () {
