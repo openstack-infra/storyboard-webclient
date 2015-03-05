@@ -31,31 +31,13 @@ angular.module('sb.auth').factory('Session',
         var sessionState = SessionState.PENDING;
 
         /**
-         * Initialize the session.
+         * Handles state updates and broadcasts.
          */
-        function initializeSession() {
-            var deferred = $q.defer();
-
-            if (!AccessToken.getAccessToken()) {
-                $log.debug('No token found');
-                updateSessionState(SessionState.LOGGED_OUT);
-                deferred.resolve();
-            } else {
-                // Validate the token currently in the cache.
-                validateToken()
-                    .then(function () {
-                        $log.debug('Token validated');
-                        updateSessionState(SessionState.LOGGED_IN);
-                        deferred.resolve(sessionState);
-                    }, function () {
-                        $log.debug('Token not validated');
-                        AccessToken.clear();
-                        updateSessionState(SessionState.LOGGED_OUT);
-                        deferred.resolve(sessionState);
-                    });
+        function updateSessionState(newState) {
+            if (newState !== sessionState) {
+                sessionState = newState;
+                Notification.send(newState, newState, Severity.SUCCESS);
             }
-
-            return deferred.promise;
         }
 
         /**
@@ -82,15 +64,32 @@ angular.module('sb.auth').factory('Session',
             return deferred.promise;
         }
 
-
         /**
-         * Handles state updates and broadcasts.
+         * Initialize the session.
          */
-        function updateSessionState(newState) {
-            if (newState !== sessionState) {
-                sessionState = newState;
-                Notification.send(newState, newState, Severity.SUCCESS);
+        function initializeSession() {
+            var deferred = $q.defer();
+
+            if (!AccessToken.getAccessToken()) {
+                $log.debug('No token found');
+                updateSessionState(SessionState.LOGGED_OUT);
+                deferred.resolve();
+            } else {
+                // Validate the token currently in the cache.
+                validateToken()
+                    .then(function () {
+                        $log.debug('Token validated');
+                        updateSessionState(SessionState.LOGGED_IN);
+                        deferred.resolve(sessionState);
+                    }, function () {
+                        $log.debug('Token not validated');
+                        AccessToken.clear();
+                        updateSessionState(SessionState.LOGGED_OUT);
+                        deferred.resolve(sessionState);
+                    });
             }
+
+            return deferred.promise;
         }
 
         /**
