@@ -27,7 +27,7 @@ angular.module('sb.services')
          */
         function filterTemplateRequests(message) {
             if (message.type !== 'http') {
-                return;
+                return false;
             }
 
             var request = message.cause;
@@ -46,7 +46,7 @@ angular.module('sb.services')
         function filterSuccessful(message) {
             var response = message.cause;
             if (message.type !== 'http' || !response) {
-                return;
+                return false;
             }
 
             // All successful requests are filtered out.
