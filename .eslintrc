@@ -52,7 +52,6 @@
 
         // Rules to be processed.
         "no-use-before-define": 0,
-        "space-infix-ops": 0,
 
         // Stylistic
         "indent": [2, 4],
