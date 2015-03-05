@@ -54,7 +54,6 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                 controller: 'UserEditController',
                 resolve: {
                     user: function ($stateParams, User) {
-                        console.warn($stateParams);
                         return User.get({id: $stateParams.id}).$promise;
                     }
                 }
