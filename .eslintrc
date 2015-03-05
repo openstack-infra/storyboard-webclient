@@ -55,7 +55,6 @@
         "space-infix-ops": 0,
         "no-shadow": 0,
         "consistent-return": 0,
-        "space-unary-ops": 0,
 
         // Stylistic
         "indent": [2, 4],
