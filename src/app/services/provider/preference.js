@@ -61,7 +61,7 @@ angular.module('sb.services').provider('Preference',
              *
              * @returns {deferred.promise|*}
              */
-            this._resolveUserPreferences = function () {
+            this.resolveUserPreferences = function () {
                 var deferred = $q.defer();
 
                 // First resolve the session.
@@ -118,7 +118,7 @@ angular.module('sb.services').provider('Preference',
                         }
                     }
                 }
-                return this._save();
+                return this.save();
             };
 
             /**
@@ -158,7 +158,7 @@ angular.module('sb.services').provider('Preference',
                 // Store the preference.
                 preferences[key] = value;
 
-                return this._save();
+                return this.save();
             };
 
             /**
@@ -168,7 +168,7 @@ angular.module('sb.services').provider('Preference',
                 var deferred = $q.defer();
 
                 // This should never fail, see implementation above.
-                this._resolveUserPreferences().then(
+                this.resolveUserPreferences().then(
                     function (newPrefs) {
                         preferences = newPrefs;
                         deferred.resolve(preferences);
@@ -181,7 +181,7 @@ angular.module('sb.services').provider('Preference',
             /**
              * Private save method.
              */
-            this._save = function () {
+            this.save = function () {
                 var deferred = $q.defer();
 
                 // If preferences are defaults, they won't have a $save()
