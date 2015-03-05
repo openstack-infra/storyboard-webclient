@@ -33,15 +33,13 @@ angular.module('sb.util').factory('DateUtil',
              * @returns {boolean} True if time ago needs to be used.
              */
             needsTimeAgo: function (targetDate) {
-                if (targetDate)
-                {
+                if (targetDate) {
                     var currentDate = new Date().getTime();
-                    var daydiff = (currentDate - Date.parse(targetDate))/
-                        (1000*60*60*24);
+                    var daydiff = (currentDate - Date.parse(targetDate)) /
+                        (1000 * 60 * 60 * 24);
                     return (daydiff < 1);
                 }
-                else
-                {
+                else {
                     return true;
                 }
             }
