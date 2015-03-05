@@ -5,9 +5,10 @@ angular.module('sb.auth').service('RefreshManager',
         var currentRefresh = null;
         var nextRefreshPromise = null;
         var scheduledForToken = null;
+        var self = this;
 
         // Try to refresh the expired access_token
-        var tryRefresh = function () {
+        this.tryRefresh = function () {
 
             if (!currentRefresh) {
                 // Create our promise, since we should always return one.
@@ -42,7 +43,7 @@ angular.module('sb.auth').service('RefreshManager',
                         function (data) {
                             AccessToken.setToken(data);
                             currentRefresh.resolve(true);
-                            scheduleRefresh();
+                            self.scheduleRefresh();
                         },
                         function () {
                             AccessToken.clear();
@@ -55,7 +56,7 @@ angular.module('sb.auth').service('RefreshManager',
         };
 
 
-        var scheduleRefresh = function () {
+        this.scheduleRefresh = function () {
             if (!AccessToken.getRefreshToken() || AccessToken.isExpired()) {
                 $log.info('Current token does not require deferred refresh.');
                 return;
@@ -73,14 +74,10 @@ angular.module('sb.auth').service('RefreshManager',
 
             var now = Math.round((new Date()).getTime() / 1000);
             var delay = (expiresAt - preExpireDelta - now) * 1000;
-            nextRefreshPromise = $timeout(tryRefresh, delay, false);
+            nextRefreshPromise = $timeout(self.tryRefresh, delay, false);
             scheduledForToken = AccessToken.getAccessToken();
 
             $log.info('Refresh scheduled to happen in ' + delay + ' ms');
         };
-
-        this.tryRefresh = tryRefresh;
-        this.scheduleRefresh = scheduleRefresh;
-
     }
 );
