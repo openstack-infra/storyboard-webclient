@@ -100,14 +100,14 @@ angular.module('sb.story').controller('StoryModalController',
             var lastTask = $scope.tasks[$scope.tasks.length - 1];
             var project_id = lastTask.project_id;
 
-            if (! project_id ) {
+            if (!project_id) {
                 // if we are in the scope of a project, grab the project ID
                 // from that scope.
                 project_id = params.projectId || null;
             }
 
             var current_task = new Task({project_id: project_id});
-            if ( project_id ) {
+            if (project_id) {
                 // Preload the project
                 Project.get({
                     id: project_id
