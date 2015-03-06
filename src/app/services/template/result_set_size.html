@@ -1,0 +1,12 @@
+<p class="hidden-xs">
+    <span ng-if="total == 0">
+        0 results.
+    </span>
+    <span ng-if="total > 0">
+        {{total == 0 ? 0 : offset + 1}}
+        to
+        {{offset + (total > limit ? limit : total)}}
+        of
+        {{total}}
+    </span>
+</p>

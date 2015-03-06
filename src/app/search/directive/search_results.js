@@ -65,7 +65,11 @@ angular.module('sb.search').directive('searchResults',
                  *
                  * @param results
                  */
-                function handleSearchResult(results) {
+                function handleSearchResult(results, headers) {
+                    $scope.searchTotal =
+                        parseInt(headers('X-Total')) || results.length;
+                    $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
+                    $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.searchResults = results;
                     $scope.isSearching = false;
                 }
