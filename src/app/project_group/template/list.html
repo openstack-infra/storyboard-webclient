@@ -50,7 +50,8 @@
         <div class="col-xs-2 hidden-xs">
             <div class="form form-horizontal">
                 <p class="form-control-static text-muted">
-                    ({{searchResults.length}} found)
+                    (Showing {{searchResults.length == 0 ? 0 : searchOffset + 1}}
+                    to {{searchResults.length + searchOffset}} of {{searchTotal}})
                 </p>
             </div>
         </div>

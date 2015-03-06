@@ -83,6 +83,10 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
 
             $scope.projectGroups = ProjectGroup.browse({
                 title: searchQuery
+            }, function(results, headers){
+                $scope.searchTotal = headers('X-Total') || results.length;
+                $scope.searchOffset = headers('X-Offset') || 0;
+                $scope.searchLimit = headers('X-Limit') || 0;
             });
         };
 

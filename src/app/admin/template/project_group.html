@@ -43,7 +43,8 @@
         <div class="col-md-6 col-sm-5 hidden-xs">
             <div class="form form-horizontal">
                 <p class="form-control-static text-muted">
-                    ({{projectGroups.length}} found)
+                    (Showing {{projectGroups.length == 0 ? 0 : searchOffset + 1}}
+                    to {{projectGroups.length + searchOffset}} of {{searchTotal}})
                 </p>
             </div>
         </div>

@@ -57,6 +57,10 @@ angular.module('sb.admin').controller('UserAdminController',
 
             $scope.users = User.browse({
                 full_name: searchQuery
+            }, function(results, headers){
+                $scope.searchTotal = headers('X-Total') || results.length;
+                $scope.searchOffset = headers('X-Offset') || 0;
+                $scope.searchLimit = headers('X-Limit') || 0;
             });
         };
 
