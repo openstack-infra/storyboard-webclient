@@ -53,9 +53,12 @@
         </div>
         <div class="col-xs-2 hidden-xs">
             <div class="form form-horizontal">
-                <p class="form-control-static text-muted">
-                    ({{searchResults.length}} found)
-                </p>
+                <result-set-size
+                        class="form-control-static text-muted"
+                        total="searchTotal"
+                        offset="searchOffset"
+                        limit="searchLimit"
+                        />
             </div>
         </div>
         <div class="col-xs-2" permission="is_superuser">
