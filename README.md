@@ -23,7 +23,7 @@ First of all be sure to have tox installed on your machine then:
   - Source the new path containing grunt:
 `source .tox/venv/bin/activate`
   - Now you can launch the grunt tasks of storyboard-webclient, by default run
-the development server with the following command: `grunt server`
+the development server with the following command: `grunt serve`
 
 
 Grunt tasks
@@ -48,10 +48,10 @@ which is a plain css file is stored into `dist/styles/main.css`
   - `server:dist`:  This task performs a full build of our application,
 and then runs that source in a local web server. It does no watching,
 it simply hosts the files.
-  - `server:prod`: This task is identical to 'server:dist',
+  - `serve:prod`: This task is identical to 'server:dist',
 with the exception that it will proxy the API requests against the production
 API. *USE WITH CAUTION*
-  - `server`: Development server - runs a build and sets up concurrent watchers
+  - `serve`: Development server - runs a build and sets up concurrent watchers
 that will automatically lint, test, and refresh the code when a change is
 detected.
   - `test`: Run all the tests.
