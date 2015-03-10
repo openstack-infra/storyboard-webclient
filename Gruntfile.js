@@ -617,18 +617,6 @@ module.exports = function (grunt) {
     ]);
 
     /**
-     * Support the old non-verb form of invoking `serve` but warn.
-     */
-    grunt.registerTask('server',
-        'DEPRECATED TASK. Use the "serve" task instead',
-        function (target) {
-            grunt.log.warn('The `server` task has been deprecated. Use ' +
-                '`grunt serve` to start a server.');
-            grunt.task.run(['serve:' + target]);
-        }
-    );
-
-    /**
      * grunt test:integration
      *
      * This command will create a clean build against which our unit
