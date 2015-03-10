@@ -29,7 +29,7 @@ angular.module('sb.auth').run(
 
         function handle_403() {
             var modalInstance = $modal.open({
-                templateUrl: 'app/templates/auth/modal/superuser_required.html',
+                templateUrl: 'app/auth/template/modal/superuser_required.html',
                 controller: function($modalInstance, $scope) {
                     $scope.close = function () {
                         $modalInstance.dismiss('cancel');
