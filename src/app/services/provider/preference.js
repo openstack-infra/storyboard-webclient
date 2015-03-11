@@ -49,13 +49,10 @@ angular.module('sb.services').provider('Preference',
         function Preference($q, $log, Session, AccessToken, UserPreference,
                             SessionState) {
 
-            // Scope assignment.
-            var self = this;
-
             /**
              * The currently loaded preferences.
              */
-            this.preferences = {};
+            var preferences = {};
 
             /**
              * This function resolves the user preferences. If a valid session
@@ -100,8 +97,8 @@ angular.module('sb.services').provider('Preference',
                     result[def_key] = this.get(def_key);
                 }
 
-                for (var key in this.preferences) {
-                    result[key] = this.preferences[key];
+                for (var key in preferences) {
+                    result[key] = preferences[key];
                 }
 
                 return result;
@@ -110,11 +107,15 @@ angular.module('sb.services').provider('Preference',
             /**
              * Save all the preferences in the passed hash.
              */
-            this.saveAll = function (preferences) {
+            this.saveAll = function (newPrefs) {
                 // Update the preferences.
                 for (var key in defaults) {
                     if (preferences.hasOwnProperty(key)) {
-                        this.preferences[key] = preferences[key];
+                        if (preferences[key] !== newPrefs[key]) {
+                            $log.debug('Preference Change: ' + key + ' -> ' +
+                                newPrefs[key]);
+                            preferences[key] = newPrefs[key];
+                        }
                     }
                 }
                 return this._save();
@@ -134,13 +135,13 @@ angular.module('sb.services').provider('Preference',
 
                 // If the value is unset, and we have a default,
                 // set that.
-                if (!this.preferences.hasOwnProperty(key)) {
+                if (!preferences.hasOwnProperty(key)) {
                     $log.warn('Setting default preference: ',
                         key, defaults[key]);
                     this.set(key, defaults[key]);
                 }
 
-                return this.preferences[key];
+                return preferences[key];
             };
 
             /**
@@ -155,7 +156,7 @@ angular.module('sb.services').provider('Preference',
                 }
 
                 // Store the preference.
-                this.preferences[key] = value;
+                preferences[key] = value;
 
                 return this._save();
             };
@@ -169,8 +170,8 @@ angular.module('sb.services').provider('Preference',
                 // This should never fail, see implementation above.
                 this._resolveUserPreferences().then(
                     function (newPrefs) {
-                        self.preferences = angular.copy(newPrefs);
-                        deferred.resolve(newPrefs);
+                        preferences = newPrefs;
+                        deferred.resolve(preferences);
                     }
                 );
 
@@ -180,9 +181,9 @@ angular.module('sb.services').provider('Preference',
             /**
              * Private save method.
              */
-            this._save = function() {
+            this._save = function () {
                 var deferred = $q.defer();
-                this.preferences.$save({id: AccessToken.getIdToken()},
+                preferences.$save({id: AccessToken.getIdToken()},
                     function () {
                         deferred.resolve();
                     }, function () {
