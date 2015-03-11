@@ -183,12 +183,19 @@ angular.module('sb.services').provider('Preference',
              */
             this._save = function () {
                 var deferred = $q.defer();
-                preferences.$save({id: AccessToken.getIdToken()},
-                    function () {
-                        deferred.resolve();
-                    }, function () {
-                        deferred.resolve();
-                    });
+
+                // If preferences are defaults, they won't have a $save()
+                // method.
+                if (!preferences.$save) {
+                    deferred.resolve();
+                } else {
+                    preferences.$save({id: AccessToken.getIdToken()},
+                        function () {
+                            deferred.resolve();
+                        }, function () {
+                            deferred.resolve();
+                        });
+                }
 
                 return deferred.promise;
             };
