@@ -32,7 +32,7 @@ angular.module('sb.services')
          * @returns {*}
          */
         function getLimit() {
-            return $injector.get('pageSize');
+            return Preference.get('page_size');
         }
 
         /**
