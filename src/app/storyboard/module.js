@@ -33,7 +33,8 @@ angular.module('storyboard',
         timezone: 'UTC'
     })
     .config(function ($urlRouterProvider, $locationProvider, $httpProvider,
-                      msdElasticConfig, $stateProvider, SessionResolver) {
+                      msdElasticConfig, $stateProvider, SessionResolver,
+                      PreferenceResolver) {
         'use strict';
 
         // Default URL hashbang route
@@ -58,7 +59,7 @@ angular.module('storyboard',
                 template: '<div ui-view></div>',
                 resolve: {
                     sessionState: SessionResolver.resolveSessionState,
-                    preferences: SessionResolver.resolvePreferences
+                    preferences: PreferenceResolver.resolvePreferences
                 }
             });
     })

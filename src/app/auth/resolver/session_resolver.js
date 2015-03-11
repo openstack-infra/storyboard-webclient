@@ -110,14 +110,6 @@ angular.module('sb.auth').constant('SessionResolver',
             requireCurrentUser: function ($q, $log, CurrentUser) {
                 $log.debug('Resolving current user...');
                 return CurrentUser.resolve();
-            },
-
-            /**
-             * This function resolves the preferences.
-             */
-            resolvePreferences: function ($q, $log, Preference) {
-                $log.debug('Resolving user preferences...');
-                return Preference.refresh();
             }
         };
     })());
