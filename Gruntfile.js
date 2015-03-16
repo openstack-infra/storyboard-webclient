@@ -87,17 +87,13 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt jshint
+         * grunt eslint
          *
-         * Runs the JSHint linter against all the javascript files in our
-         * project, using the .jshintrc file shared with our IDE (sublime,
-         * eclipse, intellij, etc)
+         * Runs the eslint linter against all the javascript files in our
+         * project, using the .eslintrc file shared with our IDE.
          */
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
-            all: [
+        eslint: {
+            target: [
                 dir.source + '/**/*.js',
                 dir.test + '/**/*.js',
                 './*.js'
@@ -119,25 +115,6 @@ module.exports = function (grunt) {
                 ],
                 dest: dir.output + '/js/storyboard.js'
             }
-        },
-
-        /**
-         * grunt newlines
-         *
-         * Checks that all js files end with a newline
-         */
-        lintspaces: {
-            dist: {
-                src: [
-                    dir.source + '/**/*.js',
-                    dir.test + '/**/*.js',
-                    './*.js'
-                ],
-                options: {
-                    newline: true,
-                    trailingspaces: true
-                }
-            },
         },
 
         /**
@@ -455,21 +432,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['html2js']
             },
-            jshint: {
+            eslint: {
                 files: [
                     'Gruntfile.js',
                     dir.source + '/**/*.js',
                     dir.test + '/**/*.js'
                 ],
-                tasks: ['jshint']
-            },
-            lintspaces: {
-                files: [
-                    'Gruntfile.js',
-                    dir.source + '/**/*.js',
-                    dir.test + '/**/*.js'
-                ],
-                tasks: ['lintspaces']
+                tasks: ['eslint']
             },
             livereload: {
                 options: {
@@ -582,11 +551,10 @@ module.exports = function (grunt) {
      * Compiles all of our sources.
      */
     grunt.registerTask('compile', [
-        'jshint',
+        'eslint',
         'useminPrepare',
         'concat',
         'less',
-        'lintspaces',
         'imagemin',
         'html2js',
         'copy:dist',
@@ -657,7 +625,8 @@ module.exports = function (grunt) {
             grunt.log.warn('The `server` task has been deprecated. Use ' +
                 '`grunt serve` to start a server.');
             grunt.task.run(['serve:' + target]);
-    });
+        }
+    );
 
     /**
      * grunt test:integration
