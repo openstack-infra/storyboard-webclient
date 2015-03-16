@@ -53,9 +53,13 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                     creator: function (story, User) {
                         // Pre-resolve the creator after the story has been
                         // resolved.
-                        return User.get({
-                            id: story.creator_id
-                        }).$promise;
+                        if (!story.creator_id) {
+                            return {};
+                        } else {
+                            return User.get({
+                                id: story.creator_id
+                            }).$promise;
+                        }
                     },
                     tasks: function (Task, $stateParams) {
                         return Task.browse({
