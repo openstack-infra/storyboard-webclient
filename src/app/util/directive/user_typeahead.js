@@ -50,7 +50,7 @@ angular.module('sb.util').directive('userTypeahead',
                             $timeout(function () {
                                 $scope.showForm =
                                     $scope.enabled ? !$scope.showForm : false;
-                                }, 200);
+                            }, 200);
                         }
                         else {
                             $scope.showForm = true;
