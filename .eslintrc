@@ -60,7 +60,6 @@
         "strict": 0,
         "no-underscore-dangle": 0,
         "no-space-before-semi": 0,
-        "key-spacing": 0,
 
         // Stylistic
         "indent": [2, 4],
