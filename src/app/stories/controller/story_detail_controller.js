@@ -19,8 +19,8 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
-              Preference, Event, Comment, TimelineEventTypes, story, creator,
-              tasks, Task) {
+              Preference, Event, Comment, TimelineEventTypes, story, Story,
+              creator, tasks, Task) {
         'use strict';
 
         /**
@@ -294,5 +294,46 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.loadEvents();
                 }
             );
+        };
+
+        // ###################################################################
+        // Tags Management
+        // ###################################################################
+
+        /**
+         * The controller to add/delete tags from a story.
+         *
+         * @type {tags_controller}
+         */
+        $scope.tags_controller = new Story.tags_controller({"id": story.id});
+
+        /**
+         * Show an input for a new tag
+         *
+         * @type {boolean}
+         */
+        $scope.showAddTag = false;
+
+        $scope.toggleAddTag = function() {
+            $scope.showAddTag = !$scope.showAddTag;
+        };
+
+        $scope.addTag = function (tag_name) {
+            console.log($scope);
+            if(!!tag_name) {
+                $scope.tags_controller.$update({tags: [tag_name]},
+                    function () {
+                        $scope.showAddTag = false;
+                        handleServiceSuccess();
+                    },
+                    handleServiceError);
+            }
+        };
+
+        $scope.removeTag = function (tag_name) {
+            console.log($scope.tags_controller);
+            $scope.tags_controller.$delete({tags: [tag_name]},
+               handleServiceSuccess,
+               handleServiceError);
         };
     });
