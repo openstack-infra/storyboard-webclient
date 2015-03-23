@@ -27,6 +27,8 @@
             </div>
             <div ng-include src="'/inline/task_list.html'"></div>
             <hr/>
+            <div ng-include src="'/inline/tags.html'"></div>
+            <hr/>
             <div ng-include src="'/inline/discussion.html'"></div>
         </div>
     </div>
@@ -131,6 +133,40 @@
     </form>
 </script>
 
+<!-- Template for the tags list and controls -->
+<script type="text/ng-template" id="/inline/tags.html">
+    <strong>Tags</strong>
+
+    <ul class="list-inline">
+        <li ng-repeat="tag in story.tags">
+            <h4>
+                <span class="label label-warning">
+                    {{tag}}
+                    <i class="fa fa-remove" ng-show="isLoggedIn"
+                       ng-click="removeTag(tag)"></i>
+                </span>
+            </h4>
+        </li>
+        </ul>
+        <br>
+        <span class="input-group" ng-show="showAddTag">
+            <input type="text" class="form-control" ng-model="newTag.name" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"
+                        ng-click="addTag(newTag.name)">Add</button>
+            </span>
+        </span>
+        <h4>
+            <span class="label label-default" ng-click="toggleAddTag()"
+                  ng-show="!showAddTag">
+                Add
+                <i class="fa fa-plus"></i>
+            </span>
+        </h4>
+
+
+
+</script>
 
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/task_list.html">

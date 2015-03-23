@@ -20,7 +20,7 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('Story',
-    function (ResourceFactory) {
+    function (ResourceFactory, $resource, storyboardApiBase) {
         'use strict';
 
         var resource = ResourceFactory.build(
@@ -28,6 +28,27 @@ angular.module('sb.services').factory('Story',
             '/stories/search',
             {id: '@id'}
         );
+
+        var tags_signature = {
+            'update': {
+                method: 'PUT',
+                //delete request body
+                transformRequest: function() {
+                    return '';
+                }
+            },
+            'delete': {
+                method: 'DELETE',
+                //delete request body
+                transformRequest: function() {
+                    return '';
+                }
+            }
+        };
+
+        resource.TagsController = $resource(
+                storyboardApiBase + '/stories/:id/tags', {id: '@id'},
+                tags_signature);
 
         ResourceFactory.applySearch(
             'Story',
