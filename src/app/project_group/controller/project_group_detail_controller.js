@@ -19,7 +19,7 @@
  * projects, and any stories that belong under this project group.
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
-    function ($scope, projectGroup, projects, stories) {
+    function ($scope, projectGroup, projects, Story) {
         'use strict';
 
         /**
@@ -41,5 +41,43 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
          *
          * @type [Story]
          */
-        $scope.stories = stories;
+        $scope.stories = [];
+
+        /**
+         * Filter the stories.
+         */
+        $scope.showActive = true;
+        $scope.showMerged = false;
+        $scope.showInvalid = false;
+
+        /**
+         * Reload the stories in this view based on user selected filters.
+         */
+        $scope.filterStories = function () {
+            var status = [];
+            if ($scope.showActive) {
+                status.push('active');
+            }
+            if ($scope.showMerged) {
+                status.push('merged');
+            }
+            if ($scope.showInvalid) {
+                status.push('invalid');
+            }
+
+            // If we're asking for nothing, just return a [];
+            if (status.length === 0) {
+                $scope.stories = [];
+                return;
+            }
+
+            $scope.stories = Story.query({
+                project_group_id: projectGroup.id,
+                sort_field: 'id',
+                sort_dir: 'desc',
+                status: status
+            });
+        };
+
+        $scope.filterStories();
     });
