@@ -80,6 +80,15 @@ angular.module('sb.services')
                     params: {
                         limit: getLimit
                     }
+                },
+                'query': {
+                    method: 'GET',
+                    responseType: 'json',
+                    isArray: true,
+                    cache: cacheSearchResults,
+                    params: {
+                        limit: getLimit
+                    }
                 }
             };
         }
