@@ -186,7 +186,13 @@
             <div ng-repeat="event in events">
                 <timeline-event tl_event={{event}} />
             </div>
-
+            <button type="button"
+                    style="margin-top:20px;margin-bottom:20px"
+                    class="btn btn-primary pull-left"
+                    ng-click="nextEvents()"
+                    ng-show="next_event_visible">
+                Show more
+            </button>
             <form class="discussion-comment-form comment"
                   id="commentForm"
                   name="commentForm" ng-show="isLoggedIn">

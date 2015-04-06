@@ -32,11 +32,12 @@ angular.module('sb.services').factory('Event',
              * @param storyId   The id of the story to return events for.
              * @return An array with the matching events.
              */
-            search: function (storyId) {
+            search: function (storyId, marker) {
                 var params = {};
                 params.sort_field = 'id';
                 params.sort_dir = 'asc';
                 params.story_id = storyId;
+                params.marker = marker;
 
                 var deferred = $q.defer();
 
