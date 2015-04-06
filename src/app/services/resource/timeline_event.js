@@ -21,15 +21,28 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('TimelineEvent',
-    function (ResourceFactory) {
+    function (storyboardApiBase, $resource, $rootScope) {
         'use strict';
 
-        return ResourceFactory.build(
-            '/stories/:story_id/events/:id',
-            '/stories/:story_id/events/search', // Not implemented.
-            {
-                id: '@id',
-                story_id: '@story_id'
+        var events_signature = {
+			'query': {
+                method: 'GET',
+                responseType: 'json',
+                isArray: true,
+                cache: false,
+                transformResponse: function(data, headersGetter) {
+                    $rootScope.event_count = parseInt(
+                                                headersGetter()['x-total']);
+                    return data;
+                }
             }
-        );
+        };
+
+        return $resource(storyboardApiBase + '/stories/:story_id/events/:id',
+                         {
+                             id: '@id',
+                             story_id: '@story_id'
+                         },
+                         events_signature
+                        );
     });

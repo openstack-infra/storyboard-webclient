@@ -29,6 +29,9 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {Story}
          */
         $scope.story = story;
+        $scope.marker = 0;
+        $scope.events = [];
+        $scope.next_event_visible = true;
 
         /**
          * The user record for the author, resolved in the state.
@@ -60,9 +63,15 @@ angular.module('sb.story').controller('StoryDetailController',
          * The events associated to the story
          */
         $scope.loadEvents = function () {
-            Event.search($scope.story.id).then(function (events) {
-                $scope.events = events;
-            });
+            Event.search($scope.story.id, $scope.marker).then(
+                function (events) {
+                    $scope.events = $scope.events.concat(events);
+                    $scope.marker = $scope.events[$scope.events.length - 1].id;
+
+                    if ($scope.events.length === $rootScope.event_count) {
+                        $scope.next_event_visible = false;
+                    }
+                });
         };
         $scope.loadEvents();
 
@@ -221,6 +230,10 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.loadEvents();
                 }
             );
+        };
+
+        $scope.nextEvents = function() {
+            $scope.loadEvents();
         };
 
         // ###################################################################
