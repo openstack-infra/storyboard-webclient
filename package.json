@@ -6,9 +6,9 @@
   "scripts": {
     "clean": "./node_modules/.bin/grunt clean",
     "lint": "./node_modules/.bin/grunt eslint",
-    "test:unit": "./node_modules/.bin/grunt test:unit",
-    "test:functional": "./node_modules/.bin/grunt test:functional",
-    "test:integration": "./node_modules/.bin/grunt test:integration",
+    "test-unit": "./node_modules/.bin/grunt test:unit",
+    "test-functional": "./node_modules/.bin/grunt test:functional",
+    "test-integration": "./node_modules/.bin/grunt test:integration",
     "draft": "./node_modules/.bin/grunt build:draft",
     "build": "./node_modules/.bin/grunt build",
     "serve": "./node_modules/.bin/grunt serve"
