@@ -29,6 +29,7 @@
     "eslint": "0.15.1",
     "gifsicle": "1.0.0",
     "grunt": "0.4.5",
+    "grunt-bower-task": "^0.4.0",
     "grunt-cli": "0.1.13",
     "grunt-connect-proxy": "0.1.11",
     "grunt-contrib-clean": "0.6.0",
