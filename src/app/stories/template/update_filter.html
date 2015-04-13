@@ -33,6 +33,20 @@
                         <label for="storyDetailsChanged">Story details changed</label>
                         <br/>
                         <input type="checkbox" name="enabledTypes"
+                               id="tagsAdded"
+                               ng-true-value="'true'"
+                               ng-false-value="'false'"
+                               ng-model="display_events_tags_added">
+                        <label for="tagsAdded">Tags added</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
+                               id="tagsDeleted"
+                               ng-true-value="'true'"
+                               ng-false-value="'false'"
+                               ng-model="display_events_tags_deleted">
+                        <label for="tagsDeleted">Tags deleted</label>
+                        <br/>
+                        <input type="checkbox" name="enabledTypes"
                                id="taskCreated"
                                ng-true-value="'true'"
                                ng-false-value="'false'"

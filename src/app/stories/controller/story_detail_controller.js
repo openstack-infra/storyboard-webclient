@@ -19,8 +19,8 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
-              Preference, Event, Comment, TimelineEventTypes, story, creator,
-              tasks, Task) {
+              Preference, Event, Comment, TimelineEventTypes, story, Story,
+              creator, tasks, Task, DSCacheFactory, storyboardApiBase) {
         'use strict';
 
         /**
@@ -261,7 +261,6 @@ angular.module('sb.story').controller('StoryDetailController',
             task.$update(function () {
                 $scope.showTaskEditForm = false;
                 $scope.loadEvents();
-
             });
         };
 
@@ -294,5 +293,56 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.loadEvents();
                 }
             );
+        };
+
+        // ###################################################################
+        // Tags Management
+        // ###################################################################
+
+        /**
+         * The controller to add/delete tags from a story.
+         *
+         * @type {TagsController}
+         */
+        $scope.TagsController = new Story.TagsController({'id': story.id});
+
+        /**
+         * Show an input for a new tag
+         *
+         * @type {boolean}
+         */
+        $scope.showAddTag = false;
+
+        $scope.toggleAddTag = function() {
+            $scope.showAddTag = !$scope.showAddTag;
+        };
+
+        $scope.addTag = function (tag_name) {
+            if(!!tag_name) {
+                $scope.TagsController.$update({tags: [tag_name]},
+                    function (updatedStory) {
+                        DSCacheFactory.get('defaultCache').put(
+                            storyboardApiBase + '/stories/' + story.id,
+                            updatedStory);
+                        $scope.showAddTag = false;
+                        $scope.story.tags.push(tag_name);
+                        $scope.loadEvents();
+                    },
+                    handleServiceError);
+            }
+        };
+
+        $scope.removeTag = function (tag_name) {
+            $scope.TagsController.$delete({tags: [tag_name]},
+                function() {
+                    var tagIndex = $scope.story.tags.indexOf(tag_name);
+                    DSCacheFactory.get('defaultCache').remove(
+                            storyboardApiBase + '/stories/' + story.id);
+                    if (tagIndex > -1) {
+                        $scope.story.tags.splice(tagIndex, 1);
+                    }
+                    $scope.loadEvents();
+                },
+                handleServiceError);
         };
     });

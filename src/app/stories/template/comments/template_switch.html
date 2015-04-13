@@ -5,6 +5,12 @@
     <div ng-switch-when="story_details_changed">
         <div ng-include src="'app/stories/template/comments/story_details_changed.html'"></div>
     </div>
+    <div ng-switch-when="tags_added">
+        <div ng-include src="'app/stories/template/comments/tags_added.html'"></div>
+    </div>
+    <div ng-switch-when="tags_deleted">
+        <div ng-include src="'app/stories/template/comments/tags_deleted.html'"></div>
+    </div>
     <div ng-switch-when="task_assignee_changed">
         <div ng-include src="'app/stories/template/comments/task_assignee_changed.html'"></div>
     </div>

@@ -18,6 +18,8 @@ angular.module('sb.util').constant('TimelineEventTypes',
     [
         'story_created',
         'story_details_changed',
+        'tags_added',
+        'tags_deleted',
         'task_created',
         'task_assignee_changed',
         'task_status_changed',
