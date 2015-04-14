@@ -44,7 +44,13 @@ angular.module('sb.util').directive('userTypeahead',
                 /**
                  * Toggle the display of the form.
                  */
-                $scope.toggleForm = function () {
+                $scope.toggleForm = function (evt) {
+                    // If we blur while the input is empty, try to set that
+                    // value.
+                    if (evt && !evt.target.value) {
+                        $scope.updateViewValue(null);
+                    }
+
                     if (!!$scope.asInline) {
                         if ($scope.showForm) {
                             $timeout(function () {
@@ -97,6 +103,34 @@ angular.module('sb.util').directive('userTypeahead',
                     if (value !== ngModel.$viewValue) {
                         ngModel.$setViewValue(value);
                         $scope.onChange();
+                    }
+                };
+
+                /**
+                 * Blur on escape.
+                 */
+                $scope.handleEscapeKey = function (evt) {
+                    // Escape key
+                    if (evt.keyCode === 27) {
+                        evt.target.blur();
+                    }
+                };
+
+                /**
+                 * Save and blur on enter.
+                 */
+                $scope.handleEnterKey = function (evt) {
+
+                    // The enter key
+                    if (evt.keyCode === 13) {
+                        // If the field is empty, try to set the view value (if
+                        // there's something in it, we have to trust
+                        // that the field renderer knows what it's doing).
+
+                        if (evt && !evt.target.value) {
+                            $scope.updateViewValue(null);
+                        }
+                        evt.target.blur();
                     }
                 };
 
