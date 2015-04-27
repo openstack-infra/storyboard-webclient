@@ -18,13 +18,13 @@
  * A directive which displays a responsive result set size :
  * (showing x to y of z)
  */
-angular.module('sb.services').directive('resultSetSize',
+angular.module('sb.services').directive('resultSetPager',
     function () {
         'use strict';
 
         return {
             restrict: 'E',
-            templateUrl: 'app/services/template/result_set_size.html',
+            templateUrl: 'app/services/template/result_set_pager.html',
             scope: {
                 total: '=',
                 offset: '=',
