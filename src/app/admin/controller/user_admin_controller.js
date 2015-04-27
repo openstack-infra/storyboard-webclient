@@ -18,7 +18,7 @@
  * Administration controller for users.
  */
 angular.module('sb.admin').controller('UserAdminController',
-    function ($scope, $modal, User) {
+    function ($scope, $modal, User, Preference) {
         'use strict';
 
         /**
@@ -63,6 +63,17 @@ angular.module('sb.admin').controller('UserAdminController',
                 $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                 $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
             });
+        };
+
+        /**
+         * Update the page size preference and re-search.
+         */
+        $scope.updatePageSize = function (value) {
+            Preference.set('page_size', value).then(
+                function () {
+                    $scope.search();
+                }
+            );
         };
 
         // Initialize
