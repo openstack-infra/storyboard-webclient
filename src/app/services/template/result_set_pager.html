@@ -1,4 +1,4 @@
-<p class="hidden-xs">
+<span class="hidden-xs">
     <span ng-if="total == 0">
         0 results.
     </span>
@@ -9,4 +9,18 @@
         of
         {{total}}
     </span>
-</p>
+
+<div class="btn-group" dropdown>
+    <button class="btn btn-xs btn-link"
+            dropdown-toggle>
+        <i class="fa fa-gear"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class="dropdown-header"># of results</li>
+        <li ng-repeat="size in [10,25,50,100]"
+            ng-class="{'active': size == limit}">
+            <a ng-click="pageSize({'pageSize':size})">{{size}}</a>
+        </li>
+    </ul>
+</div>
+</span>

@@ -28,7 +28,8 @@ angular.module('sb.services').directive('resultSetPager',
             scope: {
                 total: '=',
                 offset: '=',
-                limit: '='
+                limit: '=',
+                pageSize: '&onPageSize'
             }
         };
     });

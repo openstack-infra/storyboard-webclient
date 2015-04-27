@@ -91,7 +91,7 @@ angular.module('sb.search').directive('searchResults',
                     $scope.hasValidCriteria =
                         searchWithoutCriteria ||
                         ($scope.validCriteria.length === criteria.length &&
-                            $scope.hasCriteria);
+                        $scope.hasCriteria);
 
                     // No need to search if our criteria aren't valid.
                     if (!$scope.hasValidCriteria) {
@@ -106,7 +106,7 @@ angular.module('sb.search').directive('searchResults',
 
                     if (!resource) {
                         $log.error('Invalid resource name: ' +
-                            resourceName);
+                        resourceName);
                         return;
                     }
 
@@ -130,6 +130,18 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
+                 * Update the page size preference and re-search.
+                 */
+                $scope.updatePageSize = function (value) {
+                    Preference.set('page_size', value).then(
+                        function () {
+                            pageSize = value;
+                            updateResults();
+                        }
+                    );
+                };
+
+                /**
                  * Toggle the filter ID and direction in the UI.
                  *
                  * @param fieldName
@@ -137,7 +149,7 @@ angular.module('sb.search').directive('searchResults',
                 $scope.toggleFilter = function (fieldName) {
                     if ($scope.sortField === fieldName) {
                         $scope.sortDirection =
-                                $scope.sortDirection === 'asc' ? 'desc' : 'asc';
+                            $scope.sortDirection === 'asc' ? 'desc' : 'asc';
                     } else {
                         $scope.sortField = fieldName;
                         $scope.sortDirection = 'desc';
@@ -148,7 +160,7 @@ angular.module('sb.search').directive('searchResults',
                 // Watch for changing criteria
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
-                    function(results){
+                    function (results) {
                         criteria = results;
                         updateResults();
                     });
