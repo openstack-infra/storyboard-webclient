@@ -18,7 +18,7 @@
  * Administration controller for project groups.
  */
 angular.module('sb.admin').controller('ProjectGroupAdminController',
-    function ($scope, $modal, ProjectGroup) {
+    function ($scope, $modal, ProjectGroup, Preference) {
         'use strict';
 
         /**
@@ -89,6 +89,17 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
                 $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                 $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
             });
+        };
+
+        /**
+         * Update the page size preference and re-search.
+         */
+        $scope.updatePageSize = function (value) {
+            Preference.set('page_size', value).then(
+                function () {
+                    $scope.search();
+                }
+            );
         };
 
         // Initialize
