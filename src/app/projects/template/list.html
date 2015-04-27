@@ -22,16 +22,21 @@
      search-without-criteria="true">
     <div class="row">
         <div class="col-xs-12">
-            <h1><i class="fa fa-sb-project"></i> Projects</h1>
+            <a class="btn btn-primary btn-sm pull-bottom-right"
+               permission="is_superuser"
+               href="#!/project/new">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-xs">Create Project</span>
+            </a>
+
+            <h1 class="no-border no-margin-bottom">
+                <i class="fa fa-sb-project"></i> Projects
+            </h1>
         </div>
     </div>
 
     <div class="row">
-        <div ng-class="{
-                'col-sm-8': is_superuser,
-                'col-sm-10': !is_superuser,
-                'col-xs-10': is_superuser,
-                'col-xs-12': !is_superuser }">
+        <div class="col-xs-12">
             <div class="form-group has-feedback has-feedback-no-label">
                 <div id="search-criteria"
                      tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
@@ -49,24 +54,13 @@
                     <i class="fa fa-refresh fa-spin"
                        ng-show="loadingCriteria"></i>
                 </span>
-            </div>
-        </div>
-        <div class="col-xs-2 hidden-xs">
-            <div class="form form-horizontal">
                 <result-set-size
-                        class="form-control-static text-muted"
+                        class="form-control-static text-muted pull-right"
                         total="searchTotal"
                         offset="searchOffset"
                         limit="searchLimit"
-                        />
+                        ></result-set-size>
             </div>
-        </div>
-        <div class="col-xs-2" permission="is_superuser">
-            <a class="btn btn-primary pull-right"
-               href="#!/project/new">
-                <i class="fa fa-plus"></i>
-                <span class="hidden-xs">Create Project</span>
-            </a>
         </div>
     </div>
 
@@ -79,9 +73,6 @@
 
     <div class="row"
          ng-if="hasValidCriteria">
-        <div class="col-xs-12">
-            <br/>
-        </div>
         <div class="col-xs-12">
             <table class="table table-condensed table-striped">
                 <thead>
