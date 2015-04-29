@@ -107,21 +107,21 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody ng-if="searchResults.length != 0">
+                <tbody ng-if="searchResults.length != 0 && !isSearching">
                 <tr ng-repeat="projectGroup in searchResults"
                     ng-include="'app/search/template/project_group_search_item.html'">
                 </tr>
                 </tbody>
 
-                <tbody ng-if="searchResults.length == 0 &amp;&amp; !isSearching">
+                <tbody ng-if="searchResults.length == 0 && !isSearching">
                 <td class="text-center text-muted" colspan="3">
                     <em>No project groups found.</em>
                 </td>
                 </tbody>
 
                 <tbody ng-if="isSearching">
-                <td colspan="3">
-                    <small class="fa fa-spin fa-refresh text-muted">
+                <td colspan="3" class="text-center">
+                    <small class="fa fa-spin fa-2x fa-refresh text-muted">
                     </small>
                 </td>
                 </tbody>

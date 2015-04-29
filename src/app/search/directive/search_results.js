@@ -115,6 +115,7 @@ angular.module('sb.search').directive('searchResults',
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
+                    $scope.isSearching = true;
                     if (!params.hasOwnProperty('q')) {
                         params.sort_field = $scope.sortField;
                         params.sort_dir = $scope.sortDirection;

@@ -124,13 +124,13 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody ng-if="searchResults.length != 0">
+                <tbody ng-if="searchResults.length != 0 && !isSearching">
                 <tr ng-repeat="story in searchResults"
                     ng-include="'app/search/template/story_search_item.html'">
                 </tr>
                 </tbody>
 
-                <tbody ng-if="hasValidCriteria &amp;&amp; searchResults.length == 0 &amp;&amp; !isSearching">
+                <tbody ng-if="hasValidCriteria && searchResults.length == 0 && !isSearching">
                 <td class="text-center text-muted" colspan="4">
                     <em>No stories found.</em>
                 </td>
@@ -143,8 +143,8 @@
                 </tbody>
 
                 <tbody ng-if="isSearching">
-                <td colspan="4">
-                    <small class="fa fa-spin fa-refresh text-muted">
+                <td colspan="4" class="text-center">
+                    <small class="fa fa-spin fa-lg fa-refresh text-muted">
                     </small>
                 </td>
                 </tbody>
