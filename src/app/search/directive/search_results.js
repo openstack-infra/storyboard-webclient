@@ -20,7 +20,7 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, Preference, ContributeModal) {
         'use strict';
 
         return {
@@ -52,6 +52,15 @@ angular.module('sb.search').directive('searchResults',
                  * @type {string}
                  */
                 $scope.sortDirection = 'asc';
+
+                /**
+                 * Help message.
+                 */
+                var helpMessage = 'Our api doesn\'t support paging yet. If ' +
+                    'you\'d like to see this feature, you can help by ' +
+                    'contributing to <a ' +
+                    'href="https://review.openstack.org/#/c/139638/" ' +
+                    'target="_blank">this specification</a>. Thanks!';
 
                 /**
                  * Handle error result.
@@ -156,6 +165,20 @@ angular.module('sb.search').directive('searchResults',
                         $scope.sortDirection = 'desc';
                     }
                     updateResults();
+                };
+
+                /**
+                 * Next page of the results.
+                 */
+                $scope.nextPage = function () {
+                    ContributeModal.show(helpMessage);
+                };
+
+                /**
+                 * Previous page in the results.
+                 */
+                $scope.previousPage = function () {
+                    ContributeModal.show(helpMessage);
                 };
 
                 // Watch for changing criteria
