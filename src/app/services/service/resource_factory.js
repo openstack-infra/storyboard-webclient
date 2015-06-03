@@ -26,16 +26,6 @@ angular.module('sb.services')
         'use strict';
 
         /**
-         * This method is used in our API signature to return a recent value
-         * for the user's pageSize preference.
-         *
-         * @returns {*}
-         */
-        function getLimit() {
-            return Preference.get('page_size');
-        }
-
-        /**
          * Construct a full API signature for a specific resource. Includes
          * CRUD, Browse, and Search. If the resource doesn't support it,
          * don't use it :).
@@ -66,20 +56,14 @@ angular.module('sb.services')
                     method: 'GET',
                     isArray: true,
                     responseType: 'json',
-                    cache: cacheSearchResults,
-                    params: {
-                        limit: getLimit
-                    }
+                    cache: cacheSearchResults
                 },
                 'search': {
                     method: 'GET',
                     url: searchUrl,
                     isArray: true,
                     responseType: 'json',
-                    cache: cacheSearchResults,
-                    params: {
-                        limit: getLimit
-                    }
+                    cache: cacheSearchResults
                 }
             };
         }
