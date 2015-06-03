@@ -66,20 +66,14 @@ angular.module('sb.services')
                     method: 'GET',
                     isArray: true,
                     responseType: 'json',
-                    cache: cacheSearchResults,
-                    params: {
-                        limit: getLimit
-                    }
+                    cache: cacheSearchResults
                 },
                 'search': {
                     method: 'GET',
                     url: searchUrl,
                     isArray: true,
                     responseType: 'json',
-                    cache: cacheSearchResults,
-                    params: {
-                        limit: getLimit
-                    }
+                    cache: cacheSearchResults
                 }
             };
         }
