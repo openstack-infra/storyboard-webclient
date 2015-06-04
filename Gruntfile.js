@@ -569,7 +569,6 @@ module.exports = function (grunt) {
      * Compiles all of our sources.
      */
     grunt.registerTask('compile', [
-        'eslint',
         'useminPrepare',
         'concat',
         'less',
