@@ -9,7 +9,7 @@ Project Resources
 
   - [Project status, bugs, and blueprints](http://storyboard.openstack.org)
   - [Source code](https://git.openstack.org/cgit/openstack-infra/storyboard-webclient)
-  - [Documentation](http://ci.openstack.org/storyboard)
+  - [Documentation](http://docs.openstack.org/infra/storyboard)
   - [Additional resources are linked from the project wiki page](https://wiki.openstack.org/wiki/StoryBoard)
   - [How to contribute to OpenStack](http://docs.openstack.org/infra/manual/developers.html)
   - [Code reviews workflow](http://docs.openstack.org/infra/manual/developers.html#development-workflow)
