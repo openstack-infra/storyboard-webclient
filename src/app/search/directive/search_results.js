@@ -158,6 +158,16 @@ angular.module('sb.search').directive('searchResults',
                     updateResults();
                 };
 
+                /**
+                 * Next page of the results.
+                 */
+                $scope.nextPage = function () {};
+
+                /**
+                 * Previous page in the results.
+                 */
+                $scope.previousPage = function () {};
+
                 // Watch for changing criteria
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
