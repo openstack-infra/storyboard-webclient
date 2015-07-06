@@ -29,7 +29,11 @@ angular.module('sb.services').directive('resultSetPager',
                 total: '=',
                 offset: '=',
                 limit: '=',
-                pageSize: '&onPageSize'
+                listType: '=',
+                minimalPager: '=',
+                pageSize: '&onPageSize',
+                nextPage: '&onNextPage',
+                previousPage: '&onPreviousPage'
             }
         };
     });
