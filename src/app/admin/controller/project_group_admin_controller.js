@@ -78,11 +78,15 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
         /**
          * Execute a search.
          */
+        $scope.searchOffset = 0;
+        var pageSize = Preference.get('page_size');
         $scope.search = function () {
             var searchQuery = $scope.filterQuery || '';
 
             $scope.projectGroups = ProjectGroup.browse({
-                title: searchQuery
+                title: searchQuery,
+                offset: $scope.searchOffset,
+                limit: pageSize
             }, function(results, headers){
                 $scope.searchTotal =
                     parseInt(headers('X-Total')) || results.length;
@@ -97,9 +101,29 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
         $scope.updatePageSize = function (value) {
             Preference.set('page_size', value).then(
                 function () {
+                    pageSize = value;
                     $scope.search();
                 }
             );
+        };
+
+        /**
+         * Next page of the results.
+         */
+        $scope.nextPage = function () {
+            $scope.searchOffset += pageSize;
+            $scope.search();
+        };
+
+        /**
+         * Previous page of the results.
+         */
+        $scope.previousPage = function () {
+            $scope.searchOffset -= pageSize;
+            if ($scope.searchOffset < 0) {
+                $scope.searchOffset = 0;
+            }
+            $scope.search();
         };
 
         // Initialize

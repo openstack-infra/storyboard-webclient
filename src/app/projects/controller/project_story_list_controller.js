@@ -18,7 +18,8 @@
  * This controller manages stories within the scope of a particular project.
  */
 angular.module('sb.projects').controller('ProjectStoryListController',
-    function ($scope, $state, $stateParams, Story, NewStoryService) {
+    function ($scope, $state, $stateParams, Story, NewStoryService,
+              Preference) {
         'use strict';
 
         // Parse the ID. Since we're in a nested state, we don't really need
@@ -32,6 +33,8 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             $state.go('sb.index');
             return;
         }
+
+        var pageSize = Preference.get('project_detail_page_size');
 
         // Variables and methods available to the template...
         function resetScope() {
@@ -61,13 +64,20 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             $scope.isSearching = true;
 
             // Execute the story query.
-            Story.browse(
-                {project_id: id, status: $scope.filter || null},
+            Story.browse({
+                    project_id: id,
+                    status: $scope.filter || null,
+                    offset: $scope.searchOffset,
+                    limit: pageSize
+                },
                 function (result, headers) {
 
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
-                    $scope.storyCount = headers('X-Total') || result.length;
+                    $scope.storyCount =
+                        parseInt(headers('X-Total')) || result.length;
+                    $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
+                    $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.stories = result;
                     $scope.isSearching = false;
                 },
@@ -78,6 +88,37 @@ angular.module('sb.projects').controller('ProjectStoryListController',
                     $scope.isSearching = false;
                 }
             );
+        };
+
+        /**
+         * Update the page size preference and re-search.
+         */
+        $scope.updatePageSize = function (value) {
+            Preference.set('page_size', value).then(
+                function () {
+                    pageSize = value;
+                    $scope.search();
+                }
+            );
+        };
+
+        /**
+         * Next page of the results.
+         */
+        $scope.nextPage = function () {
+            $scope.searchOffset += pageSize;
+            $scope.search();
+        };
+
+        /**
+         * Previous page of the results.
+         */
+        $scope.previousPage = function () {
+            $scope.searchOffset -= pageSize;
+            if ($scope.searchOffset < 0) {
+                $scope.searchOffset = 0;
+            }
+            $scope.search();
         };
 
         $scope.newStory = function () {
