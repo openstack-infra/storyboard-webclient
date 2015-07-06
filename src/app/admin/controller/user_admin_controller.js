@@ -52,11 +52,15 @@ angular.module('sb.admin').controller('UserAdminController',
         /**
          * Execute a search.
          */
+        var pageSize = Preference.get('page_size');
+        $scope.searchOffset = 0;
         $scope.search = function () {
             var searchQuery = $scope.filterQuery || '';
 
             $scope.users = User.browse({
-                full_name: searchQuery
+                full_name: searchQuery,
+                offset: $scope.searchOffset,
+                limit: pageSize
             }, function(results, headers) {
                 $scope.searchTotal =
                     parseInt(headers('X-Total')) || results.length;
@@ -71,9 +75,29 @@ angular.module('sb.admin').controller('UserAdminController',
         $scope.updatePageSize = function (value) {
             Preference.set('page_size', value).then(
                 function () {
+                    pageSize = value;
                     $scope.search();
                 }
             );
+        };
+
+        /**
+         * Next page of the results.
+         */
+        $scope.nextPage = function () {
+            $scope.searchOffset += pageSize;
+            $scope.search();
+        };
+
+        /**
+         * Previous page of the results.
+         */
+        $scope.previousPage = function () {
+            $scope.searchOffset -= pageSize;
+            if ($scope.searchOffset < 0) {
+                $scope.searchOffset = 0;
+            }
+            $scope.search();
         };
 
         // Initialize

@@ -19,9 +19,12 @@
  */
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
-              Preference, Event, Comment, TimelineEventTypes, story, Story,
-              creator, tasks, Task, DSCacheFactory, storyboardApiBase) {
+              Preference, TimelineEvent, Comment, TimelineEventTypes, story,
+              Story, creator, tasks, Task, DSCacheFactory, User,
+              storyboardApiBase) {
         'use strict';
+
+        var pageSize = Preference.get('story_detail_page_size');
 
         /**
          * The story, resolved in the state.
@@ -52,19 +55,77 @@ angular.module('sb.story').controller('StoryDetailController',
                 var pref_name = 'display_events_' + type;
                 $scope[pref_name] = Preference.get(pref_name) === 'true';
             });
+            pageSize = Preference.get('story_detail_page_size');
+            $scope.loadEvents();
         }
 
+        $scope.searchOffset = 0;
+        $scope.isSearching = false;
+
+        /**
+         * Load TimelineEvents related to the story.
+         */
+        $scope.loadEvents = function () {
+            $scope.isSearching = true;
+            var params = {};
+            params.sort_field = 'id';
+            params.sort_dir = 'asc';
+            params.story_id = $scope.story.id;
+            params.offset = $scope.searchOffset;
+            params.limit = pageSize;
+
+            TimelineEvent.browse(params,
+                function (result, headers) {
+                    var eventResults = [];
+                    result.forEach(function (item) {
+                        item.author = User.get({id: item.author_id});
+                        item.event_info = JSON.parse(item.event_info);
+
+                        eventResults.push(item);
+                    });
+                    $scope.searchTotal = parseInt(headers('X-Total'));
+                    $scope.searchOffset = parseInt(headers('X-Offset'));
+                    $scope.searchLimit = parseInt(headers('X-Limit'));
+                    $scope.events = eventResults;
+                    $scope.isSearching = false;
+                },
+                function () {
+                    $scope.isSearching = false;
+                }
+            );
+        };
         reloadPagePreferences();
 
         /**
-         * The events associated to the story
+         * Next page of the results.
          */
-        $scope.loadEvents = function () {
-            Event.search($scope.story.id).then(function (events) {
-                $scope.events = events;
-            });
+        $scope.nextPage = function () {
+            $scope.searchOffset += pageSize;
+            $scope.loadEvents();
         };
-        $scope.loadEvents();
+
+        /**
+         * Previous page of the results.
+         */
+        $scope.previousPage = function () {
+            $scope.searchOffset -= pageSize;
+            if ($scope.searchOffset < 0) {
+                $scope.searchOffset = 0;
+            }
+            $scope.loadEvents();
+        };
+
+        /**
+         * Update the page size preference and re-search.
+         */
+        $scope.updatePageSize = function (value) {
+            Preference.set('story_detail_page_size', value).then(
+                function () {
+                    pageSize = value;
+                    $scope.loadEvents();
+                }
+            );
+        };
 
         /**
          * The new comment backing the input form.
@@ -191,6 +252,7 @@ angular.module('sb.story').controller('StoryDetailController',
             });
 
             modalInstance.result.then(reloadPagePreferences);
+            $scope.searchLimit = Preference.get('story_detail_page_size');
         };
 
         /**
