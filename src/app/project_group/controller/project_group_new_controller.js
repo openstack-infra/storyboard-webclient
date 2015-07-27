@@ -17,7 +17,7 @@
 /**
  * New Project Group modal controller.
  */
-angular.module('sb.admin').controller('ProjectGroupNewController',
+angular.module('sb.project_group').controller('ProjectGroupNewController',
     function ($q, $log, $scope, $modalInstance, ProjectGroup, ProjectGroupItem,
               Project) {
         'use strict';
