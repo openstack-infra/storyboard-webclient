@@ -3,7 +3,12 @@
         <div class="col-xs-12">
             <h1>
                 <i class="fa fa-sb-project-group"></i>
-                {{projectGroup.name}}
+                {{projectGroup.title}}
+                <small>
+                    <a href="#!/project_group/edit/{{projectGroup.id}}" permission="is_superuser">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </small>
             </h1>
         </div>
     </div>

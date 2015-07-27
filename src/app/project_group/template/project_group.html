@@ -19,6 +19,7 @@
     <div class="row">
         <div class="col-xs-12">
             <button class="btn btn-primary btn-sm pull-bottom-right"
+                    permission="is_superuser"
                     ng-click="addProjectGroup()">
                 <i class="fa fa-plus"></i>
                 <span class="hidden-xs">Add Project Group</span>
@@ -84,7 +85,7 @@
                 <tr ng-repeat="projectGroup in projectGroups">
                     <td class="col-sm-3 col-xs-4">
                         <i class="fa fa-sb-project-group text-muted"></i>
-                        <a href="#!/admin/project_group/{{projectGroup.id}}">
+                        <a href="#!/project_group/detail/{{projectGroup.id}}">
                             {{projectGroup.title}}
                         </a>
                     </td>
@@ -92,10 +93,12 @@
                         ng-controller="ProjectGroupItemController">
                         <div class="pull-right btn-group btn-group-xs">
                             <a class="btn btn-link "
-                               href="#!/admin/project_group/{{projectGroup.id}}">
+                               permission="is_superuser"
+                               href="#!/project_group/edit/{{projectGroup.id}}">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a>
                             <a class="btn btn-link "
+                               permission="is_superuser"
                                href=""
                                ng-click="deleteProjectGroup(projectGroup)">
                                 <i class="fa fa-times fa-lg"></i>

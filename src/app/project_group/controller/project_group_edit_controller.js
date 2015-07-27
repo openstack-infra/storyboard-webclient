@@ -17,7 +17,7 @@
 /**
  * New Project Group edit controller.
  */
-angular.module('sb.admin').controller('ProjectGroupEditController',
+angular.module('sb.project_group').controller('ProjectGroupEditController',
     function ($q, $log, $scope, $state, projectGroup, projects, Project,
               ProjectGroupItem, ArrayUtil) {
         'use strict';
@@ -178,7 +178,7 @@ angular.module('sb.admin').controller('ProjectGroupEditController',
             // Roll all the promises into one big happy promise.
             $q.all(promises).then(
                 function () {
-                    $state.go('sb.admin.project_group', {});
+                    $state.go('sb.project_group.list', {});
                 },
                 function (error) {
                     $log.error(error);
