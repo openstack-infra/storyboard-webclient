@@ -58,26 +58,6 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                     }
                 }
             })
-            .state('sb.admin.project_group', {
-                url: '/project_group',
-                templateUrl: 'app/admin/template/project_group.html',
-                controller: 'ProjectGroupAdminController'
-            })
-            .state('sb.admin.project_group_edit', {
-                url: '/project_group/:id',
-                templateUrl: 'app/admin/template/project_group_edit.html',
-                controller: 'ProjectGroupEditController',
-                resolve: {
-                    projectGroup: function ($stateParams, ProjectGroup) {
-                        return ProjectGroup.get({id: $stateParams.id}).$promise;
-                    },
-                    projects: function ($stateParams, ProjectGroupItem) {
-                        return ProjectGroupItem.browse(
-                            {projectGroupId: $stateParams.id}
-                        ).$promise;
-                    }
-                }
-            })
             .state('sb.admin.team', {
                 url: '/team',
                 templateUrl: 'app/admin/template/team.html'

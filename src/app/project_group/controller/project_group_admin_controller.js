@@ -17,8 +17,8 @@
 /**
  * Administration controller for project groups.
  */
-angular.module('sb.admin').controller('ProjectGroupAdminController',
-    function ($scope, $modal, ProjectGroup, Preference) {
+angular.module('sb.project_group').controller('ProjectGroupAdminController',
+    function ($scope, $modal, ProjectGroup, Preference, isSuperuser) {
         'use strict';
 
         /**
@@ -27,6 +27,8 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
          * @type {Array}
          */
         $scope.projectGroups = [];
+
+        $scope.is_superuser = isSuperuser;
 
         /**
          * The search filter query string.
@@ -41,7 +43,7 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
         $scope.addProjectGroup = function () {
             $scope.modalInstance = $modal.open(
                 {
-                    templateUrl: 'app/admin/template/project_group_new.html',
+                    templateUrl: 'app/project_group/template/new.html',
                     controller: 'ProjectGroupNewController'
                 });
 
@@ -58,7 +60,7 @@ angular.module('sb.admin').controller('ProjectGroupAdminController',
          */
         $scope.deleteProjectGroup = function (projectGroup) {
             var modalInstance = $modal.open({
-                templateUrl: 'app/admin/template/project_group_delete.html',
+                templateUrl: 'app/project_group/template/delete.html',
                 controller: 'ProjectGroupDeleteController',
                 resolve: {
                     projectGroup: function () {
