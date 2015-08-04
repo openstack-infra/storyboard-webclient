@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+1: Marton Kiss <marton.kiss@gmail.com>
+Code-Review+2: Adam Coldrick <adam.coldrick@codethink.co.uk>
+Workflow+1: Adam Coldrick <adam.coldrick@codethink.co.uk>
+Submitted-by: Jenkins
+Submitted-at: Tue, 04 Aug 2015 10:09:17 +0000
+Reviewed-on: https://review.openstack.org/203609
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
