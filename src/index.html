@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <title>StoryBoard</title>
+    <title ng-bind-template="{{viewTitle ? viewTitle + ' | ' : ''}} StoryBoard">StoryBoard</title>
 
     <!-- Google's Ajax Crawling: https://developers.google.com/webmasters/ajax-crawling -->
     <meta name="fragment" content="!">
@@ -38,6 +38,7 @@
     <script src="angular-cache/dist/angular-cache.js"></script>
     <script src="moment/moment.js"></script>
     <script src="angular-moment/angular-moment.js"></script>
+    <script src="angularjs-viewhead/angularjs-viewhead.js"></script>
     <!-- endbuild -->
 
     <link rel="stylesheet" href="styles/main.css">
