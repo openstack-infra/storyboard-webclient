@@ -27,7 +27,7 @@ angular.module('storyboard',
         'sb.auth', 'sb.story', 'sb.profile', 'sb.notification', 'sb.search',
         'sb.admin', 'sb.subscription', 'sb.project_group', 'ui.router',
         'ui.bootstrap', 'monospaced.elastic', 'angularMoment',
-        'angular-data.DSCacheFactory'])
+        'angular-data.DSCacheFactory', 'ngSanitize'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
         timezone: 'UTC'
@@ -62,6 +62,13 @@ angular.module('storyboard',
                     preferences: PreferenceResolver.resolvePreferences
                 }
             });
+
+        // Set up syntax highlighting for the markdown parser
+        marked.setOptions({
+            highlight: function (code) {
+                return hljs.highlightAuto(code).value;
+            }
+        });
     })
     .run(function ($log, $rootScope, $document) {
         'use strict';

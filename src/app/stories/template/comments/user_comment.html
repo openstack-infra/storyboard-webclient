@@ -4,9 +4,9 @@
         <span time-moment eventdate="event.created_at" class="pull-right"></span>
     </p>
 
-    <p ng-show="event.comment.content"
-       class="honor-carriage-return">{{event.comment.content}}
-    </p>
+    <insert-markdown ng-show="event.comment.content"
+       content="event.comment.content">
+    </insert-markdown>
 
     <p><em ng-hide="event.comment.content"
            class="text-muted">

@@ -37,24 +37,7 @@
 
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/story_detail.html">
-    <h1>
-
-        <span ng-show="story.title">
-            {{story.title}}
-        </span>
-        <em ng-hide="story.title" class="text-muted">
-            No title
-        </em>
-
-        <small ng-show="isLoggedIn">
-            <a href="" ng-click="toggleEditMode()" >
-                <i class="fa fa-pencil"></i>
-            </a>
-            <subscribe resource="story"
-                   resource-id="story.id"></subscribe>
-        </small>
-    </h1>
-    <p><strong>Author:</strong>
+    <p class="pull-right"><strong>Author:</strong>
         <em ng-show="!story.creator_id" class="text-muted">
             None
         </em>
@@ -72,10 +55,27 @@
             Never
         </em>
     </p>
-    <p>
-        <span ng-show="story.description"
-              class="honor-carriage-return">{{story.description}}
+    <h1>
+
+        <span ng-show="story.title">
+            {{story.title}}
         </span>
+        <em ng-hide="story.title" class="text-muted">
+            No title
+        </em>
+
+        <small ng-show="isLoggedIn">
+            <a href="" ng-click="toggleEditMode()" >
+                <i class="fa fa-pencil"></i>
+            </a>
+            <subscribe resource="story"
+                   resource-id="story.id"></subscribe>
+        </small>
+    </h1>
+    <p>
+        <insert-markdown ng-show="story.description"
+                         content="story.description">
+        </insert-markdown>
         <em ng-hide="story.description" class="text-muted">
             No description provided
         </em>

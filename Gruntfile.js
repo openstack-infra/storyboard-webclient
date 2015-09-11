@@ -149,7 +149,8 @@ module.exports = function (grunt) {
                         dir.theme + '/custom/',
                         dir.theme + '/storyboard/',
                         dir.bower + '/bootstrap/less/',
-                        dir.bower + '/font-awesome/less/'
+                        dir.bower + '/font-awesome/less/',
+                        dir.bower + '/highlightjs/styles/'
                     ];
                 },
                 cleancss: true,
