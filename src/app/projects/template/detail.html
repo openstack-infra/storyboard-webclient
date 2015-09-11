@@ -46,9 +46,9 @@
         </small>
     </h1>
     <p>
-        <span ng-show="project.description"
-              class="honor-carriage-return">{{project.description}}
-        </span>
+        <insert-markdown ng-if="project.description && !isLoading"
+                         content="project.description">
+        </insert-markdown>
         <em ng-hide="project.description" class="text-muted">
             No description provided
         </em>
