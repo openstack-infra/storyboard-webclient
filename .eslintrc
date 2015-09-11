@@ -49,6 +49,7 @@
         "no-trailing-spaces": 2,
         "camelcase": 0,
         "no-extra-boolean-cast": 0,
+        "no-undef": 1,
 
         // Stylistic
         "indent": [2, 4],
