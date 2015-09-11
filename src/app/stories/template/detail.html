@@ -38,7 +38,6 @@
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/story_detail.html">
     <h1>
-
         <span ng-show="story.title" view-title>
             {{story.title}}
         </span>
@@ -51,12 +50,7 @@
                 <i class="fa fa-pencil"></i>
             </a>
             <subscribe resource="story"
-                    resource-id="story.id"></subscribe>
-            <button type="button"
-                    class="btn btn-link"
-                    ng-click="remove()" permission="is_superuser">
-                Remove this story
-            </button>
+                   resource-id="story.id"></subscribe>
         </small>
     </h1>
     <p><strong>Author:</strong>
@@ -78,9 +72,9 @@
         </em>
     </p>
     <p>
-        <span ng-show="story.description"
-              class="honor-carriage-return">{{story.description}}
-        </span>
+        <insert-markdown ng-show="story.description"
+                         content="story.description">
+        </insert-markdown>
         <em ng-hide="story.description" class="text-muted">
             No description provided
         </em>
