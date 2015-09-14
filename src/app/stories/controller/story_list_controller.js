@@ -18,7 +18,8 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryListController',
-    function ($scope, $state, NewStoryService, Criteria) {
+    function ($scope, $state, Criteria, NewStoryService,
+             SubscriptionList) {
         'use strict';
 
         // search results must be of type "story"
@@ -40,4 +41,7 @@ angular.module('sb.story').controller('StoryListController',
                 }
             );
         };
+
+        //GET list of subscriptions
+        $scope.storySubscriptions = SubscriptionList.subsList('story');
     });
