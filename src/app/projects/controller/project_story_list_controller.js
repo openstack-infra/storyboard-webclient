@@ -19,7 +19,7 @@
  */
 angular.module('sb.projects').controller('ProjectStoryListController',
     function ($scope, $state, $stateParams, Story, NewStoryService,
-              Preference) {
+              Preference, CurrentUser, Subscription) {
         'use strict';
 
         // Parse the ID. Since we're in a nested state, we don't really need
@@ -133,4 +133,27 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         // Initialize the view with a default search.
         resetScope();
         $scope.search();
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.storysubscriptions = [];
+
+        //GET list of project subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.storysubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'story',
+                    limit: 100
+                });
+            }
+        );
     });

@@ -20,7 +20,7 @@
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
     function ($scope, $stateParams, projectGroup, Story, Project,
-              Preference) {
+              Preference, CurrentUser, Subscription) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -204,4 +204,51 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
 
         $scope.listProjects();
         $scope.filterStories();
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        ** TODO: there are two different subscriptions functions
+        * because of how variables are passed from the project groups
+        * controller. This needs fixing.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.projectsubscriptions = [];
+
+        //GET list of project subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.projectsubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'project',
+                    limit: 100
+                });
+            }
+        );
+
+                /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        $scope.storysubscriptions = [];
+
+        //GET list of project subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.storysubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'story',
+                    limit: 100
+                });
+            }
+        );
     });

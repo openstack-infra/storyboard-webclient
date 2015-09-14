@@ -18,7 +18,7 @@
  * A Project
  */
 angular.module('sb.project_group').controller('ProjectGroupListController',
-    function ($scope) {
+    function ($scope, CurrentUser, Session, Subscription) {
         'use strict';
 
         // search results must be of type "ProjectGroup"
@@ -26,4 +26,27 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.projectgroupsubscriptions = [];
+
+        //GET list of project group subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.projectgroupsubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'project_group',
+                    limit: 100
+                });
+            }
+        );
     });

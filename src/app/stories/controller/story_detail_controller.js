@@ -21,7 +21,7 @@ angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User,
-              storyboardApiBase) {
+              storyboardApiBase, CurrentUser, Subscription) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -407,4 +407,28 @@ angular.module('sb.story').controller('StoryDetailController',
                 },
                 handleServiceError);
         };
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.storysubscriptions = [];
+
+        //GET list of project subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.storysubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'story',
+                    target_id: story.id,
+                    limit: 100
+                });
+            }
+        );
     });

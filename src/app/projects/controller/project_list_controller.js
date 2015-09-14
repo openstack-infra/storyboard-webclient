@@ -20,7 +20,7 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, isSuperuser) {
+    function ($scope, CurrentUser, isSuperuser, Subscription) {
         'use strict';
 
         // inject superuser flag to properly adjust UI.
@@ -31,4 +31,27 @@ angular.module('sb.projects').controller('ProjectListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.projectsubscriptions = [];
+
+        //GET list of project subscriptions
+        cuPromise.then(
+            function(user) {
+                $scope.projectsubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'project',
+                    limit: 100
+                });
+            }
+        );
     });

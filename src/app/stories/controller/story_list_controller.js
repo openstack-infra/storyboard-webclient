@@ -18,7 +18,8 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryListController',
-    function ($scope, $state, NewStoryService, Criteria) {
+    function ($scope, $state, Criteria, CurrentUser, NewStoryService, Session,
+            Subscription) {
         'use strict';
 
         // search results must be of type "story"
@@ -40,4 +41,27 @@ angular.module('sb.story').controller('StoryListController',
                 }
             );
         };
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        $scope.storysubscriptions = [];
+
+        //GET list of story subscriptions
+        cuPromise.then(
+           function(user) {
+                $scope.storysubscriptions = Subscription.browse({
+                    user_id: user.id,
+                    target_type: 'story',
+                    limit: 100
+                });
+            }
+        );
     });
