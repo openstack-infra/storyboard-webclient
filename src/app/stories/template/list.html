@@ -126,7 +126,8 @@
                 </thead>
                 <tbody ng-if="searchResults.length != 0 && !isSearching">
                 <tr ng-repeat="story in searchResults"
-                    ng-include="'app/search/template/story_search_item.html'">
+                    ng-include="'app/search/template/story_search_item.html'"
+                    subscriptions= "subscriptions">
                 </tr>
                 </tbody>
 
