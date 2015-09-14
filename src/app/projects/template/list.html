@@ -116,7 +116,8 @@
                 </thead>
                 <tbody ng-if="searchResults.length != 0 && !isSearching">
                 <tr ng-repeat="project in searchResults"
-                    ng-include="'app/search/template/project_search_item.html'">
+                    ng-include="'app/search/template/project_search_item.html'"
+                    subscriptions= "subscriptions">
                 </tr>
                 </tbody>
 
