@@ -28,7 +28,8 @@ angular.module('sb.util').directive('subscribe',
             restrict: 'E',
             scope: {
                 resource: '@',
-                resourceId: '='
+                resourceId: '=',
+                subscriptions: '='
             },
             templateUrl: 'app/subscription/template/subscribe.html',
             link: function ($scope) {
@@ -52,6 +53,8 @@ angular.module('sb.util').directive('subscribe',
                  */
                 $scope.subscribed = false;
 
+                $scope.subscriptions = $scope.subscriptions;
+
                 /**
                  * Is the control currently trying to resolve the user's
                  * subscription?
@@ -66,6 +69,8 @@ angular.module('sb.util').directive('subscribe',
                  * @type {Object}
                  */
                 $scope.subscription = null;
+                
+                var i;
 
                 /**
                  * The current user.
@@ -119,6 +124,26 @@ angular.module('sb.util').directive('subscribe',
                     );
                 }
 
+                function resolveSubsList() {
+
+                    if (!Session.isLoggedIn()) {
+                        setSubscription();
+                        return;
+                    }
+
+                    $scope.resolving = true;
+
+                    cuPromise.then(
+                        function (user) {
+                            for (i in $scope.subscriptions){
+                                if ($scope.resourceId === $scope.subscriptions[i].target_id) {
+                                    setSubscription($scope.subscriptions[i]);
+                                }
+                            }
+                        $scope.resolving = false;
+                        }
+                    );
+                }
                 // Subscribe to login/logout events for enable/disable/resolve.
                 var removeNotifier = Notification.intercept(function (message) {
                     switch (message.type) {
@@ -176,7 +201,7 @@ angular.module('sb.util').directive('subscribe',
                 };
 
                 // On initialization, resolve.
-                resolveSubscription();
+            $scope.subscriptions.$promise.then(resolveSubsList);
             }
         };
     });
