@@ -20,7 +20,7 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.util').directive('subscribe',
-    function (CurrentUser, Notification, Priority, SessionState, Session,
+    function (CurrentUser, Notification, Priority, Session, SessionState,
               Subscription) {
         'use strict';
 
@@ -28,7 +28,8 @@ angular.module('sb.util').directive('subscribe',
             restrict: 'E',
             scope: {
                 resource: '@',
-                resourceId: '='
+                resourceId: '=',
+                subscriptions: '='
             },
             templateUrl: 'app/subscription/template/subscribe.html',
             link: function ($scope) {
@@ -175,8 +176,36 @@ angular.module('sb.util').directive('subscribe',
                     }
                 };
 
+                $scope.subscriptions = $scope.subscriptions;
+
+                var i;
+
+                /** Set subscriptions based on list passed from
+                * stories/projects/project_groups controller(s)
+                */
+                function resolveSubsList() {
+
+                    if (!Session.isLoggedIn()) {
+                        setSubscription();
+                        return;
+                    }
+
+                    $scope.resolving = true;
+
+                    cuPromise.then(
+                        function () {
+                            for (i in $scope.subscriptions){
+                                if ($scope.resourceId === $scope.subscriptions[i].target_id) {
+                                    setSubscription($scope.subscriptions[i]);
+                                }
+                            }
+                            $scope.resolving = false;
+                        }
+                    );
+                }
+
                 // On initialization, resolve.
-                resolveSubscription();
+                $scope.subscriptions.$promise.then(resolveSubsList);
             }
         };
     });

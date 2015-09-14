@@ -18,12 +18,12 @@
  * A controller that manages our logged-in dashboard
  */
 angular.module('sb.dashboard').controller('DashboardController',
-    function ($scope, currentUser, Story, SubscriptionEvent, $q) {
+    function ($q, $scope, CurrentUser, Session, Story, Subscription, SubscriptionEvent) {
         'use strict';
 
         // Load the list of current assigned stories.
         $scope.assignedStories = Story.browse({
-            assignee_id: currentUser.id,
+            assignee_id: CurrentUser.id,
             status: 'active'
         });
 
@@ -31,7 +31,7 @@ angular.module('sb.dashboard').controller('DashboardController',
             // Load the user's subscription events.
             $scope.subscriptionEvents = null;
             SubscriptionEvent.browse({
-                subscriber_id: currentUser.id
+                subscriber_id: CurrentUser.id
             }, function (results) {
 
                 // First go through the results and decode the event info.
@@ -71,4 +71,43 @@ angular.module('sb.dashboard').controller('DashboardController',
             // reload new events
             $q.all(promises).then(loadEvents);
         };
+
+        /**
+        * TODO: The following is all subscriptions code. It should
+        * be moved into its own area when possible.
+        */
+
+        /**
+        * When we start, create a promise for the current user.
+        */
+        var cuPromise = CurrentUser.resolve();
+
+        /**
+        * The current user.
+        *
+        * @param currentUser
+        */
+        $scope.currentUser = null;
+
+        cuPromise.then(function (user) {
+            $scope.currentUser = user;
+        });
+
+        $scope.subscriptions = [];
+
+        //GET list of story subscriptions
+        if (!Session.isLoggedIn()) {
+            $scope.subscriptions = null;
+        }
+        else {
+            cuPromise.then(
+                function(user) {
+                    $scope.subscriptions = Subscription.browse({
+                        user_id: user.id,
+                        target_type: 'story',
+                        limit: 100
+                    });
+                }
+            );
+        }
     });
