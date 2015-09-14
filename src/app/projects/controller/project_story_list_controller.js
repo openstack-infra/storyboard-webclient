@@ -19,7 +19,7 @@
  */
 angular.module('sb.projects').controller('ProjectStoryListController',
     function ($scope, $state, $stateParams, Story, NewStoryService,
-              Preference) {
+              Preference, SubscriptionList, CurrentUser) {
         'use strict';
 
         // Parse the ID. Since we're in a nested state, we don't really need
@@ -133,4 +133,12 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         // Initialize the view with a default search.
         resetScope();
         $scope.search();
+
+        // GET list of story subscriptions
+        var cuPromise = CurrentUser.resolve();
+
+        cuPromise.then(function(user){
+            $scope.storySubscriptions = SubscriptionList.subsList(
+                'story', user);
+        });
     });

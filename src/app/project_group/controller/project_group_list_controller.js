@@ -18,7 +18,7 @@
  * A Project
  */
 angular.module('sb.project_group').controller('ProjectGroupListController',
-    function ($scope) {
+    function ($scope, SubscriptionList, CurrentUser) {
         'use strict';
 
         // search results must be of type "ProjectGroup"
@@ -26,4 +26,14 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        //GET list of project group subscriptions
+        var cuPromise = CurrentUser.resolve();
+
+        cuPromise.then(function(user){
+            $scope.projectGroupSubscriptions =
+            SubscriptionList.subsList(
+                'project_group', user);
+        });
+
     });
