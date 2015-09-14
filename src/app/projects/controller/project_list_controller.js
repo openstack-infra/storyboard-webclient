@@ -20,7 +20,7 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, isSuperuser) {
+    function ($scope, isSuperuser, SubscriptionList) {
         'use strict';
 
         // inject superuser flag to properly adjust UI.
@@ -31,4 +31,11 @@ angular.module('sb.projects').controller('ProjectListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        /**
+        * TODO: Tidy these horrible variable names!
+        */
+
+        $scope.projectsubscriptions = [];
+        $scope.projectsubscriptions = SubscriptionList.subsList('project');
     });

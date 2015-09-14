@@ -20,7 +20,7 @@
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
     function ($scope, $stateParams, projectGroup, Story, Project,
-              Preference) {
+              Preference, SubscriptionList) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -204,4 +204,13 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
 
         $scope.listProjects();
         $scope.filterStories();
+
+        //GET subscriptions
+
+        $scope.projectsubscriptions = [];
+        $scope.projectsubscriptions = SubscriptionList.subsList('project');
+
+
+        $scope.storysubscriptions = [];
+        $scope.storysubscriptions = SubscriptionList.subsList('story');
     });

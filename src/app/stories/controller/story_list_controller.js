@@ -18,7 +18,8 @@
  * Controller for our story list.
  */
 angular.module('sb.story').controller('StoryListController',
-    function ($scope, $state, NewStoryService, Criteria) {
+    function ($scope, $state, Criteria, CurrentUser, NewStoryService,
+             SubscriptionList) {
         'use strict';
 
         // search results must be of type "story"
@@ -40,4 +41,12 @@ angular.module('sb.story').controller('StoryListController',
                 }
             );
         };
+
+        /**
+        * TODO: Tidy these horrible variable names!
+        */
+
+        $scope.storysubscriptions = [];
+        //GET list of subscriptions
+        $scope.storysubscriptions = SubscriptionList.subsList('story');
     });
