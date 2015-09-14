@@ -50,7 +50,14 @@
                 <i class="fa fa-pencil"></i>
             </a>
             <subscribe resource="story"
-                   resource-id="story.id"></subscribe>
+                    resource-id="story.id"
+                    subscriptions="storySubscriptions">
+            </subscribe>
+            <button type="button"
+                    class="btn btn-link"
+                    ng-click="remove()" permission="is_superuser">
+                Remove this story
+            </button>
         </small>
     </h1>
     <p><strong>Author:</strong>
