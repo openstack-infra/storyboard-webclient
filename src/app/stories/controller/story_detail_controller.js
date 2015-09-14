@@ -21,7 +21,7 @@ angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User,
-              storyboardApiBase) {
+              storyboardApiBase, SubscriptionList, CurrentUser) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -407,4 +407,12 @@ angular.module('sb.story').controller('StoryDetailController',
                 },
                 handleServiceError);
         };
+
+        //GET subscriptions
+        var cuPromise = CurrentUser.resolve();
+
+        cuPromise.then(function(user){
+            $scope.storySubscriptions = SubscriptionList.subsList(
+                'story', user);
+        });
     });
