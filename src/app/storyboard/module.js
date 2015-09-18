@@ -27,7 +27,7 @@ angular.module('storyboard',
         'sb.auth', 'sb.story', 'sb.profile', 'sb.notification', 'sb.search',
         'sb.admin', 'sb.subscription', 'sb.project_group', 'ui.router',
         'ui.bootstrap', 'monospaced.elastic', 'angularMoment',
-        'angular-data.DSCacheFactory'])
+        'angular-data.DSCacheFactory', 'viewhead'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
         timezone: 'UTC'
