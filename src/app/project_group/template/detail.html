@@ -15,6 +15,20 @@
                 <small>Projects</small>
             </span>
             <i class="fa fa-2x fa-sb-project visible-xs"></i>
+            <div class="col-xs-12">
+                <br />
+                <result-set-pager
+                        class="form-control-static text-muted"
+                        total="projectCount"
+                        offset="projectSearchOffset"
+                        limit="projectSearchLimit"
+                        minimal-pager="true"
+                        list-type="'projects'"
+                        on-next-page="nextPage(type)"
+                        on-previous-page="previousPage(type)"
+                        on-page-size="updatePageSize(type, pageSize)"
+                        ></result-set-pager>
+            </div>
         </div>
         <div class="col-xs-10">
             <table class="table table-condensed table-striped table-clean">
@@ -65,6 +79,20 @@
                            ng-change="filterStories()"/>
                     Invalid
                 </div>
+            </div>
+            <div class="col-xs-12 text-center text-muted">
+                <br />
+                <result-set-pager
+                        class="form-control-static text-muted"
+                        total="storyCount"
+                        offset="storySearchOffset"
+                        limit="storySearchLimit"
+                        list-type="'stories'"
+                        minimal-pager="true"
+                        on-next-page="nextPage(type)"
+                        on-previous-page="previousPage(type)"
+                        on-page-size="updatePageSize(type, pageSize)"
+                        ></result-set-pager>
             </div>
         </div>
         <div class="col-xs-10">

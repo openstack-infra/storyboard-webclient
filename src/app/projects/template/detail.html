@@ -134,6 +134,15 @@
 <script type="text/ng-template" id="/inline/story_list.html">
     <div ng-controller="ProjectStoryListController">
         <div class="col-xs-12">
+            <result-set-pager
+                    class="form-control-static text-muted pull-right"
+                    total="storyCount"
+                    offset="searchOffset"
+                    limit="searchLimit"
+                    on-next-page="nextPage()"
+                    on-previous-page="previousPage()"
+                    on-page-size="updatePageSize(pageSize)"
+                    ></result-set-pager>
             <a href=""
                class="btn btn-link pull-right"
                ng-click="newStory()"

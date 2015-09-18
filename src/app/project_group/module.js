@@ -58,17 +58,6 @@ angular.module('sb.project_group',
                                 deferred.reject(error);
                             });
                         return deferred.promise;
-                    },
-                    projects: function($stateParams, Project, $q) {
-                        var deferred = $q.defer();
-
-                        Project.query({project_group_id: $stateParams.id},
-                            function (result) {
-                                deferred.resolve(result);
-                            }, function (error) {
-                                deferred.reject(error);
-                            });
-                        return deferred.promise;
                     }
                 }
             });

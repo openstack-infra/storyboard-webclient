@@ -112,6 +112,7 @@ angular.module('sb.search').directive('searchResults',
 
                     // Apply paging.
                     params.limit = pageSize;
+                    params.offset = $scope.searchOffset;
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
@@ -161,12 +162,21 @@ angular.module('sb.search').directive('searchResults',
                 /**
                  * Next page of the results.
                  */
-                $scope.nextPage = function () {};
+                $scope.nextPage = function () {
+                    $scope.searchOffset += pageSize;
+                    updateResults();
+                };
 
                 /**
                  * Previous page in the results.
                  */
-                $scope.previousPage = function () {};
+                $scope.previousPage = function () {
+                    $scope.searchOffset -= pageSize;
+                    if ($scope.searchOffset < 0) {
+                        $scope.searchOffset = 0;
+                    }
+                    updateResults();
+                };
 
                 // Watch for changing criteria
                 $scope.$watchCollection(

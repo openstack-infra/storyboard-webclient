@@ -224,5 +224,11 @@ angular.module('sb.services').provider('Preference',
 
         // Let our preference provider know about page_size.
         PreferenceProvider.addPreference('page_size', 10);
+        PreferenceProvider.addPreference('story_detail_page_size', 10);
+        PreferenceProvider.addPreference(
+            'project_group_detail_projects_page_size', 10);
+        PreferenceProvider.addPreference(
+            'project_group_detail_stories_page_size', 10);
+        PreferenceProvider.addPreference('project_detail_page_size', 10);
 
     });
