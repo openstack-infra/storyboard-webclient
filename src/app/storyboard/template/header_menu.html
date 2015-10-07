@@ -39,12 +39,49 @@
 
         <ul class="nav navbar-nav">
             <li>&nbsp;&nbsp;</li>
-            <li>
+            <li class="dropdown" dropdown ng-show="isLoggedIn">
                 <button type="button"
-                        class="btn btn-primary navbar-btn"
-                        ng-click="newStory()">
+                        class="btn btn-primary navbar-btn dropdown-toggle"
+                        dropdown-toggle>
                     <i class="fa fa-plus-circle"></i>
-                    New Story
+                    Create New...
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href ng-click="newStory()">
+                            Story
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="newWorklist()">
+                            Worklist
+                        </a>
+                    </li>
+                    <li>
+                        <a href ng-click="newBoard()">
+                            Board
+                        </a>
+                    </li>
+                    <li ng-show="currentUser.is_superuser">
+                        <a href="#!/project/new">
+                            Project
+                        </a>
+                    </li>
+                    <li ng-show="currentUser.is_superuser">
+                        <a href ng-click="newProjectGroup()">
+                            Project Group
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li ng-show="!isLoggedIn">
+                <button type="button"
+                        class="btn btn-primary navbar-btn dropdown-toggle"
+                        ng-click="showLoginRequiredModal()">
+                    <i class="fa fa-plus-circle"></i>
+                    Create New...
+                    <i class="fa fa-caret-down"></i>
                 </button>
             </li>
         </ul>
@@ -118,12 +155,53 @@
                ng-hide="isLoggedIn">
                 <i class="fa fa-sign-in"></i>
             </a>
-            <a href="#" ng-click="newStory()"
-               class="btn btn-sm btn-primary navbar-btn">
+            <button type="button"
+                    ng-click="showMobileNewMenu = !showMobileNewMenu"
+                    class="btn btn-sm btn-primary navbar-btn"
+                    ng-show="isLoggedIn">
                 <i class="fa fa-plus-circle"></i>
-                New Story
-            </a>
+                Create New...
+            </button>
+            <button type="button"
+                    class="btn btn-primary navbar-btn dropdown-toggle"
+                    ng-click="showLoginRequiredModal()"
+                    ng-show="!isLoggedIn">
+                <i class="fa fa-plus-circle"></i>
+                Create New...
+                <i class="fa fa-caret-down"></i>
+            </button>
             <a class="navbar-brand" href="#!/">StoryBoard</a>
+        </div>
+
+        <div collapse="!showMobileNewMenu" id="mobile-new-menu">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href ng-click="newStory()">
+                        Story
+                    </a>
+                </li>
+                <li>
+                    <a href ng-click="newWorklist()">
+                        Worklist
+                    </a>
+                </li>
+                <li>
+                    <a href ng-click="newBoard()">
+                        Board
+                    </a>
+                </li>
+                <li ng-show="currentUser.is_superuser">
+                    <a href="#!/project/new"
+                       ng-click="showMobileNewMenu = false">
+                        Project
+                    </a>
+                </li>
+                <li ng-show="currentUser.is_superuser">
+                    <a href ng-click="newProjectGroup()">
+                        Project Group
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <div collapse="!showMobileMenu" id="mobile-dropdown-menu">
