@@ -19,9 +19,10 @@
  * and search box.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($q, $scope, $rootScope, $state, NewStoryService, Session,
-              SessionState, CurrentUser, Criteria, Notification, Priority,
-              Project, Story, ProjectGroup) {
+    function ($q, $scope, $rootScope, $state, $modal, NewStoryService,
+              Session, SessionState, CurrentUser, Criteria, Notification,
+              Priority, Project, Story, ProjectGroup, NewWorklistService,
+              NewBoardService, SessionModalService) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -49,9 +50,64 @@ angular.module('storyboard').controller('HeaderController',
             NewStoryService.showNewStoryModal()
                 .then(function (story) {
                     // On success, go to the story detail.
+                    $scope.showMobileNewMenu = false;
                     $state.go('sb.story.detail', {storyId: story.id});
                 }
             );
+        };
+
+        /**
+         * Create a new worklist.
+         */
+        $scope.newWorklist = function () {
+            NewWorklistService.showNewWorklistModal()
+                .then(function (worklist) {
+                    // On success, go to the worklist detail.
+                    $scope.showMobileNewMenu = false;
+                    $state.go('sb.worklist.detail',
+                              {worklistID: worklist.id});
+                }
+            );
+        };
+
+        /**
+         * Create a new board.
+         */
+        $scope.newBoard = function () {
+            NewBoardService.showNewBoardModal()
+                .then(function (board) {
+                    // On success, go to the board detail.
+                    $scope.showMobileNewMenu = false;
+                    $state.go('sb.board.detail', {boardID: board.id});
+                }
+            );
+        };
+
+        /**
+         * Create a new project-group.
+         */
+        $scope.newProjectGroup = function () {
+            $scope.modalInstance = $modal.open(
+                {
+                    templateUrl: 'app/project_group/template/new.html',
+                    controller: 'ProjectGroupNewController'
+                });
+
+            $scope.modalInstance.result.then(function (projectGroup) {
+                    // On success, go to the project group detail.
+                    $scope.showMobileNewMenu = false;
+                    $state.go(
+                        'sb.project_group_detail',
+                        {id: projectGroup.id}
+                    );
+                });
+        };
+
+        /**
+         * Show modal informing the user login is required.
+         */
+        $scope.showLoginRequiredModal = function() {
+            SessionModalService.showLoginRequiredModal();
         };
 
         /**
