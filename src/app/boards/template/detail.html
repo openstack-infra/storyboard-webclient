@@ -1,0 +1,178 @@
+<!--
+  ~ Copyright (c) 2015 Codethink Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="container-fluid">
+    <div ng-include
+         src="'/inline/board_detail.html'"
+         ng-hide="showEditForm">
+    </div>
+    <hr ng-show="showEditForm">
+    <div ng-include
+         src="'/inline/edit_board.html'"
+         ng-show="showEditForm">
+    </div>
+    <hr>
+    <div ng-show="permissions.edit_board"
+         ng-include src="'/inline/kanban_lanes.html'"></div>
+    <div ng-show="!permissions.edit_board"
+         ng-include src="'/inline/kanban_lanes_static.html'"></div>
+</div>
+
+
+<!-- Template for the header and description -->
+<script type="text/ng-template" id="/inline/board_detail.html">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="no-margin-bottom" view-title>
+                {{board.title}}
+                <small>
+                    <a ng-click="toggleEditMode()"
+                       ng-show="permissions.edit_board">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <insert-markdown ng-if="board.description"
+                             content="board.description">
+            </insert-markdown>
+        </div>
+    </div>
+</script>
+
+
+<!-- Template for the edit form -->
+<script type="text/ng-template" id="/inline/edit_board.html">
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="boardForm" role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">
+                        Title
+                    </label>
+                    <div class="col-sm-10">
+                        <input id="title"
+                               focus
+                               type="text"
+                               class="form-control"
+                               ng-model="board.title"
+                               required
+                               maxlength="100"
+                               placeholder="Board title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description"
+                           class="col-sm-2 control-label">
+                        Description
+                    </label>
+                    <div class="col-sm-10">
+                        <textarea id="description"
+                                  class="form-control"
+                                  ng-model="board.description"
+                                  msd-elastic
+                                  placeholder="A short description of the board's purpose.">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="private" class="col-sm-2 control-label">
+                        Private
+                    </label>
+                    <div class="col-sm-10 checkbox">
+                        <input id="private"
+                               type="checkbox"
+                               class="modal-checkbox"
+                               ng-model="board.private"
+                                />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <div class="btn" ng-show="isUpdating">
+                            <i class="fa fa-spinner fa-lg fa-spin"></i>
+                        </div>
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-click="update()"
+                                ng-disabled="!boardForm.$valid">
+                            Save
+                        </button>
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="toggleEditMode()">
+                            Cancel
+                        </button>
+                    </div>
+                    <button type="button"
+                            class="btn btn-danger"
+                            ng-click="remove()"
+                            ng-show="permissions.editBoard">
+                        Archive board
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+
+<!-- Template for the board's lanes with edit permissions -->
+<script type="text/ng-template" id="/inline/kanban_lanes.html">
+    <div id="kanban-board" class="kanban-board"
+         as-sortable="lanesSortable" ng-model="board.worklists">
+        <div class="kanban-lane" as-sortable-item ng-repeat="worklist in board.worklists">
+            <div as-sortable-item-handle>
+                <span ng-if="!worklist.editing">
+                    <a ng-class="{'kanban-lane-title': !!worklist.title}" ng-click="toggleEditLane(worklist)">
+                        {{ worklist.title }}
+                        <i class="fa fa-pencil" ng-if="!worklist.title"></i>
+                    </a>
+                    <button type="button" class="close" title="Remove"
+                            ng-click="removeLane(worklist)">
+                        &times;
+                    </button>
+                </span>
+                <input class="form-control"
+                       type="text"
+                       ng-model="worklist.title"
+                       placeholder="Lane Title"
+                       focus
+                       ng-if="worklist.editing"
+                       ng-blur="toggleEditLane(worklist)" />
+                </div>
+                <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
+            </div>
+        </div>
+        <div class="kanban-lane-clickable" ng-click="addLane()">
+            Add lane
+        </div>
+    </div>
+</script>
+
+
+<!-- Template for the board's lanes without edit permissions -->
+<script type="text/ng-template" id="/inline/kanban_lanes_static.html">
+    <div class="kanban-board">
+        <div class="kanban-lane" ng-repeat="worklist in board.worklists">
+            <span class="kanban-lane-title">{{ worklist.title }}</span>
+            <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'"
+                 ng-show="permissions.move_cards"></div>
+            <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'"
+                 ng-show="!permissions.move_cards"></div>
+        </div>
+    </div>
+</script>

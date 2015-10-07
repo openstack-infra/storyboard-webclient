@@ -26,7 +26,7 @@ angular.module('storyboard',
     [ 'sb.services', 'sb.templates', 'sb.dashboard', 'sb.pages', 'sb.projects',
         'sb.auth', 'sb.story', 'sb.profile', 'sb.notification', 'sb.search',
         'sb.admin', 'sb.subscription', 'sb.project_group', 'sb.worklist',
-        'ui.router', 'ui.bootstrap', 'monospaced.elastic',
+        'sb.board', 'ui.router', 'ui.bootstrap', 'monospaced.elastic',
         'angularMoment', 'angular-data.DSCacheFactory', 'viewhead',
         'ngSanitize', 'as.sortable'])
     .constant('angularMomentConfig', {
