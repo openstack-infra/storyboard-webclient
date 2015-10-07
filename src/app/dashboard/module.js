@@ -18,7 +18,7 @@
  * The storyboard dashboard module. Handles our index page.
  */
 angular.module('sb.dashboard',
-    [ 'sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap'])
+    ['sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap'])
     .config(function ($stateProvider, SessionResolver) {
         'use strict';
 
@@ -33,12 +33,29 @@ angular.module('sb.dashboard',
                 }
             })
             .state('sb.dashboard', {
+                abstract: true,
                 url: '/dashboard',
-                templateUrl: 'app/dashboard/template/dashboard.html',
-                controller: 'DashboardController',
                 resolve: {
-                    sessionState: SessionResolver.requireLoggedIn,
+                    sessionState: SessionResolver.resolveSessionState,
                     currentUser: SessionResolver.requireCurrentUser
+                },
+                views: {
+                    'submenu@': {
+                        templateUrl: 'app/dashboard/template/submenu.html'
+                    },
+                    '@': {
+                        template: '<div ui-view></div>'
+                    }
                 }
+            })
+            .state('sb.dashboard.stories', {
+                url: '/stories',
+                controller: 'DashboardController',
+                templateUrl: 'app/dashboard/template/dashboard.html'
+            })
+            .state('sb.dashboard.boards', {
+                url: '/boards',
+                controller: 'BoardsWorklistsController',
+                templateUrl: 'app/dashboard/template/boards_worklists.html'
             });
     });
