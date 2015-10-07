@@ -47,6 +47,24 @@
                     New Story
                 </button>
             </li>
+            <li>&nbsp;&nbsp;</li>
+            <li>
+                <button type="button"
+                        class="btn btn-primary navbar-btn"
+                        ng-click="newWorklist()">
+                    <i class="fa fa-plus-circle"></i>
+                    New Worklist
+                </button>
+            </li>
+            <li>&nbsp;&nbsp;</li>
+            <li>
+                <button type="button"
+                        class="btn btn-primary navbar-btn"
+                        ng-click="newBoard()">
+                    <i class="fa fa-plus-circle"></i>
+                    New Board
+                </button>
+            </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -122,6 +140,11 @@
                class="btn btn-sm btn-primary navbar-btn">
                 <i class="fa fa-plus-circle"></i>
                 New Story
+            </a>
+            <a href="#" ng-click="newWorklist()"
+               class="btn btn-sm btn-primary navbar-btn">
+                <i class="fa fa-plus-circle"></i>
+                New Worklist
             </a>
             <a class="navbar-brand" href="#!/">StoryBoard</a>
         </div>
