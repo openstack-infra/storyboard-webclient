@@ -1,0 +1,118 @@
+<!--
+  ~ Copyright (c) 2015 Codethink Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">New Board</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-horizontal" role="form" name="worklistForm">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">
+                            Title
+                        </label>
+                        <div class="col-sm-10">
+                            <input id="title"
+                                   focus
+                                   type="text"
+                                   class="form-control"
+                                   ng-model="board.title"
+                                   required
+                                   maxlength="100"
+                                   placeholder="Board title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description"
+                               class="col-sm-2 control-label">
+                            Description
+                        </label>
+                        <div class="col-sm-10">
+                            <textarea id="description"
+                                      class="form-control"
+                                      ng-model="board.description"
+                                      msd-elastic
+                                      placeholder="A short description of the board's purpose.">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="private" class="col-sm-2 control-label">
+                            Private
+                        </label>
+                        <div class="col-sm-10 checkbox">
+                            <input id="private"
+                                   type="checkbox"
+                                   class="modal-checkbox"
+                                   ng-model="board.private"
+                                    />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="kanban-board"
+             id="new-board"
+             ng-model="lanes"
+             as-sortable="lanesSortable">
+            <div class="kanban-lane"
+                 ng-repeat="worklist in lanes"
+                 as-sortable-item>
+                <span ng-if="!worklist.editing">
+                    <i class="fa fa-bars" as-sortable-item-handle></i>
+                    &nbsp;
+                    <a ng-click="toggleEdit(worklist)">
+                        {{worklist.title}}
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <button type="button" class="close" title="Remove"
+                            ng-click="removeLane(worklist)">
+                        &times;
+                    </button>
+                </span>
+                <input class="form-control"
+                       type="text"
+                       ng-model="worklist.title"
+                       placeholder="Lane Title"
+                       focus
+                       ng-if="worklist.editing"
+                       ng-blur="toggleEdit(worklist)" />
+            </div><div class="kanban-lane-clickable"
+                       ng-click="addLane()">
+                Add lane
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="save()">
+                    Save Changes
+                </button>
+                <button type="button"
+                        ng-click="close()"
+                        class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
