@@ -23,7 +23,7 @@ angular.module('sb.dashboard').controller('HomeController',
 
         // If we're logged in, go to the dashboard instead.
         if (sessionState === SessionState.LOGGED_IN) {
-            $state.go('sb.dashboard');
+            $state.go('sb.dashboard.stories');
         } else {
             $state.go('sb.project.list');
         }
