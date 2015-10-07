@@ -150,7 +150,8 @@ module.exports = function (grunt) {
                         dir.theme + '/storyboard/',
                         dir.bower + '/bootstrap/less/',
                         dir.bower + '/font-awesome/less/',
-                        dir.bower + '/highlightjs/styles/'
+                        dir.bower + '/highlightjs/styles/',
+                        dir.bower + '/ng-sortable/dist/'
                     ];
                 },
                 cleancss: true,
