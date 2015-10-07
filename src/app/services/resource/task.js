@@ -33,7 +33,7 @@ angular.module('sb.services').factory('Task',
         ResourceFactory.applySearch(
             'Task',
             resource,
-            null,
+            'title',
             {
                 Text: 'q',
                 TaskStatus: 'status',
