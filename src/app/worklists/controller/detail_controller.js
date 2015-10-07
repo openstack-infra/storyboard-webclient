@@ -121,18 +121,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             accept: function (sourceHandle, dest) {
                 return sourceHandle.itemScope.sortableScope.$id === dest.$id;
             },
-            orderChanged: function(result) {
-                var list = result.source.sortableScope.$parent.worklist;
-                for (var i = 0; i < list.items.length; i++) {
-                    var item = list.items[i];
-                    item.position = i;
-                    Worklist.ItemsController.update({
-                        id: list.id,
-                        item_id: item.list_item_id,
-                        list_position: item.position
-                    });
-                }
-            }
+            orderChanged: BoardHelper.moveCardInLane
         };
 
         // Load the worklist.
