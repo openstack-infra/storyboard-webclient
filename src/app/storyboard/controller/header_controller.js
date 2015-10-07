@@ -21,7 +21,8 @@
 angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, NewStoryService, Session,
               SessionState, CurrentUser, Criteria, Notification, Priority,
-              Project, Story, ProjectGroup) {
+              Project, Story, ProjectGroup, NewWorklistService,
+              NewBoardService) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -50,6 +51,23 @@ angular.module('storyboard').controller('HeaderController',
                 .then(function (story) {
                     // On success, go to the story detail.
                     $state.go('sb.story.detail', {storyId: story.id});
+                }
+            );
+        };
+
+        $scope.newWorklist = function () {
+            NewWorklistService.showNewWorklistModal()
+                .then(function (worklist) {
+                    $state.go('sb.worklist.detail',
+                              {worklistID: worklist.id});
+                }
+            );
+        };
+
+        $scope.newBoard = function () {
+            NewBoardService.showNewBoardModal()
+                .then(function (board) {
+                    $state.go('sb.board.detail', {boardID: board.id});
                 }
             );
         };
