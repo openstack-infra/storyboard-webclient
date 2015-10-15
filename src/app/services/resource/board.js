@@ -30,9 +30,24 @@ angular.module('sb.services').factory('Board',
             {id: '@id'}
         );
 
+        var permissionsSignature = {
+            'create': {
+                method: 'POST'
+            },
+            'get': {
+                method: 'GET',
+                cache: false,
+                isArray: true
+            },
+            'update': {
+                method: 'PUT'
+            }
+        };
+
         resource.Permissions = $resource(
             storyboardApiBase + '/boards/:id/permissions',
-            {id: '@id'}
+            {id: '@id'},
+            permissionsSignature
         );
 
         ResourceFactory.applySearch(
