@@ -27,7 +27,8 @@ angular.module('sb.services').factory('Board',
         var resource = ResourceFactory.build(
             '/boards/:id',
             '/boards/search',
-            {id: '@id'}
+            {id: '@id'},
+            false, true
         );
 
         var permissionsSignature = {
@@ -48,11 +49,6 @@ angular.module('sb.services').factory('Board',
             storyboardApiBase + '/boards/:id/permissions',
             {id: '@id'},
             permissionsSignature
-        );
-
-        resource.OldPermissions = $resource(
-            storyboardApiBase + '/boards/:id/permissions',
-            {id: '@id'}
         );
 
         ResourceFactory.applySearch(

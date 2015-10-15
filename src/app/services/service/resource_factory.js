@@ -34,9 +34,11 @@ angular.module('sb.services')
          * @param cacheSearchResults
          * @returns An API signature that may be used with a $resource.
          */
-        function buildSignature(searchUrl, cacheSearchResults) {
+        function buildSignature(searchUrl, cacheSearchResults,
+                                disableCachedGets) {
             // Cast to boolean.
             cacheSearchResults = !!cacheSearchResults;
+            disableCachedGets = !!disableCachedGets;
 
             return {
                 'create': {
@@ -44,7 +46,7 @@ angular.module('sb.services')
                 },
                 'get': {
                     method: 'GET',
-                    cache: true
+                    cache: !disableCachedGets
                 },
                 'update': {
                     method: 'PUT'
@@ -81,7 +83,7 @@ angular.module('sb.services')
              * @returns {*}
              */
             build: function (restUri, searchUri, resourceParameters,
-                             cacheSearchResults) {
+                             cacheSearchResults, disableCachedGets) {
 
                 if (!restUri) {
                     $log.error('Cannot use resource factory ' +
@@ -93,7 +95,7 @@ angular.module('sb.services')
                 cacheSearchResults = !!cacheSearchResults;
 
                 var signature = buildSignature(storyboardApiBase + searchUri,
-                    cacheSearchResults);
+                    cacheSearchResults, disableCachedGets);
                 return $resource(storyboardApiBase + restUri,
                     resourceParameters, signature);
             },
