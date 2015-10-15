@@ -21,7 +21,7 @@ angular.module('sb.dashboard').controller('BoardsWorklistsController',
     function ($scope, currentUser, Worklist, Board) {
         'use strict';
 
-        var params = {creator_id: currentUser.id};
+        var params = {user_id: currentUser.id};
 
         // Load the boards belonging to the logged in user.
         Board.browse(params).$promise.then(function(boards) {

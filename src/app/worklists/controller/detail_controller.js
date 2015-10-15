@@ -19,40 +19,71 @@
  */
 angular.module('sb.worklist').controller('WorklistDetailController',
     function ($scope, $modal, $timeout, $stateParams, Worklist, BoardHelper,
-              $document) {
+              $document, User, $q) {
         'use strict';
+
+        function resolvePermissions() {
+            $scope.owners = [];
+            $scope.users = [];
+            angular.forEach($scope.worklist.owners, function(id) {
+                $scope.owners.push(User.get({id: id}));
+            });
+            angular.forEach($scope.worklist.users, function(id) {
+                $scope.users.push(User.get({id: id}));
+            });
+        }
 
         /**
          * Load the worklist and its contents.
          */
         function loadWorklist() {
             var params = {id: $stateParams.worklistID};
-            Worklist.get(params).$promise.then(function(result) {
+            Worklist.Permissions.get(params, function(perms) {
+                $scope.permissions = {
+                    editWorklist: perms.indexOf('edit_worklist') > -1,
+                    moveItems: perms.indexOf('move_items') > 1
+                };
+            });
+            Worklist.get(params, function(result) {
                 $scope.worklist = result;
                 Worklist.loadContents(result, true);
+                resolvePermissions();
             });
         }
 
         /**
          * Save the worklist.
          */
-        function saveWorklist() {
+        $scope.update = function() {
+            var params = {id: $scope.worklist.id};
+            var owners = {
+                codename: 'edit_worklist',
+                users: $scope.worklist.owners
+            };
+            var users = {
+                codename: 'move_items',
+                users: $scope.worklist.users
+            };
             $scope.worklist.$update().then(function() {
-                Worklist.loadContents($scope.worklist, true);
+                var updating = [
+                    Worklist.Permissions.update(params, owners).$promise,
+                    Worklist.Permissions.update(params, users).$promise
+                ];
+                $q.all(updating).then(function() {
+                    $scope.toggleEditMode();
+                });
             });
-        }
+        };
 
         /**
          * Toggle edit mode on the worklist. If going on->off then
          * save changes.
          */
         $scope.toggleEditMode = function() {
-            if (!$scope.worklist.editing) {
-                $scope.worklist.editing = true;
-            } else {
-                $scope.worklist.editing = false;
-                saveWorklist();
+            if ($scope.editing) {
+                loadWorklist();
             }
+            $scope.editing = !$scope.editing;
         };
 
         /**
@@ -89,7 +120,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
         /**
          * Remove an item from the worklist.
          */
-        $scope.removeItem = function(item) {
+        $scope.removeListItem = function(item) {
             Worklist.ItemsController.delete({
                 id: $scope.worklist.id,
                 item_id: item.list_item_id
@@ -113,6 +144,55 @@ angular.module('sb.worklist').controller('WorklistDetailController',
                 }
             });
             return modalInstance.result;
+        };
+
+        /**
+         * User typeahead search method.
+         */
+        $scope.searchUsers = function (value, array) {
+            var deferred = $q.defer();
+
+            User.browse({full_name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (array.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        /**
+         * Formats the user name.
+         */
+        $scope.formatUserName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Add a new user to one of the permission levels.
+         */
+        $scope.addUser = function (model, modelArray, idArray) {
+            idArray.push(model.id);
+            modelArray.push(model);
+        };
+
+        /**
+         * Remove a user from one of the permission levels.
+         */
+        $scope.removeUser = function (model, modelArray, idArray) {
+            var idIdx = idArray.indexOf(model.id);
+            idArray.splice(idIdx, 1);
+
+            var modelIdx = modelArray.indexOf(model);
+            modelArray.splice(modelIdx, 1);
         };
 
         /**
