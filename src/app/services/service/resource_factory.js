@@ -44,7 +44,7 @@ angular.module('sb.services')
                 },
                 'get': {
                     method: 'GET',
-                    cache: true
+                    cache: false
                 },
                 'update': {
                     method: 'PUT'

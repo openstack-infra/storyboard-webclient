@@ -19,7 +19,7 @@
  */
 angular.module('sb.board').controller('BoardDetailController',
     function ($scope, Worklist, $modal, Board, Project, $stateParams,
-              BoardHelper) {
+              BoardHelper, User, $q) {
         'use strict';
 
         /**
@@ -31,9 +31,23 @@ angular.module('sb.board').controller('BoardDetailController',
             if (onlyContents) {
                 Board.loadContents($scope.board, true, true);
             } else {
+                Board.Permissions.get(params, function(perms) {
+                    $scope.permissions = {
+                        editBoard: perms.indexOf('edit_board') > -1,
+                        moveCards: perms.indexOf('move_cards') > -1
+                    };
+                });
                 Board.get(params, function(board) {
                     $scope.board = board;
                     Board.loadContents(board, true, true);
+                    $scope.owners = [];
+                    $scope.users = [];
+                    angular.forEach(board.owners, function(id) {
+                        $scope.owners.push(User.get({id: id}));
+                    });
+                    angular.forEach(board.users, function(id) {
+                        $scope.users.push(User.get({id: id}));
+                    });
                 });
             }
         }
@@ -87,6 +101,9 @@ angular.module('sb.board').controller('BoardDetailController',
          * Toggle the edit form for the board title and description.
          */
         $scope.toggleEditMode = function() {
+            if ($scope.showEditForm) {
+                loadBoard();
+            }
             $scope.showEditForm = !$scope.showEditForm;
         };
 
@@ -94,9 +111,23 @@ angular.module('sb.board').controller('BoardDetailController',
          * Save changes to the board.
          */
         $scope.update = function() {
+            var params = {id: $scope.board.id};
+            var owners = {
+                codename: 'edit_board',
+                users: $scope.board.owners
+            };
+            var users = {
+                codename: 'move_cards',
+                users: $scope.board.users
+            };
             $scope.board.$update().then(function() {
-                loadBoard(true);
-                $scope.toggleEditMode();
+                var updating = [
+                    Board.Permissions.update(params, owners).$promise,
+                    Board.Permissions.update(params, users).$promise
+                ];
+                $q.all(updating).then(function() {
+                    $scope.toggleEditMode();
+                });
             });
         };
 
@@ -191,6 +222,55 @@ angular.module('sb.board').controller('BoardDetailController',
         };
 
         /**
+         * User typeahead search method.
+         */
+        $scope.searchUsers = function (value, array) {
+            var deferred = $q.defer();
+
+            User.browse({full_name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (array.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        /**
+         * Formats the user name.
+         */
+        $scope.formatUserName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Add a new user to one of the permission levels.
+         */
+        $scope.addUser = function (model, modelArray, idArray) {
+            idArray.push(model.id);
+            modelArray.push(model);
+        };
+
+        /**
+         * Remove a user from one of the permission levels.
+         */
+        $scope.removeUser = function (model, modelArray, idArray) {
+            var idIdx = idArray.indexOf(model.id);
+            idArray.splice(idIdx, 1);
+
+            var modelIdx = modelArray.indexOf(model);
+            modelArray.splice(modelIdx, 1);
+        };
+
+        /**
          * Config for the lanes sortable.
          */
         $scope.lanesSortable = {
@@ -211,6 +291,9 @@ angular.module('sb.board').controller('BoardDetailController',
             accept: function (sourceHandle, dest) {
                 var srcParent = sourceHandle.itemScope.sortableScope.$parent;
                 var dstParentSortable = dest.$parent.sortableScope;
+                if (!$scope.permissions.edit_board) {
+                    return true;
+                }
                 if (!srcParent.sortableScope) {
                     return false;
                 }
@@ -220,6 +303,6 @@ angular.module('sb.board').controller('BoardDetailController',
 
         // Load the board and permissions on page load.
         loadBoard();
-        $scope.permissions = Board.Permissions.get({id: $stateParams.boardID});
         $scope.showEditForm = false;
+        $scope.showAddOwner = false;
     });
