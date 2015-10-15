@@ -50,11 +50,6 @@ angular.module('sb.services').factory('Board',
             permissionsSignature
         );
 
-        resource.OldPermissions = $resource(
-            storyboardApiBase + '/boards/:id/permissions',
-            {id: '@id'}
-        );
-
         ResourceFactory.applySearch(
             'Board',
             resource,

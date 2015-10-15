@@ -14,38 +14,188 @@
   ~ under the License.
   -->
 <div class="container-fluid">
+    <div ng-include
+         src="'/inline/worklist_title.html'"
+         ng-hide="editing">
+    </div>
+    <hr ng-show="editing">
+    <div ng-include
+         src="'/inline/edit_worklist.html'"
+         ng-show="editing">
+    </div>
+    <hr ng-show="editing">
+    <div ng-show="permissions.editWorklist || permissions.moveItems"
+         ng-include src="'/inline/worklist.html'"></div>
+    <div ng-show="!(permissions.editWorklist || permissions.moveItems)"
+         ng-include src="'/inline/worklist_static.html'"></div>
+</div>
+
+<script type="text/ng-template" id="/inline/worklist_title.html">
     <div class="row">
-        <div class="col-sm-12" ng-show="!worklist.editing">
+        <div class="col-sm-12" ng-show="!editing">
             <h1 class="no-margin-bottom" view-title>
                 {{worklist.title}}
-                <a ng-click="toggleEditMode()">
+                <a ng-click="toggleEditMode()"
+                   ng-show="permissions.editWorklist">
                     <i class="fa fa-pencil"></i>
                 </a>
-                <button type="button" class="pull-right close" title="Delete"
-                        ng-click="remove()">
-                    <i class="fa fa-times"></i>
-                </button>
-            </h1>
-        </div>
-        <div class="col-sm-12" ng-show="worklist.editing">
-            <h1 class="no margin-bottom">
-                <input type="text" class="form-control form-control-inline h1"
-                       ng-model="worklist.title">
-                <a ng-click="toggleEditMode()">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <button type="button" class="pull-right close" title="Delete"
-                        ng-click="remove()">
-                    <i class="fa fa-times"></i>
-                </button>
             </h1>
         </div>
     </div>
+</script>
+
+<script type="text/ng-template" id="/inline/edit_worklist.html">
+    <div class="row">
+        <div class="col-sm-12" ng-show="editing">
+            <form name="worklistForm" role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">
+                        Title
+                    </label>
+                    <div class="col-sm-10">
+                        <input id="title"
+                               focus
+                               type="text"
+                               class="form-control"
+                               ng-model="worklist.title"
+                               required
+                               maxlength="100"
+                               placeholder="Worklist title">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Owners</th>
+                                <th class="text-right">
+                                    <small>
+                                        <a href
+                                           ng-click="showAddOwner = !showAddOwner">
+                                            <i class="fa fa-plus" ng-if="!showAddOwner"></i>
+                                            <i class="fa fa-minus" ng-if="showAddOwner"></i>
+                                            Add Owner
+                                        </a>
+                                    </small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="owner in owners">
+                                <td colspan="2">
+                                    {{owner.full_name}}
+                                    <a class="close"
+                                       ng-show="owners.length > 1"
+                                       ng-click="removeUser(owner, owners, worklist.owners)">
+                                        &times;
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="showAddOwner">
+                                <td colspan="2">
+                                    <input id="owner"
+                                           type="text"
+                                           placeholder="Click to add an owner"
+                                           ng-model="asyncOwner"
+                                           typeahead-wait-ms="200"
+                                           typeahead-editable="false"
+                                           typeahead="user as user.full_name for user in
+                                                      searchUsers($viewValue, worklist.owners)"
+                                           typeahead-loading="loadingUsers"
+                                           typeahead-input-formatter="formatUserName($model)"
+                                           typeahead-on-select="addUser($model, owners, worklist.owners)"
+                                           class="form-control input-sm"
+                                            />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Users</th>
+                                <th class="text-right">
+                                    <small>
+                                        <a href
+                                           ng-click="showAddUser = !showAddUser">
+                                            <i class="fa fa-plus" ng-if="!showAddUser"></i>
+                                            <i class="fa fa-minus" ng-if="showAddUser"></i>
+                                            Add User
+                                        </a>
+                                    </small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users">
+                                <td colspan="2">
+                                    {{user.full_name}}
+                                    <a class="close"
+                                       ng-click="removeUser(user, users, worklist.users)">
+                                        &times;
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="showAddUser">
+                                <td colspan="2">
+                                    <input id="user"
+                                           type="text"
+                                           placeholder="Click to add a user"
+                                           ng-model="asyncUser"
+                                           typeahead-wait-ms="200"
+                                           typeahead-editable="false"
+                                           typeahead="user as user.full_name for user in
+                                                      searchUsers($viewValue, worklist.users)"
+                                           typeahead-loading="loadingUsers"
+                                           typeahead-input-formatter="formatUserName($model)"
+                                           typeahead-on-select="addUser($model, users, worklist.users)"
+                                           class="form-control input-sm"
+                                            />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <div class="btn" ng-show="isUpdating">
+                                <i class="fa fa-spinner fa-lg fa-spin"></i>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-click="update()"
+                                    ng-disabled="!worklistForm.$valid">
+                                Save
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="toggleEditMode()">
+                                Cancel
+                            </button>
+                        </div>
+                        <button type="button"
+                                class="btn btn-danger"
+                                ng-click="remove()"
+                                ng-show="permissions.editWorklist">
+                            Archive worklist
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/inline/worklist.html">
     <div class="row">
         <div class="col-sm-12">
             <table class="table table-striped table-hover">
-                <tbody as-sortable="sortableOptions" ng-model="worklist.items"
-                       ng-show="!worklist.editing">
+                <tbody as-sortable="sortableOptions" ng-model="worklist.items">
                     <tr as-sortable-item ng-repeat="item in worklist.items">
                         <td as-sortable-item-handle ng-switch="item.type" class="hover-row"
                             title="{{item.type}}: {{item.title}}">
@@ -66,9 +216,30 @@
                                 </div>
                             </a>
                         </td>
+                        <td>
+                            <button type="button" class="close" title="Delete"
+                                    ng-click="removeListItem(item)">
+                                &times;
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="hover-row text-center" title="Add Item"
+                        ng-click="addItem()">
+                        <td colspan="2">
+                            Add Items
+                        </td>
                     </tr>
                 </tbody>
-                <tbody ng-show="worklist.editing">
+            </table>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/inline/worklist_static.html">
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped table-hover">
+                <tbody ng-show="worklist.items.length > 0">
                     <tr ng-repeat="item in worklist.items">
                         <td ng-switch="item.type" class="hover-row"
                             title="{{item.type}}: {{item.title}}">
@@ -76,7 +247,7 @@
                                 <div class="col-sm-1">
                                     <i class="fa fa-sb-story text-muted"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-11">
                                     {{item.title}}
                                 </div>
                             </a>
@@ -84,16 +255,10 @@
                                 <div class="col-sm-1">
                                     <i class="fa fa-tasks text-muted"></i>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-11">
                                     {{item.title}}
                                 </div>
                             </a>
-                            <div class="col-sm-1">
-                                <button type="button" class="close" title="Remove"
-                                   ng-click="removeItem(item)">
-                                    &times;
-                                </button>
-                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -104,15 +269,7 @@
                         </td>
                     </tr>
                 </tbody>
-                <tbody>
-                    <tr class="hover-row text-center" title="Add Item"
-                        ng-click="addItem()">
-                        <td>
-                            Add Items
-                        </td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
-</div>
+</script>

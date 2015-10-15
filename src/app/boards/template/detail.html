@@ -24,9 +24,9 @@
          ng-show="showEditForm">
     </div>
     <hr>
-    <div ng-show="permissions.edit_board"
+    <div ng-show="permissions.editBoard"
          ng-include src="'/inline/kanban_lanes.html'"></div>
-    <div ng-show="!permissions.edit_board"
+    <div ng-show="!permissions.editBoard"
          ng-include src="'/inline/kanban_lanes_static.html'"></div>
 </div>
 
@@ -39,7 +39,7 @@
                 {{board.title}}
                 <small>
                     <a ng-click="toggleEditMode()"
-                       ng-show="permissions.edit_board">
+                       ng-show="permissions.editBoard">
                         <i class="fa fa-pencil"></i>
                     </a>
                 </small>
@@ -100,29 +100,128 @@
                                 />
                     </div>
                 </div>
-                <div class="clearfix">
-                    <div class="pull-right">
-                        <div class="btn" ng-show="isUpdating">
-                            <i class="fa fa-spinner fa-lg fa-spin"></i>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Owners</th>
+                                <th class="text-right">
+                                    <small>
+                                        <a href
+                                           ng-click="showAddOwner = !showAddOwner">
+                                            <i class="fa fa-plus" ng-if="!showAddOwner"></i>
+                                            <i class="fa fa-minus" ng-if="showAddOwner"></i>
+                                            Add Owner
+                                        </a>
+                                    </small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="owner in owners">
+                                <td colspan="2">
+                                    {{owner.full_name}}
+                                    <a class="close"
+                                       ng-show="owners.length > 1"
+                                       ng-click="removeUser(owner, owners, board.owners)">
+                                        &times;
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="showAddOwner">
+                                <td colspan="2">
+                                    <input id="owner"
+                                           type="text"
+                                           placeholder="Click to add an owner"
+                                           ng-model="asyncOwner"
+                                           typeahead-wait-ms="200"
+                                           typeahead-editable="false"
+                                           typeahead="user as user.full_name for user in
+                                                      searchUsers($viewValue, board.owners)"
+                                           typeahead-loading="loadingUsers"
+                                           typeahead-input-formatter="formatUserName($model)"
+                                           typeahead-on-select="addUser($model, owners, board.owners)"
+                                           class="form-control input-sm"
+                                            />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Users</th>
+                                <th class="text-right">
+                                    <small>
+                                        <a href
+                                           ng-click="showAddUser = !showAddUser">
+                                            <i class="fa fa-plus" ng-if="!showAddUser"></i>
+                                            <i class="fa fa-minus" ng-if="showAddUser"></i>
+                                            Add User
+                                        </a>
+                                    </small>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users">
+                                <td colspan="2">
+                                    {{user.full_name}}
+                                    <a class="close"
+                                       ng-click="removeUser(user, users, board.users)">
+                                        &times;
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr ng-show="showAddUser">
+                                <td colspan="2">
+                                    <input id="user"
+                                           type="text"
+                                           placeholder="Click to add a user"
+                                           ng-model="asyncUser"
+                                           typeahead-wait-ms="200"
+                                           typeahead-editable="false"
+                                           typeahead="user as user.full_name for user in
+                                                      searchUsers($viewValue, board.users)"
+                                           typeahead-loading="loadingUsers"
+                                           typeahead-input-formatter="formatUserName($model)"
+                                           typeahead-on-select="addUser($model, users, board.users)"
+                                           class="form-control input-sm"
+                                            />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <div class="btn" ng-show="isUpdating">
+                                <i class="fa fa-spinner fa-lg fa-spin"></i>
+                            </div>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-click="update()"
+                                    ng-disabled="!boardForm.$valid">
+                                Save
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default"
+                                    ng-click="toggleEditMode()">
+                                Cancel
+                            </button>
                         </div>
                         <button type="button"
-                                class="btn btn-primary"
-                                ng-click="update()"
-                                ng-disabled="!boardForm.$valid">
-                            Save
-                        </button>
-                        <button type="button"
-                                class="btn btn-default"
-                                ng-click="toggleEditMode()">
-                            Cancel
+                                class="btn btn-danger"
+                                ng-click="remove()"
+                                ng-show="permissions.editBoard">
+                            Archive board
                         </button>
                     </div>
-                    <button type="button"
-                            class="btn btn-danger"
-                            ng-click="remove()"
-                            ng-show="permissions.editBoard">
-                        Archive board
-                    </button>
                 </div>
             </form>
         </div>
@@ -170,9 +269,9 @@
         <div class="kanban-lane" ng-repeat="worklist in board.worklists">
             <span class="kanban-lane-title">{{ worklist.title }}</span>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'"
-                 ng-show="permissions.move_cards"></div>
+                 ng-show="permissions.moveCards || permissions.editBoard"></div>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'"
-                 ng-show="!permissions.move_cards"></div>
+                 ng-show="!(permissions.moveCards || permissions.editBoard)"></div>
         </div>
     </div>
 </script>
