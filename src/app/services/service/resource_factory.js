@@ -153,7 +153,9 @@ angular.module('sb.services')
                             // build the query parameters.
                             var queryParams = {};
                             queryParams[nameField] = searchString;
-                            queryParams.limit = pageSize;
+                            if (pageSize > -1) {
+                                queryParams.limit = pageSize;
+                            }
 
                             resource.browse(queryParams,
                                 function (result) {

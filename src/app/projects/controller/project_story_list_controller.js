@@ -64,12 +64,15 @@ angular.module('sb.projects').controller('ProjectStoryListController',
             $scope.isSearching = true;
 
             // Execute the story query.
-            Story.browse({
+            var params = {
                     project_id: id,
-                    status: $scope.filter || null,
-                    offset: $scope.searchOffset,
-                    limit: pageSize
-                },
+                    status: $scope.filter || null
+            };
+            if (pageSize > -1) {
+                params.offset = $scope.searchOffset;
+                params.limit = pageSize;
+            }
+            Story.browse(params,
                 function (result, headers) {
 
                     // Successful search results, apply the results to the
@@ -77,7 +80,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
                     $scope.storyCount =
                         parseInt(headers('X-Total')) || result.length;
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
-                    $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
+                    $scope.searchLimit = parseInt(headers('X-Limit')) || -1;
                     $scope.stories = result;
                     $scope.isSearching = false;
                 },

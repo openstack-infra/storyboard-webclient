@@ -57,15 +57,18 @@ angular.module('sb.admin').controller('UserAdminController',
         $scope.search = function () {
             var searchQuery = $scope.filterQuery || '';
 
-            $scope.users = User.browse({
-                full_name: searchQuery,
-                offset: $scope.searchOffset,
-                limit: pageSize
-            }, function(results, headers) {
+            var params = {
+                full_name: searchQuery
+            };
+            if (pageSize > -1) {
+                params.offset = $scope.searchOffset;
+                params.limit = pageSize;
+            }
+            $scope.users = User.browse(params, function(results, headers) {
                 $scope.searchTotal =
                     parseInt(headers('X-Total')) || results.length;
                 $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
-                $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
+                $scope.searchLimit = parseInt(headers('X-Limit')) || -1;
             });
         };
 
