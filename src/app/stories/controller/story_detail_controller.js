@@ -72,8 +72,10 @@ angular.module('sb.story').controller('StoryDetailController',
             params.sort_field = 'id';
             params.sort_dir = 'asc';
             params.story_id = $scope.story.id;
-            params.offset = $scope.searchOffset;
-            params.limit = pageSize;
+            if (pageSize > -1) {
+                params.offset = $scope.searchOffset;
+                params.limit = pageSize;
+            }
 
             TimelineEvent.browse(params,
                 function (result, headers) {
@@ -85,8 +87,8 @@ angular.module('sb.story').controller('StoryDetailController',
                         eventResults.push(item);
                     });
                     $scope.searchTotal = parseInt(headers('X-Total'));
-                    $scope.searchOffset = parseInt(headers('X-Offset'));
-                    $scope.searchLimit = parseInt(headers('X-Limit'));
+                    $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
+                    $scope.searchLimit = parseInt(headers('X-Limit')) || -1;
                     $scope.events = eventResults;
                     $scope.isSearching = false;
                 },

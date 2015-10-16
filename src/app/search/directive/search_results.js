@@ -69,7 +69,7 @@ angular.module('sb.search').directive('searchResults',
                     $scope.searchTotal =
                         parseInt(headers('X-Total')) || results.length;
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
-                    $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
+                    $scope.searchLimit = parseInt(headers('X-Limit')) || -1;
                     $scope.searchResults = results;
                     $scope.isSearching = false;
                 }
@@ -111,8 +111,10 @@ angular.module('sb.search').directive('searchResults',
                     }
 
                     // Apply paging.
-                    params.limit = pageSize;
-                    params.offset = $scope.searchOffset;
+                    if (pageSize > -1) {
+                        params.limit = pageSize;
+                        params.offset = $scope.searchOffset;
+                    }
 
                     // If we don't actually have search criteria, issue a
                     // browse. Otherwise, issue a search.
