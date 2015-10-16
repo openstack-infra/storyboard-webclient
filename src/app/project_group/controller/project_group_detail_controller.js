@@ -48,11 +48,14 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
          */
         $scope.listProjects = function () {
             $scope.isSearchingProjects = true;
-            Project.browse({
-                    project_group_id: projectGroup.id,
-                    offset: $scope.projectSearchOffset,
-                    limit: projectPageSize
-                },
+            var params = {
+                project_group_id: projectGroup.id
+            };
+            if (projectPageSize > -1) {
+                params.offset = $scope.projectSearchOffset;
+                params.limit = projectPageSize;
+            }
+            Project.browse(params,
                 function (result, headers) {
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
@@ -61,7 +64,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projectSearchOffset =
                         parseInt(headers('X-Offset')) || 0;
                     $scope.projectSearchLimit =
-                        parseInt(headers('X-Limit')) || 0;
+                        parseInt(headers('X-Limit')) || -1;
                     $scope.projects = result;
                     $scope.isSearchingProjects = false;
                 },
@@ -109,14 +112,17 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 return;
             }
 
-            Story.browse({
-                    project_group_id: projectGroup.id,
-                    sort_field: 'id',
-                    sort_dir: 'desc',
-                    status: status,
-                    offset: $scope.storySearchOffset,
-                    limit: storyPageSize
-                },
+            var params = {
+                project_group_id: projectGroup.id,
+                sort_field: 'id',
+                sort_dir: 'desc',
+                status: status
+            };
+            if (storyPageSize > -1) {
+                params.offset = $scope.storySearchOffset;
+                params.limit = storyPageSize;
+            }
+            Story.browse(params,
                 function (result, headers) {
                     // Successful search results, apply the results to the
                     // scope and unset our progress flag.
@@ -125,7 +131,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.storySearchOffset =
                         parseInt(headers('X-Offset')) || 0;
                     $scope.storySearchLimit =
-                        parseInt(headers('X-Limit')) || 0;
+                        parseInt(headers('X-Limit')) || -1;
                     $scope.stories = result;
                     $scope.isSearchingStories = false;
                 },
