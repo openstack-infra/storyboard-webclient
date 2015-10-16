@@ -1,5 +1,6 @@
 <span class="hidden-xs">
     <a class="btn btn-link btn-xs"
+       ng-show="limit > -1"
        ng-class="{'disabled': offset === 0}"
        ng-click="previousPage({'type':listType})">
         <i class="fa fa-caret-left"></i>
@@ -8,7 +9,7 @@
         <small ng-if="!!minimalPager">0 results.</small>
         <span ng-if="!minimalPager">0 results.</span>
     </span>
-    <span ng-if="total > 0">
+    <span ng-if="total > 0 && limit > -1">
         <small ng-if="!!minimalPager">
             {{total == 0 ? 0 : offset + 1}}
             to
@@ -24,10 +25,15 @@
             {{total}}
         </span>
     </span>
+    <span ng-if="total > 0 && limit == -1">
+        <small ng-if="!!minimalPager">{{total}} results.</small>
+        <span ng-if="!minimalPager">{{total}} results.</span>
+    </span>
 
     <a class="btn btn-link btn-xs"
+       ng-show="limit > -1"
        ng-class="{'disabled': offset + limit >= total}"
-            ng-click="nextPage({'type':listType})">
+       ng-click="nextPage({'type':listType})">
         <i class="fa fa-caret-right"></i>
     </a>
     <br ng-if="!!minimalPager" />
@@ -40,9 +46,11 @@
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li class="dropdown-header"># of results</li>
-            <li ng-repeat="size in [10,25,50,100]"
-                ng-class="{'active': size == limit}">
-                <a ng-click="pageSize({'type':listType, 'pageSize':size})">{{size}}</a>
+            <li ng-repeat="size in [10,25,50,100,-1]"
+                ng-class="{'active': size == limit || (size == -1 && limit == 0)}">
+                <a ng-click="pageSize({'type':listType, 'pageSize':size})">
+                    {{size != -1 ?  size : 'Unlimited'}}
+                </a>
             </li>
         </ul>
     </span>
