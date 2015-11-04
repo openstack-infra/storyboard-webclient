@@ -235,4 +235,7 @@ angular.module('sb.services').provider('Preference',
             'project_group_detail_stories_page_size', 10);
         PreferenceProvider.addPreference('project_detail_page_size', 10);
 
+        // Let our preference provider know about email preferences.
+        PreferenceProvider.addPreference('plugin_email_enable', 'false');
+
     });
