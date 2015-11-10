@@ -25,6 +25,6 @@ angular.module('sb.dashboard').controller('HomeController',
         if (sessionState === SessionState.LOGGED_IN) {
             $state.go('sb.dashboard');
         } else {
-            $state.go('sb.project.list');
+            $state.go('sb.page.about');
         }
     });
