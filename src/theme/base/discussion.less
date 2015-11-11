@@ -26,10 +26,6 @@
     }
 
     .discussion-comment {
-        * {
-            margin: 0px;
-        }
-
         .discussion-comment-author {
             border-top: 1px solid @table-border-color;
             background-color: @gray-lighter;
@@ -39,6 +35,13 @@
         > insert-markdown > div, > p {
             padding: @table-cell-padding;
             padding-bottom: 0px;
+            margin: 0 10px;
+
+            > blockquote {
+                margin: 0 0 10px;
+                font-size: 14px;
+                color: #555;
+            }
         }
     }
 
