@@ -147,10 +147,11 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         $scope.nextPage = function (type) {
             if (type === 'stories') {
                 $scope.storySearchOffset += storyPageSize;
+                $scope.filterStories();
             } else if (type === 'projects') {
                 $scope.projectSearchOffset += projectPageSize;
+                $scope.listProjects();
             }
-            $scope.filterStories();
         };
 
         /**
@@ -165,13 +166,14 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 if ($scope.storySearchOffset < 0) {
                     $scope.storySearchOffset = 0;
                 }
+                $scope.filterStories();
             } else if (type === 'projects') {
                 $scope.projectSearchOffset -= projectPageSize;
                 if ($scope.projectSearchOffset < 0) {
                     $scope.projectSearchOffset = 0;
                 }
+                $scope.listProjects();
             }
-            $scope.filterStories();
         };
 
         /**
@@ -195,7 +197,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     'project_group_detail_projects_page_size', value).then(
                         function () {
                             projectPageSize = value;
-                            $scope.filterStories();
+                            $scope.listProjects();
                         }
                     );
             }
