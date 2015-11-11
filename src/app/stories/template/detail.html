@@ -242,6 +242,15 @@
             <form class="discussion-comment-form comment"
                   id="commentForm"
                   name="commentForm" ng-show="isLoggedIn">
+                <div class="discussion-comment" ng-if="previewingComment">
+                    <p class="discussion-comment-author">
+                        Previewing Comment
+                    </p>
+
+                    <insert-markdown ng-show="newComment.content"
+                                     content="newComment.content">
+                    </insert-markdown>
+                </div>
                 <div class="form-group">
                     <textarea id="comment"
                               placeholder="Enter your comment here"
@@ -260,6 +269,12 @@
                             ng-click="addComment()"
                             ng-disabled="!commentForm.$valid || isSavingComment">
                         Comment
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            ng-click="togglePreview()"
+                            ng-disabled="!commentForm.$valid || isSavingComment">
+                        Toggle Preview
                     </button>
                 </div>
             </form>

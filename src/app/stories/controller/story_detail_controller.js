@@ -255,6 +255,14 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.searchLimit = Preference.get('story_detail_page_size');
         };
 
+        $scope.previewingComment = false;
+        $scope.togglePreview = function(val) {
+            $scope.previewingComment = !$scope.previewingComment;
+            if (val === true || val === false) {
+                $scope.previewingComment = val;
+            }
+        };
+
         /**
          * Add a comment
          */
@@ -271,6 +279,7 @@ angular.module('sb.story').controller('StoryDetailController',
             }
 
             $scope.isSavingComment = true;
+            $scope.togglePreview(false);
 
             // Author ID will be automatically attached by the service, so
             // don't inject it into the conversation until it comes back.
