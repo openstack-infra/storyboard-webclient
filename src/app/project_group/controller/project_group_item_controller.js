@@ -17,7 +17,7 @@
 /**
  * Controller for the project group member list.
  */
-angular.module('sb.admin').controller('ProjectGroupItemController',
+angular.module('sb.project_group').controller('ProjectGroupItemController',
     function ($scope, $log, ProjectGroupItem) {
         'use strict';
 

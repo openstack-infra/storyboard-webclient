@@ -17,7 +17,7 @@
 /**
  * The StoryBoard project group submodule handles most activity involving
  * searching for and reviewing project groups. Administration of project groups
- * lives in the admin module.
+ * has moved from the admin module.
  */
 angular.module('sb.project_group',
     ['ui.router', 'sb.services', 'sb.util', 'sb.auth'])
@@ -32,7 +32,8 @@ angular.module('sb.project_group',
             .state('sb.project_group', {
                 abstract: true,
                 url: '/project_group',
-                template: '<div ui-view></div>',
+                templateUrl: 'app/project_group/template/project_group.html',
+                controller: 'ProjectGroupAdminController',
                 resolve: {
                     isSuperuser: PermissionResolver
                         .resolvePermission('is_superuser', true)
@@ -43,8 +44,8 @@ angular.module('sb.project_group',
                 templateUrl: 'app/project_group/template/list.html',
                 controller: 'ProjectGroupListController'
             })
-            .state('sb.project_group.detail', {
-                url: '/{id:[0-9]+}',
+            .state('sb.project_group_detail', {
+                url: '/project_group/detail/:id',
                 templateUrl: 'app/project_group/template/detail.html',
                 controller: 'ProjectGroupDetailController',
                 resolve: {
@@ -60,6 +61,22 @@ angular.module('sb.project_group',
                         return deferred.promise;
                     }
                 }
-            });
-    })
-;
+            })
+            .state('sb.project_group_edit', {
+                url: '/project_group/edit/:id',
+                templateUrl: 'app/project_group/template/edit.html',
+                controller: 'ProjectGroupEditController',
+                resolve: {
+                    projectGroup: function ($stateParams, ProjectGroup) {
+                        return ProjectGroup.get({id: $stateParams.id}).$promise;
+                    },
+                    projects: function ($stateParams, ProjectGroupItem) {
+                        return ProjectGroupItem.browse(
+                            {projectGroupId: $stateParams.id}
+                        ).$promise;
+                    },
+                    isSuperuser: PermissionResolver
+                        .requirePermission('is_superuser', true)
+                }
+        });
+    });
