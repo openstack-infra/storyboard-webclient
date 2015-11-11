@@ -8,13 +8,14 @@
     </span>
 </td>
 <td class="hidden-xs">
-    <span time-moment eventdate="project.created_at">
+    <span time-moment eventdate="project.created_at" short-date="true">
     </span>
 </td>
 <td class="hidden-xs">
     <span time-moment
           ng-if="project.updated_at"
-          eventdate="project.updated_at">
+          eventdate="project.updated_at"
+          short-date="true">
     </span>
     <em ng-if="!project.updated_at"
         class="text-muted">
