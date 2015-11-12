@@ -1,3 +1,10 @@
-<span ng-if="needsTimeAgo" am-time-ago="eventdate" title="{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}" ></span>
-<span ng-if="!needsTimeAgo">
-{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+<span ng-if="needsTimeAgo" am-time-ago="eventdate"
+      title="{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}" >
+</span>
+<span ng-if="!needsTimeAgo && shortDate"
+      title="{{eventdate | date:'yyyy-MM-dd HH:mm:ss Z'}}" >
+    {{eventdate | date:'yyyy-MM-dd'}}
+</span>
+<span ng-if="!needsTimeAgo && !shortDate">
+    {{eventdate | date:"yyyy-MM-dd 'at' HH:mm:ss"}}
+</span>
