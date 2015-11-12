@@ -5,6 +5,37 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                <th>Recent Events</th>
+                <th><button type="button" class="close"
+                    ng-show="subscriptionEvents.length > 0"
+                    ng-click="removeAllEvents()">&times;
+                </button></th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="event in subscriptionEvents">
+                    <td subscription-event="{{event}}"></td>
+                    <td>
+                        <button type="button" class="close"
+                                ng-click="removeEvent(event)">
+                            &times;
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="subscriptionEvents.length == 0">
+                <td colspan="2" class="text-center text-muted">
+                    <em>
+                        There are no recent events on your subscriptions.
+                    </em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-6">
             <table class="table table-striped">
                 <thead>
@@ -42,27 +73,30 @@
         <div class="col-sm-6">
             <table class="table table-striped">
                 <thead>
-                <th>Recent Events</th>
-                <th><button type="button" class="close"
-                    ng-show="subscriptionEvents.length > 0"
-                    ng-click="removeAllEvents()">&times;
-                </button></th>
+                <th colspan="2">Stories created by me</th>
                 </thead>
                 <tbody>
-                <tr ng-repeat="event in subscriptionEvents">
-                    <td subscription-event="{{event}}"></td>
+                <tr ng-repeat="story in createdStories">
+                    <td class="col-sm-2">
+                        <story-status-label story="story"/>
+                    </td>
                     <td>
-                        <button type="button" class="close"
-                                ng-click="removeEvent(event)">
-                            &times;
-                        </button>
+                        <subscribe class="pull-right"
+                                   resource="story"
+                                   resource-id="story.id"></subscribe>
+                        <p>
+                            <a href="#!/story/{{story.id}}">
+                                {{story.title}}
+                            </a>
+                        </p>
+                        <story-task-status story="story"/>
                     </td>
                 </tr>
                 </tbody>
-                <tbody ng-show="subscriptionEvents.length == 0">
-                <td colspan="2" class="text-center text-muted">
+                <tbody ng-show="createdStories.length == 0">
+                <td colspan="3" class="text-center text-muted">
                     <em>
-                        There are no recent events on your subscriptions.
+                        There are no active stories currently assigned to you.
                     </em>
                 </td>
                 </tbody>

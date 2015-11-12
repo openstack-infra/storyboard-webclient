@@ -28,6 +28,11 @@ angular.module('sb.dashboard').controller('DashboardController',
             status: 'active'
         });
 
+        $scope.createdStories = Story.browse({
+            creator_id: currentUser.id,
+            status: 'active'
+        });
+
         function loadEvents() {
             // Load the user's subscription events.
             $scope.subscriptionEvents = null;
