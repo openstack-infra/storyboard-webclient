@@ -474,7 +474,7 @@ module.exports = function (grunt) {
          */
         connect: {
             options: {
-                hostname: grunt.option('hostname') || 'localhost'
+                hostname: grunt.option('hostname') || '0.0.0.0'
             },
             livereload: {
                 options: {
