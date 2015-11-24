@@ -130,7 +130,7 @@ angular.module('sb.story').controller('StoryDetailController',
         /**
          * The new comment backing the input form.
          */
-        $scope.newComment = new Comment({story_id: $scope.story.id});
+        $scope.newComment = new Comment({});
 
         /**
          * Generic service error handler. Assigns errors to the view's scope,
@@ -283,11 +283,9 @@ angular.module('sb.story').controller('StoryDetailController',
 
             // Author ID will be automatically attached by the service, so
             // don't inject it into the conversation until it comes back.
-            $scope.newComment.$create(
+            $scope.newComment.$create({story_id: $scope.story.id},
                 function () {
-                    $scope.newComment = new Comment({
-                        story_id: $scope.story.id
-                    });
+                    $scope.newComment = new Comment({});
                     resetSavingFlag();
                     $scope.loadEvents();
                 }
