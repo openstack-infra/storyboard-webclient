@@ -18,7 +18,8 @@
  * Administration controller for project groups.
  */
 angular.module('sb.project_group').controller('ProjectGroupAdminController',
-    function ($scope, $modal, ProjectGroup, Preference, isSuperuser) {
+    function ($scope, $modal, ProjectGroup, Preference, isSuperuser,
+             CurrentUser, SubscriptionList) {
         'use strict';
 
         /**
@@ -36,6 +37,16 @@ angular.module('sb.project_group').controller('ProjectGroupAdminController',
          * @type {string}
          */
         $scope.filterQuery = '';
+
+        //GET list of project group subscriptions
+        var cuPromise = CurrentUser.resolve();
+
+        cuPromise.then(function(user){
+            $scope.projectGroupSubscriptions =
+            SubscriptionList.subsList(
+                'project_group', user);
+        });
+
 
         /**
          * Launches the add-project-group modal.
