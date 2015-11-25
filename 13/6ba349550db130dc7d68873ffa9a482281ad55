@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+1: Pedro Alvarez Piedehierro <pedro.alvarez@codethink.co.uk>
+Code-Review+2: Zara <zara.zaimeche@codethink.co.uk>
+Workflow+1: Zara <zara.zaimeche@codethink.co.uk>
+Submitted-by: Jenkins
+Submitted-at: Wed, 25 Nov 2015 11:13:06 +0000
+Reviewed-on: https://review.openstack.org/249219
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
