@@ -45,7 +45,7 @@ angular.module('sb.project_group',
                 controller: 'ProjectGroupListController'
             })
             .state('sb.project_group_detail', {
-                url: '/project_group/detail/:id',
+                url: '/project_group/detail/{id:[0-9]+}',
                 templateUrl: 'app/project_group/template/detail.html',
                 controller: 'ProjectGroupDetailController',
                 resolve: {
@@ -63,7 +63,7 @@ angular.module('sb.project_group',
                 }
             })
             .state('sb.project_group_edit', {
-                url: '/project_group/edit/:id',
+                url: '/project_group/edit/{id:[0-9]+}',
                 templateUrl: 'app/project_group/template/edit.html',
                 controller: 'ProjectGroupEditController',
                 resolve: {
