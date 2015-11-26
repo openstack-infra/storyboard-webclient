@@ -14,12 +14,6 @@
 </td>
 <td>
     <p>
-        <small ng-show="isLoggedIn">
-            <subscribe resource="story"
-                   resource-id="story.id"
-                   subscriptions="storySubscriptions">
-            </subscribe>
-        </small>
         <strong>
             <a href="#!/story/{{story.id}}">
                 {{story.title}}
@@ -55,4 +49,13 @@
             </td>
         </tr>
     </table>
+</td>
+<td>
+    <small ng-show="isLoggedIn">
+        <subscribe class="pull-right"
+               resource="story"
+               resource-id="story.id"
+               subscriptions="storySubscriptions">
+        </subscribe>
+    </small>
 </td>
