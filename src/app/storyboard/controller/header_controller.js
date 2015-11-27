@@ -132,7 +132,7 @@ angular.module('storyboard').controller('HeaderController',
                     $state.go('sb.search', {q: criteria.value});
                     break;
                 case 'ProjectGroup':
-                    $state.go('sb.project_group.detail', {id: criteria.value});
+                    $state.go('sb.project_group_detail', {id: criteria.value});
                     break;
                 case 'Project':
                     $state.go('sb.project.detail', {id: criteria.value});
