@@ -19,7 +19,7 @@
  */
 angular.module('sb.board').controller('BoardDetailController',
     function ($scope, Worklist, $modal, Board, Project, $stateParams,
-              BoardHelper) {
+              BoardHelper, $document) {
         'use strict';
 
         /**
@@ -216,6 +216,14 @@ angular.module('sb.board').controller('BoardDetailController',
                 }
                 return srcParent.sortableScope.$id === dstParentSortable.$id;
             }
+        };
+
+        /**
+         * Add an event listener to prevent default dragging behaviour from
+         * interfering with dragging items around.
+         */
+        $document[0].ondragstart = function (event) {
+            event.preventDefault();
         };
 
         // Load the board and permissions on page load.

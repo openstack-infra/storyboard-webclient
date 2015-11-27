@@ -18,7 +18,8 @@
  * A controller that manages the worklist detail page.
  */
 angular.module('sb.worklist').controller('WorklistDetailController',
-    function ($scope, $modal, $timeout, $stateParams, Worklist, BoardHelper) {
+    function ($scope, $modal, $timeout, $stateParams, Worklist, BoardHelper,
+              $document) {
         'use strict';
 
         /**
@@ -122,6 +123,14 @@ angular.module('sb.worklist').controller('WorklistDetailController',
                 return sourceHandle.itemScope.sortableScope.$id === dest.$id;
             },
             orderChanged: BoardHelper.moveCardInLane
+        };
+
+        /**
+         * Add an event listener to prevent default dragging behaviour from
+         * interfering with dragging items around.
+         */
+        $document[0].ondragstart = function (event) {
+            event.preventDefault();
         };
 
         // Load the worklist.
