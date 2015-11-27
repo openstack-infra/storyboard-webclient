@@ -218,6 +218,14 @@ angular.module('sb.board').controller('BoardDetailController',
             }
         };
 
+        /**
+         * Add an event listener to prevent default dragging behaviour from
+         * interfering with dragging items around.
+         */
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+        });
+
         // Load the board and permissions on page load.
         loadBoard();
         $scope.permissions = Board.Permissions.get({id: $stateParams.boardID});

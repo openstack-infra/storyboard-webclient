@@ -124,6 +124,14 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             orderChanged: BoardHelper.moveCardInLane
         };
 
+        /**
+         * Add an event listener to prevent default dragging behaviour from
+         * interfering with dragging items around.
+         */
+        document.addEventListener('dragstart', function (e) {
+            e.preventDefault();
+        });
+
         // Load the worklist.
         loadWorklist();
     });
