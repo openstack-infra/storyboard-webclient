@@ -21,7 +21,8 @@ angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User,
-              storyboardApiBase, SubscriptionList, CurrentUser) {
+              storyboardApiBase, SubscriptionList, CurrentUser,
+              SessionModalService) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -290,6 +291,13 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.loadEvents();
                 }
             );
+        };
+
+        /**
+         * Show modal informing the user login is required.
+         */
+        $scope.showLoginRequiredModal = function() {
+            SessionModalService.showLoginRequiredModal();
         };
 
         // ###################################################################
