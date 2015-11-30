@@ -164,7 +164,12 @@
         </span>
         <h4>
             <span class="label label-default" ng-click="toggleAddTag()"
-                  ng-show="!showAddTag">
+                  ng-show="!showAddTag && isLoggedIn">
+                Add
+                <i class="fa fa-plus"></i>
+            </span>
+            <span class="label label-default" ng-click="showLoginRequiredModal()"
+                  ng-show="!isLoggedIn">
                 Add
                 <i class="fa fa-plus"></i>
             </span>
