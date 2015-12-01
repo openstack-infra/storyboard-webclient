@@ -215,6 +215,7 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.story.$update(
                 function () {
                     $scope.showEditForm = false;
+                    $scope.previewStory = false;
                     handleServiceSuccess();
                 },
                 handleServiceError
