@@ -18,7 +18,7 @@
  * A Project
  */
 angular.module('sb.project_group').controller('ProjectGroupListController',
-    function ($scope, SubscriptionList, CurrentUser) {
+    function ($scope, $modal, SubscriptionList, CurrentUser) {
         'use strict';
 
         // search results must be of type "ProjectGroup"
@@ -26,6 +26,26 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        /**
+         * Create a new project-group.
+         */
+        $scope.newProjectGroup = function () {
+            $scope.modalInstance = $modal.open(
+                {
+                    templateUrl: 'app/project_group/template/new.html',
+                    controller: 'ProjectGroupNewController'
+                });
+
+            $scope.modalInstance.result.then(function (projectGroup) {
+                    // On success, go to the project group detail.
+                    $scope.showMobileNewMenu = false;
+                    $state.go(
+                        'sb.project_group.detail',
+                        {id: projectGroup.id}
+                    );
+                });
+        };
 
         //GET list of project group subscriptions
         var cuPromise = CurrentUser.resolve();

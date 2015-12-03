@@ -37,6 +37,7 @@ angular.module('sb.project_group').controller('ProjectGroupItemController',
             function (results) {
                 $scope.loadingProjectGroupItems = false;
                 $scope.projectGroupItems = results;
+                $scope.collapsed = results.length > 1;
             }, function (error) {
                 $log.error(error);
                 $scope.loadingProjectGroupItems = false;
