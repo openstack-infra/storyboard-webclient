@@ -32,8 +32,7 @@ angular.module('sb.project_group',
             .state('sb.project_group', {
                 abstract: true,
                 url: '/project_group',
-                templateUrl: 'app/project_group/template/project_group.html',
-                controller: 'ProjectGroupAdminController',
+                template: '<div ui-view></div>',
                 resolve: {
                     isSuperuser: PermissionResolver
                         .resolvePermission('is_superuser', true)
@@ -44,8 +43,8 @@ angular.module('sb.project_group',
                 templateUrl: 'app/project_group/template/list.html',
                 controller: 'ProjectGroupListController'
             })
-            .state('sb.project_group_detail', {
-                url: '/project_group/detail/{id:[0-9]+}',
+            .state('sb.project_group.detail', {
+                url: '/{id:[0-9]+}',
                 templateUrl: 'app/project_group/template/detail.html',
                 controller: 'ProjectGroupDetailController',
                 resolve: {
@@ -62,8 +61,8 @@ angular.module('sb.project_group',
                     }
                 }
             })
-            .state('sb.project_group_edit', {
-                url: '/project_group/edit/{id:[0-9]+}',
+            .state('sb.project_group.edit', {
+                url: '/{id:[0-9]+}/edit',
                 templateUrl: 'app/project_group/template/edit.html',
                 controller: 'ProjectGroupEditController',
                 resolve: {
