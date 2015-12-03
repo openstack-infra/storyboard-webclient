@@ -1,7 +1,61 @@
 <td>
+    <a href ng-click="collapsed = !collapsed"
+       ng-hide="projectGroupItems.length < 2"
+       class="pull-right">
+        <i class="fa"
+           ng-class="{'fa-caret-down': !collapsed, 'fa-caret-right': collapsed}">
+        </i>
+    </a>
     <a href="#!/project_group/{{projectGroup.id}}">
         {{projectGroup.title | truncate: 97}}
     </a>
+</td>
+<td>
+    <table>
+        <tbody ng-if="loadingProjectGroupItems">
+        <tr>
+            <td>
+                <span class="text-muted text-center">
+                    <i class="fa fa-spin fa-refresh"></i>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody ng-if="projectGroupItems.length == 0 && !loadingProjectGroupItems">
+        <tr>
+            <td>
+                <em class="text-muted">
+                    This group does not contain any
+                    projects.
+                </em>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody ng-if="projectGroupItems.length > 0 && !collapsed">
+        <tr ng-repeat="project in projectGroupItems">
+            <td>
+                <a href="#!/project/{{project.id}}">
+                    <i class="fa fa-sb-project text-muted"></i>
+                    {{project.name}}
+                </a>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody ng-if="projectGroupItems.length > 0 && collapsed">
+        <tr>
+            <td>
+                <a href="#!/project/{{projectGroupItems[0].id}}">
+                    <i class="fa fa-sb-project text-muted"></i>
+                    {{projectGroupItems[0].name}}
+                </a>
+            </td>
+        </tr>
+        <tr><td>...</td></tr>
+        </tbody>
+    </table>
 </td>
 <td class="hidden-xs">
     <span time-moment eventdate="projectGroup.created_at" short-date="true">

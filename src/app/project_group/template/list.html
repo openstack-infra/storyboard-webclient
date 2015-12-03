@@ -91,6 +91,9 @@
                             </i>
                         </a>
                     </th>
+                    <th>
+                        Projects
+                    </th>
                     <th class="hidden-xs">
                         <a ng-click="toggleFilter('created_at')">
                             Created
@@ -118,7 +121,8 @@
                 </thead>
                 <tbody ng-if="searchResults.length != 0 && !isSearching">
                 <tr ng-repeat="projectGroup in searchResults"
-                    ng-include="'app/search/template/project_group_search_item.html'">
+                    ng-include="'app/search/template/project_group_search_item.html'"
+                    ng-controller="ProjectGroupItemController">
                 </tr>
                 </tbody>
 
