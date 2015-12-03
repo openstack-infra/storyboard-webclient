@@ -138,7 +138,7 @@ angular.module('sb.services').provider('Preference',
                 if (!preferences.hasOwnProperty(key)) {
                     $log.warn('Setting default preference: ',
                         key, defaults[key]);
-                    this.set(key, defaults[key]);
+                    this.set(key, defaults[key], true);
                 }
 
                 return preferences[key];
@@ -147,7 +147,7 @@ angular.module('sb.services').provider('Preference',
             /**
              * Save a preference and return the saving promise.
              */
-            this.set = function (key, value) {
+            this.set = function (key, value, isDefault) {
                 // Is this a valid preference?
                 if (!defaults.hasOwnProperty(key)) {
                     $log.warn('Attempt to set unregistered preference: ' +
@@ -158,7 +158,7 @@ angular.module('sb.services').provider('Preference',
                 // Store the preference.
                 preferences[key] = value;
 
-                return this.save();
+                return this.save(isDefault);
             };
 
             /**
@@ -181,12 +181,10 @@ angular.module('sb.services').provider('Preference',
             /**
              * Private save method.
              */
-            this.save = function () {
+            this.save = function (isDefault) {
                 var deferred = $q.defer();
 
-                // If preferences are defaults, they won't have a $save()
-                // method.
-                if (!preferences.$save) {
+                if (isDefault) {
                     deferred.resolve();
                 } else {
                     preferences.$save({id: AccessToken.getIdToken()},
