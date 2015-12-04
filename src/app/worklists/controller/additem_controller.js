@@ -26,10 +26,13 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
         $scope.items = [];
 
         // Set our progress flags and clear previous error conditions.
+        $scope.saving = false;
         $scope.loadingItems = false;
         $scope.error = {};
 
         $scope.save = function() {
+            $scope.saving = true;
+            var creates = [];
             var offset = $scope.worklist.items.length;
             for (var i = 0; i < $scope.items.length; i++) {
                 var item = $scope.items[i];
@@ -49,10 +52,15 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
                 };
 
                 if (valid(item)) {
-                    Worklist.ItemsController.create(params);
+                    creates.push(
+                        Worklist.ItemsController.create(params).$promise
+                    );
                 }
             }
-            $modalInstance.dismiss('success');
+            $q.all(creates).then(function() {
+                $scope.saving = false;
+                $modalInstance.dismiss('success');
+            });
         };
 
         /**
