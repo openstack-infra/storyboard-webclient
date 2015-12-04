@@ -228,6 +228,20 @@ angular.module('sb.board').controller('BoardDetailController',
 
         // Load the board and permissions on page load.
         loadBoard();
-        $scope.permissions = Board.Permissions.get({id: $stateParams.boardID});
+        $scope.permissions = {};
+        Board.Permissions.get({id: $stateParams.boardID}).$promise.then(
+            function(permissions) {
+                $scope.permissions = {
+                    edit_board: permissions.indexOf('edit_board') > -1,
+                    move_cards: permissions.indexOf('move_cards') > -1
+                };
+            }
+        ).catch(function() {
+            // Fall back to old object-based permissions
+            Board.OldPermissions.get({id: $stateParams.boardID},
+                function(permissions) {
+                    $scope.permissions = permissions;
+                });
+        });
         $scope.showEditForm = false;
     });

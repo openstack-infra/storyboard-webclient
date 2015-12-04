@@ -55,6 +55,26 @@ angular.module('sb.services').factory('Worklist',
             {id: '@id', item_id: '@item_id'},
             items_signature);
 
+        var permissionsSignature = {
+            'create': {
+                method: 'POST'
+            },
+            'get': {
+                method: 'GET',
+                cache: false,
+                isArray: true
+            },
+            'update': {
+                method: 'PUT'
+            }
+        };
+
+        resource.Permissions = $resource(
+            storyboardApiBase + '/worklists/:id/permissions',
+            {id: '@id'},
+            permissionsSignature
+        );
+
         ResourceFactory.applySearch(
             'Worklist',
             resource,
