@@ -8,13 +8,29 @@
         <div class="col-sm-12">
             <table class="table table-striped">
                 <thead>
-                <th>Recent Events</th>
+                <th>
+                    <a href ng-click="collapsedEvents = !collapsedEvents"
+                       ng-hide="subscriptionEvents.length < 1">
+                        <i class="fa"
+                           ng-class="{'fa-caret-down': !collapsedEvents,
+                                      'fa-caret-right': collapsedEvents}">
+                        </i>
+                        Recent Events
+                        <span ng-show="subscriptionEvents.length > 0">
+                            ({{subscriptionEvents.length}})
+                        </span>
+                    </a>
+                    <span ng-show="subscriptionEvents.length < 1">
+                        Recent Events
+                    </span>
+                </th>
                 <th><button type="button" class="close"
                     ng-show="subscriptionEvents.length > 0"
                     ng-click="removeAllEvents()">&times;
                 </button></th>
                 </thead>
-                <tbody>
+
+                <tbody ng-show="!collapsedEvents">
                 <tr ng-repeat="event in subscriptionEvents">
                     <td subscription-event="{{event}}"></td>
                     <td>
@@ -25,6 +41,7 @@
                     </td>
                 </tr>
                 </tbody>
+
                 <tbody ng-show="subscriptionEvents.length == 0">
                 <td colspan="2" class="text-center text-muted">
                     <em>

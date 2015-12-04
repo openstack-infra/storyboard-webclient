@@ -50,6 +50,7 @@ angular.module('sb.dashboard').controller('DashboardController',
                 });
 
                 $scope.subscriptionEvents = results;
+                $scope.collapsedEvents = results.length > 1;
             });
         }
 
