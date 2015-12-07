@@ -24,6 +24,15 @@
                                    placeholder="Story Title">
                         </div>
                     </div>
+                    <div class="form-group" ng-show="preview">
+                        <label class="col-sm-2 control-label">
+                            Description Preview
+                        </label>
+                        <div class="col-sm-10">
+                            <insert-markdown content="story.description">
+                            </insert-markdown>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="description"
                                class="col-sm-2 control-label">
@@ -66,6 +75,11 @@
                 </button>
             </div>
             <div class="col-xs-6 text-right">
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="preview = !preview">
+                    Preview Description
+                </button>
                 <button type="button"
                         class="btn btn-primary"
                         ng-click="save()"
