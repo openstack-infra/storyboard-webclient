@@ -184,7 +184,13 @@ angular.module('sb.services').provider('Preference',
             this.save = function (isDefault) {
                 var deferred = $q.defer();
 
+                // Don't save default preferences, but just checking there is
+                // no $save() method is insufficient. Also, if there is no
+                // $save() method, don't try to save the preferences (this is
+                // the case when there is no logged in user).
                 if (isDefault) {
+                    deferred.resolve();
+                } else if (!preferences.$save) {
                     deferred.resolve();
                 } else {
                     preferences.$save({id: AccessToken.getIdToken()},
