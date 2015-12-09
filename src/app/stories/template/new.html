@@ -21,7 +21,7 @@
                                    ng-model="story.title"
                                    required
                                    maxlength="255"
-                                   placeholder="Story Title">
+                                   placeholder="Story Title (required)">
                         </div>
                     </div>
                     <div class="form-group" ng-show="preview">
@@ -45,7 +45,7 @@
                                       ng-model="story.description"
                                       msd-elastic
                                       required
-                                      placeholder="A brief story description">
+                                      placeholder="A brief story description (required)">
                             </textarea>
                         </div>
                     </div>
@@ -103,13 +103,13 @@
                class="form-control input-sm"
                ng-model="task.title"
                required
-               placeholder="Task Title">
+               placeholder="Task Title (required)">
     </td>
     <td class="col-xs-4">
         <div class="has-feedback has-feedback-no-label">
             <input id="project"
                    type="text"
-                   placeholder="Select a Project"
+                   placeholder="Select a Project (required)"
                    required
                    ng-model="asyncProject"
                    typeahead-wait-ms="200"
