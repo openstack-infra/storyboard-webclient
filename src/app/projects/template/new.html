@@ -40,14 +40,11 @@
                                ng-pattern="PROJECT_NAME_REGEX"
                                maxlength="50"
                                ng-minlength="3"
-                               placeholder="Project Name">
+                               placeholder="Project Name (required)">
 
                         <div class="help-block text-danger"
                              ng-show="!projectForm.name.$pristine &&
                              projectForm.name.$invalid">
-                            <span ng-show="projectForm.name.$error.required">
-                                A project name is required.
-                            </span>
                             <span ng-show="projectForm.name.$error.pattern">
                                 A project name must begin with a letter, and
                                 may only contain letters, numbers, forward
@@ -76,15 +73,12 @@
                                   ng-model="newProject.description"
                                   msd-elastic
                                   required
-                                  placeholder="A brief project description">
+                                  placeholder="A brief project description (required)">
                         </textarea>
 
                         <div class="help-block text-danger"
                              ng-show="!projectForm.description.$pristine &&
                              projectForm.description.$invalid">
-                            <span ng-show="projectForm.description.$error.required">
-                                A project description is required.
-                            </span>
                         </div>
                     </div>
                 </div>

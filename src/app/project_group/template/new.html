@@ -44,13 +44,10 @@
                                    ng-disabled="isSaving"
                                    maxlength="255"
                                    ng-minlength="3"
-                                   placeholder="Project Group Title">
+                                   placeholder="Project Group Title (required)">
                             </input>
                             <div class="help-block text-danger"
                                  ng-show="projectGroupForm.title.$invalid">
-                                 <span ng-show="projectGroupForm.title.$error.required">
-                                     A project group title is required.
-                                 </span>
                                  <span ng-show="projectGroupForm.title.$error.pattern">
                                      A project group title must begin with a letter, and may only
                                      contain letters, numbers, forward slashes, periods, and
@@ -78,13 +75,10 @@
                                    maxlength="255"
                                    ng-minlength="5"
                                    ng-disabled="isSaving"
-                                   placeholder="URL Stub for the project group">
+                                   placeholder="URL Stub for the project group (required)">
                             </input>
                             <div class="help-block text-danger"
                                 ng-show="projectGroupForm.name.$invalid">
-                                <span ng-show="projectGroupForm.name.$error.required">
-                                    A project group URL is required.
-                                </span>
                                 <span ng-show="projectGroupForm.name.$error.minlength">
                                     A project group URL must have at least 5 characters.
                                 </span>
@@ -143,7 +137,7 @@
         <div class="has-feedback has-feedback-no-label">
             <input id="project"
                    type="text"
-                   placeholder="Select a Project"
+                   placeholder="Select a Project (required)"
                    required
                    ng-model="project"
                    typeahead-wait-ms="200"
