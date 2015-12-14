@@ -1,0 +1,136 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="container-fluid" ng-hide="isLoading">
+    <div class="row">
+        <div class="col-xs-12">
+            <view-title>Subscriptions</view-title>
+            <h1><i class="fa fa-star"
+                   ng-if="!saving"></i>
+                <i class="fa fa-spin fa-star"
+                   ng-if="saving"></i>
+                Subscriptions
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table table-striped">
+                <thead>
+                <th colspan="2">
+                    <i class="fa fa-sb-story fa-lg"></i>
+                    Stories
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="story in stories">
+                    <td class="col-sm-2">
+                        <story-status-label story="story"/>
+                    </td>
+                    <td>
+                        <subscribe class="pull-right"
+                                   resource="story"
+                                   resource-id="story.id"
+                                   subscriptions="storySubscriptions">
+                        </subscribe>
+                        <p>
+                            <a href="#!/story/{{story.id}}">
+                                {{story.title}}
+                            </a>
+                        </p>
+                        <story-task-status story="story"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="stories.length == 0">
+                <td colspan="3" class="text-center text-muted">
+                    <em>
+                        You are not currently subscribed to any stories.
+                    </em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <hr class="visible-xs"/>
+            <table class="table table-striped">
+                <thead>
+                <th>
+                    <i class="fa fa-sb-project fa-lg"></i>
+                    Projects
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="project in projects">
+                    <td>
+                        <subscribe class="pull-right"
+                                   resource="project"
+                                   resource-id="project.id"
+                                   subscriptions="projectSubscriptions">
+                        </subscribe>
+                        <p>
+                            <a href="#!/project/{{project.id}}">
+                                {{project.name}}
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="projects.length == 0">
+                <td colspan="3" class="text-center text-muted">
+                    <em>
+                        You are not currently subscribed to any projects.
+                    </em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <hr class="visible-xs"/>
+            <table class="table table-striped">
+                <thead>
+                <th>
+                    <i class="fa fa-sb-project-group fa-lg"></i>
+                    Project Groups
+                </th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="projectGroup in projectGroups">
+                    <td>
+                        <subscribe class="pull-right"
+                                   resource="project_group"
+                                   resource-id="projectGroup.id"
+                                   subscriptions="projectGroupSubscriptions">
+                        </subscribe>
+                        <p>
+                            <a href="#!/project_group/{{projectGroup.id}}">
+                                {{projectGroup.name}}
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="projectGroups.length == 0">
+                <td colspan="3" class="text-center text-muted">
+                    <em>
+                        You are not currently subscribed to any project groups.
+                    </em>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
