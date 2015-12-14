@@ -57,5 +57,10 @@ angular.module('sb.dashboard',
                 url: '/boards',
                 controller: 'BoardsWorklistsController',
                 templateUrl: 'app/dashboard/template/boards_worklists.html'
+            })
+            .state('sb.dashboard.subscriptions', {
+                url: '/subscriptions',
+                templateUrl: 'app/dashboard/template/subscriptions.html',
+                controller: 'DashboardSubscriptionsController'
             });
     });
