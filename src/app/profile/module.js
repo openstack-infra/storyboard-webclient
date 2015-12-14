@@ -54,6 +54,11 @@ angular.module('sb.profile',
                 templateUrl: 'app/profile/template/preferences.html',
                 controller: 'ProfilePreferencesController'
             })
+            .state('sb.profile.subscriptions', {
+                url: '/subscriptions',
+                templateUrl: 'app/profile/template/subscriptions.html',
+                controller: 'ProfileSubscriptionsController'
+            })
             .state('sb.profile.tokens', {
                 url: '/tokens',
                 templateUrl: 'app/profile/template/tokens.html',
