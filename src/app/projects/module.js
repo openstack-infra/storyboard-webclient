@@ -47,16 +47,6 @@ angular.module('sb.projects',
                 url: '/{id:[0-9]+}',
                 templateUrl: 'app/projects/template/detail.html',
                 controller: 'ProjectDetailController'
-            })
-            .state('sb.project.new', {
-                url: '/new',
-                templateUrl: 'app/projects/template/new.html',
-                controller: 'ProjectNewController',
-                resolve: {
-                    isLoggedIn: SessionResolver.requireLoggedIn,
-                    isSuperuser: PermissionResolver
-                        .requirePermission('is_superuser', true)
-                }
             });
     })
 ;

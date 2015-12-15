@@ -20,7 +20,7 @@
  * that'll be a bit tricky to test).
  */
 angular.module('sb.projects').controller('ProjectNewController',
-    function ($scope, $state, Project) {
+    function ($scope, $state, $modalInstance, Project) {
         'use strict';
 
         // View parameters.
@@ -40,9 +40,9 @@ angular.module('sb.projects').controller('ProjectNewController',
             $scope.error = {};
 
             $scope.newProject.$create(
-                function () {
-                    // Success!
-                    $state.go('sb.project.list');
+                function (project) {
+                    $modalInstance.dismiss('success');
+                    $state.go('sb.project.detail', {id: project.id});
                 },
                 function (error) {
                     // Error received. Ho hum.
@@ -50,5 +50,12 @@ angular.module('sb.projects').controller('ProjectNewController',
                     $scope.error = error;
                 }
             );
+        };
+
+        /**
+         * Close this modal without saving.
+         */
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
         };
     });
