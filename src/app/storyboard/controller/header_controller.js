@@ -84,6 +84,17 @@ angular.module('storyboard').controller('HeaderController',
         };
 
         /**
+         * Create a new project.
+         */
+        $scope.newProject = function () {
+            $scope.modalInstance = $modal.open({
+                size: 'lg',
+                templateUrl: 'app/projects/template/new.html',
+                controller: 'ProjectNewController'
+            });
+        };
+
+        /**
          * Create a new project-group.
          */
         $scope.newProjectGroup = function () {
