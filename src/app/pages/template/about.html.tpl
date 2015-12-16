@@ -58,12 +58,13 @@
 	        is not well served.  This system uses the best concepts
 	        from existing tools and goes beyond to support the needs
 	        of the OpenStack project.</p>
-        <p><a href="http://git.openstack.org/cgit/openstack-infra/storyboard/tree/README.rst"
+            <p><a href="http://git.openstack.org/cgit/openstack-infra/storyboard/tree/README.rst"
                target="_blank"
                class="btn btn-primary">
                 See project README
                 <i class="fa fa-chevron-right"></i>
-            </a>
+            </a></p>
+            <small><p class="text-muted">Webclient version: <%- sha %></p></small>
         </div>
         <div class="col-sm-4">
             <hr class="visible-xs"/>
