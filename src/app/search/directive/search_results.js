@@ -51,7 +51,7 @@ angular.module('sb.search').directive('searchResults',
                  *
                  * @type {string}
                  */
-                $scope.sortDirection = 'asc';
+                $scope.sortDirection = 'desc';
 
                 /**
                  * Handle error result.
