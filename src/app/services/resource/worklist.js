@@ -27,7 +27,8 @@ angular.module('sb.services').factory('Worklist',
         var resource = ResourceFactory.build(
             '/worklists/:id',
             '/worklists/search',
-            {id: '@id'}
+            {id: '@id'},
+            false, true
         );
 
         var items_signature = {

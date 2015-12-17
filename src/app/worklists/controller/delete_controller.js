@@ -31,7 +31,7 @@ angular.module('sb.worklist').controller('WorklistDeleteController',
             $scope.worklist.$delete(
                 function () {
                     $modalInstance.dismiss('success');
-                    $state.go('sb.dashboard.worklist');
+                    $state.go('sb.dashboard.boards');
                 }
             );
         };
