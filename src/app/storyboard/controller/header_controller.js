@@ -108,7 +108,7 @@ angular.module('storyboard').controller('HeaderController',
                     // On success, go to the project group detail.
                     $scope.showMobileNewMenu = false;
                     $state.go(
-                        'sb.project_group_detail',
+                        'sb.project_group.detail',
                         {id: projectGroup.id}
                     );
                 });
@@ -143,7 +143,7 @@ angular.module('storyboard').controller('HeaderController',
                     $state.go('sb.search', {q: criteria.value});
                     break;
                 case 'ProjectGroup':
-                    $state.go('sb.project_group_detail', {id: criteria.value});
+                    $state.go('sb.project_group.detail', {id: criteria.value});
                     break;
                 case 'Project':
                     $state.go('sb.project.detail', {id: criteria.value});
