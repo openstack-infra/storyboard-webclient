@@ -1,49 +1,47 @@
-<span class="hidden-xs">
-    <a class="btn btn-link btn-xs"
-       ng-class="{'disabled': offset === 0}"
-       ng-click="previousPage({'type':listType})">
-        <i class="fa fa-caret-left"></i>
-    </a>
-    <span ng-if="total == 0">
-        <small ng-if="!!minimalPager">0 results.</small>
-        <span ng-if="!minimalPager">0 results.</span>
+<a class="btn btn-link btn-xs"
+   ng-class="{'disabled': offset === 0}"
+   ng-click="previousPage({'type':listType})">
+    <i class="fa fa-caret-left"></i>
+</a>
+<span ng-if="total == 0">
+    <small ng-if="!!minimalPager">0 results.</small>
+    <span ng-if="!minimalPager">0 results.</span>
+</span>
+<span ng-if="total > 0">
+    <small ng-if="!!minimalPager">
+        {{total == 0 ? 0 : offset + 1}}
+        to
+        {{(total > limit + offset ? limit + offset : total)}}
+        of
+        {{total}}
+    </small>
+    <span ng-if="!minimalPager">
+        {{total == 0 ? 0 : offset + 1}}
+        to
+        {{(total > limit + offset ? limit + offset : total)}}
+        of
+        {{total}}
     </span>
-    <span ng-if="total > 0">
-        <small ng-if="!!minimalPager">
-            {{total == 0 ? 0 : offset + 1}}
-            to
-            {{(total > limit + offset ? limit + offset : total)}}
-            of
-            {{total}}
-        </small>
-        <span ng-if="!minimalPager">
-            {{total == 0 ? 0 : offset + 1}}
-            to
-            {{(total > limit + offset ? limit + offset : total)}}
-            of
-            {{total}}
-        </span>
-    </span>
+</span>
 
-    <a class="btn btn-link btn-xs"
-       ng-class="{'disabled': offset + limit >= total}"
-            ng-click="nextPage({'type':listType})">
-        <i class="fa fa-caret-right"></i>
-    </a>
-    <br ng-if="!!minimalPager" />
-    <span class="btn-group" dropdown>
-        <div>
-            <button class="btn btn-xs btn-default"
-                    dropdown-toggle>
-                <i class="fa fa-gear"></i>
-            </button>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-            <li class="dropdown-header"># of results</li>
-            <li ng-repeat="size in [10,25,50,100]"
-                ng-class="{'active': size == limit}">
-                <a ng-click="pageSize({'type':listType, 'pageSize':size})">{{size}}</a>
-            </li>
-        </ul>
-    </span>
+<a class="btn btn-link btn-xs"
+   ng-class="{'disabled': offset + limit >= total}"
+        ng-click="nextPage({'type':listType})">
+    <i class="fa fa-caret-right"></i>
+</a>
+<br ng-if="!!minimalPager" />
+<span class="btn-group" dropdown>
+    <div>
+        <button class="btn btn-xs btn-default"
+                dropdown-toggle>
+            <i class="fa fa-gear"></i>
+        </button>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class="dropdown-header"># of results</li>
+        <li ng-repeat="size in [10,25,50,100]"
+            ng-class="{'active': size == limit}">
+            <a ng-click="pageSize({'type':listType, 'pageSize':size})">{{size}}</a>
+        </li>
+    </ul>
 </span>
