@@ -115,6 +115,37 @@ module.exports = function (grunt) {
         },
 
         /**
+         * grunt gitinfo
+         *
+         * Gets information about the current state of the source repository.
+         */
+        gitinfo: {
+            options: {
+                cwd: '.'
+            }
+        },
+
+        /**
+         * grunt template
+         *
+         * Interpolate variables into any templates we have defined.
+         */
+        template: {
+            'process-html-template': {
+                options: {
+                    data: {
+                        sha: '<%= gitinfo.local.branch.current.SHA %>'
+                    }
+                },
+                files: {
+                    'src/app/pages/template/about.html': [
+                        'src/app/pages/template/about.html.tpl'
+                    ]
+                }
+            }
+        },
+
+        /**
          * grunt concat
          *
          * Creates a single file out of our javascript source in accordance
@@ -417,6 +448,12 @@ module.exports = function (grunt) {
          * when necessary.
          */
         watch: {
+            template: {
+                files: [
+                    dir.source + '/**/*.tpl'
+                ],
+                tasks: ['compile']
+            },
             concat: {
                 files: [
                     dir.source + '/app/**/module.js',
@@ -571,6 +608,8 @@ module.exports = function (grunt) {
      * Compiles all of our sources.
      */
     grunt.registerTask('compile', [
+        'gitinfo',
+        'template',
         'useminPrepare',
         'concat',
         'less',

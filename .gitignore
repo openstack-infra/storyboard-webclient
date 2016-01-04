@@ -12,3 +12,4 @@ cover
 src/theme/custom/**.less
 src/theme/custom/**.ico
 src/config.json
+src/app/pages/template/about.html
