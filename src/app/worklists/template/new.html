@@ -23,19 +23,38 @@
         <div class="row">
             <div class="col-xs-12">
                 <form class="form-horizontal" role="form" name="worklistForm">
-                    <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">
+                    <div class="form-group has-feedback"
+                         ng-class="{'has-error': worklistForm.title.$invalid,
+                                    'has-success': !worklistForm.title.$invalid}">
+                        <label for="title" class="col-sm-2 control-label">
                             Title
                         </label>
                         <div class="col-sm-10">
-                            <input id="name"
-                                   focus
+                            <input id="title"
+                                   name="title"
                                    type="text"
                                    class="form-control"
                                    ng-model="worklist.title"
                                    required
+                                   focus
                                    maxlength="100"
-                                   placeholder="Worklist Title">
+                                   placeholder="Worklist Title"
+                                   ng-disabled="isSaving">
+                            <span class="form-control-feedback"
+                                  ng-show="worklistForm.title.$invalid">
+                                <i class="fa fa-times fa-lg"></i>
+                            </span>
+                            <span class="form-control-feedback"
+                                  ng-show="!worklistForm.title.$invalid">
+                                <i class="fa fa-check fa-lg"></i>
+                            </span>
+
+                            <div class="help-block text-danger"
+                                 ng-show="worklistForm.title.$invalid">
+                                 <span ng-show="worklistForm.title.$error.required">
+                                     A worklist title is required.
+                                 </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -47,6 +66,7 @@
                                    type="checkbox"
                                    class="modal-checkbox"
                                    ng-model="worklist.private"
+                                   ng-disabled="isSaving"
                                     />
                         </div>
                     </div>
@@ -55,14 +75,19 @@
         </div>
         <div class="row">
             <div class="col-xs-12 text-right">
+                <div class="btn" ng-show="isSaving">
+                    <i class="fa fa-spinner fa-lg fa-spin"></i>
+                </div>
                 <button type="button"
                         class="btn btn-primary"
-                        ng-click="save()">
+                        ng-click="save()"
+                        ng-disabled="!worklistForm.$valid || isSaving">
                     Save Changes
                 </button>
                 <button type="button"
                         ng-click="close()"
-                        class="btn btn-default">
+                        class="btn btn-default"
+                        ng-disabled="isSaving">
                     Cancel
                 </button>
             </div>
