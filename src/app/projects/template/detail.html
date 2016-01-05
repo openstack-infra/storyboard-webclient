@@ -58,75 +58,125 @@
 
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/project_detail_form.html">
-    <br/>
-    <form name="projectForm">
-        <div class="form-group"
-             ng-class="{'has-error': projectForm.name.$invalid}">
-            <input id="name"
-                   name="name"
-                   type="text"
-                   class="form-control"
-                   ng-model="project.name"
-                   required
-                   ng-pattern="PROJECT_NAME_REGEX"
-                   maxlength="50"
-                   ng-minlength="3"
-                   ng-disabled="isUpdating"
-                   placeholder="Project Name">
-            </input>
-            <div class="help-block text-danger"
-                 ng-show="projectForm.name.$invalid">
-                 <span ng-show="projectForm.name.$error.required">
-                     A project name is required.
-                 </span>
-                 <span ng-show="projectForm.name.$error.pattern">
-                     A project name must begin with a letter, and may only
-                     contain letters, numbers, forward slashes, periods, and
-                     dashes. It should not start or end with a separator and
-                     must not contain two or more sequential separators.
-                 </span>
-                 <span ng-show="projectForm.name.$error.minlength">
-                     A project name must have at least 3 characters.
-                 </span>
-            </div>
-        </div>
-        <div class="form-group"
-             ng-class="{'has-error': projectForm.description.$invalid}">
-            <textarea name="description"
-                      placeholder="Enter a project description here"
-                      class="form-control"
-                      rows="3"
-                      msd-elastic
-                      required
-                      ng-disabled="isUpdating"
-                      ng-model="project.description">
-            </textarea>
+    <hr>
+        <div class="row">
+            <div class="col-sm-12">
+            <form name="projectForm" class="form-horizontal" role="form">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': projectForm.name.$invalid,
+                                'has-success': !projectForm.name.$invalid}">
+                    <label for="name" class="col-sm-2 control-label">
+                        Name
+                    </label>
 
-            <div ng-show="projectForm.description.$error.required"
-                 class="help-block text-danger">
-                A project description is required.
-            </div>
-        </div>
+                    <div class="col-sm-10">
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               class="form-control"
+                               ng-model="project.name"
+                               required
+                               ng-pattern="PROJECT_NAME_REGEX"
+                               maxlength="50"
+                               ng-minlength="3"
+                               ng-disabled="isUpdating"
+                               placeholder="Project Name">
+                        <span class="form-control-feedback"
+                              ng-show="projectForm.name.$invalid">
+                            <i class="fa fa-times fa-lg"></i>
+                        </span>
+                        <span class="form-control-feedback"
+                              ng-show="!projectForm.name.$invalid">
+                            <i class="fa fa-check fa-lg"></i>
+                        </span>
 
-        <div class="clearfix">
-            <div class="pull-right">
-                <div class="btn" ng-show="isUpdating">
-                    <i class="fa fa-spinner fa-lg fa-spin"></i>
+                        <div class="help-block text-danger"
+                             ng-show="projectForm.name.$invalid">
+                             <span ng-show="projectForm.name.$error.required">
+                                 A project name is required.
+                             </span>
+                             <span ng-show="projectForm.name.$error.pattern">
+                                 A project name must begin with a letter, and may only
+                                 contain letters, numbers, forward slashes, periods, and
+                                 dashes. It should not start or end with a separator and
+                                 must not contain two or more sequential separators.
+                             </span>
+                             <span ng-show="projectForm.name.$error.minlength">
+                                 A project name must have at least 3 characters.
+                             </span>
+                        </div>
+                    </div>
                 </div>
-                <button type="button"
-                        class="btn btn-primary"
-                        ng-click="update()"
-                        ng-disabled="!projectForm.$valid">
-                    Save
-                </button>
-                <button type="button"
-                        class="btn btn-default"
-                        ng-click="cancel()">
-                    Cancel
-                </button>
-            </div>
+                <hr ng-show="preview">
+                <div class="form-group" ng-show="preview">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <insert-markdown content="project.description">
+                        </insert-markdown>
+                    </div>
+                </div>
+                <hr ng-show="preview">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': projectForm.description.$invalid,
+                                'has-success': !projectForm.description.$invalid}">
+                    <label for="description" class="col-sm-2 control-label">
+                        Description
+                    </label>
+
+                    <div class="col-sm-10">
+                        <textarea id="description"
+                                  name="description"
+                                  placeholder="Enter a project description here"
+                                  class="form-control"
+                                  rows="3"
+                                  msd-elastic
+                                  required
+                                  ng-disabled="isUpdating"
+                                  ng-model="project.description">
+                        </textarea>
+                        <span class="form-control-feedback"
+                              ng-show="projectForm.description.$invalid">
+                            <i class="fa fa-times fa-lg"></i>
+                        </span>
+                        <span class="form-control-feedback"
+                              ng-show="!projectForm.description.$invalid">
+                            <i class="fa fa-check fa-lg"></i>
+                        </span>
+
+                        <div ng-show="projectForm.description.$error.required"
+                             class="help-block text-danger">
+                            A project description is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <div class="btn" ng-show="isUpdating">
+                            <i class="fa fa-spinner fa-lg fa-spin"></i>
+                        </div>
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-click="preview = !preview"
+                                ng-disabled="isUpdating">
+                            Preview Description
+                        </button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                ng-click="update()"
+                                ng-disabled="!projectForm.$valid || isUpdating">
+                            Save
+                        </button>
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-click="cancel()"
+                                ng-disabled="isUpdating">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
     <hr/>
 </script>
 
