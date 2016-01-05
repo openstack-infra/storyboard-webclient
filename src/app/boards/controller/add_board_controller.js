@@ -28,6 +28,7 @@ angular.module('sb.board').controller('AddBoardController',
         function saveBoard() {
             $scope.board.$create(
                 function (result) {
+                    $scope.isSaving = false;
                     $modalInstance.dismiss('success');
                     $state.go('sb.board.detail', {boardID: result.id});
                 }
@@ -70,6 +71,7 @@ angular.module('sb.board').controller('AddBoardController',
          * Saves the board, and any worklists created to serve as lanes.
          */
         $scope.save = function() {
+            $scope.isSaving = true;
             if ($scope.lanes.length > 0) {
                 saveBoardWithLanes();
             } else {
@@ -117,6 +119,7 @@ angular.module('sb.board').controller('AddBoardController',
         };
 
         // Create a blank Board to begin with.
+        $scope.isSaving = false;
         $scope.lanes = [];
         $scope.board = new Board({
             title: '',
