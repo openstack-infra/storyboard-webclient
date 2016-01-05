@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Codethink Limited
+ * Copyright (c) 2015-2016 Codethink Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -111,6 +111,7 @@ angular.module('sb.board').controller('BoardDetailController',
          * Save changes to the board.
          */
         $scope.update = function() {
+            $scope.isUpdating = true;
             var params = {id: $scope.board.id};
             var owners = {
                 codename: 'edit_board',
@@ -126,6 +127,7 @@ angular.module('sb.board').controller('BoardDetailController',
                     Board.Permissions.update(params, users).$promise
                 ];
                 $q.all(updating).then(function() {
+                    $scope.isUpdating = false;
                     $scope.toggleEditMode();
                 });
             });
@@ -313,4 +315,5 @@ angular.module('sb.board').controller('BoardDetailController',
         loadBoard();
         $scope.showEditForm = false;
         $scope.showAddOwner = false;
+        $scope.isUpdating = false;
     });

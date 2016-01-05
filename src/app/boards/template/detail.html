@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2015 Codethink Limited
+  ~ Copyright (c) 2015-2016 Codethink Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -59,21 +59,48 @@
     <div class="row">
         <div class="col-sm-12">
             <form name="boardForm" role="form" class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': boardForm.title.$invalid,
+                                'has-success': !boardForm.title.$invalid}">
                     <label for="title" class="col-sm-2 control-label">
                         Title
                     </label>
                     <div class="col-sm-10">
                         <input id="title"
-                               focus
+                               name="title"
                                type="text"
                                class="form-control"
                                ng-model="board.title"
                                required
+                               focus
                                maxlength="100"
-                               placeholder="Board title">
+                               placeholder="Board title"
+                               ng-disabled="isUpdating">
+                        <span class="form-control-feedback"
+                              ng-show="boardForm.title.$invalid">
+                            <i class="fa fa-times fa-lg"></i>
+                        </span>
+                        <span class="form-control-feedback"
+                              ng-show="!boardForm.title.$invalid">
+                            <i class="fa fa-check fa-lg"></i>
+                        </span>
+
+                        <div class="help-block text-danger"
+                             ng-show="boardForm.title.$invalid">
+                             <span ng-show="boardForm.title.$error.required">
+                                 A board title is required.
+                             </span>
+                        </div>
                     </div>
                 </div>
+                <hr ng-show="preview">
+                <div class="form-group" ng-show="preview">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <insert-markdown content="board.description">
+                        </insert-markdown>
+                    </div>
+                </div>
+                <hr ng-show="preview">
                 <div class="form-group">
                     <label for="description"
                            class="col-sm-2 control-label">
@@ -84,7 +111,8 @@
                                   class="form-control"
                                   ng-model="board.description"
                                   msd-elastic
-                                  placeholder="A short description of the board's purpose.">
+                                  placeholder="A short description of the board's purpose."
+                                  ng-disabled="isUpdating">
                         </textarea>
                     </div>
                 </div>
@@ -97,6 +125,7 @@
                                type="checkbox"
                                class="modal-checkbox"
                                ng-model="board.private"
+                               ng-disabled="isUpdating"
                                 />
                     </div>
                 </div>
@@ -109,7 +138,8 @@
                                 <th class="text-right">
                                     <small>
                                         <a href
-                                           ng-click="showAddOwner = !showAddOwner">
+                                           ng-click="showAddOwner = !showAddOwner"
+                                           ng-disabled="isUpdating">
                                             <i class="fa fa-plus" ng-if="!showAddOwner"></i>
                                             <i class="fa fa-minus" ng-if="showAddOwner"></i>
                                             Add Owner
@@ -129,7 +159,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr ng-show="showAddOwner">
+                            <tr ng-show="showAddOwner && !isUpdating">
                                 <td colspan="2">
                                     <input id="owner"
                                            type="text"
@@ -157,7 +187,8 @@
                                 <th class="text-right">
                                     <small>
                                         <a href
-                                           ng-click="showAddUser = !showAddUser">
+                                           ng-click="showAddUser = !showAddUser"
+                                           ng-disabled="isUpdating">
                                             <i class="fa fa-plus" ng-if="!showAddUser"></i>
                                             <i class="fa fa-minus" ng-if="showAddUser"></i>
                                             Add User
@@ -176,7 +207,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr ng-show="showAddUser">
+                            <tr ng-show="showAddUser && !isUpdating">
                                 <td colspan="2">
                                     <input id="user"
                                            type="text"
@@ -205,20 +236,28 @@
                             </div>
                             <button type="button"
                                     class="btn btn-primary"
+                                    ng-click="preview = !preview"
+                                    ng-disabled="isUpdating">
+                                Preview Description
+                            </button>
+                            <button type="button"
+                                    class="btn btn-primary"
                                     ng-click="update()"
-                                    ng-disabled="!boardForm.$valid">
+                                    ng-disabled="!boardForm.$valid || isUpdating">
                                 Save
                             </button>
                             <button type="button"
                                     class="btn btn-default"
-                                    ng-click="toggleEditMode()">
+                                    ng-click="toggleEditMode()"
+                                    ng-disabled="isUpdating">
                                 Cancel
                             </button>
                         </div>
                         <button type="button"
                                 class="btn btn-danger"
                                 ng-click="remove()"
-                                ng-show="permissions.editBoard">
+                                ng-show="permissions.editBoard"
+                                ng-disabled="isUpdating">
                             Archive board
                         </button>
                     </div>
