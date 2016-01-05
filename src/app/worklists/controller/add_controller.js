@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Codethink Limited
+ * Copyright (c) 2015-2016 Codethink Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -25,8 +25,10 @@ angular.module('sb.worklist').controller('AddWorklistController',
          * Saves the worklist.
          */
         $scope.save = function () {
+            $scope.isSaving = true;
             $scope.worklist.$create(
                 function (result) {
+                    $scope.isSaving = false;
                     $modalInstance.dismiss('success');
                     $state.go('sb.worklist.detail', {worklistID: result.id});
                 }
@@ -40,5 +42,6 @@ angular.module('sb.worklist').controller('AddWorklistController',
             $modalInstance.dismiss('cancel');
         };
 
+        $scope.isSaving = false;
         $scope.worklist = new Worklist({title: ''});
     });
