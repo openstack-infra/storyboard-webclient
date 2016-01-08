@@ -1,0 +1,9 @@
+Code-Review+1: Gábor Antal <antal@inf.u-szeged.hu>
+Code-Review+2: Zara <zara.zaimeche@codethink.co.uk>
+Workflow+1: Zara <zara.zaimeche@codethink.co.uk>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 08 Jan 2016 18:33:41 +0000
+Reviewed-on: https://review.openstack.org/263761
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
