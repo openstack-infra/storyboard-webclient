@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Codethink Limited
+ * Copyright (c) 2015-2016 Codethink Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -28,6 +28,7 @@ angular.module('sb.board').controller('AddBoardController',
         function saveBoard() {
             $scope.board.$create(
                 function (result) {
+                    $scope.isSaving = false;
                     $modalInstance.dismiss('success');
                     $state.go('sb.board.detail', {boardID: result.id});
                 }
@@ -70,6 +71,7 @@ angular.module('sb.board').controller('AddBoardController',
          * Saves the board, and any worklists created to serve as lanes.
          */
         $scope.save = function() {
+            $scope.isSaving = true;
             if ($scope.lanes.length > 0) {
                 saveBoardWithLanes();
             } else {
@@ -117,6 +119,7 @@ angular.module('sb.board').controller('AddBoardController',
         };
 
         // Create a blank Board to begin with.
+        $scope.isSaving = false;
         $scope.lanes = [];
         $scope.board = new Board({
             title: '',
