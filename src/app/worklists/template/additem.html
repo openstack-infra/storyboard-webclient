@@ -21,37 +21,80 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-xs-12">
-                <form class="form-horizontal" role="form" name="worklistForm">
-                    <div class="form-group">
-                        <label for="search" class="col-sm-2 control-label">
-                            Search
-                        </label>
-                        <div class="has-feedback col-sm-10">
+            <div class="col-xs-6">
+                <form class="form-horizontal"
+                      role="form"
+                      name="itemForm"
+                      autocomplete="off">
+                    <div class="form-group col-xs-12 has-feedback">
+                        <div class="input-group new-item-search">
+                            <div class="input-group-btn" dropdown>
+                                <button type="button"
+                                        class="btn btn-default dropdown-toggle"
+                                        dropdown-toggle
+                                        aria-haspopup="true"
+                                        aria-expanded="false">
+                                    {{searchTarget}}
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="name in targets">
+                                        <a href
+                                           ng-click="setSearchTarget(name)">
+                                            {{name}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                             <input id="search"
                                    type="text"
-                                   placeholder="Search for Stories and Tasks"
-                                   ng-model="asyncItem"
-                                   typeahead-wait-ms="200"
-                                   typeahead-editable="false"
-                                   typeahead="item as item.title for item
-                                   in searchItems($viewValue)"
-                                   typeahead-loading="loadingItems"
-                                   typeahead-input-formatter="formatItemName($model)"
-                                   typeahead-on-select="selectNewItem($model)"
-                                   typeahead-template-url="app/search/template/typeahead_criteria_item.html"
                                    class="form-control"
+                                   placeholder="Search for {{searchTarget}}"
+                                   autocomplete="off"
+                                   ng-model="searchQuery"
+                                   ng-change="searchItems(searchQuery)"
+                                   ng-disabled="saving"
                                     />
-                            <span class="form-control-feedback text-muted
-                            form-control-feedback-sm">
-                                <i class="fa fa-refresh fa-spin" ng-show="loadingItems"></i>
-                                <i class="fa fa-search" ng-hide="loadingItems"></i>
-                            </span>
                         </div>
+                        <span class="form-control-feedback text-muted
+                                     form-control-feedback-sm">
+                            <i class="fa fa-refresh fa-spin" ng-show="loadingItems"></i>
+                            <i class="fa fa-search" ng-hide="loadingItems"></i>
+                        </span>
                     </div>
                 </form>
-                <table class="table table-striped table-bordered">
-                    <tbody>
+                <div class="table-container col-xs-12">
+                    <table class="table table-fixed">
+                        <tbody ng-if="searchTarget === 'Stories'">
+                            <tr ng-repeat="item in searchResults"
+                                ng-include src="'./inline/story_search_result.html'"
+                                ng-click="selectStory(item, searchResults, $event)"
+                                class="hover-row">
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="searchTarget === 'Tasks'">
+                            <tr ng-repeat="item in searchResults"
+                                ng-include src="'./inline/task_search_result.html'"
+                                ng-click="selectTask(item, searchResults, $event)"
+                                class="hover-row">
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Items to add</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="items.length < 1">
+                        <tr>
+                            <td><i>No new items currently selected to add.</i></td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="items.length > 0">
                         <tr ng-repeat="item in items">
                             <td ng-switch="item.type" class="header-criteria-item"
                                 title="{{item.type}}: {{item.title}}">
@@ -73,11 +116,14 @@
         </div>
         <div class="row">
             <div class="col-xs-12 text-right">
+                <div class="btn" ng-show="saving">
+                    <i class="fa fa-spinner fa-lg fa-spin"></i>
+                </div>
                 <button type="button"
                         class="btn btn-primary"
                         ng-click="save()"
-                        ng-disabled="saving">
-                    Save Changes
+                        ng-disabled="saving || items.length < 1">
+                    Add Items
                 </button>
                 <button type="button"
                         ng-click="close()"
@@ -89,3 +135,80 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="./inline/story_search_result.html">
+    <td class="col-xs-11">
+        <i class="fa fa-sb-story text-muted"></i>&emsp;
+        {{item.title}}
+        <div ng-click="loadTasks(item); showTasks = !showTasks; $event.stopPropagation()">
+            <a href>
+                <i class="fa"
+                   ng-class="{'fa-caret-right': !showTasks,
+                              'fa-caret-down': showTasks}"></i>
+                <small>
+                    {{showTasks ? 'Hide' : 'Show'}} tasks...
+                </small>
+            </a>
+        </div>
+        <table class="table table-fixed table-dark" ng-show="showTasks">
+            <tbody ng-show="item.loadingTasks">
+                <tr>
+                    <td class="text-center">
+                        <i class="fa fa-spin fa-refresh"></i>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-show="!item.loadingTasks">
+                <tr class="hover-row"
+                    ng-click="selectTask(task, item.tasks, $event)"
+                    ng-repeat="task in item.tasks">
+                    <td class="col-xs-11">
+                        <i class="fa fa-tasks text-muted"></i>&emsp;
+                        {{task.title}}
+                    </td>
+                    <td class="col-xs-1 text-right">
+                        <a href><i class="fa fa-plus"></i></a>
+                    </td>
+                </tr>
+                <tr class="hover-row"
+                    ng-show="item.invalidTasks.length > 0"
+                    ng-click="showInvalid = !showInvalid; $event.stopPropagation()">
+                    <td colspan="2">
+                        <a href>
+                            <i class="fa"
+                               ng-class="{'fa-caret-right': !showInvalid,
+                                          'fa-caret-down': showInvalid}"></i>
+                            <small>
+                                {{showInvalid ? 'Hide' : 'Show'}} invalid tasks...
+                            </small>
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-repeat="task in item.invalidTasks"
+                    ng-show="showInvalid"
+                    ng-click="$event.stopPropagation()">
+                    <td colspan="2">
+                        <i class="fa fa-tasks text-muted"></i>&emsp;
+                        {{task.title}}
+                        <div class="text-muted">
+                            <small>{{task.invalid}}</small>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+    <td class="col-xs-1 text-right">
+        <a href><i class="fa fa-plus"></i></a>
+    </td>
+</script>
+
+<script type="text/ng-template" id="./inline/task_search_result.html">
+    <td class="col-xs-11">
+        <i class="fa fa-tasks text-muted"></i>&emsp;
+        {{item.title}}
+    </td>
+    <td class="col-xs-1 text-right">
+        <a href><i class="fa fa-plus"></i></a>
+    </td>
+</script>
