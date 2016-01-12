@@ -30,6 +30,26 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
         $scope.loadingItems = false;
         $scope.error = {};
 
+        var unstaged = function(item) {
+            var accept = true;
+            angular.forEach($scope.items, function(selectedItem) {
+                if (!selectedItem.hasOwnProperty('value')) {
+                    selectedItem.value = selectedItem.id;
+                }
+                if (!item.hasOwnProperty('value')) {
+                    item.value = item.id;
+                }
+
+                if (selectedItem.type === item.type &&
+                    selectedItem.value === item.value) {
+                    accept = false;
+                    item.invalid = item.type +
+                                   ' is already waiting to be added.';
+                }
+            });
+            return accept;
+        };
+
         $scope.save = function() {
             $scope.saving = true;
             var creates = [];
@@ -72,24 +92,32 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
         };
 
         /**
-         * Item typeahead search method.
+         * Item search method.
          */
+        $scope.targets = ['Stories', 'Tasks'];
+        $scope.searchTarget = 'Tasks';
+        $scope.searchQuery = '';
         $scope.searchItems = function (value) {
-            var deferred = $q.defer();
-
             var searchString = value || '';
 
-            var searches = [
-                Story.criteriaResolver(searchString, 5),
-                Task.criteriaResolver(searchString, 5)
-            ];
+            var searches = [];
+            if (searchString !== '') {
+                if ($scope.searchTarget === 'Stories') {
+                    searches.push(Story.criteriaResolver(searchString, 500));
+                } else if ($scope.searchTarget === 'Tasks') {
+                    searches.push(Task.criteriaResolver(searchString, 500));
+                }
+            }
 
             $q.all(searches).then(function (searchResults) {
-                var criteria = [];
+                var validated = [];
+                var invalid = [];
 
                 var addResult = function (item) {
-                    if (valid(item)) {
-                        criteria.push(item);
+                    if (valid(item) && unstaged(item)) {
+                        validated.push(item);
+                    } else {
+                        invalid.push(item);
                     }
                 };
 
@@ -107,10 +135,35 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
                     }
                 }
 
-                deferred.resolve(criteria);
+                $scope.searchResults = validated;
+                $scope.invalidSearchResults = invalid;
             });
+        };
 
-            return deferred.promise;
+        $scope.setSearchTarget = function(target) {
+            $scope.searchTarget = target;
+            $scope.searchItems($scope.searchQuery);
+        };
+
+        $scope.loadTasks = function(story) {
+            story.loadingTasks = true;
+            Task.browse({story_id: story.value}, function(tasks) {
+                var results = [];
+                var invalid = [];
+
+                angular.forEach(tasks, function(task) {
+                    task.type = 'Task';
+                    if (valid(task) && unstaged(task)) {
+                        results.push(task);
+                    } else {
+                        invalid.push(task);
+                    }
+                });
+
+                story.tasks = results;
+                story.invalidTasks = invalid;
+                story.loadingTasks = false;
+            });
         };
 
         /**
@@ -126,9 +179,24 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
         /**
          * Select a new item.
          */
-        $scope.selectNewItem = function (model) {
-            $scope.items.push(model);
-            $scope.asyncItem = '';
+        $scope.selectTask = function (task, source, event) {
+            event.stopPropagation();
+            task.type = 'Task';
+            $scope.items.push(task);
+            if (source.length > 0) {
+                var idx = source.indexOf(task);
+                source.splice(idx, 1);
+            }
+        };
+
+        $scope.selectStory = function (story, source, event) {
+            event.stopPropagation();
+            story.type = 'Story';
+            $scope.items.push(story);
+            if (source.length > 0) {
+                var idx = source.indexOf(story);
+                source.splice(idx, 1);
+            }
         };
 
         $scope.close = function () {

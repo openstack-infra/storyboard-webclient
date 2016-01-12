@@ -59,6 +59,7 @@ angular.module('sb.board').controller('BoardDetailController',
          */
         function showAddItemModal(worklist) {
             var modalInstance = $modal.open({
+                size: 'lg',
                 templateUrl: 'app/worklists/template/additem.html',
                 controller: 'WorklistAddItemController',
                 resolve: {
@@ -72,9 +73,17 @@ angular.module('sb.board').controller('BoardDetailController',
                             angular.forEach(board.worklists, function(list) {
                                 angular.forEach(list.items, function(listItem) {
                                     var type = item.type.toLowerCase();
+                                    if (!item.hasOwnProperty('value')) {
+                                        item.value = item.id;
+                                    }
                                     if (item.value === listItem.id &&
                                         type === listItem.type) {
                                         valid = false;
+                                        item.invalid = item.type +
+                                                       ' is already in' +
+                                                       ' the board (' +
+                                                       list.title +
+                                                       ' lane).';
                                     }
                                 });
                             });

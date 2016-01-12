@@ -91,6 +91,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
          */
         function showAddItemModal() {
             var modalInstance = $modal.open({
+                size: 'lg',
                 templateUrl: 'app/worklists/template/additem.html',
                 controller: 'WorklistAddItemController',
                 resolve: {
