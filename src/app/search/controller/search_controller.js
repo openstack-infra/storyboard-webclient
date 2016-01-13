@@ -34,7 +34,7 @@ angular.module('sb.search').controller('SearchController',
          * @type {string[]}
          */
         $scope.resourceTypes = ['TaskStatus', 'Story', 'Project', 'User',
-            'Task'];
+            'Task', 'ProjectGroup'];
 
         /**
          * If a 'q' exists in the state params, go ahead and add it.
