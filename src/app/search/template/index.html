@@ -236,4 +236,51 @@
             </table>
         </div>
     </div>
+    <div class="row"
+         ng-if="criteria.length > 0"
+         search-results
+         search-resource="ProjectGroup"
+         search-criteria="criteria">
+        <div class="col-xs-12" ng-if="hasValidCriteria">
+            <hr/>
+        </div>
+        <div class="col-xs-2 text-center text-muted" ng-if="hasValidCriteria">
+            <span class="hidden-xs">
+                <i class="fa fa-3x fa-sb-project-group"></i>
+                <br/>
+                <small>Project Groups</small>
+            </span>
+            <i class="fa fa-2x fa-sb-project-group visible-xs"></i>
+        </div>
+        <div class="col-xs-10" ng-if="hasValidCriteria">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="searchResults.length != 0">
+                <tr ng-repeat="projectGroup in searchResults"
+                    ng-include="'app/search/template/project_group_search_item.html'"
+                    ng-controller="ProjectGroupItemController">
+                </tr>
+                </tbody>
+
+                <tbody ng-if="hasValidCriteria &amp;&amp; searchResults.length == 0 &amp;&amp; !isSearching">
+                <td class="text-center text-muted">
+                    <em>No users found.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="!hasValidCriteria">
+                <td class="text-center text-muted">
+                    <em>Your search criteria are not valid for this item.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="isSearching">
+                <td colspan="2">
+                    <small class="fa fa-spin fa-refresh text-muted">
+                    </small>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
 </div>
