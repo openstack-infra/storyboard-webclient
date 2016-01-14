@@ -8,23 +8,22 @@
            ng-if="project && !project.$resolved"></i>
         &nbsp;
 
+        <a
+           href="#!/project/{{project.id}}">
+            {{project.name}}
+        </a>
+
         <a href=""
            ng-focus="toggleForm()"
            ng-click="toggleForm()"
            ng-if="!showForm && enabled">
             <span ng-if="project">
-                {{project.name}}
                 <i class="fa fa-edit"></i>
             </span>
             <em ng-if="!project" class="text-muted">
                 {{emptyPrompt}}
                 <i class="fa fa-edit"></i>
             </em>
-        </a>
-
-        <a ng-if="project && !enabled"
-           href="#!/project/{{project.id}}">
-            {{project.name}}
         </a>
 
         <em class="text-muted"
