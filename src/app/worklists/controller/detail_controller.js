@@ -141,7 +141,8 @@ angular.module('sb.worklist').controller('WorklistDetailController',
                 resolve: {
                     worklist: function() {
                         return $scope.worklist;
-                    }
+                    },
+                    redirect: true
                 }
             });
             return modalInstance.result;
