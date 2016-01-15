@@ -174,9 +174,21 @@ angular.module('sb.board').controller('BoardDetailController',
          * Remove a lane from the board.
          */
         $scope.removeLane = function (worklist) {
-            var idx = $scope.board.worklists.indexOf(worklist);
-            $scope.board.worklists.splice(idx, 1);
-            worklist.$delete();
+            var modalInstance = $modal.open({
+                templateUrl: 'app/worklists/template/delete.html',
+                controller: 'WorklistDeleteController',
+                resolve: {
+                    worklist: function() {
+                        return worklist;
+                    },
+                    redirect: false
+                }
+            });
+
+            modalInstance.result.then(function() {
+                var idx = $scope.board.worklists.indexOf(worklist);
+                $scope.board.worklists.splice(idx, 1);
+            });
         };
 
         /**

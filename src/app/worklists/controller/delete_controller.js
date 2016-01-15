@@ -18,7 +18,7 @@
  * Controller for "delete worklist" modal
  */
 angular.module('sb.worklist').controller('WorklistDeleteController',
-    function ($log, $scope, $state, worklist, $modalInstance) {
+    function ($log, $scope, $state, worklist, redirect, $modalInstance) {
         'use strict';
 
         $scope.worklist = worklist;
@@ -30,8 +30,10 @@ angular.module('sb.worklist').controller('WorklistDeleteController',
         $scope.remove = function () {
             $scope.worklist.$delete(
                 function () {
-                    $modalInstance.dismiss('success');
-                    $state.go('sb.dashboard.boards');
+                    if (!!redirect) {
+                        $state.go('sb.dashboard.boards');
+                    }
+                    return $modalInstance.close('success');
                 }
             );
         };
