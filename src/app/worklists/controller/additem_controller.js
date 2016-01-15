@@ -103,9 +103,9 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
             var searches = [];
             if (searchString !== '') {
                 if ($scope.searchTarget === 'Stories') {
-                    searches.push(Story.criteriaResolver(searchString, 500));
+                    searches.push(Story.criteriaResolver(searchString, 50));
                 } else if ($scope.searchTarget === 'Tasks') {
-                    searches.push(Task.criteriaResolver(searchString, 500));
+                    searches.push(Task.criteriaResolver(searchString, 50));
                 }
             }
 
