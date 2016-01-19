@@ -18,7 +18,7 @@
  * A Project
  */
 angular.module('sb.project_group').controller('ProjectGroupListController',
-    function ($scope, $modal, SubscriptionList, CurrentUser) {
+    function ($scope, $modal, SubscriptionList, CurrentUser, $state) {
         'use strict';
 
         // search results must be of type "ProjectGroup"
