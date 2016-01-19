@@ -39,6 +39,8 @@
             <a href="#!/story/{{item.story_id}}">
                 {{item.title}}
             </a>
+            <user-typeahead ng-show="item.assignee_id"
+                ng-model="item.assignee_id"/>
         </div>
     </div>
 </div>

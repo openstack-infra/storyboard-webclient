@@ -221,6 +221,8 @@
                             </a>
                             <a href="#!/story/{{item.story_id}}" ng-switch-when="task">
                                 <div class="col-sm-1">
+                                    <user-typeahead ng-show="item.assignee_id"
+                                            ng-model="item.assignee_id"/>
                                     <i class="fa fa-tasks text-muted"></i>
                                 </div>
                                 <div class="col-sm-11">
@@ -266,6 +268,8 @@
                             <a href="#!/story/{{item.story_id}}" ng-switch-when="task">
                                 <div class="col-sm-1">
                                     <i class="fa fa-tasks text-muted"></i>
+                                    <user-typeahead ng-show="item.assignee_id"
+                                            ng-model="item.assignee_id"/>
                                 </div>
                                 <div class="col-sm-11">
                                     {{item.title}}
