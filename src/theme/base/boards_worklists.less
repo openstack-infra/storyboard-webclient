@@ -118,6 +118,12 @@
     text-align: left;
     border-radius: @border-radius-base;
     border: 1px solid #bbb;
+    > div > user-typeahead > .form-group {
+        margin-bottom: 0px;
+        > .form-control-static {
+            padding: 0px;
+        }
+    }
 }
 
 .kanban-card-readonly {
