@@ -123,9 +123,9 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
         $scope.newStory = function () {
             NewStoryService.showNewStoryModal(id)
-                .then(function () {
-                    // On success, refresh the page.
-                    $scope.search();
+                .then(function (createdStory) {
+                    // On success, go to the story detail
+                    $state.go('sb.story.detail', {storyId: createdStory.id});
                 }
             );
         };
