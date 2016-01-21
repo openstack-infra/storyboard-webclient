@@ -36,21 +36,6 @@ angular.module('sb.auth').controller('AuthTokenController',
             return;
         }
 
-        // Validate any previously stored redirect path
-        function buildNextPath() {
-
-            // First, do we have a stored last location?
-            var location = LastLocation.get();
-
-            // Sanity check on the location, we don't want to bounce straight
-            // back into auth.
-            if (location.indexOf('/auth') > -1) {
-                location = '/';
-            }
-
-            return location;
-        }
-
         // Looks like there's no error, so let's see if we can resolve a token.
         // TODO: Finish implementing.
         OpenId.token($searchParams)
@@ -58,9 +43,7 @@ angular.module('sb.auth').controller('AuthTokenController',
             function (token) {
                 Session.updateSession(token)
                     .then(function () {
-                        var nextPath = buildNextPath();
-                        $window.location.href =
-                            UrlUtil.buildApplicationUrl(nextPath);
+                        LastLocation.go('sb.page.about', {});
                     });
             },
             function (error) {
