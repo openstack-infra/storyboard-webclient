@@ -29,7 +29,6 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-jasmine',
             'karma-html-reporter',
-            'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-firefox-launcher'
         ],
@@ -52,7 +51,7 @@ module.exports = function (config) {
 
         colors: false,
 
-        browsers: [ 'PhantomJS', 'Firefox' ],
+        browsers: [ 'Firefox', 'Chrome' ],
 
         preprocessors: {
             './dist/js/storyboard.js': ['coverage']
