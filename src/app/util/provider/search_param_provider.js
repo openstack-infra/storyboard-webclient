@@ -18,18 +18,46 @@
  * Utility injector, injects the query parameters from the NON-hashbang URL as
  * $searchParams.
  */
-angular.module('sb.util').factory('$searchParams',
-    function ($window, UrlUtil) {
+angular.module('sb.util').provider('$searchParams',
+    function ($windowProvider) {
         'use strict';
 
-        var params = {};
-        var search = $window.location.search;
-        if (!!search) {
+        var pageParams = {};
+
+        this.extractSearchParameters = function () {
+            var window = $windowProvider.$get();
+            var search = window.location.search;
             if (search.charAt(0) === '?') {
                 search = search.substr(1);
             }
+            var queryComponents = search.split('&');
+            for (var i = 0; i < queryComponents.length; i++) {
+                var parts = queryComponents[i].split('=');
+                var key = decodeURIComponent(parts[0]) || null;
+                var value = decodeURIComponent(parts[1]) || null;
 
-            return UrlUtil.deserializeParameters(search);
+                if (!!key && !!value) {
+                    pageParams[key] = value;
+                }
+            }
+        };
+        this.$get = function () {
+            return angular.copy(pageParams);
+        };
+    })
+    .config(function ($searchParamsProvider, $windowProvider) {
+        'use strict';
+
+        // Make sure we save the search parameters so they can be used later.
+        $searchParamsProvider.extractSearchParameters();
+
+        // Overwrite the URL's current state.
+        var window = $windowProvider.$get();
+        var url = new URL(window.location.toString());
+        url.search = '';
+        if (window.location.toString() !== url.toString()) {
+            window.history.replaceState({},
+                window.document.title,
+                url.toString());
         }
-        return params;
     });
