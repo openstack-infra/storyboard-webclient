@@ -17,49 +17,53 @@
 /**
  * A service that keeps track of the last page we visited.
  */
-angular.module('sb.util')
-    .factory('LastLocation',
-    function ($rootScope, localStorageService, $location) {
+angular.module('sb.util').factory('LastLocation',
+    function ($rootScope, localStorageService, $state) {
         'use strict';
 
         /**
-         * The last detected length of the history
+         * onStateChange handler. Stores the next destination state, and its
+         * parameters, so we can keep revisit the history after bouncing out
+         * for authentication.
+         *
+         * @param event The state change event.
+         * @param toState The destination state.
+         * @param toParams The parameters for that destination state.
          */
-
-            // When the location changes, store the new one. Since the $location
-            // object changes too quickly, we instead extract the hash manually.
-        function onLocationChange() {
-            var path = $location.path();
-            if (!!path && path.indexOf('/auth') === -1) {
-                localStorageService.set('lastLocation', path);
+        function onStateChange(event, toState, toParams) {
+            if (toState.name.indexOf('sb.auth') === -1) {
+                var data = {
+                    'name': toState.name,
+                    'params': toParams
+                };
+                localStorageService.set('lastLocation',
+                    angular.toJson(data));
             }
-
         }
+
+        // Add the listener to the application, remove it when the scope is
+        // destroyed.
+        $rootScope.$on('$destroy',
+            $rootScope.$on('$stateChangeStart', onStateChange)
+        );
 
         // The published API.
         return {
 
             /**
-             * Get the recorded history path at the provided index.
+             * Navigate to the last recorded state.
+             *
+             * @param defaultStateName A fallback state.
+             * @param defaultStateParams Default state parameters.
              */
-            get: function () {
-                return localStorageService.get('lastLocation');
-            },
-
-            /**
-             * Initialize this service.
-             */
-            initialize: function () {
-                // Register (and disconnect) our listener.
-                $rootScope.$on('$destroy',
-                    $rootScope.$on('$locationChangeStart', onLocationChange)
-                );
+            go: function (defaultStateName, defaultStateParams) {
+                var last = localStorageService.get('lastLocation');
+                if (!last) {
+                    $state.go(defaultStateName, defaultStateParams);
+                } else {
+                    last = angular.fromJson(last);
+                    $state.go(last.name, last.params);
+                }
             }
         };
-    })
-    .run(function (LastLocation) {
-        'use strict';
-
-        // Initialize this service.
-        LastLocation.initialize();
     });
