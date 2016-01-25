@@ -68,7 +68,8 @@ angular.module('sb.projects').controller('ProjectStoryListController',
                     project_id: id,
                     status: $scope.filter || null,
                     offset: $scope.searchOffset,
-                    limit: pageSize
+                    limit: pageSize,
+                    sort_dir: 'desc'
                 },
                 function (result, headers) {
 
