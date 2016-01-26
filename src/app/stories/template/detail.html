@@ -299,7 +299,7 @@
     <table class="table table-striped table-supercondensed">
         <thead>
         <tr>
-            <td colspan="7"><strong>Tasks</strong></td>
+            <td colspan="8"><strong>Tasks</strong></td>
             </td>
         </tr>
         </thead>
@@ -309,7 +309,7 @@
             src="'/inline/task_list_item.html'">
         </tr>
         <tr ng-if="tasks.length == 0 && !showAddTaskForm">
-            <td colspan="7">
+            <td colspan="8">
                 <p class="text-muted text-center">
                     <em>This story has no tasks.</em>
                 </p>
@@ -321,7 +321,7 @@
         </tr>
         <hr />
         <tr>
-            <td colspan="7" class="text-left">
+            <td colspan="8" class="text-left">
                     <button class="btn btn-default" type="button"
                        ng-click="showAddTaskForm = !showAddTaskForm"
                        ng-show="isLoggedIn">
@@ -401,6 +401,7 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
+    <td class="col-xs-1 center-vertical">{{task.id}}:</td>
     <td class="col-xs-3 center-vertical">
         <input-inline
                 ng-model="task.title"
@@ -467,6 +468,7 @@
 
 <!-- Template for the task add form. -->
 <script type="text/ng-template" id="/inline/task_edit_form.html">
+    <td class="col-xs-1"></td>
     <td class="col-xs-3">
         <input-inline
                 auto-focus="true"
