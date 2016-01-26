@@ -401,7 +401,7 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
-    <td class="col-xs-3 center-vertical">
+    <td class="col-xs-3 center-vertical">{{task.id}}:</td>
         <input-inline
                 ng-model="task.title"
                 enabled="isLoggedIn"
@@ -467,7 +467,8 @@
 
 <!-- Template for the task add form. -->
 <script type="text/ng-template" id="/inline/task_edit_form.html">
-    <td class="col-xs-3">
+    <td class="col-xs-3"></td>
+    <td class="col-xs-4">
         <input-inline
                 auto-focus="true"
                 ng-model="newTask.title"
