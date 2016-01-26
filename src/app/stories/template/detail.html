@@ -298,6 +298,7 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
+    <td class="col-xs-1"> ID: {{task.id}} </td>
     <td class="col-xs-4">
         <input-inline
                 ng-model="task.title"
@@ -353,6 +354,7 @@
 
 <!-- Template for the task add form. -->
 <script type="text/ng-template" id="/inline/task_edit_form.html">
+    <td class="col-xs-1"></td>
     <td class="col-xs-4">
         <input-inline
                 auto-focus="true"
