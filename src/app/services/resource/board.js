@@ -62,35 +62,5 @@ angular.module('sb.services').factory('Board',
             }
         );
 
-        resource.getLane = function(board, id) {
-            for (var n = 0; n < board.lanes.length; n++) {
-                if (board.lanes[n].list_id === id) {
-                    return board.lanes[n];
-                }
-            }
-        };
-
-        resource.loadContents = function(board, loadContents,
-                                         resolveContents) {
-            // The empty string is used to pass a false value to the endpoint.
-            // See: https://bugs.launchpad.net/wsme/+bug/1493982
-            Worklist.browse({
-                board_id: board.id,
-                hide_lanes: ''
-            }).$promise.then(function(worklists) {
-                board.worklists = worklists.sort(function(a, b) {
-                    return resource.getLane(board, a.id).position -
-                           resource.getLane(board, b.id).position;
-                });
-            }).then(function() {
-                if (loadContents) {
-                    for (var i = 0; i < board.worklists.length; i++) {
-                        var worklist = board.worklists[i];
-                        Worklist.loadContents(worklist, resolveContents);
-                    }
-                }
-            });
-        };
-
         return resource;
     });

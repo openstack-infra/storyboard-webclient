@@ -46,7 +46,6 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             });
             Worklist.get(params, function(result) {
                 $scope.worklist = result;
-                Worklist.loadContents(result, true);
                 resolvePermissions();
             });
         }
@@ -124,7 +123,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
         $scope.removeListItem = function(item) {
             Worklist.ItemsController.delete({
                 id: $scope.worklist.id,
-                item_id: item.list_item_id
+                item_id: item.id
             }).$promise.then(function() {
                 var idx = $scope.worklist.items.indexOf(item);
                 $scope.worklist.items.splice(idx, 1);
@@ -204,7 +203,17 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             accept: function (sourceHandle, dest) {
                 return sourceHandle.itemScope.sortableScope.$id === dest.$id;
             },
-            orderChanged: BoardHelper.moveCardInLane
+            orderChanged: function (result) {
+                var list = result.dest.sortableScope.$parent.worklist;
+                for (var i = 0; i < list.items.length; i++) {
+                    var item = list.items[i];
+                    Worklist.ItemsController.update({
+                        id: list.id,
+                        item_id: item.id,
+                        list_position: i
+                    });
+                }
+            }
         };
 
         /**

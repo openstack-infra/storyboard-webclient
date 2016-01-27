@@ -15,18 +15,18 @@
   -->
 <div class="kanban-lane-contents-readonly">
     <div class="kanban-card-readonly"
-         ng-repeat="item in worklist.items"
-         ng-switch="item.type">
+         ng-repeat="item in lane.worklist.items"
+         ng-switch="item.item_type">
         <div ng-switch-when="story">
             <i class="fa fa-sb-story text-muted"></i>
-            <a href="#!/story/{{item.id}}">
-                {{item.title}}
+            <a href="#!/story/{{item.story.id}}">
+                {{item.story.title}}
             </a>
         </div>
         <div ng-switch-when="task">
             <i class="fa fa-tasks text-muted"></i>
-            <a href="#!/story/{{item.story_id}}">
-                {{item.title}}
+            <a href="#!/story/{{item.task.id}}">
+                {{item.task.title}}
             </a>
         </div>
     </div>
