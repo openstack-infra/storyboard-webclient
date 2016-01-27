@@ -314,7 +314,7 @@ angular.module('sb.board').controller('BoardDetailController',
             accept: function (sourceHandle, dest) {
                 var srcParent = sourceHandle.itemScope.sortableScope.$parent;
                 var dstParentSortable = dest.$parent.sortableScope;
-                if (!$scope.permissions.edit_board) {
+                if (!$scope.permissions.editBoard) {
                     return true;
                 }
                 if (!srcParent.sortableScope) {
