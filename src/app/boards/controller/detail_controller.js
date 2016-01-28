@@ -300,8 +300,8 @@ angular.module('sb.board').controller('BoardDetailController',
          * Config for the cards sortable.
          */
         $scope.cardsSortable = {
-            orderChanged: BoardHelper.moveCardInLane,
-            itemMoved: BoardHelper.moveCardBetweenLanes,
+            orderChanged: BoardHelper.moveCard,
+            itemMoved: BoardHelper.moveCard,
             dragMove: BoardHelper.maybeScrollContainer('kanban-board'),
             accept: function (sourceHandle, dest) {
                 var srcParent = sourceHandle.itemScope.sortableScope.$parent;

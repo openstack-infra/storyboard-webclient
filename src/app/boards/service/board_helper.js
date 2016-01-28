@@ -53,52 +53,29 @@ angular.module('sb.board').factory('BoardHelper',
         }
 
         /**
-         * ng-sortable callback for orderChanged event.
+         * ng-sortable callback for orderChanged and itemMoved events.
          *
-         * This is called when a card has changed position in a lane, and
-         * updates to position of each card in the lane.
+         * This is called when a card has changed position or moved between
+         * two different lanes. It updates the WorklistItem which represents
+         * the card.
          */
-        function moveCardInLane(result) {
-            var list = result.source.sortableScope.$parent.lane.worklist;
-            for (var i = 0; i < list.items.length; i++) {
-                var item = list.items[i];
-                item.position = i;
-                Worklist.ItemsController.update({
-                    id: list.id,
-                    item_id: item.id,
-                    list_position: item.position
-                });
-            }
-        }
+        function moveCard(result) {
+            var list = result.dest.sortableScope.$parent.lane.worklist;
+            var position = result.dest.index;
+            var item = list.items[position];
 
-        /**
-         * ng-sortable callback for itemMoved event.
-         *
-         * This is called when a card has moved between lanes, and updates
-         * the position of each card in the two lanes involved, as well as
-         * ensuring that the correct list_id is set for items in the
-         * destination lane.
-         */
-        function moveCardBetweenLanes(result) {
-            moveCardInLane(result);
-            var dst = result.dest.sortableScope.$parent.lane.worklist;
-            for (var i = 0; i < dst.items.length; i++) {
-                var item = dst.items[i];
-                item.position = i;
-                item.list_id = dst.id;
-                Worklist.ItemsController.update({
-                    id: dst.id,
-                    item_id: item.id,
-                    list_position: item.position,
-                    list_id: item.list_id
-                });
-            }
+            item.list_position = position;
+            Worklist.ItemsController.update({
+                id: list.id,
+                item_id: item.id,
+                list_position: item.list_position,
+                list_id: list.id
+            });
         }
 
         return {
             maybeScrollContainer: scrollFunction,
-            moveCardInLane: moveCardInLane,
-            moveCardBetweenLanes: moveCardBetweenLanes
+            moveCard: moveCard
         };
     }
 );
