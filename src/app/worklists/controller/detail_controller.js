@@ -207,14 +207,15 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             },
             orderChanged: function (result) {
                 var list = result.dest.sortableScope.$parent.worklist;
-                for (var i = 0; i < list.items.length; i++) {
-                    var item = list.items[i];
-                    Worklist.ItemsController.update({
-                        id: list.id,
-                        item_id: item.id,
-                        list_position: i
-                    });
-                }
+                var position = result.dest.index;
+                var item = list.items[position];
+
+                item.list_position = position;
+                Worklist.ItemsController.update({
+                    id: list.id,
+                    item_id: item.id,
+                    list_position: item.list_position
+                });
             }
         };
 
