@@ -50,17 +50,6 @@
         Hide {{projectGroupItems.length}} projects...
     </a>
 </td>
-<td class="hidden-xs">
-    <span time-moment eventdate="projectGroup.created_at" short-date="true">
-    </span>
-</td>
-<td class="hidden-xs">
-    <span time-moment
-          ng-if="projectGroup.updated_at"
-          eventdate="projectGroup.updated_at"
-          short-date="true">
-    </span>
-</td>
 <td>
     <small ng-show="isLoggedIn">
         <subscribe class="pull-right"
