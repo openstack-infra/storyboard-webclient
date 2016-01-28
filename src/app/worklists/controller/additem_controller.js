@@ -64,6 +64,10 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
                     item_type = 'story';
                 }
 
+                if (!item.hasOwnProperty('value')) {
+                    item.value = item.id;
+                }
+
                 var params = {
                     item_id: item.value,
                     id: $scope.worklist.id,
