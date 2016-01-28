@@ -21,7 +21,7 @@
  * @author Adam Coldrick
  */
 angular.module('sb.services').factory('Worklist',
-    function (ResourceFactory, $resource, storyboardApiBase, Task, Story) {
+    function (ResourceFactory, $resource, storyboardApiBase) {
         'use strict';
 
         var resource = ResourceFactory.build(
@@ -86,49 +86,6 @@ angular.module('sb.services').factory('Worklist',
                 User: 'creator_id'
             }
         );
-
-        function addItem(list, listitem) {
-            return function(item) {
-                item.list_item_id = listitem.id;
-                item.type = listitem.item_type;
-                item.position = listitem.list_position;
-                list.push(item);
-                list.sort(function(a, b) {
-                    return a.position - b.position;
-                });
-            };
-        }
-
-        resource.resolveContents = function(worklist, items) {
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i];
-                if (item.item_type === 'task') {
-                    Task.get({
-                        id: item.item_id
-                    }).$promise.then(
-                        addItem(worklist.items, item));
-                } else if (item.item_type === 'story') {
-                    Story.get({
-                        id: item.item_id
-                    }).$promise.then(
-                        addItem(worklist.items, item));
-                }
-            }
-        };
-
-        resource.loadContents = function (worklist, resolveContents) {
-            resource.ItemsController.get({
-                id: worklist.id
-            }).$promise.then(function(items) {
-                if (resolveContents) {
-                    worklist.items = [];
-                    resource.resolveContents(worklist, items);
-                } else {
-                    worklist.items = items;
-                }
-            });
-        };
-
 
         return resource;
     });

@@ -271,26 +271,28 @@
 <!-- Template for the board's lanes with edit permissions -->
 <script type="text/ng-template" id="/inline/kanban_lanes.html">
     <div id="kanban-board" class="kanban-board"
-         as-sortable="lanesSortable" ng-model="board.worklists">
-        <div class="kanban-lane" as-sortable-item ng-repeat="worklist in board.worklists">
+         as-sortable="lanesSortable" ng-model="board.lanes">
+        <div class="kanban-lane" as-sortable-item ng-repeat="lane in board.lanes"
+             ng-if="!lane.worklist.archived">
             <div as-sortable-item-handle>
-                <span ng-if="!worklist.editing">
-                    <a ng-class="{'kanban-lane-title': !!worklist.title}" ng-click="toggleEditLane(worklist)">
-                        {{ worklist.title }}
-                        <i class="fa fa-pencil" ng-if="!worklist.title"></i>
+                <span ng-if="!lane.worklist.editing">
+                    <a ng-class="{'kanban-lane-title': !!lane.worklist.title}"
+                       ng-click="toggleEditLane(lane)">
+                        {{ lane.worklist.title }}
+                        <i class="fa fa-pencil" ng-if="!lane.worklist.title"></i>
                     </a>
                     <button type="button" class="close" title="Remove"
-                            ng-click="removeLane(worklist)">
+                            ng-click="removeLane(lane)">
                         &times;
                     </button>
                 </span>
                 <input class="form-control"
                        type="text"
-                       ng-model="worklist.title"
+                       ng-model="lane.worklist.title"
                        placeholder="Lane Title"
                        focus
-                       ng-if="worklist.editing"
-                       ng-blur="toggleEditLane(worklist)" />
+                       ng-if="lane.worklist.editing"
+                       ng-blur="toggleEditLane(lane)" />
                 </div>
                 <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
             </div>
@@ -305,8 +307,9 @@
 <!-- Template for the board's lanes without edit permissions -->
 <script type="text/ng-template" id="/inline/kanban_lanes_static.html">
     <div class="kanban-board">
-        <div class="kanban-lane" ng-repeat="worklist in board.worklists">
-            <span class="kanban-lane-title">{{ worklist.title }}</span>
+        <div class="kanban-lane" ng-repeat="lane in board.lanes"
+             ng-if="!lane.worklist.archived">
+            <span class="kanban-lane-title">{{ lane.worklist.title }}</span>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'"
                  ng-show="permissions.moveCards || permissions.editBoard"></div>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'"

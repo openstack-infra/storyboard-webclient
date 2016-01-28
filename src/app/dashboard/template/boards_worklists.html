@@ -33,11 +33,12 @@
                                 {{board.title}}
                             </a>
                         </p>
-                        <small ng-repeat="list in board.worklists">
+                        <small ng-repeat="lane in board.lanes"
+                               ng-if="!lane.worklist.archived">
                         <span class="badge"
-                              ng-class="{'badge-primary': list.items.length > 0}">
-                            {{list.items.length}}
-                        </span> {{list.title}}
+                              ng-class="{'badge-primary': lane.worklist.items.length > 0}">
+                            {{lane.worklist.items.length}}
+                        </span> {{lane.worklist.title}}
                         &nbsp;
                         </small>
                     </td>
@@ -48,6 +49,11 @@
                     <em>
                         You don't currently have any boards.
                     </em>
+                </td>
+                </tbody>
+                <tbody ng-show="loadingBoards">
+                <td colspan="3" class="text-center">
+                    <i class="fa fa-refresh fa-spin fa-lg"></i>
                 </td>
                 </tbody>
             </table>
@@ -79,6 +85,11 @@
                     <em>
                         You don't currently have any worklists.
                     </em>
+                </td>
+                </tbody>
+                <tbody ng-show="loadingWorklists">
+                <td colspan="3" class="text-center">
+                    <i class="fa fa-refresh fa-spin fa-lg"></i>
                 </td>
                 </tbody>
             </table>

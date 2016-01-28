@@ -26,30 +26,25 @@ angular.module('sb.board').controller('BoardDetailController',
          * Load the board. If onlyContents is true then assume $scope.board
          * is a board and reload its contents.
          */
-        function loadBoard(onlyContents) {
+        function loadBoard() {
             var params = {id: $stateParams.boardID};
-            if (onlyContents) {
-                Board.loadContents($scope.board, true, true);
-            } else {
-                Board.Permissions.get(params, function(perms) {
-                    $scope.permissions = {
-                        editBoard: perms.indexOf('edit_board') > -1,
-                        moveCards: perms.indexOf('move_cards') > -1
-                    };
+            Board.Permissions.get(params, function(perms) {
+                $scope.permissions = {
+                    editBoard: perms.indexOf('edit_board') > -1,
+                    moveCards: perms.indexOf('move_cards') > -1
+                };
+            });
+            Board.get(params, function(board) {
+                $scope.board = board;
+                $scope.owners = [];
+                $scope.users = [];
+                angular.forEach(board.owners, function(id) {
+                    $scope.owners.push(User.get({id: id}));
                 });
-                Board.get(params, function(board) {
-                    $scope.board = board;
-                    Board.loadContents(board, true, true);
-                    $scope.owners = [];
-                    $scope.users = [];
-                    angular.forEach(board.owners, function(id) {
-                        $scope.owners.push(User.get({id: id}));
-                    });
-                    angular.forEach(board.users, function(id) {
-                        $scope.users.push(User.get({id: id}));
-                    });
+                angular.forEach(board.users, function(id) {
+                    $scope.users.push(User.get({id: id}));
                 });
-            }
+            });
         }
 
         /**
@@ -70,19 +65,20 @@ angular.module('sb.board').controller('BoardDetailController',
                         var board = $scope.board;
                         return function(item) {
                             var valid = true;
-                            angular.forEach(board.worklists, function(list) {
-                                angular.forEach(list.items, function(listItem) {
+                            angular.forEach(board.lanes, function(lane) {
+                                var items = lane.worklist.items;
+                                angular.forEach(items, function(listItem) {
                                     var type = item.type.toLowerCase();
                                     if (!item.hasOwnProperty('value')) {
                                         item.value = item.id;
                                     }
-                                    if (item.value === listItem.id &&
-                                        type === listItem.type) {
+                                    if (item.value === listItem.item_id &&
+                                        type === listItem.item_type) {
                                         valid = false;
                                         item.invalid = item.type +
                                                        ' is already in' +
                                                        ' the board (' +
-                                                       list.title +
+                                                       lane.worklist.title +
                                                        ' lane).';
                                     }
                                 });
@@ -100,9 +96,10 @@ angular.module('sb.board').controller('BoardDetailController',
          * Add a card to a lane.
          */
         $scope.addItem = function(worklist) {
+            loadBoard();
             showAddItemModal(worklist)
                 .finally(function() {
-                    Worklist.loadContents(worklist, true);
+                    loadBoard();
                 });
         };
 
@@ -163,31 +160,36 @@ angular.module('sb.board').controller('BoardDetailController',
          * Add a lane to the board.
          */
         $scope.addLane = function () {
-            $scope.board.worklists.push(new Worklist({
-                id: null,
-                title: '',
-                editing: true
-            }));
+            $scope.board.lanes.push({
+                worklist: new Worklist({
+                    id: null,
+                    title: '',
+                    editing: true
+                }),
+                position: $scope.board.lanes.length,
+                board_id: $scope.board.id
+            });
         };
 
         /**
          * Remove a lane from the board.
          */
-        $scope.removeLane = function (worklist) {
+        $scope.removeLane = function (lane) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/worklists/template/delete.html',
                 controller: 'WorklistDeleteController',
                 resolve: {
                     worklist: function() {
-                        return worklist;
+                        return lane.worklist;
                     },
                     redirect: false
                 }
             });
 
             modalInstance.result.then(function() {
-                var idx = $scope.board.worklists.indexOf(worklist);
-                $scope.board.worklists.splice(idx, 1);
+                var idx = $scope.board.lanes.indexOf(lane);
+                $scope.board.lanes.splice(idx, 1);
+                $scope.board.$update();
             });
         };
 
@@ -197,7 +199,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.removeCard = function (worklist, item) {
             Worklist.ItemsController.delete({
                 id: worklist.id,
-                item_id: item.list_item_id
+                item_id: item.id
             }).$promise.then(function() {
                 var idx = worklist.items.indexOf(item);
                 worklist.items.splice(idx, 1);
@@ -207,23 +209,11 @@ angular.module('sb.board').controller('BoardDetailController',
         /**
          * Save changes to the ordering of and additions to the lanes.
          */
-        function updateBoardLanes(newList) {
-            for (var i = 0; i < $scope.board.worklists.length; i++) {
-                var lane = Board.getLane($scope.board,
-                                         $scope.board.worklists[i].id);
-                if (!lane) {
-                    $scope.board.lanes.push({
-                        list_id: newList.id,
-                        board_id: $scope.board.id,
-                        position: i
-                    });
-                } else {
-                    lane.position = i;
-                }
+        function updateBoardLanes() {
+            for (var i = 0; i < $scope.board.lanes.length; i++) {
+                $scope.board.lanes[i].position = i;
             }
-            $scope.board.$update().then(function() {
-                Board.loadContents($scope.board, true, true);
-            });
+            $scope.board.$update();
         }
 
         /**
@@ -231,17 +221,19 @@ angular.module('sb.board').controller('BoardDetailController',
          * create a worklist to represent the lane if one doesn't exist
          * already.
          */
-        $scope.toggleEditLane = function(worklist) {
-            if (worklist.editing) {
-                if (worklist.id === null) {
-                    worklist.$create().then(updateBoardLanes);
-                } else {
-                    worklist.$update().then(function(list) {
-                        Worklist.loadContents(list, true);
+        $scope.toggleEditLane = function(lane) {
+            if (lane.worklist.editing) {
+                if (lane.worklist.id === null) {
+                    lane.worklist.$create().then(function(list) {
+                        lane.list_id = list.id;
+                        $scope.board.$update();
                     });
+                } else {
+                    Worklist.update({id: lane.worklist.id},
+                                    lane.worklist);
                 }
             }
-            worklist.editing = !worklist.editing;
+            lane.worklist.editing = !lane.worklist.editing;
         };
 
         /**

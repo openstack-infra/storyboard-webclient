@@ -59,13 +59,13 @@ angular.module('sb.board').factory('BoardHelper',
          * updates to position of each card in the lane.
          */
         function moveCardInLane(result) {
-            var list = result.source.sortableScope.$parent.worklist;
+            var list = result.source.sortableScope.$parent.lane.worklist;
             for (var i = 0; i < list.items.length; i++) {
                 var item = list.items[i];
                 item.position = i;
                 Worklist.ItemsController.update({
                     id: list.id,
-                    item_id: item.list_item_id,
+                    item_id: item.id,
                     list_position: item.position
                 });
             }
@@ -81,14 +81,14 @@ angular.module('sb.board').factory('BoardHelper',
          */
         function moveCardBetweenLanes(result) {
             moveCardInLane(result);
-            var dst = result.dest.sortableScope.$parent.worklist;
+            var dst = result.dest.sortableScope.$parent.lane.worklist;
             for (var i = 0; i < dst.items.length; i++) {
                 var item = dst.items[i];
                 item.position = i;
                 item.list_id = dst.id;
                 Worklist.ItemsController.update({
                     id: dst.id,
-                    item_id: item.list_item_id,
+                    item_id: item.id,
                     list_position: item.position,
                     list_id: item.list_id
                 });

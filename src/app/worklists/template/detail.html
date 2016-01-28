@@ -209,22 +209,22 @@
             <table class="table table-striped table-hover">
                 <tbody as-sortable="sortableOptions" ng-model="worklist.items">
                     <tr as-sortable-item ng-repeat="item in worklist.items">
-                        <td as-sortable-item-handle ng-switch="item.type" class="hover-row"
-                            title="{{item.type}}: {{item.title}}">
-                            <a href="#!/story/{{item.id}}" ng-switch-when="story">
+                        <td as-sortable-item-handle ng-switch="item.item_type" class="hover-row"
+                            title="{{item.item_type}}: {{item[item.item_type].title}}">
+                            <a href="#!/story/{{item.story.id}}" ng-switch-when="story">
                                 <div class="col-sm-1">
                                     <i class="fa fa-sb-story text-muted"></i>
                                 </div>
                                 <div class="col-sm-11">
-                                    {{item.title}}
+                                    {{item.story.title}}
                                 </div>
                             </a>
-                            <a href="#!/story/{{item.story_id}}" ng-switch-when="task">
+                            <a href="#!/story/{{item.task.story_id}}" ng-switch-when="task">
                                 <div class="col-sm-1">
                                     <i class="fa fa-tasks text-muted"></i>
                                 </div>
                                 <div class="col-sm-11">
-                                    {{item.title}}
+                                    {{item.task.title}}
                                 </div>
                             </a>
                         </td>
@@ -253,22 +253,22 @@
             <table class="table table-striped table-hover">
                 <tbody ng-show="worklist.items.length > 0">
                     <tr ng-repeat="item in worklist.items">
-                        <td ng-switch="item.type" class="hover-row"
-                            title="{{item.type}}: {{item.title}}">
-                            <a href="#!/story/{{item.value}}" ng-switch-when="story">
+                        <td ng-switch="item.item_type" class="hover-row"
+                            title="{{item.item_type}}: {{item[item.item_type].title}}">
+                            <a href="#!/story/{{item.story.id}}" ng-switch-when="story">
                                 <div class="col-sm-1">
                                     <i class="fa fa-sb-story text-muted"></i>
                                 </div>
                                 <div class="col-sm-11">
-                                    {{item.title}}
+                                    {{item.story.title}}
                                 </div>
                             </a>
-                            <a href="#!/story/{{item.story_id}}" ng-switch-when="task">
+                            <a href="#!/story/{{item.task.story_id}}" ng-switch-when="task">
                                 <div class="col-sm-1">
                                     <i class="fa fa-tasks text-muted"></i>
                                 </div>
                                 <div class="col-sm-11">
-                                    {{item.title}}
+                                    {{item.task.title}}
                                 </div>
                             </a>
                         </td>

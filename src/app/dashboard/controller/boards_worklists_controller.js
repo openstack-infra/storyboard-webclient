@@ -22,20 +22,18 @@ angular.module('sb.dashboard').controller('BoardsWorklistsController',
         'use strict';
 
         var params = {user_id: currentUser.id};
+        $scope.loadingBoards = true;
+        $scope.loadingWorklists = true;
 
         // Load the boards belonging to the logged in user.
         Board.browse(params).$promise.then(function(boards) {
-            for (var i = 0; i < boards.length; i++) {
-                Board.loadContents(boards[i], true, false);
-            }
+            $scope.loadingBoards = false;
             $scope.boards = boards;
         });
 
         // Load the worklists belonging to the logged in user.
         Worklist.browse(params).$promise.then(function(worklists) {
-            for (var i = 0; i < worklists.length; i++) {
-                Worklist.loadContents(worklists[i], false);
-            }
+            $scope.loadingWorklists = false;
             $scope.worklists = worklists;
         });
     });
