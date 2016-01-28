@@ -92,28 +92,6 @@
                             </i>
                         </a>
                     </th>
-                    <th class="hidden-xs">
-                        <a href="" ng-click="toggleFilter('created_at')">
-                            Created
-                            <i class="fa fa-caret-down"
-                               ng-if="sortField == 'created_at' && sortDirection == 'desc'">
-                            </i>
-                            <i class="fa fa-caret-up"
-                               ng-if="sortField == 'created_at' && sortDirection == 'asc'">
-                            </i>
-                        </a>
-                    </th>
-                    <th class="hidden-xs">
-                        <a href="" ng-click="toggleFilter('updated_at')">
-                            Updated
-                            <i class="fa fa-caret-down"
-                               ng-if="sortField == 'updated_at' && sortDirection == 'desc'">
-                            </i>
-                            <i class="fa fa-caret-up"
-                               ng-if="sortField == 'updated_at' && sortDirection == 'asc'">
-                            </i>
-                        </a>
-                    </th>
                     <th></th>
                 </tr>
                 </thead>
@@ -124,13 +102,13 @@
                 </tbody>
 
                 <tbody ng-if="searchResults.length == 0 && !isSearching">
-                <td class="text-center text-muted" colspan="4">
+                <td class="text-center text-muted" colspan="2">
                     <em>No projects found.</em>
                 </td>
                 </tbody>
 
                 <tbody ng-if="isSearching">
-                <td colspan="4" class="text-center">
+                <td colspan="2" class="text-center">
                     <small class="fa fa-spin fa-lg fa-refresh text-muted">
                     </small>
                 </td>

@@ -7,17 +7,6 @@
         {{project.description | truncate: 97}}
     </span>
 </td>
-<td class="hidden-xs">
-    <span time-moment eventdate="project.created_at" short-date="true">
-    </span>
-</td>
-<td class="hidden-xs">
-    <span time-moment
-          ng-if="project.updated_at"
-          eventdate="project.updated_at"
-          short-date="true">
-    </span>
-</td>
 <td>
     <small ng-show="isLoggedIn">
         <subscribe class="pull-right"
