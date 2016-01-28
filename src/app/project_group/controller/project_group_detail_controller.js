@@ -51,7 +51,8 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
             Project.browse({
                     project_group_id: projectGroup.id,
                     offset: $scope.projectSearchOffset,
-                    limit: projectPageSize
+                    limit: projectPageSize,
+                    sort_dir: 'desc'
                 },
                 function (result, headers) {
                     // Successful search results, apply the results to the
