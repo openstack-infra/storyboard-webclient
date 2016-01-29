@@ -25,7 +25,7 @@
         </div>
         <div ng-switch-when="task">
             <i class="fa fa-tasks text-muted"></i>
-            <a href="#!/story/{{item.task.id}}">
+            <a href="#!/story/{{item.task.story_id}}">
                 {{item.task.title}}
             </a>
                 <user-typeahead ng-show="item.task.assignee_id"
