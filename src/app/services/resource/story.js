@@ -57,6 +57,7 @@ angular.module('sb.services').factory('Story',
             {
                 Text: 'q',
                 StoryStatus: 'status',
+                Tags: 'tags',
                 ProjectGroup: 'project_group_id',
                 Project: 'project_id',
                 User: 'assignee_id'
