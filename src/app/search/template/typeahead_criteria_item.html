@@ -4,6 +4,9 @@
     <span ng-switch-when="Text">
         <i class="fa fa-search text-muted"></i>&emsp;{{match.model.title}}
     </span>
+    <span ng-switch-when="Tags">
+        <i class="fa fa-tag text-muted"></i>&emsp;{{match.model.title}}
+    </span>
     <span ng-switch-when="Story">
         <i class="fa fa-sb-story text-muted"></i>&emsp;{{match.model.value}}:
         {{match.model.title}}
