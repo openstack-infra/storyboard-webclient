@@ -19,8 +19,10 @@
  */
 angular.module('sb.board').controller('BoardDetailController',
     function ($scope, Worklist, $modal, Board, Project, $stateParams,
-              BoardHelper, $document, User, $q) {
+              BoardHelper, $document, User, $q, $timeout) {
         'use strict';
+
+        var scrollbars = {};
 
         /**
          * Load the board. If onlyContents is true then assume $scope.board
@@ -43,6 +45,15 @@ angular.module('sb.board').controller('BoardDetailController',
                 });
                 angular.forEach(board.users, function(id) {
                     $scope.users.push(User.get({id: id}));
+                });
+                angular.forEach(board.lanes, function(lane) {
+                    $timeout(function() {
+                        var id = 'lane-' + lane.id;
+                        var elem = $document[0].getElementById(id);
+                        if (!!elem) {
+                            elem.scrollTop = scrollbars[lane.id];
+                        }
+                    });
                 });
             });
         }
@@ -288,9 +299,16 @@ angular.module('sb.board').controller('BoardDetailController',
         /**
          * Config for the lanes sortable.
          */
+        var draggingLane = false;
         $scope.lanesSortable = {
             orderChanged: updateBoardLanes,
+            dragStart: function() {
+                draggingLane = true;
+            },
             dragMove: BoardHelper.maybeScrollContainer('kanban-board'),
+            dragEnd: function() {
+                draggingLane = false;
+            },
             accept: function (sourceHandle, dest) {
                 return sourceHandle.itemScope.sortableScope.$id === dest.$id;
             }
@@ -299,10 +317,17 @@ angular.module('sb.board').controller('BoardDetailController',
         /**
          * Config for the cards sortable.
          */
+        var draggingCard = false;
         $scope.cardsSortable = {
             orderChanged: BoardHelper.moveCard,
             itemMoved: BoardHelper.moveCard,
+            dragStart: function() {
+                draggingCard = true;
+            },
             dragMove: BoardHelper.maybeScrollContainer('kanban-board'),
+            dragEnd: function() {
+                draggingCard = false;
+            },
             accept: function (sourceHandle, dest) {
                 var srcParent = sourceHandle.itemScope.sortableScope.$parent;
                 var dstParentSortable = dest.$parent.sortableScope;
@@ -326,6 +351,24 @@ angular.module('sb.board').controller('BoardDetailController',
 
         // Load the board and permissions on page load.
         loadBoard();
+        setInterval(function(){
+            var update = true;
+            angular.forEach($scope.board.lanes, function(lane) {
+                if (lane.worklist.editing) {
+                    update = false;
+                }
+                var elem = $document[0].getElementById('lane-' + lane.id);
+                if (!!elem) {
+                    scrollbars[lane.id] = elem.scrollTop;
+                }
+            });
+            if ($scope.showEditForm || draggingCard || draggingLane) {
+                update = false;
+            }
+            if (update) {
+                loadBoard();
+            }
+        }, 5000);
         $scope.showEditForm = false;
         $scope.showAddOwner = false;
         $scope.isUpdating = false;

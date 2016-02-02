@@ -24,9 +24,9 @@
          ng-show="showEditForm">
     </div>
     <hr>
-    <div ng-show="permissions.editBoard"
+    <div ng-if="permissions.editBoard"
          ng-include src="'/inline/kanban_lanes.html'"></div>
-    <div ng-show="!permissions.editBoard"
+    <div ng-if="!permissions.editBoard"
          ng-include src="'/inline/kanban_lanes_static.html'"></div>
 </div>
 
@@ -311,9 +311,9 @@
              ng-if="!lane.worklist.archived">
             <span class="kanban-lane-title">{{ lane.worklist.title }}</span>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'"
-                 ng-show="permissions.moveCards || permissions.editBoard"></div>
+                 ng-if="permissions.moveCards || permissions.editBoard"></div>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'"
-                 ng-show="!(permissions.moveCards || permissions.editBoard)"></div>
+                 ng-if="!(permissions.moveCards || permissions.editBoard)"></div>
         </div>
     </div>
 </script>

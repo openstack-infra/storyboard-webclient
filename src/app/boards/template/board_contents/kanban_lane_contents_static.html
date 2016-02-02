@@ -13,7 +13,8 @@
   ~ License for the specific language governing permissions and limitations
   ~ under the License.
   -->
-<div class="kanban-lane-contents-readonly">
+<div class="kanban-lane-contents-readonly"
+     id="lane-{{lane.id}}">
     <div class="kanban-card-readonly"
          ng-repeat="item in lane.worklist.items"
          ng-switch="item.item_type">

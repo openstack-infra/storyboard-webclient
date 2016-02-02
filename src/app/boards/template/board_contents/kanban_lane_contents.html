@@ -15,7 +15,8 @@
   -->
 <div as-sortable="cardsSortable"
      ng-model="lane.worklist.items"
-     class="kanban-lane-contents">
+     class="kanban-lane-contents"
+     id="lane-{{lane.id}}">
     <div class="kanban-card"
          as-sortable-item
          ng-repeat="item in lane.worklist.items"
