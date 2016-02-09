@@ -1,0 +1,37 @@
+
+<div class="form-group"
+     ng-if="!enabled || !showForm">
+
+    <p class="form-control-static">
+        <a href="{{inputText}}">
+            {{inputText}}
+        </a>
+        <a href=""
+           ng-focus="toggleForm()"
+           ng-click="toggleForm()"
+           ng-if="!showForm && enabled">
+            <span ng-if="inputText">
+                <i class="fa fa-edit"></i>
+            </span>
+            <em ng-if="!inputText" class="text-muted">
+                {{emptyPrompt}}
+                <i class="fa fa-edit"></i>
+            </em>
+        </a>
+
+        <em class="text-muted"
+            ng-if="!inputText && !enabled">
+            {{emptyDisabledPrompt}}
+        </em>
+    </p>
+
+</div>
+
+<input id="input"
+       type="text"
+       ng-if="enabled && showForm"
+       class="form-control"
+       focus="autoFocus"
+       ng-blur="onInputBlur(inputText)"
+       ng-model="inputText"
+       maxlength="{{maxLength}}"/>
