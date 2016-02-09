@@ -14,7 +14,7 @@
     "serve": "./node_modules/.bin/grunt serve",
     "postinstall": "bower install"
   },
-  "repository": "",
+  "repository": "https://git.openstack.org/openstack-infra/storyboard-webclient",
   "keywords": [
     "openstack",
     "storyboard",
