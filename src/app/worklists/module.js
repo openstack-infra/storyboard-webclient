@@ -18,7 +18,8 @@
  * The StoryBoard story submodule handles most activity surrounding the
  * creation and management of stories, their tasks, and comments.
  */
-angular.module('sb.worklist', ['ui.router', 'sb.services', 'sb.util',
+angular.module('sb.worklist',
+              ['ui.router', 'sb.services', 'sb.util',
     'ui.bootstrap'])
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';

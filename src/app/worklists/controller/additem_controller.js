@@ -19,7 +19,7 @@
  */
 angular.module('sb.worklist').controller('WorklistAddItemController',
     function ($log, $scope, $state, worklist, $modalInstance, Story, Task,
-              Criteria, Worklist, $q, valid) {
+              NewStoryService, Criteria, Worklist, $q, valid) {
         'use strict';
 
         $scope.worklist = worklist;
@@ -29,6 +29,10 @@ angular.module('sb.worklist').controller('WorklistAddItemController',
         $scope.saving = false;
         $scope.loadingItems = false;
         $scope.error = {};
+
+        $scope.newStory = function () {
+            NewStoryService.showNewStoryModal();
+        };
 
         var unstaged = function(item) {
             var accept = true;
