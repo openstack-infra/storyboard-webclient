@@ -319,6 +319,17 @@
                 as-inline="true"
                 />
     </td>
+    <td class="col-xs-3">
+       <input-after-click
+                ng-model="task.link"
+                enabled="isLoggedIn"
+                on-change="updateTask(task)"
+                empty-prompt="Nothing Linked"
+                empty-disabled-prompt="No Linked Resource."
+                maxlength="255"
+                as-inline="true"
+                />
+    </td>
     <td class="col-xs-2">
         <user-typeahead
                 ng-model="task.assignee_id"
@@ -373,6 +384,17 @@
                 on-change="updateTaskInline()"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
+                as-inline="false"
+                />
+    </td>
+        <td class="col-xs-3">
+        <input-after-click
+                ng-model="newTask.link"
+                enabled="isLoggedIn"
+                on-change="updateTask(task)"
+                empty-prompt="Nothing Linked"
+                empty-disabled-prompt="No Linked Resource."
+                maxlength="255"
                 as-inline="false"
                 />
     </td>
