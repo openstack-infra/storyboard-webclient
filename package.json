@@ -11,7 +11,8 @@
     "test-integration": "./node_modules/.bin/grunt test:integration",
     "draft": "./node_modules/.bin/grunt build:draft",
     "build": "./node_modules/.bin/grunt build",
-    "serve": "./node_modules/.bin/grunt serve"
+    "serve": "./node_modules/.bin/grunt serve",
+    "postinstall": "bower install"
   },
   "repository": "",
   "keywords": [
