@@ -1,0 +1,114 @@
+<!--
+  ~ Copyright (c) 2016 Codethink Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="col-sm-8">
+    <table class="table table-fixed table-condensed table-striped">
+        <thead>
+        <tr>
+            <th class="text-center clickable-cell" ng-click="previous()">
+                <a href><i class="fa fa-chevron-left"></i></a>
+            </th>
+            <th class="text-center" colspan="5">
+                {{month.format("MMMM YYYY")}}
+            </th>
+            <th class="text-center clickable-cell" ng-click="next()">
+                <a href><i class="fa fa-chevron-right"></i></a>
+            </th>
+        </tr>
+        <tr>
+            <th class="text-center">Mon</th>
+            <th class="text-center">Tue</th>
+            <th class="text-center">Wed</th>
+            <th class="text-center">Thu</th>
+            <th class="text-center">Fri</th>
+            <th class="text-center">Sat</th>
+            <th class="text-center">Sun</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="week in weeks">
+            <td ng-repeat="day in week.days">
+                <div class="day text-center"
+                    ng-class="{'today': day.isToday,
+                               'day-selected': day.isSelected,
+                               'text-muted': !day.isCurrentMonth}"
+                    ng-click="select(day)">
+                    {{day.number}}
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-4">
+    <table class="table table-fixed table-borderless">
+        <tbody>
+        <tr>
+            <td class="text-center">
+                <a class="btn" href ng-click="incrementTime('hour')">
+                    <i class="fa fa-lg fa-chevron-up"></i>
+                </a>
+            </td>
+            <td class="separator"></td>
+            <td class="text-center">
+                <a class="btn" href ng-click="incrementTime('minute')">
+                    <i class="fa fa-lg fa-chevron-up"></i>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <button class="btn btn-default"
+                        ng-click="toggleEdit('hour')"
+                        ng-show="!editHour">
+                    {{selectedDate.format('HH')}}
+                </button>
+                <input class="form-control"
+                       ng-model="editedHour"
+                       ng-show="editHour"
+                       ng-blur="toggleEdit('hour')"
+                       focus-on-show/>
+            </td>
+            <td class="text-center separator"><strong>:</strong></td>
+            <td class="text-center">
+                <button class="btn btn-default"
+                        ng-click="toggleEdit('minute')"
+                        ng-show="!editMinute">
+                    {{selectedDate.format('mm')}}
+                </button>
+                <input class="form-control"
+                       ng-model="editedMinute"
+                       ng-show="editMinute"
+                       ng-blur="toggleEdit('minute')"
+                       focus-on-show/>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center">
+                <a class="btn" href ng-click="decrementTime('hour')">
+                    <i class="fa fa-lg fa-chevron-down"></i>
+                </a>
+            </td>
+            <td class="separator"></td>
+            <td class="text-center">
+                <a class="btn" href ng-click="decrementTime('minute')">
+                    <i class="fa fa-lg fa-chevron-down"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
