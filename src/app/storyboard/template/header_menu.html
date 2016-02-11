@@ -44,7 +44,7 @@
                         class="btn btn-primary navbar-btn dropdown-toggle"
                         dropdown-toggle>
                     <i class="fa fa-plus-circle"></i>
-                    Create New...
+                    New...
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu">
@@ -80,7 +80,7 @@
                         class="btn btn-primary navbar-btn dropdown-toggle"
                         ng-click="showLoginRequiredModal()">
                     <i class="fa fa-plus-circle"></i>
-                    Create New...
+                    New...
                     <i class="fa fa-caret-down"></i>
                 </button>
             </li>
@@ -121,7 +121,6 @@
                 </ul>
             </li>
         </ul>
-
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group has-feedback">
                 <input type="text"
@@ -156,6 +155,12 @@
                     ng-show="isLoggedIn">
                 <i class="fa fa-gear"></i>
             </button>
+            <a href="#!/search">
+             <button
+                 class="btn btn-sm btn-primary navbar-btn pull-right" active-path="^\/search.*">
+                 <i class="fa fa-search fa-inverse fa-lg visible-sm visible-xs"></i>
+        </button>
+            </a>
             <a href="#!/auth/authorize"
                class="btn btn-sm btn-primary navbar-btn pull-right"
                ng-hide="isLoggedIn">
@@ -166,14 +171,14 @@
                     class="btn btn-sm btn-primary navbar-btn"
                     ng-show="isLoggedIn">
                 <i class="fa fa-plus-circle"></i>
-                Create New...
+                New...
             </button>
             <button type="button"
                     class="btn btn-primary navbar-btn dropdown-toggle"
                     ng-click="showLoginRequiredModal()"
                     ng-show="!isLoggedIn">
                 <i class="fa fa-plus-circle"></i>
-                Create New...
+                New...
                 <i class="fa fa-caret-down"></i>
             </button>
             <a class="navbar-brand" href="#!/">StoryBoard</a>
