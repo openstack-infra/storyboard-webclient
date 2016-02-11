@@ -126,7 +126,7 @@
             <div class="form-group has-feedback">
                 <input type="text"
                        class="form-control"
-                       placeholder="Search"
+                       placeholder="Navigate"
                        ng-model="searchString"
                        typeahead-wait-ms="200"
                        typeahead-append-to-body="true"
@@ -137,7 +137,6 @@
                        typeahead-template-url="app/search/template/typeahead_criteria_item.html"
                         />
             <span class="form-control-feedback text-muted">
-                <i class="fa fa-search" ng-hide="headerCriteriaLoading"></i>
                 <i class="fa fa-spin fa-refresh"
                    ng-show="headerCriteriaLoading"></i>
             </span>
