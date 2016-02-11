@@ -121,7 +121,6 @@
                 </ul>
             </li>
         </ul>
-
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group has-feedback">
                 <input type="text"
@@ -143,6 +142,13 @@
             </span>
             </div>
         </form>
+        <li class="nav navbar-nav navbar-right" active-path="^\/search.*">
+            <a href="#!/search"> 
+                <i class="fa fa-search fa-inverse fa-2x visible-sm visible-xs"></i>
+                <i class="fa fa-search fa-inverse fa-3x visible-lg visible-md"></i>
+                <small class="visible-lg fa-inverse visible-sm visible-md">Advanced...</small>
+            </a>
+        </li>
     </div>
 </script>
 
@@ -157,6 +163,12 @@
                     ng-show="isLoggedIn">
                 <i class="fa fa-gear"></i>
             </button>
+            <a href="#!/search"> 
+             <button
+                 class="btn btn-sm btn-primary navbar-btn pull-right" active-path="^\/search.*">
+                 <i class="fa fa-search fa-inverse fa-lg visible-sm visible-xs"></i>
+        </button>
+            </a>
             <a href="#!/auth/authorize"
                class="btn btn-sm btn-primary navbar-btn pull-right"
                ng-hide="isLoggedIn">

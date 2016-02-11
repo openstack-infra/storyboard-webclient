@@ -20,14 +20,6 @@
      ng-class="{'navbar-fixed-side-has-submenu': hasSubmenu}">
     <div class="nav-main">
         <ul class="nav nav-pills nav-stacked text-center">
-            <li active-path="^\/search.*">
-                <a href="#!/search">
-                    <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-search fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Search</small>
-                </a>
-            </li>
-            <li class="nav-divider"></li>
             <li active-path="^\/(dashboard\/.*)?$" ng-if="isLoggedIn">
                 <a href="#!/">
                     <i class="fa fa-dashboard fa-lg visible-sm visible-xs"></i>
