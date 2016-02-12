@@ -24,7 +24,7 @@ angular.module('sb.board', ['ui.router', 'sb.services', 'sb.util',
         'use strict';
 
         // URL Defaults.
-        $urlRouterProvider.when('/board', '/board/list');
+        $urlRouterProvider.when('/board', '/board/list', '/boards');
 
         // Set our page routes.
         $stateProvider
@@ -37,5 +37,10 @@ angular.module('sb.board', ['ui.router', 'sb.services', 'sb.util',
                 url: '/{boardID:[0-9]+}',
                 controller: 'BoardDetailController',
                 templateUrl: 'app/boards/template/detail.html'
+            })
+            .state('sb.boards', {
+                url: '/boards',
+                controller: 'BoardsListController',
+                templateUrl: 'app/boards/template/list.html'
             });
     });
