@@ -37,5 +37,10 @@ angular.module('sb.board', ['ui.router', 'sb.services', 'sb.util',
                 url: '/{boardID:[0-9]+}',
                 controller: 'BoardDetailController',
                 templateUrl: 'app/boards/template/detail.html'
+            })
+            .state('sb.board.list', {
+                url: '/list',
+                controller: 'BoardsListController',
+                templateUrl: 'app/boards/template/list.html'
             });
     });
