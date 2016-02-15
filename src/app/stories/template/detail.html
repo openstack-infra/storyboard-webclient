@@ -330,13 +330,6 @@
                 />
     </td>
     <td class="text-center col-xs-1">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'priority', priority)"
-                priority="{{task.priority}}"
-                />
-    </td>
-    <td class="text-center col-xs-1">
         <task-status-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updateTask(task, 'status', status)"
@@ -385,12 +378,6 @@
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 as-inline="false"
-                />
-    </td>
-    <td class="text-center col-xs-1">
-        <task-priority-dropdown
-                priority="{{newTask.priority}}"
-                editable="true"
                 />
     </td>
     <td class="text-center col-xs-1">
