@@ -208,7 +208,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="task in tasks"
+        <tr ng-repeat="task in tasks | orderBy:'-status'"
             ng-include
             src="'/inline/task_list_item.html'">
         </tr>
