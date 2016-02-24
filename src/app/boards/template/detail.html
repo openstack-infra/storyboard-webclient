@@ -34,21 +34,77 @@
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/board_detail.html">
     <div class="row">
-        <div class="col-sm-12">
-            <h1 class="no-margin-bottom" view-title>
-                {{board.title}}
-                <small>
-                    <a ng-click="toggleEditMode()"
-                       ng-show="permissions.editBoard">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </small>
-            </h1>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="no-margin-bottom" view-title>
+                        {{board.title}}
+                        <small>
+                            <a ng-click="toggleEditMode()"
+                               ng-show="permissions.editBoard">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </small>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <insert-markdown ng-if="board.description"
+                                     content="board.description">
+                    </insert-markdown>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-12">
-            <insert-markdown ng-if="board.description"
-                             content="board.description">
-            </insert-markdown>
+        <div class="col-sm-4">
+            <small>
+               <table class="table table-striped table-condensed">
+               <thead>
+                   <tr><th colspan="5">Due Dates</th></tr>
+               </thead>
+               <tbody>
+                   <tr ng-repeat="dueDate in board.due_dates">
+                       <td ng-if="dueDate.name"
+                           class="col-xs-4">
+                           {{dueDate.name}}
+                       </td>
+                       <td ng-if="dueDate.name"
+                           class="col-xs-3">
+                           <span time-moment eventdate="dueDate.date"></span>
+                       </td>
+                       <td colspan="2"
+                           ng-if="!dueDate.name"
+                           class="col-xs-8">
+                           <span time-moment eventdate="dueDate.date"></span>
+                       </td>
+                       <td class="col-xs-3">
+                           {{dueDate.count}} cards
+                       </td>
+                       <td class="col-xs-1 text-right">
+                           <a href ng-click="editDueDate(dueDate)"
+                                   ng-if="dueDate.editable">
+                               <i class="fa fa-pencil"></i>
+                           </a>
+                       </td>
+                       <td class="col-xs-1 text-right">
+                           <a href ng-click="removeDueDate(dueDate)"
+                                   ng-if="dueDate.editable">
+                               <i class="fa fa-times"></i>
+                           </a>
+                       </td>
+                   </tr>
+                   <tr class="hover-row" ng-click="newDueDate()"
+                       ng-if="permissions.moveCards || permissions.editBoard">
+                       <td colspan="5" class="text-center">
+                           <a href>
+                               <i class="fa fa-plus-circle"></i>
+                               New due date
+                           </a>
+                       </td>
+                   </tr>
+               </tbody>
+               </table>
+            </small>
         </div>
     </div>
 </script>
