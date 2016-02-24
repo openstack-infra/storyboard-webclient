@@ -60,7 +60,7 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
             });
     })
     .run(function ($rootScope, SessionState, Session, PermissionManager,
-                   RefreshManager, Notification, Priority) {
+                   Notification, Priority) {
         'use strict';
 
         // Initialize our permission manager.
@@ -79,6 +79,4 @@ angular.module('sb.auth', [ 'sb.services', 'sb.templates', 'ui.router',
                     break;
             }
         }, Priority.LAST);
-
-        RefreshManager.scheduleRefresh();
     });

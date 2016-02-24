@@ -15,17 +15,8 @@
  */
 
 angular.module('sb.auth').run(
-    function($log, $modal, Notification, RefreshManager, Session, Priority) {
+    function($log, $modal, Notification, Session, Priority) {
         'use strict';
-
-        function handle_401() {
-            RefreshManager.tryRefresh().then(function () {
-                $log.info('Token refreshed on 401');
-            }, function () {
-                $log.info('Could not refresh token. Destroying session');
-                Session.destroySession();
-            });
-        }
 
         function handle_403() {
             var modalInstance = $modal.open({
@@ -44,12 +35,6 @@ angular.module('sb.auth').run(
         // intercepted before anything else happens.
         Notification.intercept(function (message) {
             if (message.type === 'http') {
-                if (message.message === 401) {
-                    // An unauthorized error. Refreshing the access token
-                    // might help.
-                    handle_401();
-                }
-
                 if (message.message === 403) {
                     // Forbidden error. A user should be warned tha he is
                     // doing something wrong.

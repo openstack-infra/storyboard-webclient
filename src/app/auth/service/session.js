@@ -20,7 +20,7 @@
  */
 angular.module('sb.auth').factory('Session',
     function (SessionState, AccessToken, $rootScope, $log, $q, $state,
-              SystemInfo, RefreshManager, Notification, Severity) {
+              SystemInfo, Notification, Severity) {
         'use strict';
 
         /**
@@ -53,15 +53,14 @@ angular.module('sb.auth').factory('Session',
              */
 
             var deferred = $q.defer();
-            RefreshManager.tryRefresh().then(function () {
-                SystemInfo.get({},
-                    function (info) {
+            return SystemInfo.get({},
+                function (info) {
+                    if (AccessToken.getAccessToken()) {
                         deferred.resolve(info);
-                    }, function (error) {
-                        deferred.reject(error);
-                    });
-            });
-            return deferred.promise;
+                    } else {
+                        deferred.reject(info);
+                    }
+                }).$promise;
         }
 
         /**
