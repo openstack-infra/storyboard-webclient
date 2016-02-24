@@ -19,7 +19,7 @@
  */
 angular.module('sb.board').controller('BoardDetailController',
     function ($scope, Worklist, $modal, Board, Project, $stateParams,
-              BoardHelper, $document, User, $q) {
+              BoardHelper, DueDate, $document, User, $q) {
         'use strict';
 
         /**
@@ -283,6 +283,99 @@ angular.module('sb.board').controller('BoardDetailController',
 
             var modelIdx = modelArray.indexOf(model);
             modelArray.splice(modelIdx, 1);
+        };
+
+        $scope.newDueDate = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/due_dates/template/new.html',
+                controller: 'DueDateNewController',
+                resolve: {
+                    board: function() {
+                        return $scope.board;
+                    }
+                }
+            });
+
+            modalInstance.result.finally(function() {
+                loadBoard();
+            });
+        };
+
+        $scope.editDueDate = function(dueDate) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/due_dates/template/new.html',
+                controller: 'DueDateEditController',
+                resolve: {
+                    board: function() {
+                        return $scope.board;
+                    },
+                    dueDate: function() {
+                        return dueDate;
+                    }
+                }
+            });
+
+            modalInstance.result.finally(function() {
+                loadBoard();
+            });
+        };
+
+        $scope.removeDueDate = function(dueDate) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/due_dates/template/remove_from_board.html',
+                controller: 'DueDateRemoveController',
+                resolve: {
+                    board: function() {
+                        return $scope.board;
+                    },
+                    dueDate: function() {
+                        return dueDate;
+                    }
+                }
+            });
+
+            modalInstance.result.finally(function() {
+                loadBoard();
+            });
+        };
+
+        $scope.isDue = function(card) {
+            if (card.item_type === 'task') {
+                if (card.task.status === 'merged') {
+                    return false;
+                }
+            }
+            var now = moment();
+            var tomorrow = now.clone();
+            tomorrow.add(1, 'day');
+            if (!card.resolved_due_date) {
+                return false;
+            }
+            if ((now.isSame(card.resolved_due_date.date) ||
+                 now.isBefore(card.resolved_due_date.date)) &&
+                (tomorrow.isSame(card.resolved_due_date.date) ||
+                 tomorrow.isAfter(card.resolved_due_date.date))) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.isLate = function(card) {
+            if (card.item_type === 'task') {
+                if (card.task.status === 'merged') {
+                    return false;
+                }
+            }
+            var now = moment();
+            if (!card.resolved_due_date) {
+                return false;
+            }
+            if (now.isAfter(card.resolved_due_date.date)) {
+                return true;
+            } else {
+                return false;
+            }
         };
 
         /**
