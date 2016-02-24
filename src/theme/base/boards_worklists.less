@@ -121,9 +121,35 @@
     border: 1px solid #bbb;
     & user-typeahead > .form-group {
         margin-bottom: 0px;
-        margin-top: 10px;
+        margin-top: 0px;
         > .form-control-static {
             padding: 0px;
+        }
+    }
+}
+
+.kanban-card-due {
+    border-right: @border-radius-base solid #555;
+    & .target-date {
+        font-weight: bold;
+    }
+}
+
+.kanban-card-late {
+    border-right: @border-radius-base solid #555;
+    & .target-date {
+        font-weight: bold;
+        color: @navbar-default-color;
+        background-color: @brand-primary;
+        border-radius: 10px;
+        margin: 0px;
+
+        & .col-xs-1, & .col-xs-11 {
+            padding: 0px 5px;
+        }
+
+        & .text-muted {
+            color: @navbar-default-color;
         }
     }
 }
@@ -141,6 +167,10 @@
     width: 100vw;
     &:hover {
         cursor: pointer;
+        & a {
+            color: darken(@brand-primary, 10%);
+            text-decoration: underline;
+        }
     }
 }
 
@@ -161,4 +191,21 @@
     border-radius: 4px;
     box-sizing: border-box;
     background-color: #999;
+}
+
+.due-date-modal {
+    & .nav-tabs {
+        margin-bottom: 10px;
+    }
+
+    & .table-hover {
+        & tr:hover {
+            background-color: #efefef;
+            cursor: pointer;
+        }
+        & tr.selected {
+            background-color: @brand-primary;
+            color: @navbar-default-color;
+        }
+    }
 }
