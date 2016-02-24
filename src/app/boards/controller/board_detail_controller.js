@@ -378,6 +378,28 @@ angular.module('sb.board').controller('BoardDetailController',
             }
         };
 
+        $scope.showCardDetail = function(card) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/boards/template/card_details.html',
+                controller: 'CardDetailController',
+                resolve: {
+                    card: function() {
+                        return card;
+                    },
+                    board: function() {
+                        return $scope.board;
+                    },
+                    permissions: function() {
+                        return $scope.permissions;
+                    }
+                }
+            });
+
+            modalInstance.result.finally(function() {
+                loadBoard();
+            });
+        };
+
         /**
          * Config for the lanes sortable.
          */

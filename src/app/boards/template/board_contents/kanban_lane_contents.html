@@ -20,7 +20,8 @@
          ng-class="{'kanban-card-due': isDue(item), 'kanban-card-late': isLate(item)}"
          as-sortable-item
          ng-repeat="item in lane.worklist.items"
-         ng-switch="item.item_type">
+         ng-switch="item.item_type"
+         ng-click="showCardDetail(item)">
         <div as-sortable-item-handle ng-switch-when="story">
             <div class="row">
                 <div class="col-xs-1">
@@ -31,7 +32,7 @@
                             ng-click="removeCard(lane.worklist, item); $event.stopPropagation();">
                         &times;
                     </button>
-                    <a href="#!/story/{{item.story.id}}">
+                    <a>
                         {{item.story.title}}
                     </a>
                 </div>
@@ -60,7 +61,7 @@
                             ng-click="removeCard(lane.worklist, item); $event.stopPropagation()">
                         &times;
                     </button>
-                    <a href="#!/story/{{item.task.story_id}}">
+                    <a>
                         {{item.task.title}}
                     </a>
                 </div>
