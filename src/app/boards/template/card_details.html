@@ -1,0 +1,337 @@
+<!--
+  ~ Copyright (c) 2016 Codethink Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="panel panel-default card-modal">
+    <div class="panel-heading clearfix">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title pull-left">
+            Card #{{card.id}} - 
+            <span ng-if="card.item_type === 'task'">
+                {{card.task.title}}
+            </span>
+            <span ng-if="card.item_type === 'story'">
+                {{card.story.title}}
+            </span>
+        </h3>
+    </div>
+    <div ng-if="card.item_type == 'task'"
+         ng-include src="'/inline/task_body.html'">
+    </div>
+    <div ng-if="card.item_type == 'story'"
+         ng-include src="'/inline/story_body.html'">
+    </div>
+</div>
+
+<script type="text/ng-template" id="/inline/task_body.html"> 
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 card-heading">
+                <h2>
+                    <span ng-show="!editingTitle">
+                        <i class="fa fa-tasks"></i>
+                        {{card.task.title}}
+                        <small ng-show="permissions.moveCards || permissions.editBoard">
+                            <a href ng-click="toggleEditTitle()">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </small>
+                    </span>
+                    <div class="input-group" ng-show="editingTitle">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Task title"
+                               ng-model="modifications.title" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default"
+                                    type="button"
+                                    ng-click="editTitle()"
+                                    ng-disabled="newTitle.length < 3">
+                                <i class="fa fa-check"></i>
+                                <span class="hidden-xs">Save</span>
+                            </button>
+                            <button class="btn btn-danger"
+                                    type="button"
+                                    ng-click="toggleEditTitle()">
+                                <i class="fa fa-times"></i>
+                                <span class="hidden-xs">Cancel</span>
+                            </button>
+                        </span>
+                    </div>
+                </h2>
+                <div class="text-muted">
+                    Task in the story
+                    <a href="#!/story/{{story.id}}">"{{story.title}}"</a>.
+                </div>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>
+                    Story description
+                    (<a href
+                        ng-click="showDescription = !showDescription"
+                        >{{showDescription ? 'hide' : 'show'}}</a>)
+                </label>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 card-detail-item" ng-show="showDescription"
+                 ng-click="toggleEditDescription()"
+                 ng-class="{'editing': editingDescription}">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <insert-markdown content="story.description"
+                                         ng-show="!editingDescription || previewDescription">
+                        </insert-markdown>
+                        <insert-markdown content="modifications.description"
+                                         ng-show="editingDescription && previewDescription">
+                        </insert-markdown>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingDescription">
+                    <div class="col-xs-12">
+                        <textarea placeholder="Enter a story description here"
+                                  class="form-control context-edit"
+                                  msd-elastic
+                                  rows="3"
+                                  required
+                                  focus-on-show
+                                  ng-disabled="isUpdating"
+                                  ng-model="modifications.description"
+                                  ng-show="editingDescription"
+                                  ng-click="$event.stopPropagation()">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingDescription"
+                     ng-click="$event.stopPropagation()">
+                    <div class="col-xs-6">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="previewDescription = !previewDescription">
+                            Preview
+                        </button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="editStoryDescription()">
+                            Save
+                        </button>
+                        <button class="btn btn-default" type="button"
+                                ng-click="toggleEditDescription()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>Due date</label>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 card-detail-item"
+                 ng-class="{'editing': editingDueDate}"
+                 ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="col-xs-11" ng-show="!editingDueDate">
+                        <span ng-show="validDueDate(card.resolved_due_date)">
+                            <span time-moment
+                                  eventdate="card.resolved_due_date.date"
+                                  format-string="'MMM Do, YYYY [at] H:mm'">
+                            </span>
+                            &nbsp;-&nbsp;
+                            <span class="text-muted">
+                                {{card.resolved_due_date.name}}
+                            </span>
+                        </span>
+                        <span ng-show="!validDueDate(card.resolved_due_date)">
+                            No due date
+                        </span>
+                    </div>
+                    <div class="col-xs-11"
+                         ng-show="editingDueDate"
+                         ng-include src="'app/boards/template/card_details/edit_due_date.html'">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>Assignee</label>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 card-detail-item"
+                 ng-class="{'editing': editingAssignee}"
+                 ng-click="toggleAssigneeTypeahead()">
+                <user-typeahead ng-model="card.task.assignee_id"
+                                enabled="isLoggedIn"
+                                on-change="updateTask(card.task)"
+                                empty-prompt="Click to assign someone to this task."
+                                empty-disabled-prompt="Task is unassigned."
+                                as-inline="true"
+                                id="assignee"
+                                on-blur="toggleEditAssignee()"
+                                on-focus="toggleEditAssignee()"
+                                />
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="/inline/story_body.html">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 card-heading">
+                <h2>
+                    <span ng-show="!editingTitle">
+                        <i class="fa fa-sb-story"></i>
+                        {{card.story.title}}
+                        <small>
+                            <a href ng-click="toggleEditTitle()">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </small>
+                    </span>
+                    <div class="input-group" ng-show="editingTitle">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Story title"
+                               ng-model="modifications.title" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default"
+                                    type="button"
+                                    ng-click="editTitle()"
+                                    ng-disabled="newTitle.length < 3">
+                                <i class="fa fa-check"></i>
+                                <span class="hidden-xs">Save</span>
+                            </button>
+                            <button class="btn btn-danger"
+                                    type="button"
+                                    ng-click="toggleEditTitle()">
+                                <i class="fa fa-times"></i>
+                                <span class="hidden-xs">Cancel</span>
+                            </button>
+                        </span>
+                    </div>
+                </h2>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>
+                    Story description
+                    (<a href
+                        ng-click="showDescription = !showDescription"
+                        >{{showDescription ? 'hide' : 'show'}}</a>)
+                </label>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 card-detail-item" ng-show="showDescription"
+                 ng-click="toggleEditDescription()"
+                 ng-class="{'editing': editingDescription}">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <insert-markdown content="story.description"
+                                         ng-show="!editingDescription">
+                        </insert-markdown>
+                        <insert-markdown content="modifications.description"
+                                         ng-show="editingDescription && previewDescription">
+                        </insert-markdown>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingDescription">
+                    <div class="col-xs-12">
+                        <textarea placeholder="Enter a story description here"
+                                  class="form-control context-edit"
+                                  msd-elastic
+                                  rows="3"
+                                  required
+                                  focus-on-show
+                                  ng-disabled="isUpdating"
+                                  ng-model="modifications.description"
+                                  ng-show="editingDescription"
+                                  ng-click="$event.stopPropagation()">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingDescription"
+                     ng-click="$event.stopPropagation()">
+                    <div class="col-xs-6">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="previewDescription = !previewDescription">
+                            Preview
+                        </button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="editStoryDescription()">
+                            Save
+                        </button>
+                        <button class="btn btn-default" type="button"
+                                ng-click="toggleEditDescription()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>Due date</label>
+            </div>
+        </div>
+        <div class="row card-detail">
+            <div class="col-xs-12 card-detail-item"
+                 ng-class="{'editing': editingDueDate}"
+                 ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="col-xs-11" ng-show="!editingDueDate">
+                        <span ng-show="validDueDate(card.resolved_due_date)">
+                            <span time-moment
+                                  eventdate="card.resolved_due_date.date"
+                                  format-string="'MMM Do, YYYY [at] H:mm'">
+                            </span>
+                            &nbsp;-&nbsp;
+                            <span class="text-muted">
+                                {{card.resolved_due_date.name}}
+                            </span>
+                        </span>
+                        <span ng-show="!validDueDate(card.resolved_due_date)">
+                            No due date
+                        </span>
+                    </div>
+                    <div class="col-xs-11"
+                         ng-show="editingDueDate"
+                         ng-include src="'app/boards/template/card_details/edit_due_date.html'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
