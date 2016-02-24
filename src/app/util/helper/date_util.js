@@ -37,7 +37,7 @@ angular.module('sb.util').factory('DateUtil',
                     var currentDate = new Date().getTime();
                     var daydiff = (currentDate - Date.parse(targetDate)) /
                         (1000 * 60 * 60 * 24);
-                    return (daydiff < 1);
+                    return (daydiff < 1 && daydiff >= 0);
                 }
                 else {
                     return true;
