@@ -1,0 +1,78 @@
+<!--
+  ~ Copyright (c) 2016 Codethink Limited
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="row">
+    <div class="col-sm-4">
+        <label>Displayed date:</label>&nbsp;
+    </div>
+    <div class="col-sm-8">
+        <span class="text-muted"
+              ng-show="!relevantDates.length">
+            No visible due dates.
+        </span>
+
+        <span class="dropdown" dropdown
+              ng-show="relevantDates.length"
+              ng-click="$event.stopPropagation();">
+              <button class="btn btn-sm btn-default dropdown-toggle"
+                      dropdown-toggle>
+                <span ng-show="validDueDate(card.resolved_due_date)">
+                    <span time-moment
+                          eventdate="card.resolved_due_date.date"
+                          format-string="'MMM Do, YYYY [at] H:mm'">
+                    </span>
+                    <br/>
+                    <span class="text-muted">
+                        {{card.resolved_due_date.name}}
+                    </span>
+                </span>
+                <span ng-show="!validDueDate(card.resolved_due_date)">
+                    No due date
+                </span>
+                &nbsp;<i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li ng-click="setDisplayDate(noDate)"
+                    dropdown-toggle>
+                    <a>
+                        No due date
+                    </a>
+                </li>
+                <li class="divider" role="separator"></li>
+                <li ng-repeat="date in relevantDates"
+                    ng-click="setDisplayDate(date)"
+                    dropdown-toggle>
+                    <a>
+                        <span time-moment
+                              eventdate="date.date"
+                              format-string="'MMM Do, YYYY [at] H:mm'">
+                        </span>
+                        <br/>
+                        <span class="text-muted">
+                            {{date.name}}
+                        </span>
+                    </a>
+                </li>
+                <li class="divider" role="separator"></li>
+                <li ng-click="newDueDate()">
+                    <a>
+                        <i class="fa fa-plus-circle"></i>
+                        &nbsp;New due date
+                    </a>
+                </li>
+            </ul>
+        </span>
+    </div>
+</div>
