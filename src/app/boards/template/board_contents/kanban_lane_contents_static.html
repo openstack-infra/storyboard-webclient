@@ -15,21 +15,64 @@
   -->
 <div class="kanban-lane-contents-readonly">
     <div class="kanban-card-readonly"
+         ng-class="{'kanban-card-due': isDue(item), 'kanban-card-late': isLate(item)}"
          ng-repeat="item in lane.worklist.items"
          ng-switch="item.item_type">
         <div ng-switch-when="story">
-            <i class="fa fa-sb-story text-muted"></i>
-            <a href="#!/story/{{item.story.id}}">
-                {{item.story.title}}
-            </a>
+            <div class="row">
+                <div class="col-xs-1">
+                    <i class="fa fa-sb-story text-muted"></i>
+                </div>
+                <div class="col-xs-10">
+                    <a href="#!/story/{{item.story.id}}">
+                        {{item.story.title}}
+                    </a>
+                </div>
+            </div>
+            <div class="row target-date" ng-show="item.resolved_due_date">
+                <div class="col-xs-1">
+                    <i class="fa fa-clock-o text-muted"></i>
+                </div>
+                <div class="col-xs-10">
+                    <span time-moment
+                          eventdate="item.resolved_due_date.date"
+                          format-string="'MMM Do, YYYY'">
+                    </span>
+                    <br/>
+                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                </div>
+            </div>
         </div>
         <div ng-switch-when="task">
-            <i class="fa fa-tasks text-muted"></i>
-            <a href="#!/story/{{item.task.story_id}}">
-                {{item.task.title}}
-            </a>
-                <user-typeahead ng-show="item.task.assignee_id"
-                ng-model="item.task.assignee_id"/>
+            <div class="row">
+                <div class="col-xs-1">
+                    <i class="fa fa-tasks text-muted"></i>
+                </div>
+                <div class="col-xs-10">
+                    <a href="#!/story/{{item.task.story_id}}">
+                        {{item.task.title}}
+                    </a>
+                </div>
+            </div>
+            <div class="row target-date" ng-show="item.resolved_due_date">
+                <div class="col-xs-1">
+                    <i class="fa fa-clock-o text-muted"></i>
+                </div>
+                <div class="col-xs-10">
+                    <span time-moment
+                          eventdate="item.resolved_due_date.date"
+                          format-string="'MMM Do, YYYY'">
+                    </span>
+                    <br/>
+                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <user-typeahead ng-show="item.task.assignee_id"
+                                    ng-model="item.task.assignee_id"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>
