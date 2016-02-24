@@ -27,7 +27,8 @@ angular.module('sb.util').directive('timeMoment',
             templateUrl: 'app/util/template/time_moment.html',
             scope: {
                 eventdate: '=',
-                shortDate: '='
+                shortDate: '=',
+                formatString: '='
             },
             controller: function ($scope) {
 
@@ -43,6 +44,12 @@ angular.module('sb.util').directive('timeMoment',
                 $scope.$on('$destroy', unwatch);
 
                 updateTimeAgo();
+                if ($scope.eventdate) {
+                    $scope.eventdate = moment($scope.eventdate);
+                    if (!$scope.eventdate.isValid()) {
+                        $scope.eventdate = {};
+                    }
+                }
             }
         };
     }
