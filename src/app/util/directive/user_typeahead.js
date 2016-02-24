@@ -30,6 +30,8 @@ angular.module('sb.util').directive('userTypeahead',
                 asInline: '=',
                 autoFocus: '=',
                 onChange: '&',
+                onBlur: '&',
+                onFocus: '&',
                 emptyPrompt: '@',
                 emptyDisabledPrompt: '@'
             },
@@ -57,9 +59,11 @@ angular.module('sb.util').directive('userTypeahead',
                                 $scope.showForm =
                                     $scope.enabled ? !$scope.showForm : false;
                             }, 200);
+                            $scope.onBlur();
                         }
                         else {
                             $scope.showForm = true;
+                            $scope.onFocus();
                         }
                     } else {
                         $scope.showForm = true;
