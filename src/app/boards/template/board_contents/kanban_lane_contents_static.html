@@ -17,14 +17,15 @@
     <div class="kanban-card-readonly"
          ng-class="{'kanban-card-due': isDue(item), 'kanban-card-late': isLate(item)}"
          ng-repeat="item in lane.worklist.items"
-         ng-switch="item.item_type">
+         ng-switch="item.item_type"
+         ng-click="showCardDetail(item)">
         <div ng-switch-when="story">
             <div class="row">
                 <div class="col-xs-1">
                     <i class="fa fa-sb-story text-muted"></i>
                 </div>
                 <div class="col-xs-10">
-                    <a href="#!/story/{{item.story.id}}">
+                    <a>
                         {{item.story.title}}
                     </a>
                 </div>
@@ -49,7 +50,7 @@
                     <i class="fa fa-tasks text-muted"></i>
                 </div>
                 <div class="col-xs-10">
-                    <a href="#!/story/{{item.task.story_id}}">
+                    <a>
                         {{item.task.title}}
                     </a>
                 </div>
