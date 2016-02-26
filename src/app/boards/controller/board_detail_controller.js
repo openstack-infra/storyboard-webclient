@@ -196,12 +196,19 @@ angular.module('sb.board').controller('BoardDetailController',
         /**
          * Remove a card from a lane.
          */
-        $scope.removeCard = function (worklist, item) {
-            Worklist.ItemsController.delete({
-                id: worklist.id,
-                item_id: item.id
-            }).$promise.then(function() {
-                var idx = worklist.items.indexOf(item);
+        $scope.removeCard = function (worklist, card) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/boards/template/archive_card.html',
+                controller: 'CardArchiveController',
+                resolve: {
+                    card: function() {
+                        return card;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function() {
+                var idx = worklist.items.indexOf(card);
                 worklist.items.splice(idx, 1);
             });
         };
