@@ -27,7 +27,8 @@ angular.module('sb.util').directive('timeMoment',
             templateUrl: 'app/util/template/time_moment.html',
             scope: {
                 eventdate: '=',
-                shortDate: '='
+                shortDate: '=',
+                formatString: '='
             },
             controller: function ($scope) {
 
