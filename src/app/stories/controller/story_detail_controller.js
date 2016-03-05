@@ -22,7 +22,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User,
               storyboardApiBase, SubscriptionList, CurrentUser,
-              SessionModalService) {
+              SessionModalService, moment, $document) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -263,6 +263,30 @@ angular.module('sb.story').controller('StoryDetailController',
             if (val === true || val === false) {
                 $scope.previewingComment = val;
             }
+        };
+
+        /**
+         * Quote a comment
+         */
+        $scope.quote = function(event) {
+            var timestamp = moment(event.created_at);
+            var reference = '<footer>'
+                            + event.author.full_name
+                            + ' on '
+                            + timestamp.format('YYYY-MM-DD [at] HH:mm:ss')
+                            + '</footer>';
+            var lines = event.comment.content.split('\n');
+            for (var i = 0; i < lines.length; i++) {
+                lines[i] = '> ' + lines[i];
+            }
+            lines.push('> ' + reference);
+            var quoted = lines.join('\n');
+            if ($scope.newComment.content) {
+                $scope.newComment.content += '\n\n' + quoted;
+            } else {
+                $scope.newComment.content = quoted;
+            }
+            $document[0].getElementById('comment').focus();
         };
 
         /**
