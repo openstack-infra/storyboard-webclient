@@ -1,4 +1,5 @@
-<div class="discussion-comment" ng-if="display_events_user_comment">
+<div class="discussion-comment" id="comment-{{event.comment.id}}"
+     ng-if="display_events_user_comment">
     <p class="discussion-comment-author">
         {{ event.author.full_name }}
         <span class="pull-right">
@@ -6,6 +7,12 @@
                     title="Quote">
                 <i class="fa fa-quote-left"></i>
             </button>
+            &nbsp;
+            <a class="btn btn-default btn-xs"
+               href="#!/story/{{story.id}}#comment-{{event.comment.id}}"
+               title="Permalink">
+                <i class="fa fa-link"></i>
+            </a>
             &nbsp;
             <span time-moment eventdate="event.created_at"></span>
         </span>
