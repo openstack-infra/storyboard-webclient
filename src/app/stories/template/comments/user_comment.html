@@ -1,4 +1,6 @@
-<div class="discussion-comment-important" ng-if="display_events_user_comment">
+<div class="discussion-comment-important"
+     ng-if="display_events_user_comment"
+     id="comment-{{event.comment.id}}">
     <p class="discussion-comment-icon-primary">
         <i class="fa fa-comment"></i>
     </p>
@@ -12,6 +14,12 @@
                     title="Quote">
                 <i class="fa fa-quote-left"></i>
             </button>
+            &nbsp;
+            <a class="btn btn-default btn-xs"
+               href="#!/story/{{story.id}}#comment-{{event.comment.id}}"
+               title="Permalink">
+                <i class="fa fa-link"></i>
+            </a>
         </span>
         </div>
         <insert-markdown class="clearfix" ng-show="event.comment.content"

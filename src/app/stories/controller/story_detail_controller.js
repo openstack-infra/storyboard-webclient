@@ -21,10 +21,13 @@ angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
-              storyboardApiBase, SessionModalService, moment, $document) {
+              storyboardApiBase, SessionModalService, moment, $document,
+              $anchorScroll, $timeout) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
+        var firstLoad = true;
+        $anchorScroll.yOffset = 50;
 
         /**
          * The story, resolved in the state.
@@ -82,6 +85,14 @@ angular.module('sb.story').controller('StoryDetailController',
                     });
                     $scope.events = eventResults;
                     $scope.isSearching = false;
+                    if (firstLoad) {
+                        firstLoad = false;
+                        // Wrap this in a timeout to make sure we don't
+                        // try to scroll before the timeline is rendered.
+                        $timeout(function() {
+                            $anchorScroll();
+                        }, 0);
+                    }
                 },
                 function () {
                     $scope.isSearching = false;
