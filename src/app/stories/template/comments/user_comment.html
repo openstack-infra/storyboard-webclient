@@ -1,7 +1,14 @@
 <div class="discussion-comment" ng-if="display_events_user_comment">
     <p class="discussion-comment-author">
         {{ event.author.full_name }}
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
+        <span class="pull-right">
+            <span time-moment eventdate="event.created_at"></span>
+            &nbsp;
+            <button class="btn btn-default btn-xs" ng-click="quote(event)"
+                    title="Quote">
+                <i class="fa fa-quote-left"></i>
+            </button>
+        </span>
     </p>
 
     <insert-markdown ng-show="event.comment.content"
