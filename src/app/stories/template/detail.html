@@ -298,7 +298,7 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
-    <td class="col-xs-4">
+    <td class="col-xs-3">
         <input-inline
                 ng-model="task.title"
                 enabled="isLoggedIn"
@@ -308,6 +308,12 @@
                 maxlength="255"
                 as-inline="true"
                 />
+    </td>
+    <td class="col-xs-1">
+                <button class="btn btn-default btn-xs"
+                ng-click="showTaskDetail(task)"
+                ng-show="isLoggedIn">
+                <i class= "fa fa-sticky-note-o"></i></button>
     </td>
     <td class="col-xs-3">
         <project-typeahead
@@ -353,7 +359,7 @@
 
 <!-- Template for the task add form. -->
 <script type="text/ng-template" id="/inline/task_edit_form.html">
-    <td class="col-xs-4">
+    <td class="col-xs-3">
         <input-inline
                 auto-focus="true"
                 ng-model="newTask.title"
@@ -365,6 +371,9 @@
                 as-inline="false"
                 />
     </td>
+    <td class="col-xs-1">
+    </td>
+
     <td class="col-xs-3">
         <project-typeahead
                 auto-focus="false"
