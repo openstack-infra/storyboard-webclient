@@ -366,6 +366,24 @@ angular.module('sb.story').controller('StoryDetailController',
             });
         };
 
+        /**
+         * Adds link/comment to task
+         */
+        $scope.showTaskNotes = function(task) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/stories/template/task_notes.html',
+                controller: 'StoryTaskNotesController',
+                resolve: {
+                    task: function() {
+                        return task;
+                    }
+                }
+            });
+
+            modalInstance.result.finally(function() {
+                $scope.loadEvents();
+            });
+        };
 
         /**
          * Removes this task
