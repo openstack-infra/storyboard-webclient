@@ -22,7 +22,7 @@ angular.module('sb.story').controller('StoryTaskNotesController',
     function ($log, $scope, $state, task, $modalInstance) {
         'use strict';
 
-        $scope.task = task;
+        $scope.task = angular.copy(task);
 
          /**
          * Generic service error handler. Assigns errors to the view's scope,
