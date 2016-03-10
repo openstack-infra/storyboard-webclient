@@ -310,7 +310,9 @@
                 />
     </td>
     <td class="col-xs-1">
-        <button class="btn btn-default btn-xs"
+        <button class="btn btn-xs"
+                ng-class="{'btn-default': !task.link,
+                           'btn-primary': task.link}"
                 ng-click="showTaskNotes(task)"
                 ng-show="isLoggedIn"
                 title="Task notes">
