@@ -2,7 +2,7 @@
   "name": "storyboard-webclient",
   "version": "0.0.1",
   "dependencies": {
-    "font-awesome": "4.3.0",
+    "font-awesome": "4.5.0",
     "angular": "1.3.13",
     "angular-resource": "1.3.13",
     "angular-sanitize": "1.3.13",
