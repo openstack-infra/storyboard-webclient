@@ -189,13 +189,19 @@ angular.module('sb.board').controller('CardDetailController',
             $scope.editingAssignee = !$scope.editingAssignee;
         };
 
+        /**
+        * and notes
+        */ 
+            
         $scope.updateTask = function(task) {
             var params = {
                 id: task.id,
-                assignee_id: task.assignee_id
+                assignee_id: task.assignee_id,
+                link: task.link
             };
             Task.update(params, function() {
                 $scope.editingAssignee = false;
+                $scope.editingNotes = false;
             });
         };
 
@@ -248,9 +254,11 @@ angular.module('sb.board').controller('CardDetailController',
         $scope.board = board;
         $scope.permissions = permissions;
         $scope.showDescription = true;
+        $scope.showTaskNotes = true;
         $scope.assigningDueDate = false;
         $scope.editingDueDate = false;
         $scope.editingDescription = false;
         $scope.editingAssignee = false;
+        $scope.showTaskForm = false;
     }
 );

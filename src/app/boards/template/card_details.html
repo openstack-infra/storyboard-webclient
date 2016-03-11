@@ -137,7 +137,6 @@
                 </div>
             </div>
         </div>
-        <hr />
         <div class="row card-detail">
             <div class="col-xs-12 item-heading">
                 <label>Due date</label>
@@ -173,6 +172,55 @@
                 </div>
             </div>
         </div>
+            <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+            <label>Task Notes
+                                (<a href
+                        ng-click="showTaskNotes = !showTaskNotes"
+                        >{{showTaskNotes ? 'hide' : 'show'}}</a>)
+            </label>
+            </div>
+            <div class= "row card-detail">
+                <div class="col-xs-12 card-detail-item"
+                     ng-show="showTaskNotes"
+                     ng-click="showTaskForm=!showTaskForm">
+                     <label> {{card.task.link}} </label>
+                     <form name="taskForm" ng-show="showTaskForm">
+                         <div class="form-group">
+                           <textarea placeholder="Enter task notes here"
+                                   class="form-control context-edit"
+                                   msd-elastic
+                                   rows="3"
+                                   required
+                                   ng-disabled="isUpdating"
+                                   ng-model="card.task.link"
+                                   ng-click="$event.stopPropagation()">
+                           </textarea>
+                       </div>
+
+                       <div class="clearfix">
+                           <div class="pull-right">
+                               <div class="btn" ng-show="isUpdating">
+                               <i class="fa fa-spinner fa-lg fa-spin"></i>
+                               </div>
+                           <button type="button"
+                                   class="btn btn-primary"
+                                   ng-click="updateTask(card.task)"
+                                   ng-disabled="!taskForm.$valid">
+                           Save
+                           </button>
+                           <button type="button"
+                                   class="btn btn-default"
+                                   ng-click="cancel()">
+                           Cancel
+                           </button>
+                           </div>
+                      </div>
+                     </form>
+                </div>
+            </div>
+        </div>
+
         <hr />
         <div class="row card-detail">
             <div class="col-xs-12 item-heading">
