@@ -23,11 +23,12 @@ angular.module('sb.board').controller('CardDetailController',
         'use strict';
 
         /**
-         * Story/Task title
+         * Story/Task title/description/notes
          */
         $scope.modifications = {
             title: '',
-            description: ''
+            description: '',
+            notes: ''
         };
         $scope.toggleEditTitle = function() {
             if (!(permissions.moveCards || permissions.editBoard)) {
@@ -79,6 +80,7 @@ angular.module('sb.board').controller('CardDetailController',
             $scope.editingDescription = !$scope.editingDescription;
         };
 
+
         $scope.editStoryDescription = function() {
             var params = {
                 id: $scope.story.id,
@@ -90,7 +92,32 @@ angular.module('sb.board').controller('CardDetailController',
             });
         };
 
+
         /**
+        * Task Notes
+        */
+        $scope.toggleEditNotes = function() {
+            if (!(permissions.moveCards || permissions.editBoard)) {
+                return false;
+            }
+            if (!$scope.editingTitle) {
+                $scope.modifications.notes = $scope.card.task.link;
+            }
+            $scope.editingNotes = !$scope.editingNotes;
+        };
+
+        $scope.editTaskNotes = function() {
+            var params = {
+                id: card.task.id,
+                link: $scope.modifications.notes
+            };
+            Task.update(params, function(updated) {
+                $scope.toggleEditNotes();
+                $scope.card.task.link = updated.link;
+            });
+        };
+
+         /**
          * Due dates
          */
         $scope.noDate = {
@@ -248,9 +275,11 @@ angular.module('sb.board').controller('CardDetailController',
         $scope.board = board;
         $scope.permissions = permissions;
         $scope.showDescription = true;
+        $scope.showTaskNotes = true;
         $scope.assigningDueDate = false;
         $scope.editingDueDate = false;
         $scope.editingDescription = false;
+        $scope.editingNotes = false;
         $scope.editingAssignee = false;
     }
 );

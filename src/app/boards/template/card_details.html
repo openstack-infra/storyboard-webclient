@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<script type="text/ng-template" id="/inline/task_body.html"> 
+<script type="text/ng-template" id="/inline/task_body.html">
     <div class="panel-body">
         <div class="row">
             <div class="col-xs-12 card-heading">
@@ -173,6 +173,68 @@
                 </div>
             </div>
         </div>
+        <hr />
+        <div class="row card-detail">
+            <div class="col-xs-12 item-heading">
+                <label>
+                    Task Notes
+                    (<a href
+                        ng-click="showTaskNotes = !showTaskNotes"
+                        >{{showTaskNotes ? 'hide' : 'show'}}</a>)
+                </label>
+            </div>
+        </div>
+        <div class= "row card-detail">
+            <div class="col-xs-12 card-detail-item" ng-show="showTaskNotes"
+                    ng-click="toggleEditNotes()"
+                    ng-class="{'editing': editingNotes}">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <insert-markdown content="card.task.link"
+                            ng-show="!editingNotes || previewNotes">
+                        </insert-markdown>
+                        <insert-markdown content="modifications.notes"
+                                ng-show="editingNotes && previewNotes">
+                        </insert-markdown>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingNotes">
+                    <div class="col-xs-12">
+                        <textarea placeholder="Enter Notes here"
+                                class="form-control context-edit"
+                                msd-elastic
+                                rows="3"
+                                required
+                                focus-on-show
+                                ng-disabled="isUpdating"
+                                ng-model="modifications.notes"
+                                ng-show="editingNotes"
+                                ng-click="$event.stopPropagation()">
+                        </textarea>
+                    </div>
+                </div>
+                <div class="row" ng-show="editingNotes"
+                        ng-click="$event.stopPropagation()">
+                    <div class="col-xs-6">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="previewNotes = !previewNotes">
+                            Preview
+                        </button>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button class="btn btn-primary" type="button"
+                                ng-click="editTaskNotes()">
+                            Save
+                        </button>
+                        <button class="btn btn-default"
+                                ng-click="toggleEditNotes()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <hr />
         <div class="row card-detail">
             <div class="col-xs-12 item-heading">
