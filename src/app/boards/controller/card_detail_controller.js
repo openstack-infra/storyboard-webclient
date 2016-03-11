@@ -23,11 +23,12 @@ angular.module('sb.board').controller('CardDetailController',
         'use strict';
 
         /**
-         * Story/Task title
+         * Story/Task title/description/notes
          */
         $scope.modifications = {
             title: '',
-            description: ''
+            description: '',
+            notes: ''
         };
         $scope.toggleEditTitle = function() {
             if (!(permissions.moveCards || permissions.editBoard)) {
@@ -78,6 +79,33 @@ angular.module('sb.board').controller('CardDetailController',
             }
             $scope.editingDescription = !$scope.editingDescription;
         };
+
+         /**
+         * Task Notes
+         */
+        $scope.toggleEditNotes = function() {
+            if (!(permissions.moveCards || permissions.editBoard)) {
+                return false;
+            }
+            if (!$scope.editingTitle) {
+                $scope.modifications.notes = $scope.card.task.link;
+            }
+            $scope.editingNotes = !$scope.editingNotes;
+        };
+
+        $scope.editTaskNotes = function() {
+            var params = {
+                id: card.task.id,
+                link: $scope.modifications.notes
+            };
+            Task.update(params, function(updated) {
+                $scope.toggleEditNotes();
+                $scope.card.task.link = updated.link;
+            });
+        };
+
+//story again
+
 
         $scope.editStoryDescription = function() {
             var params = {
@@ -189,13 +217,19 @@ angular.module('sb.board').controller('CardDetailController',
             $scope.editingAssignee = !$scope.editingAssignee;
         };
 
+        /**
+        * and notes
+        */
+
         $scope.updateTask = function(task) {
             var params = {
                 id: task.id,
-                assignee_id: task.assignee_id
+                assignee_id: task.assignee_id,
+                link: task.link
             };
             Task.update(params, function() {
                 $scope.editingAssignee = false;
+                $scope.editingNotes = false;
             });
         };
 
@@ -248,9 +282,12 @@ angular.module('sb.board').controller('CardDetailController',
         $scope.board = board;
         $scope.permissions = permissions;
         $scope.showDescription = true;
+        $scope.showTaskNotes = true;
         $scope.assigningDueDate = false;
         $scope.editingDueDate = false;
         $scope.editingDescription = false;
+        $scope.editingNotes = false;
         $scope.editingAssignee = false;
+        $scope.showTaskForm = false;
     }
 );
