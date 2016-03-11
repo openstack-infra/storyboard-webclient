@@ -213,7 +213,7 @@ angular.module('sb.board').controller('BoardDetailController',
             for (var i = 0; i < $scope.board.lanes.length; i++) {
                 $scope.board.lanes[i].position = i;
             }
-            $scope.board.$update();
+            Board.update($scope.board);
         }
 
         /**
