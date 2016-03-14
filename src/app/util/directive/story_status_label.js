@@ -52,6 +52,15 @@ angular.module('sb.util').directive('storyStatusLabel',
                         case 'active':
                             $scope.labelStyle = 'label-info';
                             break;
+                        case 'todo':
+                            $scope.labelStyle = 'label-info';
+                            break;
+                        case 'inprogress':
+                            $scope.labelStyle = 'label-info';
+                            break;
+                        case 'review':
+                            $scope.labelStyle = 'label-warning';
+                            break;
                         case 'merged':
                             $scope.labelStyle = 'label-success';
                             break;
