@@ -19,13 +19,28 @@
  */
 angular.module('sb.dashboard').controller('DashboardController',
     function ($q, $scope, currentUser, Story, SubscriptionList,
-            SubscriptionEvent) {
+            SubscriptionEvent, Task) {
         'use strict';
 
         // Load the list of current assigned stories.
         $scope.assignedStories = Story.browse({
             assignee_id: currentUser.id,
             status: 'active'
+        });
+        
+        $scope.assignedTodoTasks = Task.browse({
+            assignee_id: currentUser.id,
+            status: 'todo'
+        });
+
+        $scope.assignedProgressTasks = Task.browse({
+            assignee_id: currentUser.id,
+            status: 'progress'
+        });
+
+        $scope.assignedReviewTasks = Task.browse({
+            assignee_id: currentUser.id,
+            status: 'review'
         });
 
         $scope.createdStories = Story.browse({
