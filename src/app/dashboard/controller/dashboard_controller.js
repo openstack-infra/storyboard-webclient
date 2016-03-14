@@ -19,14 +19,54 @@
  */
 angular.module('sb.dashboard').controller('DashboardController',
     function ($q, $scope, currentUser, Story, SubscriptionList,
-            SubscriptionEvent) {
+            SubscriptionEvent, Task) {
         'use strict';
 
-        // Load the list of current assigned stories.
-        $scope.assignedStories = Story.browse({
-            assignee_id: currentUser.id,
-            status: 'active'
+        // Load the list of current assigned tasks.
+
+        $scope.filterTasks = Task.browse({
+            assignee_id: currentUser.id
+        }, function(tasks) {
+            var todo = [];
+            var progress = [];
+            var review = [];
+            var invalid = [];
+
+            angular.forEach(tasks, function(task) {
+                task.type = 'Task';
+                if (task.status === 'review') {
+                    review.push(task);
+                }
+                else if (task.status === 'todo') {
+                    todo.push(task);
+                }
+                else if (task.status === 'inprogress') {
+                    progress.push(task);
+                }
+                else {
+                    invalid.push(task);
+                }
+            });
+
+            $scope.reviewTasks = review;
+            $scope.todoTasks = todo;
+            $scope.progressTasks = progress;
+            $scope.invalidTasks = invalid;
         });
+
+        /**
+         * Updates the task list.
+         */
+        $scope.updateTask = function (task, fieldName, value) {
+
+            if(!!fieldName) {
+                task[fieldName] = value;
+            }
+
+            task.$update(function () {
+                $scope.showTaskEditForm = false;
+            });
+        };
 
         $scope.createdStories = Story.browse({
             creator_id: currentUser.id,
