@@ -16,7 +16,7 @@
 
 /**
  * A story status label that automatically selects color and text based on
- * the bound-in story.
+ * the bound-in story. Currently also used for tasks; TODO: tidy that.
  */
 angular.module('sb.util').directive('storyStatusLabel',
     function () {
@@ -43,6 +43,7 @@ angular.module('sb.util').directive('storyStatusLabel',
 
                 /**
                  * Helper method to update the label style of the story.
+                 * Or task.
                  */
                 function updateStoryLabel() {
                     switch (getStoryStatus()) {
@@ -51,6 +52,15 @@ angular.module('sb.util').directive('storyStatusLabel',
                             break;
                         case 'active':
                             $scope.labelStyle = 'label-info';
+                            break;
+                        case 'todo':
+                            $scope.labelStyle = 'label-info';
+                            break;
+                        case 'inprogress':
+                            $scope.labelStyle = 'label-info';
+                            break;
+                        case 'review':
+                            $scope.labelStyle = 'label-warning';
                             break;
                         case 'merged':
                             $scope.labelStyle = 'label-success';
