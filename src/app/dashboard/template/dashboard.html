@@ -56,32 +56,56 @@
         <div class="col-sm-6">
             <table class="table table-striped">
                 <thead>
-                <th colspan="2">Stories assigned to me</th>
+                <th colspan="2">Tasks assigned to me</th>
                 </thead>
                 <tbody>
-                <tr ng-repeat="story in assignedStories">
+                <tr ng-repeat="task in progressTasks">
                     <td class="col-sm-2">
-                        <story-status-label story="story"/>
+                        <task-status-dropdown status="{{task.status}}"/>
                     </td>
                     <td>
-                        <subscribe class="pull-right"
-                                   resource="story"
-                                   resource-id="story.id"
-                                   subscriptions="storySubscriptions">
-                        </subscribe>
                         <p>
-                            <a href="#!/story/{{story.id}}">
-                                {{story.title}}
+                            <a href="#!/story/{{task.story_id}}">
+                                {{task.title}}
                             </a>
                         </p>
-                        <story-task-status story="story"/>
                     </td>
                 </tr>
                 </tbody>
-                <tbody ng-show="assignedStories.length == 0">
+                <tbody>
+                <tr ng-repeat="task in todoTasks">
+                    <td class="col-sm-2">
+                        <task-status-dropdown status="{{task.status}}"/>
+                    </td>
+                    <td>
+                        <p>
+                            <a href="#!/story/{{task.story_id}}">
+                                {{task.title}}
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr ng-repeat="task in reviewTasks">
+                    <td class="col-sm-2">
+                        <task-status-dropdown status="{{task.status}}"/>
+                    </td>
+                    <td>
+                        <p>
+                            <a href="#!/story/{{task.story_id}}">
+                                {{task.title}}
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody ng-show="todoTasks.length == 0 &&
+                                progressTasks.length == 0 &&
+                                reviewTasks.length == 0">
                 <td colspan="3" class="text-center text-muted">
                     <em>
-                        There are no active stories currently assigned to you.
+                        There are no tasks in active stories currently assigned to you.
                     </em>
                 </td>
                 </tbody>
