@@ -23,11 +23,13 @@
     <div class="panel-body">
     <form name="taskForm">
         <div class="form-group">
-            <textarea placeholder="Enter task details here"
+            <div ng-show="!isLoggedIn"> {{task.link}}</div>
+            <textarea placeholder="Enter task notes here"
                       class="form-control context-edit"
                       msd-elastic
                       rows="3"
                       required
+                      ng-show="isLoggedIn"
                       ng-disabled="isUpdating"
                       ng-model="task.link">
             </textarea>
@@ -38,13 +40,13 @@
                 <div class="btn" ng-show="isUpdating">
                     <i class="fa fa-spinner fa-lg fa-spin"></i>
                 </div>
-                <button type="button"
+                <button type="button" ng-show="isLoggedIn"
                         class="btn btn-primary"
                         ng-click="update()"
                         ng-disabled="!taskForm.$valid">
                     Save
                 </button>
-                <button type="button"
+                <button type="button" ng-show="isLoggedIn"
                         class="btn btn-default"
                         ng-click="cancel()">
                     Cancel
