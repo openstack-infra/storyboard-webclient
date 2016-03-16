@@ -404,14 +404,16 @@
     </td>
     <td class="text-center col-xs-1">
         <task-priority-dropdown
+                editable="{{isLoggedIn}}"
+                on-change="updateTask(newTask, 'priority', priority)"
                 priority="{{newTask.priority}}"
-                editable="true"
                 />
     </td>
     <td class="text-center col-xs-1">
         <task-status-dropdown
+                editable="{{isLoggedIn}}"
+                on-change="updateTask(newTask, 'status', status)"
                 status="{{newTask.status}}"
-                editable="true"
                 />
     </td>
     <td class="text-right col-xs-1">
