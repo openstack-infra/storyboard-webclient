@@ -194,16 +194,6 @@
         <thead>
         <tr>
             <td colspan="3"><strong>Tasks</strong></td>
-            <td colspan="3" class="text-right">
-                <small>
-                    <a href=""
-                       ng-click="showAddTaskForm = !showAddTaskForm"
-                       ng-show="isLoggedIn">
-                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
-                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
-                        Add task
-                    </a>
-                </small>
             </td>
         </tr>
         </thead>
@@ -222,6 +212,18 @@
         <tr ng-if="showAddTaskForm"
             ng-include
             src="'/inline/task_edit_form.html'">
+        </tr>
+        <hr />
+        <tr>
+            <td colspan="7" class="text-left">
+                    <button type="btn btn-default href=""
+                       ng-click="showAddTaskForm = !showAddTaskForm"
+                       ng-show="isLoggedIn">
+                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
+                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
+                       <strong> Add task </strong>
+                    </button>
+            </td>
         </tr>
         </tbody>
     </table>
