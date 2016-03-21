@@ -76,6 +76,32 @@ angular.module('sb.services').factory('Worklist',
             permissionsSignature
         );
 
+        var filtersSignature = {
+            'create': {
+                method: 'POST'
+            },
+            'get': {
+                method: 'GET',
+                cache: false,
+                isArray: true
+            },
+            'update': {
+                method: 'PUT'
+            },
+            'delete': {
+                method: 'DELETE',
+                transformRequest: function() {
+                    return '';
+                }
+            }
+        };
+
+        resource.Filters = $resource(
+            storyboardApiBase + '/worklists/:id/filters/:filter_id',
+            {id: '@id'},
+            filtersSignature
+        );
+
         ResourceFactory.applySearch(
             'Worklist',
             resource,
