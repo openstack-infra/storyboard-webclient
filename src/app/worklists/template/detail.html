@@ -33,7 +33,7 @@
 <script type="text/ng-template" id="/inline/worklist_title.html">
     <div class="row">
         <div class="col-sm-12" ng-show="!editing">
-            <h1 class="no-margin-bottom" view-title>
+            <h1 view-title>
                 {{worklist.title}}
                 <a ng-click="toggleEditMode()"
                    ng-show="permissions.editWorklist">
@@ -205,87 +205,160 @@
 
 <script type="text/ng-template" id="/inline/worklist.html">
     <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-striped table-hover">
-                <tbody as-sortable="sortableOptions" ng-model="worklist.items">
-                    <tr as-sortable-item ng-repeat="item in worklist.items">
-                        <td as-sortable-item-handle ng-switch="item.item_type" class="hover-row"
-                            title="{{item.item_type}}: {{item[item.item_type].title}}">
-                            <a href="#!/story/{{item.story.id}}" ng-switch-when="story">
-                                <div class="col-sm-1">
+        <div class="col-sm-offset-3 col-sm-6">
+            <div class="worklist">
+                <div class="kanban-lane-contents"
+                     as-sortable="sortableOptions"
+                     ng-model="worklist.items">
+                    <div class="kanban-card"
+                         ng-class="{'kanban-card-due': isDue(item),
+                                    'kanban-card-late': isLate(item)}"
+                         as-sortable-item
+                         ng-repeat="item in worklist.items"
+                         ng-switch="item.item_type">
+                        <div as-sortable-item-handle ng-switch-when="story">
+                            <div class="row">
+                                <div class="col-xs-1">
                                     <i class="fa fa-sb-story text-muted"></i>
                                 </div>
-                                <div class="col-sm-11">
-                                    {{item.story.title}}
+                                <div class="col-xs-10">
+                                    <a href="#!/story/{{item.story.id}}">
+                                        {{item.story.title}}
+                                    </a>
                                 </div>
-                            </a>
-                            <a href="#!/story/{{item.task.story_id}}" ng-switch-when="task">
-                                <div class="col-sm-1">
-                                    <user-typeahead ng-show="item.task.assignee_id"
-                                            ng-model="item.task.assignee_id"/>
+                                <div class="col-xs-1">
+                                    <button type="button" class="close" title="Remove"
+                                            ng-click="removeListItem(item); $event.stopPropagation();">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row target-date" ng-show="item.resolved_due_date">
+                                <div class="col-xs-1">
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </div>
+                                <div class="col-xs-11">
+                                    <span time-moment
+                                          eventdate="item.resolved_due_date.date"
+                                          format-string="'MMM Do, YYYY'">
+                                    </span>
+                                    <br/>
+                                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div as-sortable-item-handle ng-switch-when="task">
+                            <div class="row">
+                                <div class="col-xs-1">
                                     <i class="fa fa-tasks text-muted"></i>
                                 </div>
-                                <div class="col-sm-11">
-                                    {{item.task.title}}
+                                <div class="col-xs-10">
+                                    <a href="#!/story/{{item.task.story_id}}">
+                                        {{item.task.title}}
+                                    </a>
                                 </div>
-                            </a>
-                        </td>
-                        <td>
-                            <button type="button" class="close" title="Delete"
-                                    ng-click="removeListItem(item)">
-                                &times;
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="hover-row text-center" title="Add Item"
-                        ng-click="addItem()">
-                        <td colspan="2">
-                            Add Items
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                <div class="col-xs-1">
+                                    <button type="button" class="close" title="Remove"
+                                            ng-click="removeListItem(item); $event.stopPropagation()">
+                                        &times;
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row target-date" ng-show="item.resolved_due_date">
+                                <div class="col-xs-1">
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </div>
+                                <div class="col-xs-10">
+                                    <span time-moment
+                                          eventdate="item.resolved_due_date.date"
+                                          format-string="'MMM Do, YYYY'">
+                                    </span>
+                                    <br/>
+                                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <user-typeahead ng-show="item.task.assignee_id"
+                                        ng-model="item.task.assignee_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </script>
 
 <script type="text/ng-template" id="/inline/worklist_static.html">
     <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-striped table-hover">
-                <tbody ng-show="worklist.items.length > 0">
-                    <tr ng-repeat="item in worklist.items">
-                        <td ng-switch="item.item_type" class="hover-row"
-                            title="{{item.item_type}}: {{item[item.item_type].title}}">
-                            <a href="#!/story/{{item.story.id}}" ng-switch-when="story">
-                                <div class="col-sm-1">
+        <div class="col-sm-offset-3 col-sm-6">
+            <div class="worklist">
+                <div class="kanban-lane-contents">
+                    <div class="kanban-card"
+                         ng-class="{'kanban-card-due': isDue(item),
+                                    'kanban-card-late': isLate(item)}"
+                         ng-repeat="item in worklist.items"
+                         ng-switch="item.item_type">
+                        <div ng-switch-when="story">
+                            <div class="row">
+                                <div class="col-xs-1">
                                     <i class="fa fa-sb-story text-muted"></i>
                                 </div>
-                                <div class="col-sm-11">
-                                    {{item.story.title}}
+                                <div class="col-xs-11">
+                                    <a href="#!/story/{{item.story.id}}">
+                                        {{item.story.title}}
+                                    </a>
                                 </div>
-                            </a>
-                            <a href="#!/story/{{item.task.story_id}}" ng-switch-when="task">
-                                <div class="col-sm-1">
+                            </div>
+                            <div class="row target-date" ng-show="item.resolved_due_date">
+                                <div class="col-xs-1">
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </div>
+                                <div class="col-xs-11">
+                                    <span time-moment
+                                          eventdate="item.resolved_due_date.date"
+                                          format-string="'MMM Do, YYYY'">
+                                    </span>
+                                    <br/>
+                                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-switch-when="task">
+                            <div class="row">
+                                <div class="col-xs-1">
                                     <i class="fa fa-tasks text-muted"></i>
+                                </div>
+                                <div class="col-xs-11">
+                                    <a href="#!/story/{{item.task.story_id}}">
+                                        {{item.task.title}}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row target-date" ng-show="item.resolved_due_date">
+                                <div class="col-xs-1">
+                                    <i class="fa fa-clock-o text-muted"></i>
+                                </div>
+                                <div class="col-xs-10">
+                                    <span time-moment
+                                          eventdate="item.resolved_due_date.date"
+                                          format-string="'MMM Do, YYYY'">
+                                    </span>
+                                    <br/>
+                                    <span class="text-muted">{{item.resolved_due_date.name}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
                                     <user-typeahead ng-show="item.task.assignee_id"
-                                            ng-model="item.task.assignee_id"/>
+                                        ng-model="item.task.assignee_id"/>
                                 </div>
-                                <div class="col-sm-11">
-                                    {{item.task.title}}
-                                </div>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody ng-show="worklist.items.length == 0">
-                    <tr>
-                        <td>
-                            This worklist is currently empty.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 </script>
