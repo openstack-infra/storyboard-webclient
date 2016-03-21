@@ -1,6 +1,7 @@
 <div class="tag-complete"
      ng-class="{'focused': hasFocus}">
-    <div class="form-control tag-input"
+    <div class="tag-input"
+         ng-class="{'form-control': tagCompleteTags.length < maxTags || !maxTags}"
          ng-click="focus()">
         <span ng-repeat="tag in tagCompleteTags track by $index"
               ng-click="noFocus($event)">
@@ -18,7 +19,8 @@
                class="tag-input"
                autoresize-width
                ng-delete="deletePressed()"
-               ng-model="newTagName">
+               ng-model="newTagName"
+               ng-show="tagCompleteTags.length < maxTags || !maxTags">
         </input>
     </div>
     <div typeahead-popup

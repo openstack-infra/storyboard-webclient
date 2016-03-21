@@ -34,7 +34,10 @@ angular.module('sb.util').directive('tagComplete',
                 tagCompleteOptionTemplateUrl: '=',
                 tagCompleteVerify: '&',
                 tagCompleteOnSelect: '&',
-                tagCompleteLoading: '&'
+                tagCompleteLoading: '&',
+                tagRemoveCallback: '&',
+                maxTags: '=',
+                placeholder: '@'
             },
             templateUrl: 'app/util/template/tag_complete.html',
             link: function ($scope, $element, attrs) {
@@ -42,6 +45,19 @@ angular.module('sb.util').directive('tagComplete',
                  * Grab our input.
                  */
                 var $input = $element.find('input');
+
+                /**
+                 * Set the input's placeholder text.
+                 */
+                $scope.$watch(function () {
+                    return $scope.tagCompleteTags.length;
+                }, function(tags) {
+                    if (tags > 0) {
+                        $input[0].placeholder = '';
+                    } else {
+                        $input[0].placeholder = $scope.placeholder;
+                    }
+                });
 
                 /**
                  * Override the element's focus method, use it to focus our
@@ -265,6 +281,7 @@ angular.module('sb.util').directive('tagComplete',
                     if (idx > -1) {
                         $scope.tagCompleteTags.splice(idx, 1);
                     }
+                    $scope.tagRemoveCallback(tag);
                 };
 
                 resetMatches();
