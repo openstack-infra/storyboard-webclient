@@ -162,11 +162,19 @@ angular.module('sb.services')
                                     // Transform the results to criteria tags.
                                     var criteriaResults = [];
                                     result.forEach(function (item) {
-                                        criteriaResults.push(
-                                            Criteria.create(resourceName,
-                                                item.id,
-                                                item[nameField])
-                                        );
+                                        if (item.hasOwnProperty('id')) {
+                                            criteriaResults.push(
+                                                Criteria.create(resourceName,
+                                                    item.id,
+                                                    item[nameField])
+                                            );
+                                        } else {
+                                            criteriaResults.push(
+                                                Criteria.create(resourceName,
+                                                    item.key,
+                                                    item[nameField])
+                                            );
+                                        }
                                     });
                                     deferred.resolve(criteriaResults);
                                 }, function () {

@@ -25,93 +25,6 @@
     cursor: text;
     min-height: 2.4em;
 
-    .tag {
-        padding: .2em .2em .2em .4em;
-        margin-right: .2em;
-        margin-bottom: .3em;
-        font-size: .9em;
-        display: inline-block;
-        cursor: pointer;
-
-        border-radius: @border-radius-small;
-        border: 1px solid @btn-default-border;
-        color: @btn-default-color;
-        background-color: @btn-default-bg;
-
-        &:last-of-type {
-            margin-right: 0px;
-        }
-
-        a {
-            color: @btn-default-color;
-            margin-left: .1em;
-            cursor: pointer;
-            padding: .2em .2em .2em .1em;
-            background: transparent;
-            filter: alpha(opacity=50);
-            opacity: .5;
-            font-weight: bold;
-            font-size: 1.4em;
-            line-height: .8em;
-
-            &:hover {
-                opacity: 1;
-                filter: alpha(opacity=100);
-                text-decoration: none;
-            }
-        }
-
-        &.tag-primary {
-            border-color: @btn-primary-border;
-            color: @btn-primary-color;
-            background-color: @btn-primary-bg;
-
-            a {
-                color: @btn-primary-color;
-            }
-        }
-
-        &.tag-success {
-            border-color: @btn-success-border;
-            color: @btn-success-color;
-            background-color: @btn-success-bg;
-
-            a {
-                color: @btn-success-color;
-            }
-        }
-
-        &.tag-info {
-            border-color: @btn-info-border;
-            color: @btn-info-color;
-            background-color: @btn-info-bg;
-
-            a {
-                color: @btn-info-color;
-            }
-        }
-
-        &.tag-warning {
-            border-color: @btn-warning-border;
-            color: @btn-warning-color;
-            background-color: @btn-warning-bg;
-
-            a {
-                color: @btn-warning-color;
-            }
-        }
-
-        &.tag-danger {
-            border-color: @btn-danger-border;
-            color: @btn-danger-color;
-            background-color: @btn-danger-bg;
-
-            a {
-                color: @btn-danger-color;
-            }
-        }
-    }
-
     input.tag-input {
         border: none;
         outline: none;
@@ -129,6 +42,93 @@
         height: auto;
         .tag {
             border-radius: (@border-radius-small - 1);
+        }
+    }
+}
+
+.tag {
+    padding: .2em .2em .2em .4em;
+    margin-right: .2em;
+    margin-bottom: .3em;
+    font-size: .9em;
+    display: inline-block;
+    cursor: pointer;
+
+    border-radius: @border-radius-small;
+    border: 1px solid @btn-default-border;
+    color: @btn-default-color;
+    background-color: @btn-default-bg;
+
+    &:last-of-type {
+        margin-right: 0px;
+    }
+
+    a {
+        color: @btn-default-color;
+        margin-left: .1em;
+        cursor: pointer;
+        padding: .2em .2em .2em .1em;
+        background: transparent;
+        filter: alpha(opacity=50);
+        opacity: .5;
+        font-weight: bold;
+        font-size: 1.4em;
+        line-height: .8em;
+
+        &:hover {
+            opacity: 1;
+            filter: alpha(opacity=100);
+            text-decoration: none;
+        }
+    }
+
+    &.tag-primary {
+        border-color: @btn-primary-border;
+        color: @btn-primary-color;
+        background-color: @btn-primary-bg;
+
+        a {
+            color: @btn-primary-color;
+        }
+    }
+
+    &.tag-success {
+        border-color: @btn-success-border;
+        color: @btn-success-color;
+        background-color: @btn-success-bg;
+
+        a {
+            color: @btn-success-color;
+        }
+    }
+
+    &.tag-info {
+        border-color: @btn-info-border;
+        color: @btn-info-color;
+        background-color: @btn-info-bg;
+
+        a {
+            color: @btn-info-color;
+        }
+    }
+
+    &.tag-warning {
+        border-color: @btn-warning-border;
+        color: @btn-warning-color;
+        background-color: @btn-warning-bg;
+
+        a {
+            color: @btn-warning-color;
+        }
+    }
+
+    &.tag-danger {
+        border-color: @btn-danger-border;
+        color: @btn-danger-color;
+        background-color: @btn-danger-bg;
+
+        a {
+            color: @btn-danger-color;
         }
     }
 }
