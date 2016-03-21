@@ -70,6 +70,134 @@
                                     />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="automatic" class="col-sm-2 control-label">
+                            Automatic
+                        </label>
+                        <div class="col-sm-10 checkbox">
+                            <input id="automatic"
+                                   type="checkbox"
+                                   class="modal-checkbox"
+                                   ng-model="worklist.automatic"
+                                    />
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="worklist.automatic">
+                        <div class="col-sm-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th colspan="4">
+                                        Criteria
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="filter in worklist.filters">
+                                    <td colspan="3">
+                                        <span ng-show="worklist.filters.indexOf(filter) > 0">
+                                            or
+                                        </span>
+                                        {{filter.type == 'Story' ? 'Stories' : 'Tasks'}}
+                                        where
+                                        <span ng-repeat="criterion in filter.filter_criteria">
+                                            {{criterion.field | capitalize}}
+                                            {{criterion.negative ? 'is not' : 'is'}}
+                                            {{criterion.title}}
+                                            <span ng-hide="filter.filter_criteria.indexOf(criterion)
+                                                           == filter.filter_criteria.length - 1">
+                                                and
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href class="close"
+                                           ng-click="remove(criterion)">&times;</a>
+                                    </td>
+                                </tr>
+                                <tr ng-show="showAddFilter">
+                                    <td class="center-vertical col-sm-2">
+                                        <span ng-show="worklist.filters.length > 0">
+                                            or
+                                        </span>
+                                        <span class="dropdown" dropdown>
+                                            <a class="btn btn-xs btn-default dropdown-toggle"
+                                               dropdown-toggle>
+                                                {{newFilter.type == 'Story' ? 'Stories' : 'Tasks'}}
+                                                <i class="fa fa-caret-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                <li ng-repeat="type in ['Story', 'Task']">
+                                                    <a href ng-click="setType(type)">
+                                                        {{type == 'Story' ? 'Stories' : 'Tasks'}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </td>
+                                    <td class="col-sm-9">
+                                        <span ng-repeat="criterion in newFilter.filter_criteria"
+                                              ng-controller="SearchCriteriaController"
+                                              ng-init="init([newFilter.type])">
+                                            <span class="center-vertical worklist-criterion"
+                                                  style="display: inline-block">
+                                                <span class="dropdown" dropdown>
+                                                    <a class="btn btn-xs btn-default dropdown-toggle"
+                                                       dropdown-toggle>
+                                                        {{criterion.negative ? 'not matching' : 'matching'}}
+                                                        <i class="fa fa-caret-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li ng-repeat="not in [false, true]">
+                                                            <a href
+                                                               ng-click="criterion.negative = not">
+                                                                {{not ? 'not matching' : 'matching'}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </span>
+                                                <div tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
+                                                     tag-complete-tags="criteria"
+                                                     tag-complete-label-field="title"
+                                                     tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
+                                                     tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
+                                                     tag-complete-loading="loadingCriteria = isLoading"
+                                                     tag-complete-on-select="setCriterion(criterion, tag)"
+                                                     tag-remove-callback="removeTag(criterion)"
+                                                     max-tags="1"
+                                                     placeholder="Click to select a filter.">
+                                                </div>
+                                            </span>
+                                            <span ng-hide="newFilter.filter_criteria.indexOf(criterion)
+                                                           == newFilter.filter_criteria.length - 1">
+                                                and
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="center-vertical col-sm-1">
+                                        <a href ng-click="addCriterion(newFilter)">
+                                            <i class="fa fa-plus-circle"></i>
+                                            and...
+                                        </a>
+                                    </td>
+                                    <td class="text-right center-vertical col-sm-1">
+                                        <a href class="btn btn-primary"
+                                           ng-click="saveNewFilter()"
+                                           ng-disabled="!checkNewFilter()">Save</a>
+                                    </td>
+                                </tr>
+                                <tr ng-show="!showAddFilter">
+                                    <td colspan="4" class="text-center">
+                                        <a href ng-click="showAddFilter = !showAddFilter">
+                                            <i class="fa fa-plus-circle"></i> or...
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
