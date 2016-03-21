@@ -68,6 +68,15 @@ angular.module('sb.worklist').controller('WorklistDetailController',
                     Worklist.Permissions.update(params, owners).$promise,
                     Worklist.Permissions.update(params, users).$promise
                 ];
+                angular.forEach($scope.worklist.filters, function(filter) {
+                    var filterParams = {
+                        id: $scope.worklist.id,
+                        filter_id: filter.id
+                    };
+                    updating.push(
+                        Worklist.Filters.update(filterParams, filter).$promise
+                    );
+                });
                 $q.all(updating).then(function() {
                     $scope.toggleEditMode();
                 });
@@ -197,6 +206,92 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             var modelIdx = modelArray.indexOf(model);
             modelArray.splice(modelIdx, 1);
         };
+
+        /**
+         * Criteria editing
+         */
+        var blankFilter = {
+            type: 'Story',
+            filter_criteria: [{
+                negative: false,
+                field: null,
+                value: null,
+                title: null
+            }]
+        };
+        $scope.setType = function(type) {
+            $scope.newFilter.type = type;
+            $scope.resourceTypes = [type];
+            $scope.$broadcast('refresh-types');
+        };
+
+        $scope.setCriterion = function(criterion, tag) {
+            criterion.field = tag.type;
+            criterion.value = tag.value.toString();
+            criterion.title = tag.title;
+        };
+
+        $scope.addCriterion = function(filter) {
+            filter.filter_criteria.push({
+                negative: false,
+                field: null,
+                value: null,
+                title: null
+            });
+        };
+
+        $scope.removeTag = function(criterion) {
+            if ($scope.newFilter.filter_criteria.length > 1) {
+                var idx = $scope.newFilter.filter_criteria.indexOf(criterion);
+                $scope.newFilter.filter_criteria.splice(idx, 1);
+            } else {
+                criterion.field = null;
+                criterion.value = null;
+                criterion.title = null;
+            }
+        };
+
+        $scope.checkNewFilter = function() {
+            var valid = true;
+            angular.forEach(
+                $scope.newFilter.filter_criteria,
+                function(criterion) {
+                    if (criterion.field == null ||
+                        criterion.value == null ||
+                        criterion.title == null) {
+                        valid = false;
+                    }
+                }
+            );
+            return valid;
+        };
+
+        $scope.remove = function(filter) {
+            var idx = $scope.worklist.filters.indexOf(filter);
+            Worklist.Filters.delete({
+                id: $scope.worklist.id,
+                filter_id: filter.id
+            });
+            $scope.worklist.filters.splice(idx, 1);
+        };
+
+        $scope.saveNewFilter = function() {
+            var added = angular.copy($scope.newFilter);
+            Worklist.Filters.create(
+                {id: $scope.worklist.id}, added, function(result) {
+                    $scope.worklist.filters.push(result);
+                }
+            );
+            $scope.showAddFilter = false;
+            $scope.newFilter = angular.copy(blankFilter);
+        };
+
+        $scope.isSaving = false;
+        $scope.worklist = new Worklist({title: '', filters: []});
+        $scope.resourceTypes = ['Story'];
+        $scope.showAddFilter = false;
+        $scope.newFilter = angular.copy(blankFilter);
+
 
         /**
          * Config for worklist sortable.

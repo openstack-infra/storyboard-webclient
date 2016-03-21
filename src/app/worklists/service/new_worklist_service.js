@@ -26,6 +26,7 @@ angular.module('sb.worklist').factory('NewWorklistService',
                 } else {
                     var modalInstance = $modal.open(
                         {
+                            size: 'lg',
                             templateUrl: 'app/worklists/template/new.html',
                             controller: 'AddWorklistController',
                             resolve: {
