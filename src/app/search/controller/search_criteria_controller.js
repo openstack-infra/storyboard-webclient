@@ -45,11 +45,15 @@ angular.module('sb.search').controller('SearchCriteriaController',
          * @param defaultCriteria
          */
         $scope.init = function (types, defaultCriteria) {
-            resourceTypes = types || resourceTypes;
+            resourceTypes = types || $scope.resourceTypes || resourceTypes;
             $scope.criteria = defaultCriteria || [];
             $scope.searchForCriteria =
                 Criteria.buildCriteriaSearch(resourceTypes, 5);
         };
+
+        $scope.$on('refresh-types', function() {
+            $scope.init();
+        });
 
         /**
          * When a criteria is added, make sure we remove all previous criteria
