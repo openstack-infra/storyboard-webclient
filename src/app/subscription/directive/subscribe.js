@@ -176,8 +176,6 @@ angular.module('sb.util').directive('subscribe',
                     }
                 };
 
-                $scope.subscriptions = $scope.subscriptions;
-
                 /** Set subscriptions based on list passed from
                 * stories/projects/project_groups controller(s)
                 */
