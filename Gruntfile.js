@@ -67,20 +67,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         /**
-         * grunt bower
-         *
-         * Runs the bower install command, resolving remote runtime
-         * dependencies.
-         */
-        bower: {
-            install: {
-                options: {
-                    copy: false
-                }
-            }
-        },
-
-        /**
          * grunt clean
          *
          * Cleans our output directories.
@@ -607,7 +593,6 @@ module.exports = function (grunt) {
      * Compile and packages our code.
      */
     grunt.registerTask('build', [
-        'bower:install',
         'compile',
         'package'
     ]);
@@ -617,7 +602,6 @@ module.exports = function (grunt) {
      * Compile and packages our code.
      */
     grunt.registerTask('build:draft', [
-        'bower:install',
         'compile',
         'package',
         'copy:draft'
@@ -630,7 +614,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('serve:dist', [
         'clean',
-        'bower:install',
         'compile',
         'package',
         'open',
@@ -645,7 +628,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('serve', [
         'clean',
-        'bower:install',
         'compile',
         'configureProxies:livereload',
         'connect:livereload',
@@ -661,7 +643,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('test:integration', [
         'clean',
-        'bower:install',
         'compile',
         'configureProxies:test',
         'connect:test',
@@ -677,7 +658,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('test:functional', [
         'clean',
-        'bower:install',
         'compile',
         'connect:test',
         'protractor'
