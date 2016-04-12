@@ -266,7 +266,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             return valid;
         };
 
-        $scope.remove = function(filter) {
+        $scope.removeFilter = function(filter) {
             var idx = $scope.worklist.filters.indexOf(filter);
             Worklist.Filters.delete({
                 id: $scope.worklist.id,
