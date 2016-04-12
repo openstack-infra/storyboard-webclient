@@ -7,7 +7,7 @@
     "clean": "grunt clean",
     "lint": "eslint ./",
     "pretest-unit": "grunt build",
-    "test-unit": "karma start ./karma-unit.conf.js",
+    "test-unit": "karma start ./karma.conf.js",
     "test-functional": "grunt test:functional",
     "test-integration": "grunt test:integration",
     "draft": "grunt build:draft",
