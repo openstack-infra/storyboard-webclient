@@ -25,41 +25,40 @@ First of all be sure to have tox installed on your machine then:
   - Now you can launch the grunt tasks of storyboard-webclient, by default run
 the development server with the following command: `grunt serve`
 
+NPM Commands
+-----------
+The following are commands that may be used during project development.
+
+  - `npm run lint`: Runs a linter on the javascript sources files of the
+    project, this will help us keeping style consistency across our files and
+    can reduce the risk of bugs.
+  - `npm run clean`: Erases the temporary folders created by various grunt
+    tasks, such as reports, cover and dist.
+  - `npm run build`: Compile and packages our code.
+  - `npm run serve`: Development server - runs a build and sets up concurrent
+    watchers that will automatically lint, test, and refresh the code when a
+    change is detected.
+  - `npm run test-unit`: This command will create a clean build against which
+    our unit tests will be run. For more information, please see
+    karma-unit.conf.js
+  - `npm run test-integration`: This command will create a clean build against
+    which our functional tests will be run. For more information, please see
+    protractor-integration.conf.js
+  - `npm run test-functional`: This command will create a clean build against
+    which our functional tests will be run. For more information, please see
+    protractor.conf.js
 
 Grunt tasks
 -----------
 
-Here are the grunt tasks available with the storyboard-webclient project, the
-following commands must be prefixed by grunt, example for the first one, the
-command to run will be `grunt jshint`, the virtualenv must have been
-activated see previous section:
+For more detailed development, the following commands are available via grunt.
+To run them, you will need to install grunt globally: `npm install -g grunt`.
 
-  - `jshint`: Runs a linter on the javascript sources files of the project,
-this will help us keeping style consistency across our files and can reduce the
-risk of bugs.
-  - `clean`: Erases the temporary folders created by various grunt tasks, such
-as reports, cover and dist.
-  - `less`: Compiles the themes files present in `/src/theme/custom` and
-`/src/theme/custom` using [less compiler](http://lesscss.org/), the result
-which is a plain css file is stored into `dist/styles/main.css`
   - `compile`: Compiles all of our sources in the dist directory.
   - `package`: Built code into a release package.
-  - `build`: Compile and packages our code.
   - `serve:dist`:  This task performs a full build of our application,
 and then runs that source in a local web server. It does no watching,
 it simply hosts the files.
   - `serve:prod`: This task is identical to 'server:dist',
 with the exception that it will proxy the API requests against the production
 API. *USE WITH CAUTION*
-  - `serve`: Development server - runs a build and sets up concurrent watchers
-that will automatically lint, test, and refresh the code when a change is
-detected.
-  - `test`: Run all the tests.
-  - `test:unit`: This command will create a clean build against which
-our unit tests will be run. For more information, please see karma-unit.conf.js
-  - `test:integration`: This command will create a clean build against which
-our integration tests will be run. For more information, please see
-karma-integration.conf.js
-  - `test:functional`: This command will create a clean build against which our
-functional tests will be run. For more information, please see
-karma-functional.conf.js
