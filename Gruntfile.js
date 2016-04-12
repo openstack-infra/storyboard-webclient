@@ -701,22 +701,4 @@ module.exports = function (grunt) {
         'connect:test',
         'protractor'
     ]);
-
-    /**
-     * grunt test
-     *
-     * Run all the tests.
-     */
-    grunt.registerTask('test', [
-        'clean',
-        'bower:install',
-        'compile',
-        'useminPrepare',
-        'concat',
-        'karma:unit',
-        'karma:integration',
-        'package',
-        'connect:test',
-        'protractor'
-    ]);
 };
