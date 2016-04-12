@@ -101,20 +101,6 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt eslint
-         *
-         * Runs the eslint linter against all the javascript files in our
-         * project, using the .eslintrc file shared with our IDE.
-         */
-        eslint: {
-            target: [
-                dir.source + '/**/*.js',
-                dir.test + '/**/*.js',
-                './*.js'
-            ]
-        },
-
-        /**
          * grunt gitinfo
          *
          * Gets information about the current state of the source repository.
