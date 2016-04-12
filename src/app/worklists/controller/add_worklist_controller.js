@@ -100,8 +100,8 @@ angular.module('sb.worklist').controller('AddWorklistController',
         };
 
         $scope.remove = function(filter) {
-            var idx = $scope.worklist.criteria.indexOf(filter);
-            $scope.worklist.criteria.splice(idx, 1);
+            var idx = $scope.worklist.filters.indexOf(filter);
+            $scope.worklist.filters.splice(idx, 1);
         };
 
         $scope.saveNewFilter = function() {
