@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "./node_modules/.bin/grunt clean",
     "lint": "eslint ./",
-    "test-unit": "./node_modules/.bin/grunt test:unit",
+    "pretest-unit": "grunt build",
+    "test-unit": "karma start ./karma-unit.conf.js",
     "test-functional": "./node_modules/.bin/grunt test:functional",
     "test-integration": "./node_modules/.bin/grunt test:integration",
     "draft": "./node_modules/.bin/grunt build:draft",
@@ -45,7 +46,6 @@
     "grunt-env": "0.4.1",
     "grunt-gitinfo": "^0.1.7",
     "grunt-html2js": "0.2.9",
-    "grunt-karma": "0.12.2",
     "grunt-open": "0.2.3",
     "grunt-protractor-runner": "1.1.4",
     "grunt-shell": "1.1.1",

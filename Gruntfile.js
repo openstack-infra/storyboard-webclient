@@ -541,17 +541,6 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt karma:unit / grunt karma:integration
-         *
-         * This task runs the unit or integration suite on the compiled code.
-         */
-        karma: {
-            unit: {
-                configFile: './karma-unit.conf.js'
-            }
-        },
-
-        /**
          * grunt shell:xvfbStart / grunt shell:xvfbStop
          *
          * Starts and stops a virtual frame buffer.
@@ -665,22 +654,6 @@ module.exports = function (grunt) {
     ]);
 
     /**
-     * grunt test:unit
-     *
-     * This command will create a clean build against which our unit
-     * tests will be run. For more information, please see
-     * karma-unit.conf.js
-     */
-    grunt.registerTask('test:unit', [
-        'clean',
-        'bower:install',
-        'compile',
-        'useminPrepare',
-        'concat',
-        'karma:unit'
-    ]);
-
-    /**
      * grunt test:integration
      *
      * This command will create a clean build against which our integration
@@ -700,7 +673,7 @@ module.exports = function (grunt) {
      *
      * This command will create a clean build against which our functional
      * tests will be run. For more information, please see
-     * karma-functional.conf.js
+     * protractor.conf.js
      */
     grunt.registerTask('test:functional', [
         'clean',
