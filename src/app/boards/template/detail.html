@@ -329,7 +329,8 @@
     <div id="kanban-board" class="kanban-board"
          as-sortable="lanesSortable" ng-model="board.lanes">
         <div class="kanban-lane" as-sortable-item ng-repeat="lane in board.lanes"
-             ng-if="!lane.worklist.archived">
+             ng-if="!lane.worklist.archived"
+             ng-class="{'kanban-lane-automatic': lane.worklist.automatic}">
             <div as-sortable-item-handle>
                 <span ng-if="!lane.worklist.editing">
                     <a ng-class="{'kanban-lane-title': !!lane.worklist.title}"
@@ -349,6 +350,11 @@
                        focus
                        ng-if="lane.worklist.editing"
                        ng-blur="toggleEditLane(lane)" />
+                <div ng-if="lane.worklist.automatic"
+                     ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'">
+                </div>
+                <div ng-if="!lane.worklist.automatic"
+                     ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
                 </div>
                 <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
             </div>
