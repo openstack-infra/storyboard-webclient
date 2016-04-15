@@ -18,7 +18,7 @@
  * Controller for the "new worklist" modal popup.
  */
 angular.module('sb.worklist').controller('AddWorklistController',
-    function ($scope, $modalInstance, $state, params, Worklist) {
+    function ($scope, $modalInstance, $state, params, redirect, Worklist) {
         'use strict';
 
         var blankFilter = {
@@ -39,8 +39,11 @@ angular.module('sb.worklist').controller('AddWorklistController',
             $scope.worklist.$create(
                 function (result) {
                     $scope.isSaving = false;
-                    $modalInstance.dismiss('success');
-                    $state.go('sb.worklist.detail', {worklistID: result.id});
+                    $modalInstance.close(result);
+                    if (redirect) {
+                        $state.go('sb.worklist.detail',
+                                  {worklistID: result.id});
+                    }
                 }
             );
         };
