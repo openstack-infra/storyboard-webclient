@@ -333,24 +333,19 @@
             <div as-sortable-item-handle>
                 <span ng-if="!lane.worklist.editing">
                     <a ng-class="{'kanban-lane-title': !!lane.worklist.title}"
-                       ng-click="toggleEditLane(lane)">
+                       href="/#!/worklist/{{lane.worklist.id}}">
                         {{ lane.worklist.title }}
-                        <i class="fa fa-pencil" ng-if="!lane.worklist.title"></i>
+                    </a>
+                    <a href ng-click="editWorklist(lane.worklist)">
+                        <i class="fa fa-pencil"></i>
                     </a>
                     <button type="button" class="close" title="Remove"
                             ng-click="removeLane(lane)">
                         &times;
                     </button>
                 </span>
-                <input class="form-control"
-                       type="text"
-                       ng-model="lane.worklist.title"
-                       placeholder="Lane Title"
-                       focus
-                       ng-if="lane.worklist.editing"
-                       ng-blur="toggleEditLane(lane)" />
-                </div>
                 <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
+                </div>
             </div>
         </div>
         <div class="kanban-lane-clickable" ng-click="addLane()">
