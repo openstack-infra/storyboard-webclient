@@ -349,6 +349,11 @@
                        focus
                        ng-if="lane.worklist.editing"
                        ng-blur="toggleEditLane(lane)" />
+                <div ng-if="lane.worklist.automatic"
+                     ng-include src="'app/boards/template/board_contents/kanban_lane_contents_static.html'">
+                </div>
+                <div ng-if="!lane.worklist.automatic"
+                     ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
                 </div>
                 <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'">
             </div>
