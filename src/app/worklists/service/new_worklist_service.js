@@ -34,6 +34,9 @@ angular.module('sb.worklist').factory('NewWorklistService',
                                     return {
                                         userId: userId || null
                                     };
+                                },
+                                redirect: function() {
+                                    return true;
                                 }
                             }
                         }
