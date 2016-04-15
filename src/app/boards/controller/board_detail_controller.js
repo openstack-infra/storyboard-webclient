@@ -235,19 +235,24 @@ angular.module('sb.board').controller('BoardDetailController',
          * create a worklist to represent the lane if one doesn't exist
          * already.
          */
-        $scope.toggleEditLane = function(lane) {
-            if (lane.worklist.editing) {
-                if (lane.worklist.id === null) {
-                    lane.worklist.$create().then(function(list) {
-                        lane.list_id = list.id;
-                        $scope.board.$update();
-                    });
-                } else {
-                    Worklist.update({id: lane.worklist.id},
-                                    lane.worklist);
+        $scope.editWorklist = function(worklist) {
+            var modalInstance = $modal.open({
+                size: 'lg',
+                templateUrl: 'app/worklists/template/new.html',
+                controller: 'WorklistEditController',
+                resolve: {
+                    worklist: function() {
+                        return worklist;
+                    },
+                    board: function() {
+                        return $scope.board;
+                    }
                 }
-            }
-            lane.worklist.editing = !lane.worklist.editing;
+            });
+
+            modalInstance.result.finally(function() {
+                loadBoard();
+            });
         };
 
         /**
