@@ -160,14 +160,28 @@ angular.module('sb.board').controller('BoardDetailController',
          * Add a lane to the board.
          */
         $scope.addLane = function () {
-            $scope.board.lanes.push({
-                worklist: new Worklist({
-                    id: null,
-                    title: '',
-                    editing: true
-                }),
-                position: $scope.board.lanes.length,
-                board_id: $scope.board.id
+            var modalInstance = $modal.open({
+                size: 'lg',
+                templateUrl: 'app/worklists/template/new.html',
+                controller: 'AddWorklistController',
+                resolve: {
+                    params: function() {
+                        return {};
+                    },
+                    redirect: function() {
+                        return false;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(worklist) {
+                $scope.board.lanes.push({
+                    list_id: worklist.id,
+                    worklist: Worklist.get({id: worklist.id}),
+                    position: $scope.board.lanes.length,
+                    board_id: $scope.board.id
+                });
+                Board.update($scope.board);
             });
         };
 
