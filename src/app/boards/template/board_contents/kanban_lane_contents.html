@@ -21,7 +21,7 @@
          as-sortable-item
          ng-repeat="item in lane.worklist.items"
          ng-switch="item.item_type"
-         ng-click="showCardDetail(item)">
+         ng-click="showCardDetail(item, lane)">
         <div as-sortable-item-handle ng-switch-when="story">
             <div class="row">
                 <div class="col-xs-1">

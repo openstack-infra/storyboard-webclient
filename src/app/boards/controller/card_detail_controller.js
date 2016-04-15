@@ -18,8 +18,9 @@
  * Controller for the card detail modal.
  */
 angular.module('sb.board').controller('CardDetailController',
-    function ($scope, card, board, permissions, Story, Task, DueDate,
-              Worklist, $document, $timeout, $modalInstance, $modal) {
+    function ($scope, card, board, worklist, permissions, Story, Task,
+              DueDate, Worklist, $document, $timeout, $modalInstance,
+              $modal) {
         'use strict';
 
         /**
@@ -274,6 +275,7 @@ angular.module('sb.board').controller('CardDetailController',
         $scope.card = card;
         $scope.board = board;
         $scope.permissions = permissions;
+        $scope.worklist = worklist;
         $scope.showDescription = true;
         $scope.showTaskNotes = true;
         $scope.assigningDueDate = false;

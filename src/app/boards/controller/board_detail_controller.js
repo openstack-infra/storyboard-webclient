@@ -378,7 +378,7 @@ angular.module('sb.board').controller('BoardDetailController',
             }
         };
 
-        $scope.showCardDetail = function(card) {
+        $scope.showCardDetail = function(card, lane) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/boards/template/card_details.html',
                 controller: 'CardDetailController',
@@ -388,6 +388,9 @@ angular.module('sb.board').controller('BoardDetailController',
                     },
                     board: function() {
                         return $scope.board;
+                    },
+                    worklist: function() {
+                        return lane.worklist;
                     },
                     permissions: function() {
                         return $scope.permissions;
