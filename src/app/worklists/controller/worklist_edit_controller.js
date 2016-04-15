@@ -17,8 +17,8 @@
 /**
  * Controller for the "new worklist" modal popup.
  */
-angular.module('sb.worklist').controller('AddWorklistController',
-    function ($scope, $modalInstance, $state, params, redirect, Worklist) {
+angular.module('sb.worklist').controller('WorklistEditController',
+    function ($scope, $modalInstance, $state, worklist, board, Worklist, $q) {
         'use strict';
 
         var blankFilter = {
@@ -36,15 +36,10 @@ angular.module('sb.worklist').controller('AddWorklistController',
          */
         $scope.save = function () {
             $scope.isSaving = true;
-            $scope.worklist.$create(
-                function (result) {
-                    $scope.isSaving = false;
-                    $modalInstance.close(result);
-                    if (redirect) {
-                        $state.go('sb.worklist.detail', {worklistID: result.id});
-                    }
-                }
-            );
+            Worklist.update($scope.worklist, function (result) {
+                $scope.isSaving = false;
+                $modalInstance.dismiss('success');
+            });
         };
 
         /**
@@ -103,20 +98,28 @@ angular.module('sb.worklist').controller('AddWorklistController',
 
         $scope.remove = function(filter) {
             var idx = $scope.worklist.filters.indexOf(filter);
+            Worklist.Filters.delete({
+                id: $scope.worklist.id,
+                filter_id: filter.id
+            });
             $scope.worklist.filters.splice(idx, 1);
         };
 
         $scope.saveNewFilter = function() {
             var added = angular.copy($scope.newFilter);
-            $scope.worklist.filters.push(added);
+            Worklist.Filters.create(
+                {id: $scope.worklist.id}, added, function(result) {
+                    $scope.worklist.filters.push(result);
+                }
+            );
             $scope.showAddFilter = false;
             $scope.newFilter = angular.copy(blankFilter);
         };
 
         $scope.isSaving = false;
-        $scope.worklist = new Worklist({title: '', filters: []});
+        $scope.worklist = worklist;
         $scope.resourceTypes = ['Story'];
-        $scope.showAddFilter = true;
+        $scope.showAddFilter = false;
         $scope.newFilter = angular.copy(blankFilter);
-        $scope.modalTitle = 'New Worklist';
+        $scope.modalTitle = 'Edit Worklist';
     });
