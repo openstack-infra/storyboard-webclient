@@ -18,7 +18,7 @@
          ng-class="{'kanban-card-due': isDue(item), 'kanban-card-late': isLate(item)}"
          ng-repeat="item in lane.worklist.items"
          ng-switch="item.item_type"
-         ng-click="showCardDetail(item)">
+         ng-click="showCardDetail(item, lane)">
         <div ng-switch-when="story">
             <div class="row">
                 <div class="col-xs-1">

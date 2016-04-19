@@ -138,12 +138,12 @@
             </div>
         </div>
         <hr />
-        <div class="row card-detail">
+        <div class="row card-detail" ng-if="!worklist.automatic">
             <div class="col-xs-12 item-heading">
                 <label>Due date</label>
             </div>
         </div>
-        <div class="row card-detail">
+        <div class="row card-detail" ng-if="!worklist.automatic">
             <div class="col-xs-12 card-detail-item"
                  ng-class="{'editing': editingDueDate}"
                  ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
@@ -360,12 +360,12 @@
             </div>
         </div>
         <hr />
-        <div class="row card-detail">
+        <div class="row card-detail" ng-if="!worklist.automatic">
             <div class="col-xs-12 item-heading">
                 <label>Due date</label>
             </div>
         </div>
-        <div class="row card-detail">
+        <div class="row card-detail" ng-if="!worklist.automatic">
             <div class="col-xs-12 card-detail-item"
                  ng-class="{'editing': editingDueDate}"
                  ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
