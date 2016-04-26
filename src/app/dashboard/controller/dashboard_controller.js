@@ -77,7 +77,11 @@ angular.module('sb.dashboard').controller('DashboardController',
             // Load the user's subscription events.
             $scope.subscriptionEvents = null;
             SubscriptionEvent.browse({
-                subscriber_id: currentUser.id
+                subscriber_id: currentUser.id,
+                offset: 0,
+                limit: 50,
+                sort_dir: 'desc',
+                sort_field: 'created_at'
             }, function (results) {
 
                 // First go through the results and decode the event info.
