@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "clean": "./node_modules/.bin/grunt clean",
-    "lint": "./node_modules/.bin/grunt eslint",
+    "lint": "eslint ./",
     "test-unit": "./node_modules/.bin/grunt test:unit",
     "test-functional": "./node_modules/.bin/grunt test:functional",
     "test-integration": "./node_modules/.bin/grunt test:integration",
@@ -43,7 +43,6 @@
     "grunt-contrib-uglify": "0.6.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-env": "0.4.1",
-    "grunt-eslint": "7.0.1",
     "grunt-gitinfo": "^0.1.7",
     "grunt-html2js": "0.2.9",
     "grunt-karma": "0.12.2",
