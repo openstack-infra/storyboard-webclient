@@ -360,10 +360,12 @@ angular.module('sb.story').controller('StoryDetailController',
                 task[fieldName] = value;
             }
 
-            task.$update(function () {
-                $scope.showTaskEditForm = false;
-                $scope.loadEvents();
-            });
+            if(!!task.id) {
+                task.$update(function () {
+                    $scope.showTaskEditForm = false;
+                    $scope.loadEvents();
+                });
+            }
         };
 
         /**
