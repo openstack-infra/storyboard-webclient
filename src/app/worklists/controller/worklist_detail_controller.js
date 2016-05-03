@@ -287,7 +287,6 @@ angular.module('sb.worklist').controller('WorklistDetailController',
         };
 
         $scope.isSaving = false;
-        $scope.worklist = new Worklist({title: '', filters: []});
         $scope.resourceTypes = ['Story'];
         $scope.showAddFilter = false;
         $scope.newFilter = angular.copy(blankFilter);
