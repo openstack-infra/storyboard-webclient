@@ -30,7 +30,7 @@
     <i class="fa fa-caret-right"></i>
 </a>
 <br ng-if="!!minimalPager" />
-<span class="btn-group" dropdown>
+<span ng-if="!!onPageSize" class="btn-group" dropdown>
     <div>
         <button class="btn btn-xs btn-default"
                 dropdown-toggle>
