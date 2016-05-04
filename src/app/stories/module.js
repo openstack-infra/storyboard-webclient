@@ -65,6 +65,17 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                         return Task.browse({
                             story_id: $stateParams.storyId
                         }).$promise;
+                    },
+                    worklists: function(Worklist, $stateParams, CurrentUser, $q) {
+                        var userPromise = CurrentUser.resolve();
+
+                        return userPromise.then(function(user) {
+                            return Worklist.browse({
+                                story_id: $stateParams.storyId,
+                                subscriber_id: user.id,
+                                hide_lanes: ''
+                            }).$promise;
+                        });
                     }
                 }
             });
