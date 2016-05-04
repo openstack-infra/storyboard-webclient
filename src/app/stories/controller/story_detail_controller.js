@@ -22,7 +22,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SubscriptionList, CurrentUser,
-              SessionModalService, moment, $document) {
+              SessionModalService, moment, $document, worklists) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -47,6 +47,13 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {[Task]}
          */
         $scope.tasks = tasks;
+
+        /**
+         * All worklists containing this story, resolved in the state.
+         *
+         * @type {[Worklist]}
+         */
+        $scope.worklists = worklists;
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
