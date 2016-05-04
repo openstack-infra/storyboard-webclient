@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">In worklists you're subscribed to</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+        <tbody>
+            <tr ng-repeat="worklist in worklists">
+                <td>
+                    <span class="position-label pull-right">
+                        {{worklist.item_position}} of {{worklist.items.length}}
+                    </span>
+                    <a href="/#!/worklist/{{worklist.id}}">{{worklist.title}}</a>
+                    <br />
+                    <span class="text-muted" ng-show="worklist.automatic">
+                        (automatic)
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
