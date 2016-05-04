@@ -23,6 +23,14 @@
                 <strong>This story is private</strong>.
                 Edit this story to change the privacy settings.
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="hidden-xs hidden-sm col-sm-3 pull-right"
+                 ng-show="worklists.length > 0 && !showEditForm">
+                <div ng-include src="'/inline/worklists.html'"></div>
+            </div>
             <div ng-include
                  src="'/inline/story_detail.html'"
                  ng-hide="showEditForm">
@@ -31,6 +39,15 @@
                  src="'/inline/story_detail_form.html'"
                  ng-show="showEditForm">
             </div>
+            <hr class="visible-sm" />
+            <div class="col-xs-12 visible-sm"
+                 ng-show="worklists.length > 0 && !showEditForm">
+                <div ng-include src="'/inline/worklists.html'"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
             <div ng-include src="'/inline/task_list.html'"></div>
             <hr/>
             <div ng-include src="'/inline/tags.html'"></div>
@@ -252,6 +269,58 @@
     </form>
 </script>
 
+
+<!-- Template for the list of relevant worklists -->
+<script type="text/ng-template" id="/inline/worklists.html">
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>In worklists you subscribed to</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="worklist in worklists.slice(0, 5)">
+                <td>
+                    <a href="/#!/worklist/{{worklist.id}}">{{worklist.title}}</a>
+                    <span class="text-muted pull-right" ng-show="worklist.automatic">
+                        (automatic)
+                    </span>
+                    <div ng-click="showItems = !showItems">
+                        <a href>
+                            <i class="fa"
+                               ng-class="{'fa-caret-right': !showItems,
+                                          'fa-caret-down': showItems}"></i>
+                            <small>
+                                {{showItems ? 'Hide' : 'Show'}} items...
+                            </small>
+                        </a>
+                    </div>
+                    <table class="table table-striped table-condensed subtable" ng-show="showItems">
+                        <tr ng-repeat="item in worklist.relatedItems | orderBy: 'list_position'">
+                            <td>
+                                {{item.item_type | capitalize}} {{item.item_id}}
+                                <span class="pull-right">
+                                    {{item.list_position + 1}} of {{worklist.items.length}}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr ng-if="worklists.length > 5">
+                <td class="text-center">
+                    <a href ng-click="showWorklistsModal()">More...</a>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-if="worklists.length < 1">
+            <tr>
+                <td colspan="2">No worklists related to this story</td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+
 <!-- Template for the tags list and controls -->
 <script type="text/ng-template" id="/inline/tags.html">
     <strong>Tags</strong>
@@ -465,13 +534,6 @@
                 />
     </td>
     <td class="text-center col-xs-1 center-vertical">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'priority', priority)"
-                priority="{{task.priority}}"
-                />
-    </td>
-    <td class="text-center col-xs-1 center-vertical">
         <task-status-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updateTask(task, 'status', status)"
@@ -527,13 +589,6 @@
                 empty-disabled-prompt="Not assigned."
                 as-inline="false"
                 placeholder="Assign user to task"
-                />
-    </td>
-    <td class="text-center col-xs-1">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(newTask, 'priority', priority)"
-                priority="{{newTask.priority}}"
                 />
     </td>
     <td class="text-center col-xs-1">

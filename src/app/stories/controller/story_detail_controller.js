@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Codethink Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License'); you may
  * not use this file except in compliance with the License. You may obtain
@@ -23,7 +24,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SessionModalService, moment, $document,
               $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments) {
+              enableEditableComments, worklists) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -56,6 +57,60 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {[Task]}
          */
         $scope.tasks = tasks;
+
+        /**
+         * All worklists containing this story, resolved in the state.
+         *
+         * @type {[Worklist]}
+         */
+        function setWorklists() {
+            function isNotArchived(card) {
+                return !card.archived;
+            }
+
+            var taskIds = $scope.tasks.map(function(task) {
+                return task.id;
+            });
+            for (var i = 0; i < worklists.length; i++) {
+                var worklist = worklists[i];
+                worklist.relatedItems = [];
+                worklist.items = worklist.items.filter(isNotArchived);
+                for (var j = 0; j < worklist.items.length; j++) {
+                    var item = worklist.items[j];
+                    if (item.item_type === 'story') {
+                        if (item.item_id === story.id) {
+                            worklist.relatedItems.push(item);
+                        }
+                    } else if (item.item_type === 'task') {
+                        if (taskIds.indexOf(item.item_id) > -1) {
+                            worklist.relatedItems.push(item);
+                        }
+                    }
+                }
+            }
+            $scope.worklists = worklists.map(function(list) {
+                if (list.relatedItems.length > 0) {
+                    return list;
+                }
+            }).filter(function(list) { return list; });
+        }
+
+        setWorklists();
+
+        $scope.showWorklistsModal = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/stories/template/worklists.html',
+                controller: 'StoryWorklistsController',
+                resolve: {
+                    worklists: function () {
+                        return $scope.worklists;
+                    }
+                }
+            });
+
+            // Return the modal's promise.
+            return modalInstance.result;
+        };
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
