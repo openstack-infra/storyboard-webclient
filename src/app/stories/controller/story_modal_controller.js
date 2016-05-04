@@ -18,11 +18,20 @@
  * Controller for the "new story" modal popup.
  */
 angular.module('sb.story').controller('StoryModalController',
-    function ($scope, $modalInstance, params, Project, Story, Task) {
+    function ($scope, $modalInstance, params, Project, Story, Task, User,
+              $q, CurrentUser) {
         'use strict';
 
+        var currentUser = CurrentUser.resolve();
+
         $scope.projects = Project.browse({});
-        $scope.story = new Story({title: ''});
+
+        currentUser.then(function(user) {
+            $scope.story = new Story({
+                title: '',
+                users: [user]
+            });
+        });
 
         $scope.tasks = [new Task({
             title: '',
@@ -153,5 +162,51 @@ angular.module('sb.story').controller('StoryModalController',
         $scope.selectNewProject = function (model, task) {
             task.project_id = model.id;
         };
+
+        /**
+         * User typeahead search method.
+         */
+        $scope.searchUsers = function (value, array) {
+            var deferred = $q.defer();
+
+            User.browse({full_name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (array.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        /**
+         * Formats the user name.
+         */
+        $scope.formatUserName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Add a new user to one of the permission levels.
+         */
+        $scope.addUser = function (model) {
+            $scope.story.users.push(model);
+        };
+
+        /**
+         * Remove a user from one of the permission levels.
+         */
+        $scope.removeUser = function (model) {
+            var idx = $scope.story.users.indexOf(model);
+            $scope.story.users.splice(idx, 1);
+        };
+
     })
 ;
