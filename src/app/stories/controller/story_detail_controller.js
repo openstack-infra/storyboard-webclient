@@ -22,7 +22,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SessionModalService, moment, $document,
-              $anchorScroll, $timeout, $location) {
+              $anchorScroll, $timeout, $location, worklists) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -51,6 +51,39 @@ angular.module('sb.story').controller('StoryDetailController',
          * @type {[Task]}
          */
         $scope.tasks = tasks;
+
+        /**
+         * All worklists containing this story, resolved in the state.
+         *
+         * @type {[Worklist]}
+         */
+        $scope.worklists = worklists;
+
+        function getWorklistPositions() {
+            var taskIds = [];
+            angular.forEach($scope.tasks, function(task) {
+                taskIds.push(task.id);
+            });
+            for (var i = 0; i < $scope.worklists.length; i++) {
+                var worklist = $scope.worklists[i];
+                for (var j = 0; j < worklist.items.length; j++) {
+                    var item = worklist.items[j];
+                    if (item.item_type === 'story') {
+                        if (item.item_id === story.id) {
+                            worklist.item_position = item.list_position + 1;
+                            break;
+                        }
+                    } else if (item.item_type === 'task') {
+                        if (taskIds.indexOf(item.item_id) > -1) {
+                            worklist.item_position = item.list_position + 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        getWorklistPositions();
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
