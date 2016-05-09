@@ -193,17 +193,7 @@
     <table class="table table-striped table-supercondensed">
         <thead>
         <tr>
-            <td colspan="3"><strong>Tasks</strong></td>
-            <td colspan="3" class="text-right">
-                <small>
-                    <a href=""
-                       ng-click="showAddTaskForm = !showAddTaskForm"
-                       ng-show="isLoggedIn">
-                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
-                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
-                        Add task
-                    </a>
-                </small>
+            <td colspan="7"><strong>Tasks</strong></td>
             </td>
         </tr>
         </thead>
@@ -213,7 +203,7 @@
             src="'/inline/task_list_item.html'">
         </tr>
         <tr ng-if="tasks.length == 0 && !showAddTaskForm">
-            <td colspan="6">
+            <td colspan="7">
                 <p class="text-muted text-center">
                     <em>This story has no tasks.</em>
                 </p>
@@ -222,6 +212,18 @@
         <tr ng-if="showAddTaskForm"
             ng-include
             src="'/inline/task_edit_form.html'">
+        </tr>
+        <hr />
+        <tr>
+            <td colspan="7" class="text-left">
+                    <button class="btn btn-default" type="button"
+                       ng-click="showAddTaskForm = !showAddTaskForm"
+                       ng-show="isLoggedIn">
+                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
+                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
+                       <strong> Add task </strong>
+                    </button>
+            </td>
         </tr>
         </tbody>
     </table>
