@@ -20,7 +20,7 @@
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
-              Story, creator, tasks, Task, DSCacheFactory, User,
+              Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SubscriptionList, CurrentUser,
               SessionModalService, moment, $document) {
         'use strict';
@@ -323,6 +323,51 @@ angular.module('sb.story').controller('StoryDetailController',
          */
         $scope.showLoginRequiredModal = function() {
             SessionModalService.showLoginRequiredModal();
+        };
+
+        /**
+         * User typeahead search method.
+         */
+        $scope.searchUsers = function (value, array) {
+            var deferred = $q.defer();
+
+            User.browse({full_name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (array.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        /**
+         * Formats the user name.
+         */
+        $scope.formatUserName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Add a new user to one of the permission levels.
+         */
+        $scope.addUser = function (model) {
+            $scope.story.users.push(model);
+        };
+
+        /**
+         * Remove a user from one of the permission levels.
+         */
+        $scope.removeUser = function (model) {
+            var idx = $scope.story.users.indexOf(model);
+            $scope.story.users.splice(idx, 1);
         };
 
         // ###################################################################
