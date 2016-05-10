@@ -31,7 +31,8 @@ angular.module('sb.util').directive('projectTypeahead',
                 autoFocus: '=',
                 onChange: '&',
                 emptyPrompt: '@',
-                emptyDisabledPrompt: '@'
+                emptyDisabledPrompt: '@',
+                placeholder: '@placeholder'
             },
             link: function ($scope, element, attrs, ngModel) {
                 /**

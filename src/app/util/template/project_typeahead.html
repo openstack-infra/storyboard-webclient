@@ -48,6 +48,7 @@
            typeahead-loading="loadingProjects"
            typeahead-input-formatter="formatProjectName($model)"
            typeahead-on-select="updateViewValue($model.id);"
+           placeholder="{{placeholder}}"
            ng-model="selectedProject"/>
 
     <span class="form-control-feedback text-muted">

@@ -32,7 +32,8 @@ angular.module('sb.util').directive('inputInline',
                 onChange: '&',
                 emptyPrompt: '@',
                 emptyDisabledPrompt: '@',
-                maxLength: '='
+                maxLength: '=',
+                placeholder: '@placeholder'
             },
             link: function ($scope, element, attrs, ngModel) {
                 /**

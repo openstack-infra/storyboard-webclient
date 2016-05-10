@@ -1,7 +1,6 @@
 
 <div class="form-group"
      ng-if="!enabled || !showForm">
-
     <p class="form-control-static">
         <a href=""
            ng-focus="toggleForm()"
@@ -36,4 +35,5 @@
        focus="autoFocus"
        ng-blur="onInputBlur(inputText)"
        ng-model="inputText"
+       placeholder="{{placeholder}}"
        maxlength="{{maxLength}}"/>

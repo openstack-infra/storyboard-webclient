@@ -50,6 +50,7 @@
            typeahead-loading="loadingUsers"
            typeahead-input-formatter="formatUserName($model)"
            typeahead-on-select="updateViewValue($model.id);"
+           placeholder="{{placeholder}}"
            ng-model="selectedUser"/>
 
     <span class="form-control-feedback text-muted">

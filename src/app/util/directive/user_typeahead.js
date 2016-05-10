@@ -33,7 +33,8 @@ angular.module('sb.util').directive('userTypeahead',
                 onBlur: '&',
                 onFocus: '&',
                 emptyPrompt: '@',
-                emptyDisabledPrompt: '@'
+                emptyDisabledPrompt: '@',
+                placeholder: '@placeholder'
             },
             link: function ($scope, element, attrs, ngModel) {
                 /**
