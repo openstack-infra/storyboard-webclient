@@ -73,7 +73,9 @@
                 </h2>
                 <div class="text-muted">
                     Task in the story
-                    <a href="#!/story/{{story.id}}">"{{story.title}}"</a>.
+                    <a ng-click="close()" ng-href="#!/story/{{story.id}}">
+                        "{{story.title}}"
+                    </a>.
                 </div>
             </div>
         </div>
@@ -268,7 +270,9 @@
                 <h2>
                     <span ng-show="!editingTitle">
                         <i class="fa fa-sb-story"></i>
-                       <a href="#!/story/{{story.id}}">{{card.story.title}}</a>
+                        <a ng-click="close()" ng-href="#!/story/{{story.id}}">
+                            "{{card.story.title}}"
+                        </a>
                         <small>
                             <a href ng-click="toggleEditTitle()">
                                 <i class="fa fa-pencil"></i>
