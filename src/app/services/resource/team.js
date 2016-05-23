@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Codethink Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -19,17 +20,42 @@
  * details.
  *
  * @see storyboardApiSignature
+ * @see ResourceFactory
  * @author Michael Krotscheck
+ * @author Adam Coldrick
  */
 angular.module('sb.services').factory('Team',
-    function (ResourceFactory) {
+    function (ResourceFactory, $resource, storyboardApiBase) {
         'use strict';
 
-        return ResourceFactory.build(
-            '/teams/:id',
+        var resource = ResourceFactory.build(
+            '/teams/:team_id',
             '/teams/search', // Not implemented.
             {
-                id: '@id'
+                team_id: '@team_id'
             }
         );
+
+        var usersSignature = {
+            'create': {
+                method: 'PUT'
+            },
+            'get': {
+                method: 'GET',
+                isArray: true
+            },
+            'delete': {
+                method: 'DELETE',
+                transformRequest: function() {
+                    return '';
+                }
+            }
+        };
+
+        resource.UsersController = $resource(
+            storyboardApiBase + '/teams/:team_id/users',
+            {team_id: '@team_id'},
+            usersSignature);
+
+        return resource;
     });

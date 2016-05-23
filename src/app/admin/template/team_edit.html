@@ -1,5 +1,6 @@
 <!--
   ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~ Copyright (c) 2016 Codethink Ltd
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -22,7 +23,71 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <p>This feature has not yet been implemented.</p>
+            <form class="form-horizontal"
+                  role="form"
+                  name="teamForm">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">
+                        Name:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="name"
+                               type="text"
+                               class="form-control"
+                               ng-model="team.name"
+                               required
+                               ng-disabled="isSaving"
+                               maxlength="255"
+                               placeholder="The team name.">
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Team Members</th>
+                        <th class="text-right">
+                            <a href ng-click="toggleAddMember()">
+                                <i class="fa fa-plus" ng-show="!adding"></i>
+                                <i class="fa fa-minus" ng-show="adding"></i>
+                                Add member
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="member in members">
+                        <td colspan="2">
+                            {{member.full_name}}
+                            <a href class="close"
+                               ng-click="removeUser(member)">
+                                &times;
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!adding && members.length < 1">
+                        <td colspan="2">This team has no members yet.</td>
+                    </tr>
+                    <tr ng-show="adding">
+                        <td colspan="2">
+                            <input id="user"
+                                   type="text"
+                                   placeholder="Click to add a user"
+                                   ng-model="asyncUser"
+                                   typeahead-wait-ms="200"
+                                   typeahead-editable="false"
+                                   typeahead="user as user.full_name for user in
+                                              searchUsers($viewValue, members)"
+                                   typeahead-loading="loadingUsers"
+                                   typeahead-input-formatter="formatUserName($model)"
+                                   typeahead-on-select="addUser($model)"
+                                   class="form-control input-sm"
+                                    />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>
