@@ -80,6 +80,21 @@ h1 {
     }
 }
 
+.feedback-wrapper {
+    position: relative;
+    margin-top: 20px;
+
+    & .form-control-feedback {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    & input.h1 {
+        margin-top: 0;
+        height: 46px;
+    }
+}
+
 .nav-tabs {
 
     &.nav-tabs-down {
