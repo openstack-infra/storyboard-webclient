@@ -1,5 +1,6 @@
 <!--
   ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~ Copyright (c) 2016 Codethink Ltd
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -17,12 +18,126 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12">
-            <h1><i class="fa fa-sb-team"></i> Edit Team</h1>
+            <h1 ng-show="!editing">
+                <i class="fa fa-sb-team"></i> {{team.name}}
+                <small>
+                    <a ng-click="toggleEdit()">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </small>
+            </h1>
+            <form name="teamForm" role="form" ng-show="editing">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': teamForm.name.$invalid,
+                                'has-success': !teamForm.name.$invalid}">
+                    <div class="input-group">
+                        <div class="clearfix feedback-wrapper">
+                            <input id="name"
+                                   name="name"
+                                   type="text"
+                                   class="form-control context-edit h1"
+                                   ng-model="team.name"
+                                   autocomplete="off"
+                                   required
+                                   autofocus
+                                   ng-disabled="isUpdating"
+                                   ng-pattern="PROJECT_NAME_REGEX"
+                                   ng-minlength="3"
+                                   maxlength="255"
+                                   placeholder="Team Name" />
+                            <span class="form-control-feedback"
+                                  ng-show="teamForm.name.$invalid">
+                                <i class="fa fa-times fa-lg"></i>
+                            </span>
+                            <span class="form-control-feedback"
+                                  ng-show="!teamForm.name.$invalid">
+                                <i class="fa fa-check fa-lg"></i>
+                            </span>
+                        </div>
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-lg h1"
+                                    type="button"
+                                    ng-click="save()"
+                                    ng-disabled="!teamForm.$valid || isUpdating">
+                                <i class="fa fa-check"></i>
+                                <span class="hidden-xs">Save</span>
+                            </button>
+                            <button class="btn btn-danger btn-lg h1"
+                                    type="button"
+                                    ng-click="toggleEdit()"
+                                    ng-disabled="isUpdating">
+                                <i class="fa fa-times"></i>
+                                <span class="hidden-xs">Cancel</span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="help-block text-danger"
+                         ng-show="teamForm.name.$invalid">
+                        <span ng-show="teamForm.name.$error.required">
+                            A team name is required.
+                        </span>
+                        <span ng-show="teamForm.name.$error.pattern">
+                            A team name must begin with a letter, and may only
+                            contain letters, numbers, forward slashes, periods, and
+                            dashes. It should not start or end with a separator and
+                            must not contain two or more sequential separators.
+                        </span>
+                        <span ng-show="teamForm.name.$error.minlength">
+                            A team name must have at least 3 characters.
+                        </span>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
-            <p>This feature has not yet been implemented.</p>
+        <div class="col-xs-6 col-xs-offset-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Team Members</th>
+                    <th class="text-right">
+                        <a href ng-click="toggleAddMember()">
+                            <i class="fa fa-plus" ng-show="!adding"></i>
+                            <i class="fa fa-minus" ng-show="adding"></i>
+                            Add member
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="member in members">
+                    <td colspan="2">
+                        {{member.full_name}}
+                        <a href class="close"
+                           ng-click="removeUser(member)">
+                            &times;
+                        </a>
+                    </td>
+                </tr>
+                <tr ng-if="!adding && members.length < 1">
+                    <td colspan="2">This team has no members yet.</td>
+                </tr>
+                <tr ng-show="adding">
+                    <td colspan="2">
+                        <input id="user"
+                               type="text"
+                               placeholder="Click to add a user"
+                               ng-model="asyncUser"
+                               typeahead-wait-ms="200"
+                               typeahead-editable="false"
+                               typeahead="user as user.full_name for user in
+                                          searchUsers($viewValue)"
+                               typeahead-loading="loadingUsers"
+                               typeahead-input-formatter="formatUserName($model)"
+                               typeahead-on-select="addUser($model)"
+                               class="form-control input-sm"
+                                />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
