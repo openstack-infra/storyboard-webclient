@@ -20,7 +20,7 @@
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
     function ($scope, $stateParams, projectGroup, Story, Project,
-              Preference, SubscriptionList, CurrentUser) {
+              Preference, SubscriptionList, CurrentUser, Subscription) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -211,14 +211,17 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         //GET subscriptions
         var cuPromise = CurrentUser.resolve();
 
+        $scope.resolvedUser = false;
         cuPromise.then(function(user){
             $scope.projectSubscriptions = SubscriptionList.subsList(
                 'project', user);
-        });
-
-        cuPromise.then(function(user){
             $scope.storySubscriptions = SubscriptionList.subsList(
                 'story', user);
+            $scope.projectGroupSubscription = Subscription.browse({
+                target_type: 'project_group',
+                target_id: $scope.projectGroup.id,
+                user_id: user.id
+            });
+            $scope.resolvedUser = true;
         });
-
     });

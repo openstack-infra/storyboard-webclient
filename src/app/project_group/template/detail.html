@@ -9,6 +9,11 @@
                     <a href="#!/project_group/{{projectGroup.id}}/edit" permission="is_superuser">
                         <i class="fa fa-pencil"></i>
                     </a>
+                    <subscribe resource="project_group"
+                               resource-id="projectGroup.id"
+                               subscriptions="projectGroupSubscription"
+                               ng-if="resolvedUser">
+                    </subscribe>
                 </small>
             </h1>
         </div>
