@@ -43,6 +43,11 @@
             <a href="" ng-click="toggleEditMode()" permission="is_superuser">
                 <i class="fa fa-pencil"></i>
             </a>
+            <subscribe resource="project"
+                       resource-id="project.id"
+                       subscriptions="projectSubscription"
+                       ng-if="resolvedUser">
+            </subscribe>
         </small>
     </h1>
     <p>

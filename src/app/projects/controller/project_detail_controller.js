@@ -29,7 +29,7 @@
  */
 angular.module('sb.projects').controller('ProjectDetailController',
     function ($scope, $rootScope, $state, $stateParams, Project, Story,
-              Session, isSuperuser) {
+              Session, isSuperuser, CurrentUser, Subscription) {
         'use strict';
 
         // Parse the ID
@@ -79,9 +79,22 @@ angular.module('sb.projects').controller('ProjectDetailController',
         /**
          * Resets our loading flags.
          */
+        $scope.projectSubscription = {};
+        $scope.resolvedUser = false;
         function handleServiceSuccess() {
             $scope.isLoading = false;
             $scope.isUpdating = false;
+            // Get subscriptions
+            var cuPromise = CurrentUser.resolve();
+
+            cuPromise.then(function(user){
+                $scope.projectSubscription = Subscription.browse({
+                    target_type: 'project',
+                    target_id: $scope.project.id,
+                    user_id: user.id
+                });
+                $scope.resolvedUser = true;
+            });
         }
 
         /**
