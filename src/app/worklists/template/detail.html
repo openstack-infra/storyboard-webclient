@@ -35,10 +35,15 @@
         <div class="col-sm-12" ng-show="!editing">
             <h1 view-title>
                 {{worklist.title}}
-                <a ng-click="toggleEditMode()"
-                   ng-show="permissions.editWorklist">
-                    <i class="fa fa-pencil"></i>
-                </a>
+                <small>
+                    <a ng-click="toggleEditMode()"
+                       ng-show="permissions.editWorklist">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <subscribe resource="worklist"
+                               resource-id="worklist.id">
+                    </subscribe>
+                </small>
             </h1>
         </div>
     </div>
