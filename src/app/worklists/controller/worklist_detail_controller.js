@@ -19,7 +19,7 @@
  */
 angular.module('sb.worklist').controller('WorklistDetailController',
     function ($scope, $modal, $timeout, $stateParams, Worklist, BoardHelper,
-              $document, User, $q) {
+              $document, User, $q, worklist, permissions) {
         'use strict';
 
         function resolvePermissions() {
@@ -321,6 +321,10 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             event.preventDefault();
         };
 
-        // Load the worklist.
-        loadWorklist();
+        $scope.worklist = worklist;
+        $scope.permissions = {
+            editWorklist: permissions.indexOf('edit_worklist') > -1,
+            moveItems: permissions.indexOf('move_items') > -1
+        };
+        resolvePermissions();
     });
