@@ -37,6 +37,20 @@ angular.module('sb.worklist',
             .state('sb.worklist.detail', {
                 url: '/{worklistID:[0-9]+}',
                 controller: 'WorklistDetailController',
-                templateUrl: 'app/worklists/template/detail.html'
+                templateUrl: 'app/worklists/template/detail.html',
+                resolve: {
+                    worklist: function (Worklist, $stateParams) {
+                        // Pre-resolve the worklist.
+                        return Worklist.get({
+                            id: $stateParams.worklistID
+                        }).$promise;
+                    },
+                    permissions: function(Worklist, $stateParams) {
+                        // Pre-resolve the permissions.
+                        return Worklist.Permissions.get({
+                            id: $stateParams.worklistID
+                        }).$promise;
+                    }
+                }
             });
     });
