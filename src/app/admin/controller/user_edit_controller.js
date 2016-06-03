@@ -18,13 +18,19 @@
  * Edit user Controller.
  */
 angular.module('sb.admin').controller('UserEditController',
-    function ($scope, user, $state) {
+    function ($scope, user, $state, storyboardApiBase, DSCacheFactory) {
         'use strict';
 
         $scope.user = user;
 
         $scope.save = function () {
-            $scope.user.$update(function () {
+            if (!$scope.user.email) {
+                delete $scope.user.email;
+            }
+            $scope.user.$update(function (updatedUser) {
+                DSCacheFactory.get('defaultCache').put(
+                    storyboardApiBase + '/users/' + user.id,
+                    updatedUser);
                 $state.go('sb.admin.user');
             });
         };
