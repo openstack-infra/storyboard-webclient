@@ -24,6 +24,13 @@ angular.module('sb.admin').controller('UserEditController',
         $scope.user = user;
 
         $scope.save = function () {
+            /**
+             * Delete the email field to avoid trying to save a
+             * user with a blank email address.
+             */
+            if (!$scope.user.email) {
+                delete $scope.user.email;
+            }
             $scope.user.$update(function () {
                 $state.go('sb.admin.user');
             });
