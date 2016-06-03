@@ -400,13 +400,11 @@ angular.module('sb.story').controller('StoryDetailController',
          * Updates the task list.
          */
         $scope.updateTask = function (task, fieldName, value) {
-
-            if(!!fieldName) {
-                task[fieldName] = value;
-            }
-
+            var params = {id: task.id};
+            params[fieldName] = value;
+            task[fieldName] = value;
             if(!!task.id) {
-                task.$update(function () {
+                Task.update(params, function() {
                     $scope.showTaskEditForm = false;
                     $scope.loadEvents();
                 });

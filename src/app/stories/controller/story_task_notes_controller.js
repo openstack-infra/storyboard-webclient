@@ -19,7 +19,7 @@
  */
 
 angular.module('sb.story').controller('StoryTaskNotesController',
-    function ($log, $scope, $state, task, $modalInstance) {
+    function ($log, $scope, $state, task, $modalInstance, Task) {
         'use strict';
 
         $scope.task = angular.copy(task);
@@ -62,8 +62,11 @@ angular.module('sb.story').controller('StoryTaskNotesController',
             $scope.error = {};
 
             // Invoke the save method and wait for results.
-            $scope.task.$update(
-                function () {
+            var params = {
+                id: task.id,
+                link: $scope.task.link
+            };
+            Task.update(params, function () {
                     $modalInstance.close('save');
                     handleServiceSuccess();
                 },
