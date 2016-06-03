@@ -406,7 +406,7 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
-    <td class="col-xs-3">
+    <td class="col-xs-3 center-vertical">
         <input-inline
                 ng-model="task.title"
                 enabled="isLoggedIn"
@@ -417,7 +417,7 @@
                 as-inline="true"
                 />
     </td>
-    <td class="col-xs-1">
+    <td class="col-xs-1 center-vertical">
         <button class="btn btn-xs btn-task-notes"
                 ng-class="{'btn-default': !task.link,
                            'btn-primary': task.link}"
@@ -428,7 +428,7 @@
                           'fa-sticky-note': task.link}"></i>
         </button>
     </td>
-    <td class="col-xs-3">
+    <td class="col-xs-3 center-vertical">
         <project-typeahead
                 ng-model="task.project_id"
                 enabled="isLoggedIn"
@@ -438,7 +438,7 @@
                 as-inline="true"
                 />
     </td>
-    <td class="col-xs-2">
+    <td class="col-xs-2 center-vertical">
         <user-typeahead
                 ng-model="task.assignee_id"
                 enabled="isLoggedIn"
@@ -448,21 +448,21 @@
                 as-inline="true"
                 />
     </td>
-    <td class="text-center col-xs-1">
+    <td class="text-center col-xs-1 center-vertical">
         <task-priority-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updateTask(task, 'priority', priority)"
                 priority="{{task.priority}}"
                 />
     </td>
-    <td class="text-center col-xs-1">
+    <td class="text-center col-xs-1 center-vertical">
         <task-status-dropdown
                 editable="{{isLoggedIn}}"
                 on-change="updateTask(task, 'status', status)"
                 status="{{task.status}}"
                 />
     </td>
-    <td class="text-right col-xs-1">
+    <td class="text-right col-xs-1 center-vertical">
         <a ng-show="isLoggedIn"
            ng-click="removeTask(task)">
             <i class="fa fa-times fa-lg"></i>
