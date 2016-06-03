@@ -418,7 +418,7 @@
                 />
     </td>
     <td class="col-xs-1">
-        <button class="btn btn-xs btn-task-notes"
+        <button class="btn btn-xs"
                 ng-class="{'btn-default': !task.link,
                            'btn-primary': task.link}"
                 ng-click="showTaskNotes(task)"
@@ -426,6 +426,7 @@
             <i class="fa"
                ng-class="{'fa-sticky-note-o': !task.link,
                           'fa-sticky-note': task.link}"></i>
+            <span class="hidden-sm hidden-xs">Notes</span>
         </button>
     </td>
     <td class="col-xs-3">
