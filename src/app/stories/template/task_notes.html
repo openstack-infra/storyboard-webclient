@@ -15,44 +15,54 @@
   -->
 <div class="panel panel-default card-modal">
     <div class="panel-heading clearfix">
-        {{task.title}}
         <button type="button" class="close" aria-hidden="true"
                 ng-click="close()">&times;
         </button>
+        <h3 class="panel-title">Notes on {{task.title}}</h3>
     </div>
     <div class="panel-body">
-    <form name="taskForm">
-        <div class="form-group">
-            <div ng-show="!isLoggedIn"> {{task.link}}</div>
-            <textarea placeholder="Enter task notes here"
-                      class="form-control context-edit"
-                      msd-elastic
-                      rows="3"
-                      required
-                      ng-show="isLoggedIn"
-                      ng-disabled="isUpdating"
-                      ng-model="task.link">
-            </textarea>
+        <div ng-show="!isLoggedIn || !editing || preview">
+            <insert-markdown content="task.link"></insert-markdown>
         </div>
-
-        <div class="clearfix">
-            <div class="pull-right">
-                <div class="btn" ng-show="isUpdating">
-                    <i class="fa fa-spinner fa-lg fa-spin"></i>
-                </div>
-                <button type="button" ng-show="isLoggedIn"
-                        class="btn btn-primary"
-                        ng-click="update()"
-                        ng-disabled="!taskForm.$valid">
-                    Save
-                </button>
-                <button type="button" ng-show="isLoggedIn"
-                        class="btn btn-default"
-                        ng-click="cancel()">
-                    Cancel
-                </button>
+        <button type="button" ng-show="isLoggedIn && !editing"
+                class="btn btn-primary pull-right"
+                ng-click="editing = !editing">
+            <i class="fa fa-pencil"></i> Edit
+        </button>
+        <form name="taskNotesForm" ng-show="editing">
+            <div class="form-group">
+                <textarea placeholder="Enter task notes here"
+                          class="form-control context-edit"
+                          msd-elastic
+                          rows="3"
+                          ng-show="isLoggedIn"
+                          ng-disabled="isUpdating"
+                          ng-model="task.link">
+                </textarea>
             </div>
-        </div>
-    </form>
+
+            <div class="clearfix">
+                <button type="button" ng-show="isLoggedIn"
+                        class="btn btn-default" ng-click="preview = !preview">
+                    Toggle Preview
+                </button>
+                <div class="pull-right">
+                    <div class="btn" ng-show="isUpdating">
+                        <i class="fa fa-spinner fa-lg fa-spin"></i>
+                    </div>
+                    <button type="button" ng-show="isLoggedIn"
+                            class="btn btn-primary"
+                            ng-click="update()"
+                            ng-disabled="!taskNotesForm.$valid">
+                        Save
+                    </button>
+                    <button type="button" ng-show="isLoggedIn"
+                            class="btn btn-default"
+                            ng-click="cancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
     <div>
 </div>
