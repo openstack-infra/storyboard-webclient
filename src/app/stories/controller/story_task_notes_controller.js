@@ -49,7 +49,8 @@ angular.module('sb.story').controller('StoryTaskNotesController',
          * Resets any changes and toggles the form back.
          */
         $scope.cancel = function () {
-            $modalInstance.close('cancel');
+            $scope.editing = false;
+            $scope.task = angular.copy(task);
         };
 
 
