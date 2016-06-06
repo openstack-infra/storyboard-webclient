@@ -272,8 +272,10 @@
         <span class="input-group" ng-show="showAddTag">
             <input type="text" class="form-control" ng-model="newTag.name" />
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button"
+                <button class="btn btn-primary" type="button"
                         ng-click="addTag(newTag.name)">Add</button>
+                <button class="btn btn-default" type="button"
+                        ng-click="toggleAddTag()">Cancel</button>
             </span>
         </span>
         <h4>
