@@ -351,12 +351,12 @@
                     minimal-pager="false"
                     ></result-set-pager>
         </h4>
-        <div class="discussion">
+        <div class="discussion" style="position: relative;">
             <div class="alert alert-warning"
                  ng-show="comments.length == 0">
                 The discussion hasn't started yet
             </div>
-            <div ng-repeat="event in events">
+            <div ng-repeat="event in events" style="margin-left: 20px;">
                 <timeline-event tl_event={{event}} />
             </div>
 

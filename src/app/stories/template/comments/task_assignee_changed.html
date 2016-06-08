@@ -1,7 +1,10 @@
-<div class="discussion-comment" ng-if="display_events_task_assignee_changed">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
+<div class="discussion-comment text-muted" ng-if="display_events_task_assignee_changed">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-sb-task"></i>
+    </p>
+    <p class="discussion-event">
         <span>{{event.author.full_name}} updated assignee for "{{ event.event_info.task_title }}":
-        {{ event.event_info.old_assignee_fullname }} ==> {{ event.event_info.new_assignee_fullname }}.</span>
+        {{ event.event_info.old_assignee_fullname }} ==> {{ event.event_info.new_assignee_fullname }} on </span>
+        <span time-moment eventdate="event.created_at"></span>
     </p>
 </div>

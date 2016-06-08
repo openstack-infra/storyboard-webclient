@@ -1,6 +1,9 @@
-<div class="discussion-comment" ng-if="display_events_tags_added">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{ event.author.full_name}} added tags {{event.event_info.tags}} to this story.</span>
+<div class="discussion-comment text-muted" ng-if="display_events_tags_added">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-sb-task"></i>
+    </p>
+    <p class="discussion-event">
+        <span>{{ event.author.full_name}} added tags {{event.event_info.tags}} to this story on </span>
+        <span time-moment eventdate="event.created_at"></span>
     </p>
 </div>
