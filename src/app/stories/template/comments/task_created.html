@@ -1,6 +1,11 @@
-<div class="discussion-comment" ng-if="display_events_task_created">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{ event.author.full_name }} created "{{ event.event_info.task_title }}".</span>
+<div class="discussion-comment text-muted" ng-if="display_events_task_created">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-sb-task"></i>
+    </p>
+    <p class="discussion-event">
+        <span>
+            {{ event.author.full_name }} created the task "{{ event.event_info.task_title }}" on
+        </span>
+        <span time-moment eventdate="event.created_at"></span>
     </p>
 </div>

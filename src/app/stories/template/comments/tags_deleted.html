@@ -1,6 +1,16 @@
-<div class="discussion-comment" ng-if="display_events_tags_deleted">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{ event.author.full_name}} deleted tags {{event.event_info.tags}} from this story.</span>
+<div class="discussion-comment text-muted" ng-if="display_events_tags_deleted">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-tag"></i>
+    </p>
+    <p class="discussion-event">
+        <span>
+            {{ event.author.full_name}} deleted tags&nbsp;
+            <span class="label label-warning"
+                  ng-repeat="tag in event.event_info.tags">
+                {{tag}}
+            </span>&nbsp;
+            from this story on 
+        </span>
+        <span time-moment eventdate="event.created_at"></span>
     </p>
 </div>
