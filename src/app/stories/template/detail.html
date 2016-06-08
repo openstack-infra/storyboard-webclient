@@ -360,52 +360,52 @@
             <div ng-repeat="event in events">
                 <timeline-event tl_event={{event}} />
             </div>
-
-            <form class="discussion-comment-form comment"
-                  id="commentForm"
-                  name="commentForm" ng-show="isLoggedIn">
-                <div class="discussion-comment" ng-if="previewingComment">
-                    <p class="discussion-comment-author">
-                        Previewing Comment
-                    </p>
+            <div class="discussion-comment-important" ng-if="previewingComment">
+                <p class="discussion-comment-icon-warning">
+                    <i class="fa fa-comment"></i>
+                </p>
+                <div class="discussion-event-complex">
+                    <div class="discussion-event-header">
+                        Comment Preview
+                    </div>
 
                     <insert-markdown ng-show="newComment.content"
                                      content="newComment.content">
                     </insert-markdown>
                 </div>
-                <div class="form-group">
-                    <textarea id="comment"
-                              placeholder="Enter your comment here"
-                              class="form-control"
-                              msd-elastic
-                              rows="3"
-                              required
-                              ng-disabled="isSavingComment"
-                              ng-shift-enter="addComment()"
-                              ng-model="newComment.content">
-                    </textarea>
-                </div>
-                <div class="form-group clearfix">
-                    <button type="button"
-                            class="btn btn-primary pull-right"
-                            ng-click="addComment()"
-                            ng-disabled="!commentForm.$valid || isSavingComment">
-                        Comment
-                    </button>
-                    <button type="button"
-                            class="btn btn-primary"
-                            ng-click="togglePreview()"
-                            ng-disabled="!commentForm.$valid || isSavingComment">
-                        Toggle Preview
-                    </button>
-                    <a class="btn btn-link" target="_blank"
-                       href="http://daringfireball.net/projects/markdown/basics">
-                        Markdown formatting is supported
-                    </a>
-                </div>
-            </form>
-            <hr />
+            </div>
         </div>
+        <form class="discussion-comment-form comment"
+              id="commentForm"
+              name="commentForm" ng-show="isLoggedIn">
+            <div class="form-group">
+                <textarea id="comment"
+                          placeholder="Enter your comment here"
+                          class="form-control"
+                          msd-elastic
+                          rows="3"
+                          required
+                          ng-disabled="isSavingComment"
+                          ng-shift-enter="addComment()"
+                          ng-model="newComment.content">
+                </textarea>
+            </div>
+            <div class="form-group clearfix">
+                <button type="button"
+                        class="btn btn-primary pull-right"
+                        ng-click="addComment()"
+                        ng-disabled="!commentForm.$valid || isSavingComment">
+                    Comment
+                </button>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-click="togglePreview()"
+                        ng-disabled="!commentForm.$valid || isSavingComment">
+                    Toggle Preview
+                </button>
+            </div>
+        </form>
+        <hr />
     </div>
 </script>
 

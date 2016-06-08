@@ -1,6 +1,9 @@
-<div class="discussion-comment" ng-if="display_events_story_details_changed">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
-        <span>{{ event.author.full_name }} updated this story.</span>
+<div class="discussion-comment text-muted" ng-if="display_events_story_details_changed">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-sb-story"></i>
+    </p>
+    <p class="discussion-event">
+        <span>{{ event.author.full_name }} updated this story on </span>
+        <span time-moment eventdate="event.created_at" no-time-ago="true"></span>
     </p>
 </div>
