@@ -1,7 +1,10 @@
-<div class="discussion-comment" ng-if="display_events_task_status_changed">
-    <p class="discussion-comment-author">
-        <span time-moment eventdate="event.created_at" class="pull-right"></span>
+<div class="discussion-comment text-muted" ng-if="display_events_task_status_changed">
+    <p class="discussion-comment-icon">
+        <i class="fa fa-sb-task"></i>
+    </p>
+    <p class="discussion-event">
         <span>{{event.author.full_name}} updated "{{ event.event_info.task_title }}" status:
-        {{ event.event_info.old_status }} ==> {{ event.event_info.new_status }}.</span>
+        {{ event.event_info.old_status }} ==> {{ event.event_info.new_status }} on </span>
+        <span time-moment eventdate="event.created_at"></span>
     </p>
 </div>
