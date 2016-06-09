@@ -341,16 +341,6 @@
     <div>
         <h4>Events Timeline and Comments
             <a href ng-click="updateFilter()" ng-show="isLoggedIn"><i class="fa fa-gear"></i></a>
-            <result-set-pager
-                    class="text-muted pull-right"
-                    total="searchTotal"
-                    offset="searchOffset"
-                    limit="searchLimit"
-                    on-next-page="nextPage()"
-                    on-previous-page="previousPage()"
-                    on-page-size="updatePageSize(pageSize)"
-                    minimal-pager="false"
-                    ></result-set-pager>
         </h4>
         <div class="discussion">
             <div class="alert alert-warning"
