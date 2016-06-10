@@ -416,7 +416,7 @@
         <input-inline
                 ng-model="task.title"
                 enabled="isLoggedIn"
-                on-change="updateTask(task)"
+                on-change="updateTask(task, 'title', task.title)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 maxlength="255"
@@ -438,7 +438,7 @@
         <project-typeahead
                 ng-model="task.project_id"
                 enabled="isLoggedIn"
-                on-change="updateTask(task)"
+                on-change="updateTask(task, 'project_id', task.project_id)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 as-inline="true"
@@ -448,7 +448,7 @@
         <user-typeahead
                 ng-model="task.assignee_id"
                 enabled="isLoggedIn"
-                on-change="updateTask(task)"
+                on-change="updateTask(task, 'assignee_id', task.assignee_id)"
                 empty-prompt="Click to assign."
                 empty-disabled-prompt="Not assigned."
                 as-inline="true"
