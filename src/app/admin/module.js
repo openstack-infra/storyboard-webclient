@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Codethink Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -60,10 +61,22 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
             })
             .state('sb.admin.team', {
                 url: '/team',
-                templateUrl: 'app/admin/template/team.html'
+                templateUrl: 'app/admin/template/team.html',
+                controller: 'TeamAdminController'
             })
             .state('sb.admin.team_edit', {
                 url: '/team/:id',
-                templateUrl: 'app/admin/template/team_edit.html'
+                templateUrl: 'app/admin/template/team_edit.html',
+                controller: 'TeamEditController',
+                resolve: {
+                    team: function ($stateParams, Team) {
+                        return Team.get({team_id: $stateParams.id}).$promise;
+                    },
+                    members: function($stateParams, Team) {
+                        return Team.UsersController.get({
+                            team_id: $stateParams.id
+                        }).$promise;
+                    }
+                }
             });
     });
