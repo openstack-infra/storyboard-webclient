@@ -188,23 +188,22 @@ angular.module('sb.util').directive('subscribe',
 
                     $scope.resolving = true;
 
-                    cuPromise.then(
-                        function () {
-                            angular.forEach($scope.subscriptions,
-                                function(subscription) {
-                                    if ($scope.resourceId ===
-                                    subscription.target_id) {
-                                        setSubscription(subscription);
-                                    }
-                                }
-                            );
-                            $scope.resolving = false;
-                        }
-                    );
+                    cuPromise.then(function () {
+                        angular.forEach($scope.subscriptions, function(sub) {
+                            if ($scope.resourceId === sub.target_id) {
+                                setSubscription(sub);
+                            }
+                        });
+                        $scope.resolving = false;
+                    });
                 }
 
                 // On initialization, resolve.
-                $scope.subscriptions.$promise.then(resolveSubsList);
+                if (!!$scope.subscriptions) {
+                    $scope.subscriptions.$promise.then(resolveSubsList);
+                } else {
+                    resolveSubscription();
+                }
             }
         };
     });
