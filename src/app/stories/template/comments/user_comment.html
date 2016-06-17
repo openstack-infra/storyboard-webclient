@@ -1,22 +1,27 @@
-<div class="discussion-comment" ng-if="display_events_user_comment">
-    <p class="discussion-comment-author">
+<div class="discussion-comment-important" ng-if="display_events_user_comment">
+    <p class="discussion-comment-icon-primary">
+        <i class="fa fa-comment"></i>
+    </p>
+    <div class="discussion-event-complex">
+        <div class="discussion-event-header">
         {{ event.author.full_name }}
         <span class="pull-right">
-            <span time-moment eventdate="event.created_at"></span>
+            <span time-moment eventdate="event.created_at" no-time-ago="true"></span>
             &nbsp;
             <button class="btn btn-default btn-xs" ng-click="quote(event)" ng-show="isLoggedIn"
                     title="Quote">
                 <i class="fa fa-quote-left"></i>
             </button>
         </span>
-    </p>
+        </div>
+        <insert-markdown class="clearfix" ng-show="event.comment.content"
+                         content="event.comment.content">
+        </insert-markdown>
 
-    <insert-markdown ng-show="event.comment.content"
-       content="event.comment.content">
-    </insert-markdown>
-
-    <p><em ng-hide="event.comment.content"
-           class="text-muted">
-        The author left a blank comment.
-    </em></p>
+        <p ng-hide="event.comment.content">
+            <em class="text-muted">
+                The author left a blank comment.
+            </em>
+        </p>
+    </div>
 </div>

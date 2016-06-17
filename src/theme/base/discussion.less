@@ -18,6 +18,8 @@
  * Discussion styles.
  */
 .discussion {
+    position: relative;
+
     .discussion-comment-none {
         border-top: 1px solid @table-border-color;
         border-bottom: 1px solid @table-border-color;
@@ -26,16 +28,102 @@
     }
 
     .discussion-comment {
-        .discussion-comment-author {
-            border-top: 1px solid @table-border-color;
+        vertical-align: middle !important;
+        margin-left: 20px;
+        margin-bottom: 5px;
+
+        .discussion-event-header {
+            border-bottom: 1px solid @table-border-color;
             background-color: @gray-lighter;
             padding: @table-condensed-cell-padding;
         }
 
-        > insert-markdown > div, > p {
-            padding: @table-cell-padding;
-            padding-bottom: 0px;
-            margin: 0 10px;
+        .discussion-event {
+            border: 1px solid @table-border-color;
+            border-radius: 5px;
+            padding: 2px 5px 2px 5px;
+            display: inline-block;
+            margin: 0;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 5px;
+                left: -15px;
+                height: 0;
+                width: 0;
+                border: 7px solid transparent;
+                border-right: 7px solid @table-border-color;
+            }
+        }
+
+        .discussion-event-important {
+            .discussion-event;
+            background-color: @gray-lighter;
+            padding: @table-condensed-cell-padding;
+
+            &::before {
+                top: 8px;
+            }
+        }
+
+        .discussion-event-complex {
+            .discussion-event-important;
+            padding: 0;
+            left: 32px;
+            top: -36px;
+            width: calc(100% - 32px);
+            display: block;
+        }
+
+        .discussion-comment-icon-primary {
+            display: inline-block;
+            position: relative;
+            top: 0px;
+            width: 40px;
+            height: 40px;
+            z-index: 999;
+            vertical-align: middle !important;
+            background-color: @brand-primary;
+            color: @navbar-default-brand-color;
+            border-radius: 20px;
+            border: 3px solid @table-border-color;
+            margin-left: -20px;
+            & i {
+                position: relative;
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                margin-left: -10px;
+                text-align: center;
+            }
+        }
+
+        .discussion-comment-icon-warning {
+            .discussion-comment-icon-primary;
+            background-color: #f0ad4e;
+        }
+
+        .discussion-comment-icon {
+            .discussion-comment-icon-primary;
+            width: 32px;
+            height: 32px;
+            border: 2px solid @table-border-color;
+            background-color: @white;
+            margin: 0 14px 0 -16px;
+            padding: 5px;
+            & i {
+                .text-muted;
+            }
+        }
+
+        & insert-markdown > div {
+            padding: 8px 10px 1px 10px;
+            margin: 0;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            background-color: @white;
 
             & blockquote {
                 margin: 0 0 10px;
@@ -43,11 +131,34 @@
                 color: #555;
             }
         }
+
+        > p {
+            padding: @table-cell-padding;
+            padding-bottom: 0px;
+            margin: 0 10px;
+        }
     }
 
-    .discussion-comment-form {
-        &:last-child {
-            margin-top: 1em;
-        }
+    .discussion-comment-important {
+        .discussion-comment;
+        margin-bottom: -30px;
+     }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 18px;
+        height: 100%;
+        width: 4px;
+        background: @gray-lighter;
+    }
+}
+
+.discussion-comment-form {
+    position: relative;
+    z-index: 999;
+    &:last-child {
+        margin-top: 1em;
     }
 }
