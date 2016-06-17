@@ -28,7 +28,8 @@ angular.module('sb.util').directive('timeMoment',
             scope: {
                 eventdate: '=',
                 shortDate: '=',
-                formatString: '='
+                formatString: '=',
+                noTimeAgo: '@'
             },
             controller: function ($scope) {
 
@@ -36,8 +37,12 @@ angular.module('sb.util').directive('timeMoment',
                  * Helper method to update the needs_timeago propery
                  */
                 function updateTimeAgo() {
-                    $scope.needsTimeAgo =
-                        DateUtil.needsTimeAgo($scope.eventdate);
+                    if (!$scope.noTimeAgo) {
+                        $scope.needsTimeAgo =
+                            DateUtil.needsTimeAgo($scope.eventdate);
+                    } else {
+                        $scope.needsTimeAgo = false;
+                    }
                 }
 
                 var unwatch = $scope.$watch(updateTimeAgo);
