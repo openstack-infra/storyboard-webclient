@@ -18,22 +18,26 @@
 /**
  * This criteria resolver may be injected by individual resources that accept a
  * Tags search parameter.
+ *
+ * @see ResourceFactory
  */
 angular.module('sb.services').factory('Tags',
-    function (Criteria, $q) {
+    function (ResourceFactory) {
         'use strict';
 
-        /**
-         * Return a Tags search parameter constructed from the passed search
-         * string.
-         */
+        var resource = ResourceFactory.build(
+            '/tags/:id',
+            '/tags/search',
+            {id: '@id'}
+        );
 
-        return {
-            criteriaResolver: function (searchString) {
-                var deferred = $q.defer();
-                deferred.resolve([Criteria.create('Tags', searchString)]);
+        ResourceFactory.applySearch(
+            'Tags',
+            resource,
+            'name',
+            {},
+            true // Use the name field for browse criteria, instead of the ID
+        );
 
-                return deferred.promise;
-            }
-        };
+        return resource;
     });
