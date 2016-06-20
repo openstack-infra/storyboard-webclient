@@ -75,6 +75,12 @@ angular.module('sb.story').controller('StoryDetailController',
             params.sort_field = 'id';
             params.sort_dir = 'asc';
             params.story_id = $scope.story.id;
+            params.event_type = TimelineEventTypes.map(function(type) {
+                var pref_name = 'display_events_' + type;
+                if ($scope[pref_name]) {
+                    return type;
+                }
+            }).filter(function(item) { return item; });
 
             TimelineEvent.browse(params,
                 function (result, headers) {
