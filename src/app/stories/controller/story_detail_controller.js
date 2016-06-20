@@ -328,13 +328,14 @@ angular.module('sb.story').controller('StoryDetailController',
          * User typeahead search method.
          */
         $scope.searchUsers = function (value, array) {
+            var userIds = array.map(function(user){return user.id;});
             var deferred = $q.defer();
 
             User.browse({full_name: value, limit: 10},
                 function(searchResults) {
                     var results = [];
                     angular.forEach(searchResults, function(result) {
-                        if (array.indexOf(result.id) === -1) {
+                        if (userIds.indexOf(result.id) === -1) {
                             results.push(result);
                         }
                     });
