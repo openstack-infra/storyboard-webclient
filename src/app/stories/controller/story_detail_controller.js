@@ -30,6 +30,7 @@ angular.module('sb.story').controller('StoryDetailController',
         // Set the yOffset to 50 because the fixed bootstrap navbar
         // is 50px high.
         $anchorScroll.yOffset = 50;
+        $scope.filterMode = 'advanced';
 
         /**
          * The story, resolved in the state.
@@ -63,6 +64,26 @@ angular.module('sb.story').controller('StoryDetailController',
             pageSize = Preference.get('story_detail_page_size');
             $scope.loadEvents();
         }
+
+        $scope.filterComments = function() {
+            $scope.filterMode = 'comments';
+            angular.forEach(TimelineEventTypes, function(type) {
+                var pref_name = 'display_events_' + type;
+                $scope[pref_name] = false;
+            });
+            $scope.display_events_user_comment = true;
+            $scope.display_events_story_created = true;
+            $scope.loadEvents();
+        };
+
+        $scope.filterAll = function() {
+            $scope.filterMode = 'all';
+            angular.forEach(TimelineEventTypes, function(type) {
+                var pref_name = 'display_events_' + type;
+                $scope[pref_name] = true;
+            });
+            $scope.loadEvents();
+        };
 
         $scope.isSearching = false;
 
@@ -265,6 +286,7 @@ angular.module('sb.story').controller('StoryDetailController',
                 controller: 'TimelineFilterController'
             });
 
+            $scope.filterMode = 'advanced';
             modalInstance.result.then(reloadPagePreferences);
             $scope.searchLimit = Preference.get('story_detail_page_size');
         };

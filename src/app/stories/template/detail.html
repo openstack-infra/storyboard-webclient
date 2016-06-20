@@ -339,10 +339,30 @@
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/discussion.html">
     <div>
-        <h4>Events Timeline and Comments
-            <a href ng-click="updateFilter()" ng-show="isLoggedIn"><i class="fa fa-gear"></i></a>
-        </h4>
-        <div class="discussion">
+        <div class="clearfix">
+            <span class="btn-group pull-right">
+                <button class="btn btn-default" ng-click="filterComments()"
+                        type="button" ng-show="isLoggedIn"
+                        ng-class="{'btn-primary': filterMode == 'comments'}">
+                    Comments
+                </button>
+                <button class="btn btn-default" ng-click="filterAll()"
+                        type="button" ng-show="isLoggedIn"
+                        ng-class="{'btn-primary': filterMode == 'all'}">
+                    All Events
+                </button>
+                <button class="btn btn-default" ng-click="updateFilter()"
+                        type="button" ng-show="isLoggedIn"
+                        ng-class="{'btn-primary': filterMode == 'advanced'}">
+                    Advanced...
+                </button>
+            </span>
+            <h4>Events Timeline and Comments</h4>
+        </div>
+        <div class="discussion-overlay text-center" ng-show="isSearching">
+            <i class="fa fa-lg fa-refresh fa-spin text-muted"></i>
+        </div>
+        <div class="discussion" ng-class="{'discussion-faded': isSearching}">
             <div class="alert alert-warning"
                  ng-show="comments.length == 0">
                 The discussion hasn't started yet
