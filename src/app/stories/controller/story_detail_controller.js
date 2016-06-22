@@ -22,7 +22,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SessionModalService, moment, $document,
-              $anchorScroll, $timeout, $location) {
+              $anchorScroll, $timeout, $location, currentUser) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -300,6 +300,16 @@ angular.module('sb.story').controller('StoryDetailController',
          */
         $scope.isLinked = function(event) {
             if ($location.hash() === 'comment-' + event.comment.id) {
+                 return true;
+            }
+            return false;
+        };
+
+        /**
+         * Determine if the current user is the author of a comment.
+         */
+        $scope.isAuthor = function(event) {
+            if (currentUser.id === event.author_id) {
                 return true;
             }
             return false;
@@ -330,6 +340,27 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.newComment = new Comment({});
                     resetSavingFlag();
                     $scope.loadEvents();
+                }
+            );
+        };
+
+        $scope.edit = function(event) {
+            event.editing = true;
+            event.comment.edited = angular.copy(event.comment.content);
+        }
+
+        $scope.editComment = function(event) {
+            event.isUpdating = true;
+            Comment.update(
+                {
+                    id: story.id,
+                    comment_id: event.comment.id,
+                    content: event.comment.edited
+                },
+                function(result) {
+                    event.comment.content = result.content;
+                    event.isUpdating = false;
+                    event.editing = false;
                 }
             );
         };
