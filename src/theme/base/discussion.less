@@ -30,7 +30,7 @@
     .discussion-comment {
         vertical-align: middle !important;
         margin-left: 20px;
-        margin-bottom: 5px;
+        margin-bottom: -22px;
 
         .discussion-event-header {
             border-bottom: 1px solid @table-border-color;
@@ -45,6 +45,9 @@
             display: inline-block;
             margin: 0;
             position: relative;
+            left: 32px;
+            width: calc(100% - 32px);
+            top: -28px;
 
             &::before {
                 content: '';
@@ -62,6 +65,7 @@
             .discussion-event;
             background-color: @gray-lighter;
             padding: @table-condensed-cell-padding;
+            top: -35px;
 
             &::before {
                 top: 8px;
