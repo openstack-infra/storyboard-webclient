@@ -113,7 +113,7 @@ angular.module('sb.services')
              * @param searchParameters The search parameters to apply.
              */
             applySearch: function (resourceName, resource, nameField,
-                                   searchParameters) {
+                                   searchParameters, useNameField) {
 
                 // List of criteria resolvers which we're building.
                 var criteriaResolvers = [];
@@ -162,7 +162,13 @@ angular.module('sb.services')
                                     // Transform the results to criteria tags.
                                     var criteriaResults = [];
                                     result.forEach(function (item) {
-                                        if (item.hasOwnProperty('id')) {
+                                        if (useNameField) {
+                                            criteriaResults.push(
+                                                Criteria.create(resourceName,
+                                                    item[nameField],
+                                                    item[nameField])
+                                            );
+                                        } else if (item.hasOwnProperty('id')) {
                                             criteriaResults.push(
                                                 Criteria.create(resourceName,
                                                     item.id,
