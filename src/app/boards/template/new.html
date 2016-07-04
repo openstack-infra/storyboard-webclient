@@ -27,7 +27,7 @@
                          ng-class="{'has-error': boardForm.title.$invalid,
                                     'has-success': !boardForm.title.$invalid}">
                         <label for="title" class="col-sm-2 control-label">
-                            Title
+                            Title*
                         </label>
                         <div class="col-sm-10">
                             <input id="title"
@@ -40,21 +40,7 @@
                                    maxlength="100"
                                    placeholder="Board title"
                                    ng-disabled="isSaving">
-                            <span class="form-control-feedback"
-                                  ng-show="boardForm.title.$invalid">
-                                <i class="fa fa-times fa-lg"></i>
-                            </span>
-                            <span class="form-control-feedback"
-                                  ng-show="!boardForm.title.$invalid">
-                                <i class="fa fa-check fa-lg"></i>
-                            </span>
 
-                            <div class="help-block text-danger"
-                                 ng-show="boardForm.title.$invalid">
-                                 <span ng-show="boardForm.title.$error.required">
-                                     A board title is required.
-                                 </span>
-                            </div>
                         </div>
                     </div>
                     <hr ng-show="preview">
@@ -133,7 +119,10 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12 text-right">
+            <div class="col-xs-6 text-right">
+                <span> <i>* Denotes a required field</i> </span>
+            </div>
+            <div class="col-xs-6 text-right">
                 <div class="btn" ng-show="isSaving">
                     <i class="fa fa-spinner fa-lg fa-spin"></i>
                 </div>

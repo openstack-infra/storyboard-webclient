@@ -28,7 +28,7 @@
                          ng-class="{'has-error': projectForm.name.$invalid,
                                     'has-success': !projectForm.name.$invalid}">
                         <label for="name" class="col-sm-2 control-label">
-                            Name
+                            Name*
                         </label>
 
                         <div class="col-sm-10">
@@ -42,31 +42,6 @@
                                    maxlength="50"
                                    ng-minlength="3"
                                    placeholder="Project Name">
-                            <span class="form-control-feedback"
-                                  ng-show="projectForm.name.$invalid">
-                                <i class="fa fa-times fa-lg"></i>
-                            </span>
-                            <span class="form-control-feedback"
-                                  ng-show="!projectForm.name.$invalid">
-                                <i class="fa fa-check fa-lg"></i>
-                            </span>
-
-                            <div class="help-block text-danger"
-                                 ng-show="projectForm.name.$invalid">
-                                <span ng-show="projectForm.name.$error.required">
-                                    A project name is required.
-                                </span>
-                                <span ng-show="projectForm.name.$error.pattern">
-                                    A project name must begin with a letter, and
-                                    may only contain letters, numbers, forward
-                                    slashes, periods, and dashes. It should not
-                                    start or end with a separator and must not
-                                    contain two or more sequential separators.
-                                </span>
-                                <span ng-show="projectForm.name.$error.minlength">
-                                    A project name must have at least 3 characters.
-                                </span>
-                            </div>
                         </div>
                     </div>
                     <hr ng-show="preview">
@@ -82,7 +57,7 @@
                                     'has-success': !projectFrom.description.$invalid}">
                         <label for="description"
                                class="col-sm-2 control-label">
-                            Description
+                            Description*
                         </label>
 
                         <div class="col-sm-10">
@@ -94,27 +69,15 @@
                                       required
                                       placeholder="A brief project description">
                             </textarea>
-                            <span class="form-control-feedback"
-                                  ng-show="projectForm.description.$invalid">
-                                <i class="fa fa-times fa-lg"></i>
-                            </span>
-                            <span class="form-control-feedback"
-                                  ng-show="!projectForm.description.$invalid">
-                                <i class="fa fa-check fa-lg"></i>
-                            </span>
-
-                            <div class="help-block text-danger"
-                                 ng-show="projectForm.description.$invalid">
-                                <span ng-show="projectForm.description.$error.required">
-                                    A project description is required.
-                                </span>
-                            </div>
                         </div>
                     </div>
                </form>
             </div>
             <div class="row">
-                <div class="col-xs-12 text-right">
+            <div class="col-xs-5 text-right">
+                <span> <i>* Denotes a required field</i> </span>
+            </div>
+                <div class="col-xs-7 text-right">
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="button"
