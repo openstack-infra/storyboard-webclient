@@ -83,7 +83,7 @@ angular.module('sb.story').controller('StoryDetailController',
             }).filter(function(item) { return item; });
 
             TimelineEvent.browse(params,
-                function (result, headers) {
+                function (result) {
                     var eventResults = [];
                     result.forEach(function (item) {
                         item.author = User.get({id: item.author_id});
