@@ -1,0 +1,34 @@
+<div class="discussion-comment"
+     ng-controller="WorklistEventController">
+    <p class="discussion-comment-author">
+        <p>
+            <span time-moment eventdate="evt.created_at" class="pull-right"></span>
+            <span>
+                {{author.full_name}} created a permission for
+                <a href="#!/worklist/{{evt.event_info.worklist_id}}">
+                    {{ worklist.title }}
+                </a>.
+            </span>
+        </p>
+        <p>
+            <strong ng-show="evt.event_info.codename == 'move_items' ||
+                             evt.event_info.codename == 'edit_worklist'">
+                {{ evt.event_info.codename == 'move_items' ? 'Users' : 'Owners' }}
+            </strong>
+            <strong ng-hide="evt.event_info.codename == 'move_items' ||
+                             evt.event_info.codename == 'edit_worklist'">
+                {{ evt.event_info.codename }}
+            </strong>
+            <div ng-if="evt.event_info.users.length > 0">
+                <ul>
+                    <li ng-repeat="user in evt.event_info.users">
+                        <span ng-repeat="key in user">
+                            {{ key }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </p>
+        </p>
+    </p>
+</div>

@@ -238,4 +238,7 @@ angular.module('sb.services').provider('Preference',
         // Let our preference provider know about email preferences.
         PreferenceProvider.addPreference('plugin_email_enable', 'false');
 
+        // Let our preference provider know about notifications preferences.
+        PreferenceProvider.addPreference(
+            'receive_notifications_worklists', false);
     });

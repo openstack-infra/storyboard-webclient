@@ -32,4 +32,22 @@
     <div ng-switch-when="user_comment">
         <div ng-include src="'app/dashboard/template/event/user_comment.html'"></div>
     </div>
+    <div ng-switch-when="worklist_created">
+        <div ng-include src="'app/dashboard/template/event/worklist_created.html'"></div>
+    </div>
+    <div ng-switch-when="worklist_details_changed">
+        <div ng-include src="'app/dashboard/template/event/worklist_details_changed.html'"></div>
+    </div>
+    <div ng-switch-when="worklist_contents_changed">
+        <div ng-include src="'app/dashboard/template/event/worklist_contents_changed.html'"></div>
+    </div>
+    <div ng-switch-when="worklist_filters_changed">
+        <div ng-include src="'app/dashboard/template/event/worklist_filters_changed.html'"></div>
+    </div>
+    <div ng-switch-when="worklist_permission_created">
+        <div ng-include src="'app/dashboard/template/event/worklist_permission_created.html'"></div>
+    </div>
+    <div ng-switch-when="worklist_permissions_changed">
+        <div ng-include src="'app/dashboard/template/event/worklist_permissions_changed.html'"></div>
+    </div>
 </div>

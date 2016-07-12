@@ -173,6 +173,20 @@
                            ng-model="preferences.plugin_email_enable">
                     <label for="enableEmails">Enable notification emails</label>
                 </div>
+
+                <p class="help-block">
+                    Would you like to receive notifications from
+                    worklists you are subscribed to?
+                </p>
+
+                <div>
+                    <input type="checkbox" name="worklistNotificationSettings"
+                           id="worklistNotifications"
+                           ng-true-value="'true'"
+                           ng-false-value="'false'"
+                           ng-model="preferences.receive_notifications_worklists">
+                    <label for="worklistNotifications">Enable worklist notifications</label>
+                </div>
             </div>
         </div>
     </div>
