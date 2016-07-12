@@ -1,0 +1,96 @@
+<div class="discussion-comment"
+     ng-controller="WorklistEventController">
+    <p class="discussion-comment-author">
+        <p>
+            <span time-moment eventdate="evt.created_at" class="pull-right"></span>
+            <span>
+                {{author.full_name}}
+                <span ng-show="!!evt.event_info.added">
+                    added a card to
+                </span>
+                <span ng-show="!!evt.event_info.removed">
+                    removed a card from
+                </span>
+                <span ng-show="!!evt.event_info.updated">
+                    updated a card in
+                </span>
+                <a href="#!/worklist/{{evt.event_info.worklist_id}}">
+                    {{ worklist.title }}
+                </a>.
+            </span>
+        </p>
+        <div ng-show="!!evt.event_info.added">
+            <div class="kanban-card">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <i class="fa fa-sb-story"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        {{ evt.event_info.added.item_title }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        Position: {{ evt.event_info.added.position + 1 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!!evt.event_info.removed">
+            <div class="kanban-card">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <i class="fa fa-sb-story"></i>
+                    </div>
+                    <div class="col-xs-10">
+                        {{ evt.event_info.removed.item_title }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!!evt.event_info.updated">
+            <div class="row">
+                <div class="col-xs-6">
+                    <p>
+                        <strong>Before</strong>
+                    </p>
+                    <div class="kanban-card">
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <i class="fa fa-sb-story"></i>
+                            </div>
+                            <div class="col-xs-10">
+                                {{ evt.event_info.updated.old.item_title }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                Position: {{ evt.event_info.updated.old.position + 1 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <p>
+                        <strong>After</strong>
+                    </p>
+                    <div class="kanban-card">
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <i class="fa fa-sb-story"></i>
+                            </div>
+                            <div class="col-xs-10">
+                                {{ evt.event_info.updated.new.item_title }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                Position: {{ evt.event_info.updated.new.position + 1 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p>
+</div>

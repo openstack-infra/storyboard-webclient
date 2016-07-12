@@ -1,0 +1,69 @@
+<div class="discussion-comment"
+     ng-controller="WorklistEventController">
+    <p class="discussion-comment-author">
+        <p>
+            <span time-moment eventdate="evt.created_at" class="pull-right"></span>
+            <span>
+                {{author.full_name}} updated the filters of
+                <a href="#!/worklist/{{evt.event_info.worklist_id}}">
+                    {{ worklist.title }}
+                </a>.
+            </span>
+        </p>
+        <p ng-show="!!evt.event_info.added">
+            <strong>Added:</strong> 
+            {{ evt.event_info.added.type == 'Story' ? 'Stories' : 'Tasks' }}
+            where
+            <span ng-repeat="criterion in evt.event_info.added.criteria">
+                {{ criterion.field | capitalize }}
+                {{ criterion.negative ? 'is not' : 'is' }}
+                {{ criterion.title }}
+                <span ng-hide="evt.event_info.added.criteria.indexOf(criterion)
+                               == evt.event_info.added.criteria.length - 1">
+                    and
+                </span>
+            </span>
+        </p>
+        <p ng-show="!!evt.event_info.removed">
+            <strong>Removed:</strong> 
+            {{ evt.event_info.removed.type == 'Story' ? 'Stories' : 'Tasks' }}
+            where
+            <span ng-repeat="criterion in evt.event_info.removed.criteria">
+                {{ criterion.field | capitalize }}
+                {{ criterion.negative ? 'is not' : 'is' }}
+                {{ criterion.title }}
+                <span ng-hide="evt.event_info.removed.criteria.indexOf(criterion)
+                               == evt.event_info.removed.criteria.length - 1">
+                    and
+                </span>
+            </span>
+        </p>
+        <p ng-show="!!evt.event_info.updated">
+            <strong>Updated:</strong>
+            <br>
+            From: {{ evt.event_info.updated.old.type == 'Story' ? 'Stories' : 'Tasks' }}
+            where
+            <span ng-repeat="criterion in evt.event_info.updated.old.criteria">
+                {{ criterion.field | capitalize }}
+                {{ criterion.negative ? 'is not' : 'is' }}
+                {{ criterion.title }}
+                <span ng-hide="evt.event_info.updated.old.criteria.indexOf(criterion)
+                               == evt.event_info.updated.old.criteria.length - 1">
+                    and
+                </span>
+            </span>
+            <br>
+            To: {{ evt.event_info.updated.new.type == 'Story' ? 'Stories' : 'Tasks' }}
+            where
+            <span ng-repeat="criterion in evt.event_info.updated.new.criteria">
+                {{ criterion.field | capitalize }}
+                {{ criterion.negative ? 'is not' : 'is' }}
+                {{ criterion.title }}
+                <span ng-hide="evt.event_info.updated.new.criteria.indexOf(criterion)
+                               == evt.event_info.updated.new.criteria.length - 1">
+                    and
+                </span>
+            </span>
+        </p>
+    </p>
+</div>
