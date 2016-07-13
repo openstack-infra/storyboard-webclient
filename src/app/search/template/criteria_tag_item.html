@@ -78,6 +78,20 @@
             &times;
         </a>
     </div>
+    <div class="tag tag-info" ng-switch-when="Board">
+        <i class="fa fa-sb-task"></i> {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
+    <div class="tag tag-info" ng-switch-when="Worklist">
+        <i class="fa fa-sb-task"></i> {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
     <div class="tag tag-danger" ng-switch-default>
         <i class="fa fa-question"></i> {{tag.type}}: {{tag.value}}
         <a class="tag-remove"
