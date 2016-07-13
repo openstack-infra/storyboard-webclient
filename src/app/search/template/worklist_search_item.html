@@ -1,0 +1,18 @@
+<td>
+    <subscribe class="pull-right"
+               resource="worklist"
+               resource-id="worklist.id"
+               subscriptions="worklistSubscriptions">
+    </subscribe>
+    <p>
+        <a href="#!/worklist/{{worklist.id}}">
+            {{worklist.title}}
+        </a>
+    </p>
+    <small>
+        <span class="badge"
+              ng-class="{'badge-primary': worklist.items.length > 0}">
+                  {{worklist.items.length}}
+        </span> Items
+    </small>
+</td>
