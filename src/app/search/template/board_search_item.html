@@ -1,0 +1,15 @@
+<td>
+    <p>
+        <a href="#!/board/{{board.id}}">
+                                {{board.title}}
+        </a>
+    </p>
+    <small ng-repeat="lane in board.lanes"
+           ng-if="!lane.worklist.archived">
+        <span class="badge"
+              ng-class="{'badge-primary': lane.worklist.items.length > 0}">
+                            {{lane.worklist.items.length}}
+        </span> {{lane.worklist.title}}
+        &nbsp;
+    </small>
+</td>
