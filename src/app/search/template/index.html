@@ -282,5 +282,95 @@
             </table>
         </div>
     </div>
+    <div class="row"
+         ng-if="criteria.length > 0"
+         search-results
+         search-resource="Board"
+         search-criteria="criteria">
+        <div class="col-xs-12" ng-if="hasValidCriteria">
+            <hr/>
+        </div>
+        <div class="col-xs-2 text-center text-muted" ng-if="hasValidCriteria">
+            <span class="hidden-xs">
+                <i class="fa fa-3x fa-sb-task"></i>
+                <br/>
+                <small>Boards</small>
+            </span>
+            <i class="fa fa-2x fa-sb-task visible-xs"></i>
+        </div>
+        <div class="col-xs-10" ng-if="hasValidCriteria">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="searchResults.length != 0">
+                <tr ng-repeat="board in searchResults"
+                    ng-include="'app/search/template/board_search_item.html'">
+                </tr>
+                </tbody>
+
+                <tbody ng-if="hasValidCriteria &amp;&amp; searchResults.length == 0 &amp;&amp; !isSearching">
+                <td class="text-center text-muted">
+                    <em>No boards found.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="!hasValidCriteria">
+                <td class="text-center text-muted">
+                    <em>Your search criteria are not valid for this item.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="isSearching">
+                <td colspan="2">
+                    <small class="fa fa-spin fa-refresh text-muted">
+                    </small>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row"
+         ng-if="criteria.length > 0"
+         search-results
+         search-resource="Worklist"
+         search-criteria="criteria">
+        <div class="col-xs-12" ng-if="hasValidCriteria">
+            <hr/>
+        </div>
+        <div class="col-xs-2 text-center text-muted" ng-if="hasValidCriteria">
+            <span class="hidden-xs">
+                <i class="fa fa-3x fa-sb-task"></i>
+                <br/>
+                <small>Worklists</small>
+            </span>
+            <i class="fa fa-2x fa-sb-task visible-xs"></i>
+        </div>
+        <div class="col-xs-10" ng-if="hasValidCriteria">
+            <table class="table table-condensed table-striped table-clean">
+                <tbody ng-if="searchResults.length != 0">
+                <tr ng-repeat="worklist in searchResults"
+                    ng-include="'app/search/template/worklist_search_item.html'">
+                </tr>
+                </tbody>
+
+                <tbody ng-if="hasValidCriteria &amp;&amp; searchResults.length == 0 &amp;&amp; !isSearching">
+                <td class="text-center text-muted">
+                    <em>No worklists found.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="!hasValidCriteria">
+                <td class="text-center text-muted">
+                    <em>Your search criteria are not valid for this item.</em>
+                </td>
+                </tbody>
+
+                <tbody ng-if="isSearching">
+                <td colspan="2">
+                    <small class="fa fa-spin fa-refresh text-muted">
+                    </small>
+                </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <hr>
 </div>
