@@ -34,13 +34,15 @@
     }
 
     @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-        top: @error-container-margin-vertical;
+        position: fixed;
+        top: calc(@error-container-margin-vertical + @navbar-height);
         right: @error-container-margin-horizontal;
         width: @error-container-max-width;
     }
 
     @media (min-width: @screen-lg-min) {
-        top: @error-container-margin-vertical;
+        position: fixed;
+        top: calc(@error-container-margin-vertical + @navbar-height);
         right: @error-container-margin-horizontal;
         width: @error-container-max-width;
     }
