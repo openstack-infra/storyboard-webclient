@@ -28,7 +28,8 @@ angular.module('sb.services').factory('Worklist',
             '/worklists/:id',
             '/worklists/search',
             {id: '@id'},
-            false, true
+            false, true //turn off 'cache search results', and turn on 'disable
+//                        cached GETs', respectively
         );
 
         var items_signature = {
