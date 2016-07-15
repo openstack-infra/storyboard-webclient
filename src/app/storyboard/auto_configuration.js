@@ -43,9 +43,7 @@ angular.element(document)
             },
             function () {
                 $log.warn('Cannot load ./config.json, using defaults.');
-                initializeApplication({
-                    enableEditableComments: false
-                });
+                initializeApplication({});
             }
         );
     }

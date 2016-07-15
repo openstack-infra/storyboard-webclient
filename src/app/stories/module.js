@@ -65,16 +65,6 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                         return Task.browse({
                             story_id: $stateParams.storyId
                         }).$promise;
-                    },
-                    currentUser: function (CurrentUser, Session) {
-                        var user = Session.resolveSessionState()
-                            .then(function() {
-                                if (Session.isLoggedIn()) {
-                                    return CurrentUser.resolve();
-                                }
-                                return {};
-                            });
-                        return user;
                     }
                 }
             });
