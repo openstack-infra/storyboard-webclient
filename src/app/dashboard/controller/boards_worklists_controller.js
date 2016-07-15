@@ -18,7 +18,7 @@
  * A controller that manages the dashboard for worklists and boards.
  */
 angular.module('sb.dashboard').controller('BoardsWorklistsController',
-    function ($scope, currentUser, Worklist, Board) {
+    function ($scope, currentUser, Worklist, Board, SubscriptionList) {
         'use strict';
 
         var params = {user_id: currentUser.id};
@@ -36,4 +36,7 @@ angular.module('sb.dashboard').controller('BoardsWorklistsController',
             $scope.loadingWorklists = false;
             $scope.worklists = worklists;
         });
+
+        $scope.worklistSubscriptions = SubscriptionList.subsList(
+            'worklist', currentUser);
     });

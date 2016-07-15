@@ -19,7 +19,7 @@
  */
 angular.module('sb.dashboard').controller('DashboardSubscriptionsController',
     function ($scope, Story, Project, ProjectGroup, SubscriptionList,
-              currentUser) {
+              Worklist, currentUser) {
         'use strict';
 
         $scope.storySubscriptions = SubscriptionList.subsList(
@@ -35,4 +35,7 @@ angular.module('sb.dashboard').controller('DashboardSubscriptionsController',
         $scope.projectGroups = ProjectGroup.browse(
             {subscriber_id: currentUser.id});
 
+        $scope.worklistSubscriptions = SubscriptionList.subsList(
+            'worklist', currentUser);
+        $scope.worklists = Worklist.browse({subscriber_id: currentUser.id});
     });
