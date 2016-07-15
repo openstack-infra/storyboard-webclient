@@ -21,10 +21,10 @@
  * @see storyboardApiSignature
  */
 angular.module('sb.services').factory('Comment',
-    function (ResourceFactory, $resource, storyboardApiBase) {
+    function (ResourceFactory) {
         'use strict';
 
-        var resource = ResourceFactory.build(
+        return ResourceFactory.build(
             '/stories/:story_id/comments/:id',
             '/stories/0/search',
             {
@@ -32,22 +32,4 @@ angular.module('sb.services').factory('Comment',
                 story_id: '@story_id'
             }
         );
-
-        var historySignature = {
-            'get': {
-                method: 'GET',
-                isArray: true
-            }
-        };
-
-        resource.History = $resource(
-            storyboardApiBase + '/stories/:story_id/comments/:id/history',
-            {
-                id: '@id',
-                story_id: '@story_id'
-            },
-            historySignature
-        );
-
-        return resource;
     });

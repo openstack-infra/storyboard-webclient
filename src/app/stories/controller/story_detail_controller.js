@@ -22,15 +22,11 @@ angular.module('sb.story').controller('StoryDetailController',
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SessionModalService, moment, $document,
-              $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments) {
+              $anchorScroll, $timeout, $location) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
         var firstLoad = true;
-
-        $scope.enableEditableComments = enableEditableComments;
-
         // Set the yOffset to 50 because the fixed bootstrap navbar
         // is 50px high.
         $anchorScroll.yOffset = 50;
@@ -338,16 +334,6 @@ angular.module('sb.story').controller('StoryDetailController',
         };
 
         /**
-         * Determine if the current user is the author of a comment.
-         */
-        $scope.isAuthor = function(event) {
-            if (currentUser.id === event.author_id) {
-                return true;
-            }
-            return false;
-        };
-
-        /**
          * Add a comment
          */
         $scope.addComment = function () {
@@ -374,59 +360,6 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.loadEvents();
                 }
             );
-        };
-
-        $scope.edit = function(event) {
-            event.editing = true;
-            event.comment.edited = angular.copy(event.comment.content);
-        };
-
-        $scope.editComment = function(event) {
-            event.isUpdating = true;
-            Comment.update(
-                {
-                    id: story.id,
-                    comment_id: event.comment.id,
-                    content: event.comment.edited
-                },
-                function(result) {
-                    event.comment.content = result.content;
-                    event.isUpdating = false;
-                    event.editing = false;
-                },
-                function() {
-                    event.isUpdating = false;
-                    event.editing = false;
-                }
-            );
-        };
-
-        /**
-         * View comment history
-         */
-        $scope.showHistory = function (event) {
-            var modalInstance = $modal.open({
-                size: 'lg',
-                templateUrl: 'app/stories/template/comments/history.html',
-                controller: 'CommentHistoryController',
-                resolve: {
-                    history: function() {
-                        if (event.comment && event.comment.updated_at) {
-                            return Comment.History.get({
-                                story_id: story.id,
-                                id: event.comment.id
-                            });
-                        }
-                        return [];
-                    },
-                    comment: function() {
-                        return event.comment;
-                    }
-                }
-            });
-
-            // Return the modal's promise.
-            return modalInstance.result;
         };
 
         /**
