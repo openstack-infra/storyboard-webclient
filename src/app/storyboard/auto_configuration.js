@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Codethink Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -28,8 +29,17 @@ angular.element(document)
         var $log = initInjector.get('$log');
 
         function initializeApplication(config) {
+            var defaults = {};
+
+            // Set default config values
+            for (var key in defaults) {
+                if (!config.hasOwnProperty(key)) {
+                    config[key] = defaults[key];
+                }
+            }
+
             // Load everything we got into our module.
-            for (var key in config) {
+            for (key in config) {
                 $log.debug('Configuration: ' + key + ' -> ' + config[key]);
                 angular.module('storyboard').constant(key, config[key]);
             }
