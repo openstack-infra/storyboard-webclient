@@ -28,6 +28,15 @@ angular.element(document)
         var $log = initInjector.get('$log');
 
         function initializeApplication(config) {
+            var defaults = {};
+
+            // Set default config values
+            for (var key in defaults) {
+                if (!config.hasOwnProperty(key)) {
+                    config[key] = defaults[key];
+                }
+            }
+
             // Load everything we got into our module.
             for (var key in config) {
                 $log.debug('Configuration: ' + key + ' -> ' + config[key]);
