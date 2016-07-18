@@ -29,7 +29,9 @@ angular.element(document)
         var $log = initInjector.get('$log');
 
         function initializeApplication(config) {
-            var defaults = {};
+            var defaults = {
+                enableEditableComments: false
+            };
 
             // Set default config values
             for (var key in defaults) {
