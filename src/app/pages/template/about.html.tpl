@@ -19,8 +19,8 @@
         <div class="col-xs-12">
             <h1>StoryBoard</h1>
 
-            <p class="lead">A task tracking system for inter-related
-                projects.</p>
+            <p class="lead">A task tracking system for bugs and new features in
+                interrelated projects.</p>
 
         </div>
     </div>
@@ -32,9 +32,7 @@
             <p>It all begins with a <strong>story</strong>. A story is a
                 bug report or proposed feature. Stories are then further
                 split into <strong>tasks</strong>, which affect a given
-                project and branch. You can easily track backports of
-                bugs to a specific branch, or plan cross-project
-                features.</p>
+                <strong>project</strong> and <strong>branch</strong>.</p>
             <a href="#!/story" class="btn btn-primary">
                 Access Stories
                 <i class="fa fa-chevron-right"></i>
@@ -44,20 +42,22 @@
 
             <p>StoryBoard lets you efficiently track your work across a
                 large number of interrelated projects. Flexible
-                <strong>project groups</strong> lets you get the views
-                that makes the most sense to you.</p>
+                <strong>project groups</strong> let you group together the
+                projects you're interested in so you can find things quickly
+                and easily.</p>
             <a href="#!/project" class="btn btn-primary">
                 Access Projects
                 <i class="fa fa-chevron-right"></i>
             </a>
 
-            <h2>But why?</h2>
+            <h2>Why?</h2>
             <p>The OpenStack project has run into a number of limitations
 	        with existing tools; in particular, the workflow needed by
 	        a highly-distributed system that spans multiple projects
 	        is not well served.  This system uses the best concepts
 	        from existing tools and goes beyond to support the needs
 	        of the OpenStack project.</p>
+            <p>Use the link below to find some useful information.</p>
             <p><a href="http://git.openstack.org/cgit/openstack-infra/storyboard/tree/README.rst"
                target="_blank"
                class="btn btn-primary">
@@ -72,12 +72,19 @@
 
             <p>StoryBoard is open source! If you would like to contribute to
                 the development of StoryBoard, you must follow the steps in the
-                "If you're a developer, start here" section of this page:</p>
+                <strong>Developer's Guide</strong> here:</p>
 
-            <p><a href=" http://docs.openstack.org/infra/manual/developers.html"
+            <p><a href="http://docs.openstack.org/infra/manual/developers.html"
                   target="_blank">
                 http://docs.openstack.org/infra/manual/developers.html
             </a></p>
+
+            <p>Note that all bugs in StoryBoard's API should be filed in <a href="https://storyboard.openstack.org/#!/project/456"
+                 target="_blank">openstack-infra/storyboard</a> and all of
+               StoryBoard's UX bugs should be filed in
+              <a href="https://storyboard.openstack.org/#!/project/457"
+                 target="_blank">
+                openstack-infra/storyboard-webclient</a>.</p>
 
             <hr/>
             <h4>Attribution</h4>
