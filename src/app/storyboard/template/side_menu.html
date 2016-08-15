@@ -19,7 +19,9 @@
      role="navigation"
      ng-class="{'navbar-fixed-side-has-submenu': hasSubmenu}">
     <div class="nav-main">
-        <ul class="nav nav-pills nav-stacked text-center">
+        <ul class="nav nav-pills nav-stacked text-center" style="
+          position: relative;
+          ">
             <li active-path="^\/search.*">
                 <a href="#!/search">
                     <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
@@ -102,8 +104,8 @@
                 </a>
             </li>
         </ul>
-    </div>
     <div ui-view="submenu"
          class="nav-submenu">
+    </div>
     </div>
 </nav>
