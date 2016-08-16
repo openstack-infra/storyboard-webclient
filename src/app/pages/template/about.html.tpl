@@ -51,17 +51,16 @@
                 <i class="fa fa-chevron-right"></i>
             </a>
 
-            <h2>But why?</h2>
-            <p>The OpenStack project has run into a number of limitations
-	        with existing tools; in particular, the workflow needed by
-	        a highly-distributed system that spans multiple projects
-	        is not well served.  This system uses the best concepts
-	        from existing tools and goes beyond to support the needs
-	        of the OpenStack project.</p>
-            <p><a href="http://git.openstack.org/cgit/openstack-infra/storyboard/tree/README.rst"
+            <h2>Worklists and Boards</h2>
+            <p>For categorisation or prioritisation, <strong>stories</strong>
+               and <strong>tasks</strong> can be gathered in ordered
+               <strong>worklists</strong>.  Teams, projects, or sponsors may
+               create a <strong>board</strong> with manual or automatic
+               lanes to provide a clear overview of activity of interest.</p>
+            <p><a href="#!/board"
                target="_blank"
                class="btn btn-primary">
-                See project README
+                Access Worklists and Boards
                 <i class="fa fa-chevron-right"></i>
             </a></p>
             <small><p class="text-muted">Webclient version: <%- sha %></p></small>
@@ -73,10 +72,13 @@
             <p>StoryBoard is open source! If you would like to contribute to
                 the development of StoryBoard, you must follow the steps in the
                 "If you're a developer, start here" section of this page:</p>
-
             <p><a href=" http://docs.openstack.org/infra/manual/developers.html"
                   target="_blank">
                 http://docs.openstack.org/infra/manual/developers.html
+            </a></p>
+            <p> <a href=" http://git.openstack.org/cgit/openstack-infra/storyboard/tree/README.rst"
+                   target="_blank">
+                README.md
             </a></p>
 
             <hr/>
