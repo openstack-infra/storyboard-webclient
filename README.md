@@ -3,6 +3,15 @@ Storyboard Web Client
 
 A WebClient for the OpenStack Storyboard project.
 
+Motivation
+----------
+
+Storyboard was created to serve the needs of highly-distributed systems
+that span multiple projects, with the intention of enabling cross-project
+work on a massive scale.  The best concepts were adapted from existing
+tools, and as many potential points of contention were removed as
+possible, to better facilite coordination of project work by stakeholders
+with widely varied interest and needs.
 
 Project Resources
 -----------------
