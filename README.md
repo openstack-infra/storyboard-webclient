@@ -1,7 +1,7 @@
-Storyboard Web Client
+StoryBoard Web Client
 =====================
 
-A WebClient for the OpenStack Storyboard project.
+A WebClient for the OpenStack StoryBoard project.
 
 
 Project Resources
