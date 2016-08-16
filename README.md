@@ -1,8 +1,17 @@
-Storyboard Web Client
+StoryBoard Web Client
 =====================
 
-A WebClient for the OpenStack Storyboard project.
+A WebClient for the OpenStack StoryBoard project.
 
+Motivation
+----------
+
+StoryBoard was created to serve the needs of highly-distributed systems
+that span multiple projects, to enable cross-project work on a massive
+scale.  The best concepts were adapted from existing tools, and as many
+potential points of contention were removed as possible, to better
+facilite coordination of project work by stakeholders with widely
+varied interest and needs.
 
 Project Resources
 -----------------
@@ -17,7 +26,10 @@ Project Resources
 Getting Started
 ---------------
 
-First of all be sure to have tox installed on your machine then:
+First of all, read the "If you're a developer, start here" section of the
+OpenStack Developers Manual ("How to contribute to OpenStack", above).
+
+Next, be sure to have tox installed on your machine then:
 
   - Install the virtualenv containing nodejs: `tox -evenv`
   - Source the new path containing grunt:
