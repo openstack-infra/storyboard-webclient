@@ -20,9 +20,9 @@
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
-              Story, creator, tasks, Task, DSCacheFactory, User, $q,
-              storyboardApiBase, SessionModalService, moment, $document,
-              $anchorScroll, $timeout, $location, currentUser,
+              Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
+              User, $q, storyboardApiBase, SessionModalService, moment,
+              $document, $anchorScroll, $timeout, $location, currentUser,
               enableEditableComments) {
         'use strict';
 
@@ -55,7 +55,35 @@ angular.module('sb.story').controller('StoryDetailController',
          *
          * @type {[Task]}
          */
+        $scope.projectNames = [];
+        $scope.projects = {};
         $scope.tasks = tasks;
+        angular.forEach(tasks, function(task) {
+            Project.get({id: task.project_id}).$promise.then(function(project) {
+                var idx = $scope.projectNames.indexOf(project.name)
+                if (idx < 0) {
+                    $scope.projectNames.push(project.name);
+                    $scope.projects[project.name] = project;
+                    $scope.projects[project.name].branchNames = [];
+                    $scope.projects[project.name].branches = {};
+                }
+                Branch.get({id: task.branch_id}).$promise.then(function(branch) {
+                    var branchIdx = $scope.projects[project.name]
+                        .branchNames.indexOf(branch.name);
+                    if (branchIdx > -1) {
+                        $scope.projects[project.name].branches[branch.name]
+                            .tasks.push(task);
+                    } else {
+                        $scope.projects[project.name]
+                            .branches[branch.name] = branch;
+                        $scope.projects[project.name]
+                            .branches[branch.name].tasks = [task];
+                        $scope.projects[project.name]
+                            .branchNames.push(branch.name);
+                    }
+                });
+            });
+        });
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
