@@ -20,9 +20,9 @@
 angular.module('sb.story').controller('StoryDetailController',
     function ($log, $rootScope, $scope, $state, $stateParams, $modal, Session,
               Preference, TimelineEvent, Comment, TimelineEventTypes, story,
-              Story, creator, tasks, Task, DSCacheFactory, User, $q,
-              storyboardApiBase, SessionModalService, moment, $document,
-              $anchorScroll, $timeout, $location, currentUser,
+              Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
+              User, $q, storyboardApiBase, SessionModalService, moment,
+              $document, $anchorScroll, $timeout, $location, currentUser,
               enableEditableComments, Tags) {
         'use strict';
 
@@ -55,7 +55,47 @@ angular.module('sb.story').controller('StoryDetailController',
          *
          * @type {[Task]}
          */
+        $scope.projectNames = [];
+        $scope.projects = {};
         $scope.tasks = tasks;
+
+        function mapTaskToProject(task) {
+            Project.get({id: task.project_id}).$promise.then(function(project) {
+                var idx = $scope.projectNames.indexOf(project.name);
+                if (idx < 0) {
+                    $scope.projectNames.push(project.name);
+                    $scope.projects[project.name] = project;
+                    $scope.projects[project.name].branchNames = [];
+                    $scope.projects[project.name].branches = {};
+                }
+                Branch.get({id: task.branch_id}).$promise.then(
+                    function(branch) {
+                        var branchIdx = $scope.projects[project.name]
+                            .branchNames.indexOf(branch.name);
+                        if (branchIdx > -1) {
+                            $scope.projects[project.name].branches[branch.name]
+                                .tasks.push(task);
+                        } else {
+                            $scope.projects[project.name]
+                                .branches[branch.name] = branch;
+                            $scope.projects[project.name]
+                                .branches[branch.name].tasks = [task];
+                            $scope.projects[project.name]
+                                .branches[branch.name].newTask = new Task({
+                                    story_id: $scope.story.id,
+                                    branch_id: branch.id,
+                                    project_id: project.id,
+                                    status: 'todo',
+                                    priority: 'medium'
+                                });
+                            $scope.projects[project.name]
+                                .branchNames.push(branch.name);
+                        }
+                    });
+            });
+        }
+
+        angular.forEach(tasks, mapTaskToProject);
 
         // Load the preference for each display event.
         function reloadPagePreferences() {
@@ -498,20 +538,47 @@ angular.module('sb.story').controller('StoryDetailController',
         /**
          * Adds a task.
          */
-        $scope.createTask = function () {
+        $scope.createTask = function (task, branch) {
             // Make a copy to save, so that the next task retains the
             // old information (for easier continuous editing).
-            var savingTask = new Task(angular.copy($scope.newTask));
+            var savingTask = new Task(angular.copy(task));
             savingTask.$save(function (savedTask) {
                 $scope.tasks.push(savedTask);
+                if (branch) {
+                    branch.tasks.push(savedTask);
+                } else {
+                    mapTaskToProject(savedTask);
+                }
                 $scope.loadEvents();
             });
         };
 
+        function maybeRemoveTaskProject(task, projectName, branchName) {
+            var project = $scope.projects[projectName];
+            var branch = project.branches[branchName];
+            var nameIdx = -1;
+
+            if (branch.tasks.length === 0) {
+                nameIdx = project.branchNames.indexOf(branchName);
+                if (nameIdx > -1) {
+                    project.branchNames.splice(nameIdx, 1);
+                }
+                delete project.branches[branchName];
+            }
+            if (project.branchNames.length === 0) {
+                nameIdx = $scope.projectNames.indexOf(projectName);
+                if (nameIdx > -1) {
+                    $scope.projectNames.splice(nameIdx, 1);
+                }
+                delete $scope.projects[projectName];
+            }
+        }
+
         /**
          * Updates the task list.
          */
-        $scope.updateTask = function (task, fieldName, value) {
+        $scope.updateTask = function (task, fieldName, value, projectName,
+                                      branchName) {
             var params = {id: task.id};
             params[fieldName] = value;
             task[fieldName] = value;
@@ -519,33 +586,38 @@ angular.module('sb.story').controller('StoryDetailController',
                 Task.update(params, function() {
                     $scope.showTaskEditForm = false;
                     $scope.loadEvents();
+                }).$promise.then(function(updated) {
+                    if (fieldName === 'project_id') {
+                        var project = $scope.projects[projectName];
+                        var branch = project.branches[branchName];
+
+                        var branchTaskIndex = branch.tasks.indexOf(task);
+                        if (branchTaskIndex > -1) {
+                            branch.tasks.splice(branchTaskIndex, 1);
+                        }
+
+                        maybeRemoveTaskProject(
+                            updated, projectName, branchName);
+                        mapTaskToProject(updated);
+                    }
                 });
             }
         };
 
-        /**
-         * Adds link/comment to task
-         */
-        $scope.showTaskNotes = function(task) {
-            var modalInstance = $modal.open({
-                templateUrl: 'app/stories/template/task_notes.html',
-                controller: 'StoryTaskNotesController',
-                resolve: {
-                    task: function() {
-                        return task;
-                    }
-                }
-            });
+        $scope.editNotes = function(task) {
+            task.tempNotes = task.link;
+            task.editing = true;
+        };
 
-            modalInstance.result.finally(function() {
-                $scope.loadEvents();
-            });
+        $scope.cancelEditNotes = function(task) {
+            task.tempNotes = '';
+            task.editing = false;
         };
 
         /**
          * Removes this task
          */
-        $scope.removeTask = function (task) {
+        $scope.removeTask = function (task, projectName, branchName) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/delete_task.html',
                 controller: 'StoryTaskDeleteController',
@@ -567,6 +639,14 @@ angular.module('sb.story').controller('StoryDetailController',
                     if (taskIndex > -1) {
                         $scope.tasks.splice(taskIndex, 1);
                     }
+
+                    var project = $scope.projects[projectName];
+                    var branch = project.branches[branchName];
+                    var branchTaskIndex = branch.tasks.indexOf(task);
+                    if (branchTaskIndex > -1) {
+                        branch.tasks.splice(branchTaskIndex, 1);
+                    }
+                    maybeRemoveTaskProject(task, projectName, branchName);
                     $scope.loadEvents();
                 }
             );
