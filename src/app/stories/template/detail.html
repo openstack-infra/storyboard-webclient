@@ -421,68 +421,96 @@
 
 <!-- Template for an item in the task list -->
 <script type="text/ng-template" id="/inline/task_list_item.html">
-    <td class="col-xs-1 center-vertical">{{task.id}}:</td>
-    <td class="col-xs-3 center-vertical">
-        <input-inline
-                ng-model="task.title"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'title', task.title)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                maxlength="255"
-                as-inline="true"
-                />
-    </td>
-    <td class="col-xs-1 center-vertical">
-        <button class="btn btn-xs btn-task-notes"
-                ng-class="{'btn-default': !task.link,
-                           'btn-primary': task.link}"
-                ng-click="showTaskNotes(task)"
-                title="Task notes">
-            <i class="fa"
-               ng-class="{'fa-sticky-note-o': !task.link,
-                          'fa-sticky-note': task.link}"></i>
-        </button>
-    </td>
-    <td class="col-xs-3 center-vertical">
-        <project-typeahead
-                ng-model="task.project_id"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'project_id', task.project_id)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="true"
-                />
-    </td>
-    <td class="col-xs-2 center-vertical">
-        <user-typeahead
-                ng-model="task.assignee_id"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'assignee_id', task.assignee_id)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="true"
-                />
-    </td>
-    <td class="text-center col-xs-1 center-vertical">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'priority', priority)"
-                priority="{{task.priority}}"
-                />
-    </td>
-    <td class="text-center col-xs-1 center-vertical">
-        <task-status-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'status', status)"
-                status="{{task.status}}"
-                />
-    </td>
-    <td class="text-right col-xs-1 center-vertical">
-        <a ng-show="isLoggedIn"
-           ng-click="removeTask(task)">
-            <i class="fa fa-times fa-lg"></i>
-        </a>
+    <td class="center-veritcal">
+        <div class="row">
+            <div class="col-sm-4 task-title">
+                <div>
+                    <strong>
+                        <span class="noselect">#</span>{{ task.id }}<span class="noselect">:&nbsp;</span>
+                    </strong>
+                </div>
+                <div class="title">
+                    <input-inline
+                            ng-model="task.title"
+                            enabled="isLoggedIn"
+                            on-change="updateTask(task, 'title', task.title)"
+                            empty-prompt="Click to set title."
+                            empty-disabled-prompt="No title."
+                            maxlength="255"
+                            as-inline="true"
+                            />
+                </div>
+            </div>
+            <div class="col-md-8 task-details">
+                <div class="row">
+                    <div class="col-md-5">
+                        <user-typeahead
+                                ng-model="task.assignee_id"
+                                enabled="isLoggedIn"
+                                on-change="updateTask(task, 'assignee_id', task.assignee_id)"
+                                empty-prompt="Click to assign."
+                                empty-disabled-prompt="Not assigned."
+                                as-inline="true"
+                                />
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-control-static">
+                            <button class="btn btn-xs btn-task-notes"
+                                    ng-class="{'btn-default': !task.link,
+                                               'btn-primary': task.link}"
+                                    ng-click="showTaskNotes(task)"
+                                    title="Task notes">
+                                <i class="fa fa-sticky-note-o"></i>
+                                Notes
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <task-status-dropdown
+                                editable="{{isLoggedIn}}"
+                                on-change="updateTask(task, 'status', status)"
+                                status="{{task.status}}"
+                                />
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-control-static">
+                            <button class="btn btn-xs btn-default">
+                                <i class="fa fa-plus-circle"></i>
+                                Add to Worklist
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <p class="form-control-static">
+                            <a class="pull-right"
+                               ng-show="isLoggedIn"
+                               ng-click="removeTask(task)">
+                                <i class="fa fa-times fa-lg"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-7">
+                        <project-typeahead
+                                ng-model="task.project_id"
+                                enabled="isLoggedIn"
+                                on-change="updateTask(task, 'project_id', task.project_id)"
+                                empty-prompt="Click to assign."
+                                empty-disabled-prompt="Not assigned."
+                                as-inline="true"
+                                />
+                    </div>
+                    <div class="col-md-3">
+                        <p class="form-control-static">
+                            <a href><i class="fa fa-external-link"></i>&nbsp;Gerrit Change</a>
+                            &nbsp;
+                            <a href><i class="fa fa-pencil"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </td>
 </script>
 

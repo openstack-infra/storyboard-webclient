@@ -11,3 +11,52 @@
     left: 150px;
     box-sizing: border-box;
 }
+
+div.task-details > div:first-of-type {
+    & .form-control-static {
+        padding-bottom: 0;
+        padding-top: 15px;
+    }
+}
+
+div.task-details > div:last-of-type {
+    & .form-control-static {
+        padding-bottom: 15px;
+        padding-top: 0;
+    }
+}
+
+.task-title {
+    & > div {
+        vertical-align: top;
+        display: inline-block;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    & .title {
+        max-width: 75%;
+    }
+
+    & .form-control-static {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+input-inline, project-typeahead, user-typeahead, task-status-dropdown {
+    display: inline-block;
+
+    & .form-group {
+        margin-bottom: 0;
+    }
+}
+
+.noselect {
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
