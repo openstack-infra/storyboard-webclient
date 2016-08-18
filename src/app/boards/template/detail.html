@@ -14,6 +14,28 @@
   ~ under the License.
   -->
 <div class="container-fluid">
+    <div class="alert alert-warning" ng-show="board.archived">
+        <p>
+            <i class="fa fa-archive"></i>
+            <strong>This board is archived</strong>.
+            It can still be interacted with, but won't show up in search results.
+        </p>
+        <div class="text-center alert-button">
+            <button type="button"
+                    class="btn btn-success"
+                    ng-click="unarchive()"
+                    ng-show="permissions.editBoard">
+                Unarchive this Board
+            </button>
+        </div>
+    </div>
+    <div class="alert alert-danger" ng-show="board.private">
+        <i class="fa fa-eye-slash"></i>
+        <strong>This board is private</strong>.
+        <span ng-show="permissions.editBoard">
+            Edit this board to change the privacy settings.
+        </span>
+    </div>
     <div ng-include
          src="'/inline/board_detail.html'"
          ng-hide="showEditForm">
