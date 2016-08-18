@@ -31,6 +31,7 @@
                  src="'/inline/story_detail_form.html'"
                  ng-show="showEditForm">
             </div>
+            <hr/>
             <div ng-include src="'/inline/task_list.html'"></div>
             <hr/>
             <div ng-include src="'/inline/tags.html'"></div>
@@ -296,54 +297,373 @@
                 <i class="fa fa-plus"></i>
             </span>
         </h4>
-
-
-
 </script>
 
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/task_list.html">
-    <table class="table table-striped table-supercondensed">
-        <thead>
-        <tr>
-            <td colspan="8"><strong>Tasks</strong></td>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="task in tasks | orderBy:'-status'"
-            ng-include
-            src="'/inline/task_list_item.html'">
-        </tr>
-        <tr ng-if="tasks.length == 0 && !showAddTaskForm">
-            <td colspan="8">
-                <p class="text-muted text-center">
-                    <em>This story has no tasks.</em>
-                </p>
-            </td>
-        </tr>
-        <tr ng-if="showAddTaskForm"
-            ng-include
-            src="'/inline/task_edit_form.html'">
-        </tr>
-        <hr />
-        <tr>
-            <td colspan="8" class="text-left">
-                    <button class="btn btn-default" type="button"
-                       ng-click="showAddTaskForm = !showAddTaskForm"
-                       ng-show="isLoggedIn">
-                        <i class="fa fa-plus" ng-if="!showAddTaskForm"></i>
-                        <i class="fa fa-minus" ng-if="showAddTaskForm"></i>
-                       <strong> Add task </strong>
-                    </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <h3>Tasks</h3>
+    <div ng-repeat="name in projectNames">
+        <h4>
+            <i class="fa fa-sb-project text-muted"></i>
+            <a href="#!/project/{{ projects[name].id }}">{{ name }}</a>
+        </h4>
+        <div ng-repeat="branchName in projects[name].branchNames">
+            <div class="row" ng-if="branchName != 'master'">
+                <div class="col-xs-3">
+                    <strong>
+                        &emsp;&emsp;{{ branchName }}
+                    </strong>
+                </div>
+            </div>
+            <div class="row" ng-if="branchName == 'master'">
+                <div class="col-xs-12" ng-include src="'/inline/task_table.html'"></div>
+            </div>
+            <div class="row" ng-if="branchName != 'master'">
+                <div class="col-xs-11 col-xs-offset-1"
+                     ng-include src="'/inline/task_table.html'">
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div ng-show="newTask.show" ng-include src="'/inline/new_task.html'"></div>
+    <button class="btn btn-default"
+            ng-show="!newTask.show"
+            ng-click="newTask.show = !newTask.show">
+        <i class="fa fa-plus-circle"></i>
+        Affects other project
+    </button>
+        
 </script>
 
 
-<!-- Template for the task list -->
+<!-- Template for a table of tasks -->
+<script type="text/ng-template" id="/inline/task_table.html">
+        <table class="table table-striped table-supercondensed">
+            <tr ng-repeat="task in projects[name].branches[branchName].tasks"
+                ng-include src="'/inline/task_list_item.html'">
+            </tr>
+            <tr ng-show="isLoggedIn && !projects[name].branches[branchName].showAddTask">
+                <td class="text-center">
+                    <a href
+                       ng-click="projects[name].branches[branchName].showAddTask =
+                                 !projects[name].branches[branchName].showAddTask">
+                        <i class="fa fa-plus-circle"></i>
+                        Add task affecting this project
+                    </a>
+                </td>
+            </tr>
+            <tr ng-show="projects[name].branches[branchName].showAddTask"
+                ng-include src="'/inline/task_edit_form.html'">
+            </tr>
+        </table>
+</script>
+
+<!-- Template for an item in the task list -->
+<script type="text/ng-template" id="/inline/task_list_item.html">
+    <td>
+        <div class="row">
+            <div class="col-xs-4 task-title">
+                <div>
+                    <a href ng-click="showDetail = !showDetail">
+                        <i class="fa fa-caret-down" ng-show="showDetail"></i>
+                        <i class="fa fa-caret-right" ng-show="!showDetail"></i>
+                    </a>
+                    <strong>{{ task.id }}</strong>
+                    &nbsp;
+                </div>
+                <div class="title">                                
+                    <input-inline
+                            ng-model="task.title"
+                            enabled="isLoggedIn"
+                            on-change="updateTask(task, 'title', task.title)"
+                            empty-prompt="Click to set title."
+                            empty-disabled-prompt="No title."
+                            maxlength="255"
+                            as-inline="true"
+                            />
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <user-typeahead
+                        ng-model="task.assignee_id"
+                        enabled="isLoggedIn"
+                        on-change="updateTask(task, 'assignee_id', task.assignee_id)"
+                        empty-prompt="Click to assign."
+                        empty-disabled-prompt="Not assigned."
+                        as-inline="true"
+                        />
+            </div>
+            <div class="col-xs-2">
+                <task-status-dropdown
+                        editable="{{isLoggedIn}}"
+                        on-change="updateTask(task, 'status', status)"
+                        status="{{ task.status }}"
+                        />
+            </div>
+            <div class="col-xs-2">
+                <task-priority-dropdown
+                        editable="{{isLoggedIn}}"
+                        on-change="updateTask(task, 'priority', priority)"
+                        priority="{{newTask.priority}}"
+                        />
+            </div>
+            <!-- Review link should go here once implemented in the API -->
+        </div>
+        <div class="row button-row" ng-show="showDetail">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-10">
+                <project-typeahead
+                        auto-focus="false"
+                        ng-model="task.project_id"
+                        ng-show="changingProject"
+                        enabled="isLoggedIn"
+                        on-change="updateTask(task, 'project_id', task.project_id, name, branchName);
+                                   changingProject = false"
+                        empty-prompt="Click to set a project"
+                        empty-disabled-prompt="No project set."
+                        as-inline="false"
+                        placeholder="Enter project name">
+                </project-typeahead>
+                <button class="btn btn-xs btn-default"
+                        ng-click="changingProject = !changingProject">
+                    {{ changingProject ? 'Cancel' : 'Change project' }}
+                </button>
+                <button class="btn btn-xs btn-default"
+                        ng-show="tasks.length > 1"
+                        ng-click="removeTask(task, name, branchName)">
+                    Delete
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="showDetail">
+            <div class="col-xs-10 col-xs-offset-1">
+                <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
+                <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
+                <form name="taskNotesForm" ng-show="task.editing">
+                    <div class="form-group">
+                        <textarea placeholder="Enter task notes here"
+                                  class="form-control context-edit"
+                                  msd-elastic
+                                  rows="3"
+                                  ng-show="isLoggedIn"
+                                  ng-disabled="isUpdating"
+                                  ng-model="task.tempNotes">
+                        </textarea>
+                    </div>
+
+                    <div class="clearfix">
+                        <button type="button" ng-show="isLoggedIn"
+                                class="btn btn-default" ng-click="notesPreview = !notesPreview">
+                            Toggle Preview
+                        </button>
+                        <div class="pull-right">
+                            <div class="btn" ng-show="isUpdating">
+                                <i class="fa fa-spinner fa-lg fa-spin"></i>
+                            </div>
+                            <button type="button" ng-show="isLoggedIn"
+                                    class="btn btn-primary"
+                                    ng-click="updateTask(task, 'link', task.tempNotes);
+                                              cancelEditNotes(task)"
+                                    ng-disabled="!taskNotesForm.$valid">
+                                Save
+                            </button>
+                            <button type="button" ng-show="isLoggedIn"
+                                    class="btn btn-default"
+                                    ng-click="cancelEditNotes(task)">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-1" ng-show="!task.editing">
+                <button class="btn btn-primary btn-xs"
+                        ng-click="editNotes(task)">
+                    <i class="fa fa-pencil"></i> {{ task.link ? 'Edit' : 'Add notes' }}
+                </button>
+            </div>
+        </div>
+    </td>
+</script>
+
+<!-- Template for the task add form. -->
+<script type="text/ng-template" id="/inline/task_edit_form.html">
+    <td>
+        <div class="row">
+            <div class="col-xs-4 task-title">
+                <div>
+                    <a href ng-click="showDetail = !showDetail">
+                        <i class="fa fa-caret-down" ng-show="showDetail"></i>
+                        <i class="fa fa-caret-right" ng-show="!showDetail"></i>
+                    </a>
+                    &nbsp;
+                </div>
+                <input-inline
+                        auto-focus="true"
+                        ng-model="projects[name].branches[branchName].newTask.title"
+                        enabled="isLoggedIn"
+                        on-change="updateTaskInline()"
+                        empty-prompt="Click to assign."
+                        empty-disabled-prompt="Not assigned."
+                        maxlength="255"
+                        as-inline="false"
+                        placeholder="Enter task name"
+                        />
+            </div>
+            <div class="col-xs-3">
+                <user-typeahead
+                        auto-focus="false"
+                        ng-model="projects[name].branches[branchName].newTask.assignee_id"
+                        enabled="isLoggedIn"
+                        on-change="updateTaskInline()"
+                        empty-prompt="Click to assign."
+                        empty-disabled-prompt="Not assigned."
+                        as-inline="false"
+                        placeholder="Assign user to task"
+                        />
+            </div>
+            <div class="col-xs-2">
+                <task-status-dropdown
+                        editable="{{isLoggedIn}}"
+                        on-change="updateTask(projects[name].branches[branchName].newTask, 'status', status)"
+                        status="{{projects[name].branches[branchName].newTask.status}}"
+                        />
+            </div>
+            <div class="col-xs-2">
+                <task-priority-dropdown
+                        editable="{{isLoggedIn}}"
+                        on-change="updateTask(projects[name].branches[branchName].newTask, 'priority', priority)"
+                        priority="{{projects[name].branches[branchName].newTask.priority}}"
+                        />
+            </div>
+            <!-- Review link should go here once implemented in the API -->
+            <div class="col-xs-2">
+                <button ng-click="createTask(projects[name].branches[branchName].newTask,
+                                             projects[name].branches[branchName])"
+                        class="btn btn-primary">
+                    Save
+                </button>
+                <button ng-click="projects[name].branches[branchName].showAddTask =
+                                  !projects[name].branches[branchName].showAddTask"
+                        class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <div class="row" ng-show="showDetail">
+            <div class="col-xs-10 col-xs-offset-1">
+                <textarea ng-model="projects[name].branches[branchName].newTask.link"
+                          class="form-control context-edit"
+                          msd-elastic
+                          rows="3"
+                          ng-show="isLoggedIn"
+                          placeholder="Task notes">
+                </textarea>
+            </div>
+        </div>
+    </td>
+</script>
+
+<!-- Template for creating a task in an as-yet unrelated project -->
+<script type="text/ng-template" id="/inline/new_task.html">
+    <div>
+        <h4>
+            <i class="fa fa-sb-project text-muted"></i>
+            <project-typeahead
+                    auto-focus="false"
+                    ng-model="newTask.project_id"
+                    enabled="isLoggedIn"
+                    on-change="updateTaskInline()"
+                    empty-prompt="Click to set a project"
+                    empty-disabled-prompt="No project set."
+                    as-inline="false"
+                    placeholder="Enter project name">
+            </project-typeahead>
+        </h4>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-supercondensed">
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="col-xs-4 task-title">
+                                    <div>
+                                        <a href ng-click="showDetail = !showDetail">
+                                            <i class="fa fa-caret-down" ng-show="showDetail"></i>
+                                            <i class="fa fa-caret-right" ng-show="!showDetail"></i>
+                                        </a>
+                                        &nbsp;
+                                    </div>
+                                    <input-inline
+                                            auto-focus="true"
+                                            ng-model="newTask.title"
+                                            enabled="isLoggedIn"
+                                            on-change="updateTaskInline()"
+                                            empty-prompt="Click to assign."
+                                            empty-disabled-prompt="Not assigned."
+                                            maxlength="255"
+                                            as-inline="false"
+                                            placeholder="Enter task name"
+                                            />
+                                </div>
+                                <div class="col-xs-3">
+                                    <user-typeahead
+                                            auto-focus="false"
+                                            ng-model="newTask.assignee_id"
+                                            enabled="isLoggedIn"
+                                            on-change="updateTaskInline()"
+                                            empty-prompt="Click to assign."
+                                            empty-disabled-prompt="Not assigned."
+                                            as-inline="false"
+                                            placeholder="Assign user to task"
+                                            />
+                                </div>
+                                <div class="col-xs-2">
+                                    <task-status-dropdown
+                                            editable="{{isLoggedIn}}"
+                                            on-change="updateTask(newTask, 'status', status)"
+                                            status="{{newTask.status}}"
+                                            />
+                                </div>
+                                <!-- Review link should go here once implemented in the API -->
+                                <div class="col-xs-2">
+                                    <task-priority-dropdown
+                                            editable="{{isLoggedIn}}"
+                                            on-change="updateTask(newTask, 'priority', priority)"
+                                            priority="{{newTask.priority}}"
+                                            />
+                                </div>
+                                <div class="col-xs-2">
+                                    <button ng-click="createTask(newTask)"
+                                            class="btn btn-primary">
+                                        Save
+                                    </button>
+                                    <button ng-click="newTask.show = !newTask.show"
+                                            class="btn btn-default">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="showDetail">
+                                <div class="col-xs-10 col-xs-offset-1">
+                                    <textarea ng-model="newTask.link"
+                                              class="form-control context-edit"
+                                              msd-elastic
+                                              rows="3"
+                                              ng-show="isLoggedIn"
+                                              placeholder="Task notes">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- Template for the events stream -->
 <script type="text/ng-template" id="/inline/discussion.html">
     <div>
         <div class="clearfix">
@@ -428,136 +748,4 @@
         </form>
         <hr />
     </div>
-</script>
-
-<!-- Template for an item in the task list -->
-<script type="text/ng-template" id="/inline/task_list_item.html">
-    <td class="col-xs-1 center-vertical">{{task.id}}:</td>
-    <td class="col-xs-3 center-vertical">
-        <input-inline
-                ng-model="task.title"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'title', task.title)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                maxlength="255"
-                as-inline="true"
-                />
-    </td>
-    <td class="col-xs-1 center-vertical">
-        <button class="btn btn-xs btn-task-notes"
-                ng-class="{'btn-default': !task.link,
-                           'btn-primary': task.link}"
-                ng-click="showTaskNotes(task)"
-                title="Task notes">
-            <i class="fa"
-               ng-class="{'fa-sticky-note-o': !task.link,
-                          'fa-sticky-note': task.link}"></i>
-        </button>
-    </td>
-    <td class="col-xs-3 center-vertical">
-        <project-typeahead
-                ng-model="task.project_id"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'project_id', task.project_id)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="true"
-                />
-    </td>
-    <td class="col-xs-2 center-vertical">
-        <user-typeahead
-                ng-model="task.assignee_id"
-                enabled="isLoggedIn"
-                on-change="updateTask(task, 'assignee_id', task.assignee_id)"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="true"
-                />
-    </td>
-    <td class="text-center col-xs-1 center-vertical">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'priority', priority)"
-                priority="{{task.priority}}"
-                />
-    </td>
-    <td class="text-center col-xs-1 center-vertical">
-        <task-status-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(task, 'status', status)"
-                status="{{task.status}}"
-                />
-    </td>
-    <td class="text-right col-xs-1 center-vertical">
-        <a ng-show="isLoggedIn"
-           ng-click="removeTask(task)">
-            <i class="fa fa-times fa-lg"></i>
-        </a>
-    </td>
-</script>
-
-<!-- Template for the task add form. -->
-<script type="text/ng-template" id="/inline/task_edit_form.html">
-    <td class="col-xs-1"></td>
-    <td class="col-xs-3">
-        <input-inline
-                auto-focus="true"
-                ng-model="newTask.title"
-                enabled="isLoggedIn"
-                on-change="updateTaskInline()"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                maxlength="255"
-                as-inline="false"
-                placeholder="Enter task name"
-                />
-    </td>
-    <td class="col-xs-1">
-    </td>
-
-    <td class="col-xs-3">
-        <project-typeahead
-                auto-focus="false"
-                ng-model="newTask.project_id"
-                enabled="isLoggedIn"
-                on-change="updateTaskInline()"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="false"
-                placeholder="Enter project name"
-                />
-    </td>
-    <td class="col-xs-2">
-        <user-typeahead
-                auto-focus="false"
-                ng-model="newTask.assignee_id"
-                enabled="isLoggedIn"
-                on-change="updateTaskInline()"
-                empty-prompt="Click to assign."
-                empty-disabled-prompt="Not assigned."
-                as-inline="false"
-                placeholder="Assign user to task"
-                />
-    </td>
-    <td class="text-center col-xs-1">
-        <task-priority-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(newTask, 'priority', priority)"
-                priority="{{newTask.priority}}"
-                />
-    </td>
-    <td class="text-center col-xs-1">
-        <task-status-dropdown
-                editable="{{isLoggedIn}}"
-                on-change="updateTask(newTask, 'status', status)"
-                status="{{newTask.status}}"
-                />
-    </td>
-    <td class="text-right col-xs-1">
-        <button ng-click="createTask()"
-                class="btn btn-primary">
-            Save
-        </button>
-    </td>
 </script>
