@@ -2,17 +2,19 @@
 <div class="form-group"
      ng-if="!enabled || !showForm">
     <p class="form-control-static">
+        {{ inputText }}
+
+        &nbsp;
         <a href=""
            ng-focus="toggleForm()"
            ng-click="toggleForm()"
            ng-if="!showForm && enabled">
             <span ng-if="inputText">
-                {{inputText}}
-                <i class="fa fa-edit"></i>
+                <i class="fa fa-pencil"></i>
             </span>
             <em ng-if="!inputText" class="text-muted">
                 {{emptyPrompt}}
-                <i class="fa fa-edit"></i>
+                <i class="fa fa-pencil"></i>
             </em>
         </a>
 
