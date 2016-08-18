@@ -139,6 +139,16 @@ angular.module('sb.board').controller('BoardDetailController',
             });
         };
 
+        $scope.unarchive = function() {
+            $scope.board.archived = false;
+            $scope.board.$update().then(function() {
+                angular.forEach($scope.board.lanes, function(lane) {
+                    lane.worklist.archived = false;
+                    Worklist.update(lane.worklist);
+                });
+            });
+        };
+
         /**
          * Open a modal to handle archiving the board.
          */
