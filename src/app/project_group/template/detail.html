@@ -57,75 +57,63 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <hr/>
-        </div>
-        <div class="col-xs-2">
-            <div class="text-center text-muted">
-                <span class="hidden-xs">
-                    <i class="fa fa-3x fa-sb-story"></i>
-                    <br/>
-                    <small>Stories</small>
-                </span>
-                <i class="fa fa-2x fa-sb-story visible-xs"></i>
-            </div>
-            <div class="col-xs-12 col-sm-6 col-sm-offset-2 col-md-offset-3">
-                <br/>
-                <div class="checkbox label label-info">
-                    <input type="checkbox"
-                           ng-model="showActive"
-                           ng-change="filterStories()"/>
-                    Active
-                </div>
-                <div class="checkbox label label-success">
-                    <input type="checkbox"
-                           ng-model="showMerged"
-                           ng-change="filterStories()"/>
-                    Merged
-                </div>
-                <div class="checkbox label label-default">
-                    <input type="checkbox"
-                           ng-model="showInvalid"
-                           ng-change="filterStories()"/>
-                    Invalid
-                </div>
-            </div>
-            <div class="col-xs-12 text-center text-muted">
-                <br />
+    <script type="text/ng-template" id="/inline/story_list.html">
+        <div ng-controller="Project_GroupStoryListController">
+            <div class="col-xs-12">
                 <result-set-pager
-                        class="form-control-static text-muted"
-                        total="storyCount"
-                        offset="storySearchOffset"
-                        limit="storySearchLimit"
-                        list-type="'stories'"
-                        minimal-pager="true"
-                        on-next-page="nextPage(type)"
-                        on-previous-page="previousPage(type)"
-                        on-page-size="updatePageSize(type, pageSize)"
-                        ></result-set-pager>
+                    class="form-control-static text-muted pull-right"
+                    total="storyCount"
+                    offset="searchOffset"
+                    limit="searchLimit"
+                    on-next-page="nextPage()"
+                    on-previous-page="previousPage()"
+                    on-page-size="updatePageSize(pageSize)"
+                    ></result-set-pager>
+                <a href=""
+                   class="btn btn-link pull-right"
+                   ng-click="newStory()"
+                   ng-show="isLoggedIn">
+                    <i class="fa fa-plus"></i>
+                    Add story
+                </a>
+                <ul class="nav nav-tabs clearfix">
+                    <li ng-class="{'active': filter == 'active'}">
+                        <a href=""
+                           ng-click="setFilter('active')">Active</a>
+                    </li>
+                    <li ng-class="{'active': filter == 'merged'}">
+                        <a href=""
+                           ng-click="setFilter('merged')">Merged</a>
+                    </li>
+                    <li ng-class="{'active': filter == 'invalid'}">
+                        <a href=""
+                           ng-click="setFilter('invalid')">Invalid</a>
+                    </li>
+                </ul>
+                <table class="table table-striped"
+                   ng-hide="isSearching || stories.length == 0">
+                    <tbody>
+                    <tr ng-repeat="story in stories"
+                        ng-controller="StoryListItemController"
+                        ng-include="'app/stories/template/story_list_item.html'">
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div ng-show="isSearching">
+                    <hr/>
+                    <p class="text-center">
+                        <i class="fa fa-refresh fa-spin fa-lg"></i>
+                    </p>
+                </div>
+
+                <p ng-show="!isSearching && stories.length == 0"
+                   class="text-center text-warning">
+                    <br/>
+                    <em> We were unable to find any stories.
+                        Perhaps you would like to create one?</em>
+                </p>
             </div>
         </div>
-        <div class="col-xs-10">
-            <table class="table table-condensed table-striped table-clean">
-                <tbody ng-if="stories.length > 0">
-                <tr ng-repeat="story in stories"
-                    ng-include="'app/search/template/story_search_item.html'">
-                </tr>
-                </tbody>
-
-                <tbody ng-if="!stories.$resolved && (showMerged || showInvalid || showActive)">
-                <td class="text-center text-muted">
-                    <i class="fa fa-refresh fa-spin"></i>
-                </td>
-                </tbody>
-
-                <tbody ng-if="stories.length == 0 && (stories.$resolved || !(showMerged || showInvalid || showActive))">
-                <td class="text-center text-muted">
-                    <em>No stories found.</em>
-                </td>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    </script>
 </div>
