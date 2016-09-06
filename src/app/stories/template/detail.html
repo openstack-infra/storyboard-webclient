@@ -273,7 +273,10 @@
         </ul>
         <br>
         <span class="input-group" ng-show="showAddTag">
-            <input type="text" class="form-control" ng-model="newTag.name" />
+           <input type="text" class="form-control" ng-model="newTag.name"
+             typeahead="tag as tag.name for tag in searchTags($viewValue)"
+             typeahead-on-select="updateViewValue($model.name);"/>
+
             <span class="input-group-btn">
                 <button class="btn btn-primary" type="button"
                         ng-click="addTag(newTag.name)">Add</button>
