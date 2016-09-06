@@ -23,7 +23,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, creator, tasks, Task, DSCacheFactory, User, $q,
               storyboardApiBase, SessionModalService, moment, $document,
               $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments) {
+              enableEditableComments, Tags) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -622,4 +622,14 @@ angular.module('sb.story').controller('StoryDetailController',
                 },
                 handleServiceError);
         };
+
+        $scope.searchTags = function (value) {
+            return Tags.browse({name: value, limit: 10}).$promise;
+        };
+
+        $scope.updateViewValue = function (value) {
+            $scope.newTag.name = value;
+        };
+
+        $scope.newTag = {};
     });
