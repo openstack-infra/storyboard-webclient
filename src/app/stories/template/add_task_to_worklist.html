@@ -1,0 +1,93 @@
+<!--
+  ~ Copyright (c) 2016 Codethink Ltd.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <button type="button" class="close" aria-hidden="true"
+                ng-click="close()">&times;</button>
+        <h3 class="panel-title">Add "{{task.title}}" to worklist</h3>
+    </div>
+    <div class="panel-body"
+         ng-controller="SearchCriteriaController"
+         ng-init="init(['Worklist'], defaultCriteria)"
+         search-results
+         search-resource="Worklist"
+         search-criteria="criteria"
+         search-without-criteria="true">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group has-feedback has-feedback-no-label">
+                    <div id="search-criteria"
+                         tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
+                         tag-complete-tags="criteria"
+                         tag-complete-label-field="title"
+                         tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
+                         tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
+                         tag-complete-loading="loadingCriteria = isLoading"
+                         tag-complete-on-select="addCriteria(tag)"
+                         placeholder="Search Worklists">
+                    </div>
+                    <span class="form-control-feedback text-muted">
+                        <i class="fa fa-search"
+                           ng-hide="loadingCriteria"></i>
+                        <i class="fa fa-refresh fa-spin"
+                           ng-show="loadingCriteria"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <result-set-pager
+                        class="form-control-static text-muted pull-right"
+                        total="searchTotal"
+                        offset="searchOffset"
+                        limit="searchLimit"
+                        on-next-page="nextPage()"
+                        on-previous-page="previousPage()"
+                        on-page-size="updatePageSize(pageSize)"
+                        ></result-set-pager>
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Select a Worklist</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="selectable"
+                            ng-repeat="worklist in searchResults"
+                            ng-class="{'selected-row': selected === worklist}">
+                            <td ng-click="select(worklist)">{{ worklist.id }}: {{ worklist.title }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="pull-right">
+                    <button class="btn btn-primary"
+                            ng-click="add()"
+                            ng-disabled="selected == 'none'">
+                        Add to worklist
+                    </button>
+                    <button class="btn btn-default" ng-click="close()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
