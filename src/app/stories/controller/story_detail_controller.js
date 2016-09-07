@@ -623,6 +623,18 @@ angular.module('sb.story').controller('StoryDetailController',
             task.editing = false;
         };
 
+        $scope.showAddWorklist = function(task) {
+            $modal.open({
+                templateUrl: 'app/stories/template/add_task_to_worklist.html',
+                controller: 'StoryTaskAddWorklistController',
+                resolve: {
+                    task: function() {
+                        return task;
+                    }
+                }
+            });
+        };
+
         /**
          * Removes this task
          */

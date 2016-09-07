@@ -429,6 +429,10 @@
                     {{ changingProject ? 'Cancel' : 'Change project' }}
                 </button>
                 <button class="btn btn-xs btn-default"
+                        ng-click="showAddWorklist(task)">
+                    Add to worklist
+                </button>
+                <button class="btn btn-xs btn-default"
                         ng-show="tasks.length > 1"
                         ng-click="removeTask(task, name, branchName)">
                     Delete
