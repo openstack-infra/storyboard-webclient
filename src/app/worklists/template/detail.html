@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2015 Codethink Limited
+  ~ Copyright (c) 2015-2016 Codethink Limited
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -33,6 +33,28 @@
 <script type="text/ng-template" id="/inline/worklist_title.html">
     <div class="row">
         <div class="col-sm-12" ng-show="!editing">
+            <div class="alert alert-warning" ng-show="worklist.archived">
+                <p>
+                    <i class="fa fa-archive"></i>
+                    <strong>This worklist is archived</strong>.
+                    It can still be interacted with, but won't show up in search results.
+                </p>
+                <div class="text-center alert-button">
+                    <button type="button"
+                            class="btn btn-success"
+                            ng-click="unarchive()"
+                            ng-show="permissions.editWorklist">
+                        Unarchive this Worklist
+                    </button>
+                </div>
+            </div>
+            <div class="alert alert-danger" ng-show="worklist.private">
+                <i class="fa fa-eye-slash"></i>
+                <strong>This worklist is private</strong>.
+                <span ng-show="permissions.editWorklist">
+                    Edit this worklist to change the privacy settings.
+                </span>
+            </div>
             <h1 view-title>
                 {{worklist.title}}
                 <small ng-show="isLoggedIn">
