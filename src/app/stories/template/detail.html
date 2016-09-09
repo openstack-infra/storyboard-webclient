@@ -327,7 +327,7 @@
     </div>
     <div ng-show="newTask.show" ng-include src="'/inline/new_task.html'"></div>
     <button class="btn btn-default"
-            ng-show="!newTask.show"
+            ng-show="isLoggedIn && !newTask.show"
             ng-click="newTask.show = !newTask.show">
         <i class="fa fa-plus-circle"></i>
         Affects other project
@@ -425,15 +425,17 @@
                         placeholder="Enter project name">
                 </project-typeahead>
                 <button class="btn btn-xs btn-default"
+                        ng-show="isLoggedIn"
                         ng-click="changingProject = !changingProject">
                     {{ changingProject ? 'Cancel' : 'Change project' }}
                 </button>
                 <button class="btn btn-xs btn-default"
-                        ng-click="showAddWorklist(task)">
+                        ng-click="showAddWorklist(task)"
+                        ng-show="isLoggedIn">
                     Add to worklist
                 </button>
                 <button class="btn btn-xs btn-default"
-                        ng-show="tasks.length > 1"
+                        ng-show="tasks.length > 1 && isLoggedIn"
                         ng-click="removeTask(task, name, branchName)">
                     Delete
                 </button>
@@ -479,7 +481,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="row text-center" ng-show="!task.editing && !task.link">
+                <div class="row text-center" ng-show="!task.editing && !task.link && isLoggedIn">
                     <button class="btn btn-primary btn-xs"
                             ng-click="editNotes(task)">
                         <i class="fa fa-pencil"></i> Add notes
@@ -488,6 +490,7 @@
             </div>
             <div class="col-xs-1" ng-show="!task.editing && task.link">
                 <button class="btn btn-primary btn-xs"
+                        ng-show="isLoggedIn"
                         ng-click="editNotes(task)">
                     <i class="fa fa-pencil"></i> Edit
                 </button>
