@@ -75,6 +75,19 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                                 return {};
                             });
                         return user;
+                    },
+                    worklists: function(Worklist, $stateParams, CurrentUser) {
+                        var userPromise = CurrentUser.resolve();
+
+                        return userPromise.then(function(user) {
+                            return Worklist.browse({
+                                story_id: $stateParams.storyId,
+                                subscriber_id: user.id,
+                                hide_lanes: ''
+                            }).$promise;
+                        }, function() {
+                            return [];
+                        });
                     }
                 }
             });
