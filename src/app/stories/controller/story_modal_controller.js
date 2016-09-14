@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryModalController',
     function ($scope, $modalInstance, params, Project, Story, Task, User,
-              $q, CurrentUser) {
+              Team, $q, CurrentUser) {
         'use strict';
 
         var currentUser = CurrentUser.resolve();
@@ -29,7 +29,8 @@ angular.module('sb.story').controller('StoryModalController',
         currentUser.then(function(user) {
             $scope.story = new Story({
                 title: '',
-                users: [user]
+                users: [user],
+                teams: []
             });
         });
 
@@ -164,49 +165,80 @@ angular.module('sb.story').controller('StoryModalController',
         };
 
         /**
-         * User typeahead search method.
+         * User/team typeahead search method.
          */
-        $scope.searchUsers = function (value, array) {
+        $scope.searchActors = function (value, users, teams) {
+            var userIds = users.map(function(user){return user.id;});
+            var teamIds = teams.map(function(team){return team.id;});
             var deferred = $q.defer();
+            var usersDeferred = $q.defer();
+            var teamsDeferred = $q.defer();
 
             User.browse({full_name: value, limit: 10},
                 function(searchResults) {
                     var results = [];
                     angular.forEach(searchResults, function(result) {
-                        if (array.indexOf(result.id) === -1) {
+                        if (userIds.indexOf(result.id) === -1) {
+                            result.name = result.full_name;
+                            result.type = 'user';
                             results.push(result);
                         }
                     });
-                    deferred.resolve(results);
+                    usersDeferred.resolve(results);
                 }
             );
+            Team.browse({name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (teamIds.indexOf(result.id) === -1) {
+                            result.type = 'team';
+                            results.push(result);
+                        }
+                    });
+                    teamsDeferred.resolve(results);
+                }
+            );
+
+            var searches = [teamsDeferred.promise, usersDeferred.promise];
+            $q.all(searches).then(function(searchResults) {
+                var results = [];
+                angular.forEach(searchResults, function(promise) {
+                    angular.forEach(promise, function(result) {
+                        results.push(result);
+                    });
+                });
+                deferred.resolve(results);
+            });
+
             return deferred.promise;
         };
 
         /**
-         * Formats the user name.
+         * Add a new user or team to one of the permission levels.
          */
-        $scope.formatUserName = function (model) {
-            if (!!model) {
-                return model.name;
+        $scope.addActor = function (model) {
+            if (model.type === 'user') {
+                $scope.story.users.push(model);
+            } else if (model.type === 'team') {
+                $scope.story.teams.push(model);
             }
-            return '';
         };
 
         /**
-         * Add a new user to one of the permission levels.
-         */
-        $scope.addUser = function (model) {
-            $scope.story.users.push(model);
-        };
-
-        /**
-         * Remove a user from one of the permission levels.
+         * Remove a user from the permissions.
          */
         $scope.removeUser = function (model) {
             var idx = $scope.story.users.indexOf(model);
             $scope.story.users.splice(idx, 1);
         };
 
+        /**
+         * Remove a team from the permissions.
+         */
+        $scope.removeTeam = function(model) {
+            var idx = $scope.story.teams.indexOf(model);
+            $scope.story.teams.splice(idx, 1);
+        };
     })
 ;
