@@ -24,7 +24,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments, Tags, worklists) {
+              enableEditableComments, Tags, worklists, Team) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -534,47 +534,78 @@ angular.module('sb.story').controller('StoryDetailController',
         /**
          * User typeahead search method.
          */
-        $scope.searchUsers = function (value, array) {
-            var userIds = array.map(function(user){return user.id;});
+        $scope.searchActors = function (value, users, teams) {
+            var userIds = users.map(function(user){return user.id;});
+            var teamIds = teams.map(function(team){return team.id;});
             var deferred = $q.defer();
+            var usersDeferred = $q.defer();
+            var teamsDeferred = $q.defer();
 
             User.browse({full_name: value, limit: 10},
                 function(searchResults) {
                     var results = [];
                     angular.forEach(searchResults, function(result) {
                         if (userIds.indexOf(result.id) === -1) {
+                            result.name = result.full_name;
+                            result.type = 'user';
                             results.push(result);
                         }
                     });
-                    deferred.resolve(results);
+                    usersDeferred.resolve(results);
                 }
             );
-            return deferred.promise;
-        };
+            Team.browse({name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (teamIds.indexOf(result.id) === -1) {
+                            result.type = 'team';
+                            results.push(result);
+                        }
+                    });
+                    teamsDeferred.resolve(results);
+                }
+            );
 
-        /**
-         * Formats the user name.
-         */
-        $scope.formatUserName = function (model) {
-            if (!!model) {
-                return model.name;
-            }
-            return '';
+            var searches = [teamsDeferred.promise, usersDeferred.promise];
+            $q.all(searches).then(function(searchResults) {
+                var results = [];
+                angular.forEach(searchResults, function(promise) {
+                    angular.forEach(promise, function(result) {
+                        results.push(result);
+                    });
+                });
+                deferred.resolve(results);
+            });
+
+            return deferred.promise;
         };
 
         /**
          * Add a new user to one of the permission levels.
          */
-        $scope.addUser = function (model) {
-            $scope.story.users.push(model);
+        $scope.addActor = function (model) {
+            if (model.type === 'user') {
+                $scope.story.users.push(model);
+            } else if (model.type === 'team') {
+                $scope.story.teams.push(model);
+            }
         };
 
         /**
-         * Remove a user from one of the permission levels.
+         * Remove a user from the permissions.
          */
         $scope.removeUser = function (model) {
             var idx = $scope.story.users.indexOf(model);
             $scope.story.users.splice(idx, 1);
+        };
+
+        /**
+         * Remove a team from the permissions.
+         */
+        $scope.removeTeam = function(model) {
+            var idx = $scope.story.teams.indexOf(model);
+            $scope.story.teams.splice(idx, 1);
         };
 
         // ###################################################################
