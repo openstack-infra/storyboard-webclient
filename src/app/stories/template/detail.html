@@ -192,26 +192,38 @@
                 <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Users that can see this story</th>
+                        <th>Teams and Users that can see this story</th>
                         <th class="text-right">
                             <small>
                                 <a href
                                    ng-click="showAddUser = !showAddUser">
                                     <i class="fa fa-plus" ng-if="!showAddUser"></i>
                                     <i class="fa fa-minus" ng-if="showAddUser"></i>
-                                    Add User
+                                    Add Team or User
                                 </a>
                             </small>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                    <tr ng-repeat="team in story.teams">
+                        <td colspan="2">
+                            <i class="fa fa-sb-team"></i>
+                            {{ team.name }}
+                            <a class="close"
+                               ng-click="removeTeam(team)"
+                               ng-show="story.teams.length > 1 || story.users.length > 0">
+                                &times;
+                            </a>
+                        </td>
+                    </tr>
                     <tr ng-repeat="user in story.users">
                         <td colspan="2">
+                            <i class="fa fa-sb-user"></i>
                             {{user.full_name}}
                             <a class="close"
                                ng-click="removeUser(user)"
-                               ng-show="story.users.length > 1">
+                               ng-show="story.users.length > 1 || story.teams.length > 0">
                                 &times;
                             </a>
                         </td>
@@ -220,15 +232,15 @@
                         <td colspan="2">
                             <input id="user"
                                    type="text"
-                                   placeholder="Click to add a user"
+                                   placeholder="Click to add a team or user"
                                    ng-model="asyncUser"
                                    typeahead-wait-ms="200"
                                    typeahead-editable="false"
-                                   typeahead="user as user.full_name for user in
-                                              searchUsers($viewValue, story.users)"
+                                   typeahead="actor as actor.name for actor in
+                                              searchActors($viewValue, story.users, story.teams)"
                                    typeahead-loading="loadingUsers"
-                                   typeahead-input-formatter="formatUserName($model)"
-                                   typeahead-on-select="addUser($model)"
+                                   typeahead-on-select="addActor($model)"
+                                   typeahead-template-url="/inline/actor-typeahead-item.html"
                                    class="form-control input-sm"
                                     />
                         </td>
@@ -272,6 +284,14 @@
             </div>
         </div>
     </form>
+</script>
+
+
+<script type="text/ng-template" id="/inline/actor-typeahead-item.html">
+    <a tabindex="-1">
+        <i ng-class="'fa fa-sb-' + match.model.type"></i>&nbsp;
+        <span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
+    </a>
 </script>
 
 
