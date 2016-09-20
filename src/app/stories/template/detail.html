@@ -503,8 +503,13 @@
                 </button>
             </div>
         </div>
-        <div class="row" ng-show="showDetail">
-            <div class="col-xs-10 col-xs-offset-1">
+        <div class="row"ng-show="showDetail">
+            <div class="col-xs-10 col-xs-offset-1 task-notes">
+                <button class="btn btn-primary btn-xs pull-right"
+                        ng-show="!task.editing && task.link && isLoggedIn"
+                        ng-click="editNotes(task)">
+                    <i class="fa fa-pencil"></i> Edit
+                </button>
                 <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
                 <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
                 <form name="taskNotesForm" ng-show="task.editing">
@@ -543,19 +548,12 @@
                         </div>
                     </div>
                 </form>
-                <div class="row text-center" ng-show="!task.editing && !task.link && isLoggedIn">
+                <div class="row pull-right" ng-show="!task.editing && !task.link && isLoggedIn">
                     <button class="btn btn-primary btn-xs"
                             ng-click="editNotes(task)">
                         <i class="fa fa-pencil"></i> Add notes
                     </button>
                 </div>
-            </div>
-            <div class="col-xs-1" ng-show="!task.editing && task.link">
-                <button class="btn btn-primary btn-xs"
-                        ng-show="isLoggedIn"
-                        ng-click="editNotes(task)">
-                    <i class="fa fa-pencil"></i> Edit
-                </button>
             </div>
         </div>
     </td>
