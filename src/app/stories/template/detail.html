@@ -371,7 +371,7 @@
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/task_list.html">
     <h3>Tasks</h3>
-    <div ng-repeat="name in projectNames">
+    <div ng-repeat="name in projectNames | orderBy">
         <h4>
             <i class="fa fa-sb-project text-muted"></i>
             <a href="#!/project/{{ projects[name].id }}">{{ name }}</a>
