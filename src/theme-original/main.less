@@ -1,0 +1,53 @@
+/*
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+/**
+ * This is our main CSS theme file, which serves to link together all of our
+ * CSS/LESS dependencies and ensure they all go through minification/processing.
+ * Note that this is the only LESS file that is compiled - if you want a
+ * a specific stylesheet to be included, it must be linked here.
+ */
+// Library inclusions
+@import './bootstrap.less';
+@import './base/bootstrap/navbar.less';
+@import './font-awesome.less';
+
+// HighlightJS theme
+@import (less) './default.css';
+
+// ng-sortable styles
+@import (less) './ng-sortable.css';
+
+// Theme
+@import './theme.less';
+// Addons to the bootstrap theme.
+@import './base/bootstrap_addons.less';
+// Add our own custom icon font.
+@import './base/custom_icons.less';
+// Module specific styles
+@import './base/notification.less';
+@import './base/body.less';
+@import './base/logged_in.less';
+@import './base/auth.less';
+@import './base/discussion.less';
+@import './base/typography.less';
+@import './base/tag_input.less';
+@import './base/header.less';
+@import './base/icons.less';
+@import './base/edit_tasks.less';
+@import './base/boards_worklists.less';
+@import './base/calendar.less';
+@import './base/stories.less';

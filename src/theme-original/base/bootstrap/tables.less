@@ -1,0 +1,82 @@
+// A table style that only draws an outside border.
+table.table.table-outlined {
+    border: 1px solid @table-border-color
+}
+
+// A table that takes the table-condensed style one step further.
+table.table.table-supercondensed {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: (@table-condensed-cell-padding / 2);
+            }
+        }
+    }
+}
+
+// A table style that retains the block positioning, but otherwise
+// strips out all borders.
+table.table.table-clean {
+    > thead,
+    > tbody,
+    > tfoot {
+        border: none;
+        > tr {
+            > th,
+            > td {
+                border: none;
+            }
+        }
+    }
+}
+
+// Any striped table immediately following a tab list should not have a top
+// border.
+.nav-tabs + .table-striped {
+    tr:first-child {
+        td {
+            border-top: none;
+        }
+    }
+}
+
+.table-striped {
+    > tbody > tr:nth-of-type(even) {
+        background-color: @white;
+    }
+}
+
+.table-fixed {
+    word-wrap: break-word;
+    table-layout: fixed;
+}
+
+.table-dark {
+    background-color: #f9f9f9 !important;
+}
+
+.table-container {
+    max-height: 65vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+td.center-vertical {
+    vertical-align: middle !important;
+}
+
+tr.selectable:hover {
+    cursor: pointer;
+}
+
+tr.selected-row {
+    background-color: @brand-primary !important;
+    color: @navbar-default-color;
+}
+
+.subtable {
+    margin-bottom: 0;
+}

@@ -1,0 +1,262 @@
+/**
+ * A side-locked navbar.
+ */
+.navbar {
+
+    .pull-right {
+        margin-right: 5px;
+    }
+
+    &.navbar-fixed-side {
+
+        // Add this class if you want to add an offset for the header.
+        &.navbar-fixed-side-header-offset {
+            top: @navbar-height;
+        }
+        // Add this class if you want to add an offset for the footer.
+        &.navbar-fixed-side-footer-offset {
+            bottom: @navbar-height;
+        }
+
+        @media (max-width: @screen-xs-max) {
+            width: @navbar-fixed-side-width-xs;
+
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-xs + @navbar-fixed-side-submenu-width-xs);
+            }
+
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                left: -40px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
+        }
+        @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+            width: @navbar-fixed-side-width-sm;
+
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-sm + @navbar-fixed-side-submenu-width-sm);
+            }
+
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: -40px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
+        }
+        @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+            width: @navbar-fixed-side-width-md;
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-md + @navbar-fixed-side-submenu-width-md);
+            }
+
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: -40px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
+        }
+        @media (min-width: @screen-lg-min) {
+            width: @navbar-fixed-side-width-lg;
+            &.navbar-fixed-side-has-submenu {
+                width: (@navbar-fixed-side-width-lg + @navbar-fixed-side-submenu-width-lg);
+            }
+
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+
+            .nav-submenu {
+                position: absolute;
+                top: 0px;
+                right: -40px;
+                bottom: 0px;
+                width: @navbar-fixed-side-submenu-width-md;
+            }
+        }
+
+        .nav-main {
+            padding: 5px 0px 5px 0px;
+            position: relative;
+            min-height: 100%;
+        }
+
+        .nav-submenu {
+            display: none;
+            background-color: @navbar-inverse-link-active-bg;
+
+            .nav.nav-pills {
+                > li {
+                    margin-right: 0px;
+                    margin-left: 0px;
+
+                    > a {
+                        border-radius: 0px;
+                        background: none;
+
+                        &:hover {
+                            background: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        overflow: auto;
+        border-radius: 0px;
+        position: fixed;
+        margin: 0px;
+
+        &.navbar-inverse .nav {
+
+            > li {
+
+                margin-right: 5px;
+                margin-left: 5px;
+
+                > a {
+                    color: @navbar-inverse-link-color;
+                    background: @navbar-inverse-bg;
+                    border-color: @navbar-inverse-border;
+                    padding: 10px 5px;
+                }
+
+                > a:hover {
+                    color: @navbar-inverse-link-hover-color;
+                    background: @navbar-inverse-link-hover-bg;
+                    border-color: @navbar-inverse-border;
+                }
+                > a:active {
+                    color: @navbar-inverse-link-active-color;
+                    background: @navbar-inverse-link-active-bg;
+                    border-color: @navbar-inverse-border;
+                }
+
+                &.active {
+                    > a {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+
+                    > a:hover {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+                    > a:active {
+                        color: @navbar-inverse-link-active-color;
+                        background: @navbar-inverse-link-active-bg;
+                    }
+                }
+            }
+
+            li.active {
+                background-color: @navbar-inverse-bg;
+            }
+        }
+
+        a {
+            color: @navbar-inverse-link-color;
+
+            &:hover {
+                color: @navbar-inverse-link-hover-color;
+            }
+
+            &:active {
+                color: @navbar-inverse-link-active-color;
+            }
+        }
+
+        .nav-bottom {
+            position: absolute;
+            bottom: 0px;
+        }
+
+        &.navbar-fixed-side-has-submenu {
+
+            .nav-submenu {
+                display: inherit;
+            }
+
+            @media (max-width: @screen-xs-max) {
+                .nav-main {
+                    margin-left: @navbar-fixed-side-submenu-width-xs;
+
+                    a {
+                        border-top-left-radius: 0px;
+                        border-bottom-left-radius: 0px;
+                    }
+
+                    li {
+                        &.active {
+                            margin-left: 0px;
+
+                            a {
+                                padding-left: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+            @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-sm;
+                }
+            }
+            @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-md;
+                }
+            }
+            @media (min-width: @screen-lg-min) {
+                .nav-main {
+                    margin-right: @navbar-fixed-side-submenu-width-lg;
+                }
+            }
+
+            @media (min-width: @screen-sm-min) {
+                .nav-main {
+                    li {
+                        &.active {
+                            margin-right: 0px;
+
+                            a {
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    a {
+                        border-top-right-radius: 0px;
+                        border-bottom-right-radius: 0px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Stacked pills
+.nav-stacked {
+    > li {
+        + li {
+            margin-top: 5px;
+        }
+    }
+}
