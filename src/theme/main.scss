@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+/**
+ * This is our main CSS theme file, which serves to link together all of our
+ * CSS/sass dependencies and ensure they all go through minification/processing.
+ * Note that this is the only scss file that is compiled - if you want a
+ * a specific stylesheet to be included, it must be linked here.
+ */
+
+// Library inclusions
+@import './theme_variables.scss';
+@import "_bootstrap.scss";
+@import 'font-awesome.scss';
+
+// HighlightJS theme
+@import 'default';
+
+// ng-sortable styles
+@import 'ng-sortable';
+
+// Theme
+@import './theme.scss';
+@import './base/bootstrap/navbar.scss';
+
+// Addons to the bootstrap theme.
+@import './base/bootstrap_addons.scss';
+
+// Add our own custom icon font.
+@import './base/custom_icons.scss';
+
+// Module specific styles
+@import './base/notification.scss';
+@import './base/body.scss';
+@import './base/logged_in.scss';
+@import './base/auth.scss';
+@import './base/discussion.scss';
+@import './base/typography.scss';
+@import './base/tag_input.scss';
+@import './base/header.scss';
+@import './base/icons.scss';
+@import './base/edit_tasks.scss';
+@import './base/boards_worklists.scss';
+@import './base/calendar.scss';
+@import './base/stories.scss';
