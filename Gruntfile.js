@@ -144,26 +144,21 @@ module.exports = function (grunt) {
          * Note: We're using LessCSS here because SASS requires ruby-compass,
          * and cannot be easily installed with npm.
          */
-        less: {
+
+        sass: {
             options: {
-                paths: function(mainPath) {
-                    return [
-                        mainPath,
-                        dir.theme + '/custom/',
-                        dir.theme + '/storyboard/',
-                        dir.bower + '/bootstrap/less/',
-                        dir.bower + '/font-awesome/less/',
-                        dir.bower + '/highlightjs/styles/',
-                        dir.bower + '/ng-sortable/dist/'
-                    ];
-                },
-                cleancss: true,
-                strictMath: true,
-                strictUnits: true
+                includePaths: [
+                    dir.theme + '/custom/',
+                    dir.theme + '/storyboard/',
+                    dir.bower + '/bootstrap-sass/assets/stylesheets',
+                    dir.bower + '/font-awesome/scss/',
+                    dir.bower + '/highlightjs/styles/',
+                    dir.bower + '/ng-sortable/dist/'
+                ]
             },
             theme: {
                 files: {
-                    'dist/styles/main.css': dir.theme + '/main.less'
+                    'dist/styles/main.css': dir.theme + '/main.scss'
                 }
             }
         },
@@ -433,11 +428,11 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['concat']
             },
-            less: {
+            sass: {
                 files: [
-                    dir.theme + '/**/*.less'
+                    dir.theme + '/**/*.scss'
                 ],
-                tasks: ['less:theme']
+                tasks: ['sass:theme']
             },
             copy: {
                 files: [
@@ -565,7 +560,7 @@ module.exports = function (grunt) {
         'template',
         'useminPrepare',
         'concat',
-        'less',
+        'sass',
         'imagemin',
         'html2js',
         'copy:dist',
