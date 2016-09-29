@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2015 Codethink Limited
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -50,7 +51,7 @@
     padding: 10px;
     margin: 0px 10px;
     background-color: #ddd;
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
     border: 1px solid #bbb;
     width: 240px;
     display: inline-block;
@@ -63,17 +64,16 @@
 }
 
 .kanban-lane-clickable {
-    .kanban-lane;
-
+    @extend .kanban-lane;
     text-align: center !important;
-    color: @link-color;
+    color: $link-color;
     text-decoration: none;
 
     &:hover,
     &:focus {
         background-color: #bbb;
-        color: @link-hover-color;
-        text-decoration: @link-hover-decoration;
+        color: $link-hover-color;
+        text-decoration: $link-hover-decoration;
         cursor: pointer;
     }
 }
@@ -91,7 +91,7 @@
 }
 
 .kanban-lane-contents-readonly {
-    .kanban-lane-contents;
+    @extend .kanban-lane-contents;
     margin-bottom: 0px;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .worklist {
-    .kanban-lane;
+    @extend .kanban-lane;
     width: 100%;
 
     & .kanban-lane-contents {
@@ -148,7 +148,7 @@
     margin: 5px 0px;
     background-color: #fff;
     text-align: left;
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
     border: 1px solid #bbb;
     & user-typeahead > .form-group {
         margin-bottom: 0px;
@@ -160,18 +160,18 @@
 }
 
 .kanban-card-due {
-    border-right: @border-radius-base solid #555;
+    border-right: $border-radius-base solid #555;
     & .target-date {
         font-weight: bold;
     }
 }
 
 .kanban-card-late {
-    border-right: @border-radius-base solid #555;
+    border-right: $border-radius-base solid #555;
     & .target-date {
         font-weight: bold;
-        color: @navbar-default-color;
-        background-color: @brand-primary;
+        color: $navbar-default-color;
+        background-color: $brand-primary;
         border-radius: 10px;
         margin: 0px;
 
@@ -180,14 +180,13 @@
         }
 
         & .text-muted {
-            color: @navbar-default-color;
+            color: $navbar-default-color;
         }
     }
 }
 
 .kanban-card-readonly {
-    .kanban-card;
-
+    @extend .kanban-card;
     cursor: inherit;
 }
 
@@ -199,7 +198,7 @@
     &:hover {
         cursor: pointer;
         & a {
-            color: darken(@brand-primary, 10%);
+            color: darken($brand-primary, 10%);
             text-decoration: underline;
         }
     }
@@ -248,13 +247,13 @@
 };
 
 /* TODO: declare this somewhere it can be overridden */
-@card-detail-item-hover: #f6f6f6;
+$card-detail-item-hover: #f6f6f6;
 
 .card-detail-item {
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
     padding: 10px 15px;
     &:hover {
-        background-color: @card-detail-item-hover;
+        background-color: $card-detail-item-hover;
         cursor: pointer;
     }
 
@@ -271,7 +270,7 @@
     }
 
     &.editing {
-        background-color: @card-detail-item-hover;
+        background-color: $card-detail-item-hover;
     }
 
     & .dropdown-menu {
@@ -298,8 +297,8 @@
             cursor: pointer;
         }
         & tr.selected {
-            background-color: @brand-primary;
-            color: @navbar-default-color;
+            background-color: $brand-primary;
+            color: $navbar-default-color;
         }
     }
 }
