@@ -435,7 +435,8 @@
                 <div>
                     <a href ng-click="showDetail = !showDetail">
                         <i class="fa fa-caret-down" ng-show="showDetail"></i>
-                        <i class="fa fa-caret-right" ng-show="!showDetail"></i>
+                        <i class="fa fa-caret-right" ng-show="!showDetail && (task.link || isLoggedIn)"></i>
+
                     </a>
                     <strong>{{ task.id }}</strong>
                     &nbsp;
