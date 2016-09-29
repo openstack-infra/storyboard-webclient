@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -20,13 +21,13 @@
  * we can identify them easily.
  */
 
-.@{fa-css-prefix}-sb-user:before { content: @fa-var-user; }
-.@{fa-css-prefix}-sb-task:before { content: @fa-var-tasks; }
-.@{fa-css-prefix}-sb-story:before { content: @fa-var-list-ul; }
-.@{fa-css-prefix}-sb-project:before { content: @fa-var-cube; }
-.@{fa-css-prefix}-sb-project-group:before { content: @fa-var-cubes; }
-.@{fa-css-prefix}-sb-team:before { content: @fa-var-users; }
-.@{fa-css-prefix}-sb-admin:before { content: @fa-var-gears; }
-.@{fa-css-prefix}-sb-profile:before { content: @fa-var-user; }
-.@{fa-css-prefix}-sb-profile-preferences:before { content: @fa-var-gear; }
-.@{fa-css-prefix}-sb-profile-tokens:before { content: @fa-var-key; }
+.fa-sb-user:before { content: $fa-var-user; }
+.fa-sb-task:before { content: $fa-var-tasks; }
+.fa-sb-story:before { content: $fa-var-list-ul; }
+.fa-sb-project:before { content: $fa-var-cube; }
+.fa-sb-project-group:before { content: $fa-var-cubes; }
+.fa-sb-team:before { content: $fa-var-users; }
+.fa-sb-admin:before { content: $fa-var-gears; }
+.fa-sb-profile:before { content: $fa-var-user; }
+.fa-sb-profile-preferences:before { content: $fa-var-gear; }
+.fa-sb-profile-tokens:before { content: $fa-var-key; }

@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Codethink Ltd.
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -15,17 +16,11 @@
  */
 
 /**
- * CSS Overrides specifically for when we're logged in.
+ *  Story view styles
  */
-.logged-in {
 
-    // An editable field, only accessible when you're logged in
-    .editable {
-        cursor: pointer;
+/* "Related Worklists" table style */
 
-        &:hover {
-            background-color: @gray-lighter;
-        }
-    }
-
+.position-label {
+    margin-left: 5px;
 }
