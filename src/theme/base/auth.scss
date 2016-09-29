@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -13,22 +14,12 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
- * Styles specific to the overall application.
+ * Styles specific to the auth pages.
  */
-
-ul[typeahead-popup] {
-    z-index: 2000;
-
-    a.header-criteria-item {
-        white-space: nowrap;
-        max-width: 300px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .active a .text-muted {
-        color: @dropdown-link-active-color;
-    }
+a.auth-provider.btn {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
 }
-

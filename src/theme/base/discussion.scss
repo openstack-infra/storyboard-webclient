@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -21,9 +22,9 @@
     position: relative;
 
     .discussion-comment-none {
-        border-top: 1px solid @table-border-color;
-        border-bottom: 1px solid @table-border-color;
-        padding: @table-cell-padding;
+        border-top: 1px solid $table-border-color;
+        border-bottom: 1px solid $table-border-color;
+        padding: $table-cell-padding;
         margin: 0px;
     }
 
@@ -33,13 +34,13 @@
         margin-bottom: -22px;
 
         .discussion-event-header {
-            border-bottom: 1px solid @table-border-color;
-            background-color: @gray-lighter;
-            padding: @table-condensed-cell-padding;
+            border-bottom: 1px solid $table-border-color;
+            background-color: $gray-lighter;
+            padding: $table-condensed-cell-padding;
         }
 
         .discussion-event {
-            border: 1px solid @table-border-color;
+            border: 1px solid $table-border-color;
             border-radius: 5px;
             padding: 2px 5px 2px 5px;
             display: inline-block;
@@ -57,14 +58,14 @@
                 height: 0;
                 width: 0;
                 border: 7px solid transparent;
-                border-right: 7px solid @table-border-color;
+                border-right: 7px solid $table-border-color;
             }
         }
 
         .discussion-event-important {
-            .discussion-event;
-            background-color: @gray-lighter;
-            padding: @table-condensed-cell-padding;
+            @extend .discussion-event;
+            background-color: $gray-lighter;
+            padding: $table-condensed-cell-padding;
             top: -35px;
 
             &::before {
@@ -73,7 +74,7 @@
         }
 
         .discussion-event-complex {
-            .discussion-event-important;
+            @extend .discussion-event-important;
             padding: 0;
             left: 32px;
             top: -36px;
@@ -89,10 +90,10 @@
             height: 40px;
             z-index: 999;
             vertical-align: middle !important;
-            background-color: @brand-primary;
-            color: @navbar-default-brand-color;
+            background-color: $brand-primary;
+            color: $navbar-default-brand-color;
             border-radius: 20px;
-            border: 3px solid @table-border-color;
+            border: 3px solid $table-border-color;
             margin-left: -20px;
             & i {
                 position: relative;
@@ -105,20 +106,20 @@
         }
 
         .discussion-comment-icon-warning {
-            .discussion-comment-icon-primary;
+            @extend .discussion-comment-icon-primary;
             background-color: #f0ad4e;
         }
 
         .discussion-comment-icon {
-            .discussion-comment-icon-primary;
+            @extend .discussion-comment-icon-primary;
             width: 32px;
             height: 32px;
-            border: 2px solid @table-border-color;
-            background-color: @white;
+            border: 2px solid $table-border-color;
+            background-color: $white;
             margin: 0 14px 0 -16px;
             padding: 5px;
             & i {
-                .text-muted;
+                @extend .text-muted;
             }
         }
 
@@ -127,7 +128,7 @@
             margin: 0;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
-            background-color: @white;
+            background-color: $white;
 
             & blockquote {
                 margin: 0 0 10px;
@@ -137,18 +138,18 @@
         }
 
         & div.edit-footer {
-            padding: @table-cell-padding;
+            padding: $table-cell-padding;
         }
 
         > p {
-            padding: @table-cell-padding;
+            padding: $table-cell-padding;
             padding-bottom: 0px;
             margin: 0 10px;
         }
     }
 
     .discussion-comment-important {
-        .discussion-comment;
+        @extend .discussion-comment;
         margin-bottom: -30px;
 
         &.discussion-comment-active {
@@ -167,7 +168,7 @@
         left: 18px;
         height: 100%;
         width: 4px;
-        background: @gray-lighter;
+        background: $gray-lighter;
     }
 }
 

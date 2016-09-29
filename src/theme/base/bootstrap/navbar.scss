@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) 2016 Hewlett-Packard Development Company, L.P.
+ *
  * A side-locked navbar.
  */
 .navbar {
@@ -11,18 +13,18 @@
 
         // Add this class if you want to add an offset for the header.
         &.navbar-fixed-side-header-offset {
-            top: @navbar-height;
+            top: $navbar-height;
         }
         // Add this class if you want to add an offset for the footer.
         &.navbar-fixed-side-footer-offset {
-            bottom: @navbar-height;
+            bottom: $navbar-height;
         }
 
-        @media (max-width: @screen-xs-max) {
-            width: @navbar-fixed-side-width-xs;
+        @media (max-width: $screen-xs-max) {
+            width: $navbar-fixed-side-width-xs;
 
             &.navbar-fixed-side-has-submenu {
-                width: (@navbar-fixed-side-width-xs + @navbar-fixed-side-submenu-width-xs);
+                width: ($navbar-fixed-side-width-xs + $navbar-fixed-side-submenu-width-xs);
             }
 
             top: 0px;
@@ -34,14 +36,14 @@
                 top: 0px;
                 left: -40px;
                 bottom: 0px;
-                width: @navbar-fixed-side-submenu-width-md;
+                width: $navbar-fixed-side-submenu-width-md;
             }
         }
-        @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-            width: @navbar-fixed-side-width-sm;
+        @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+            width: $navbar-fixed-side-width-sm;
 
             &.navbar-fixed-side-has-submenu {
-                width: (@navbar-fixed-side-width-sm + @navbar-fixed-side-submenu-width-sm);
+                width: ($navbar-fixed-side-width-sm + $navbar-fixed-side-submenu-width-sm);
             }
 
             top: 0px;
@@ -53,13 +55,13 @@
                 top: 0px;
                 right: -40px;
                 bottom: 0px;
-                width: @navbar-fixed-side-submenu-width-md;
+                width: $navbar-fixed-side-submenu-width-md;
             }
         }
-        @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-            width: @navbar-fixed-side-width-md;
+        @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+            width: $navbar-fixed-side-width-md;
             &.navbar-fixed-side-has-submenu {
-                width: (@navbar-fixed-side-width-md + @navbar-fixed-side-submenu-width-md);
+                width: ($navbar-fixed-side-width-md + $navbar-fixed-side-submenu-width-md);
             }
 
             top: 0px;
@@ -71,13 +73,13 @@
                 top: 0px;
                 right: -40px;
                 bottom: 0px;
-                width: @navbar-fixed-side-submenu-width-md;
+                width: $navbar-fixed-side-submenu-width-md;
             }
         }
-        @media (min-width: @screen-lg-min) {
-            width: @navbar-fixed-side-width-lg;
+        @media (min-width: $screen-lg-min) {
+            width: $navbar-fixed-side-width-lg;
             &.navbar-fixed-side-has-submenu {
-                width: (@navbar-fixed-side-width-lg + @navbar-fixed-side-submenu-width-lg);
+                width: ($navbar-fixed-side-width-lg + $navbar-fixed-side-submenu-width-lg);
             }
 
             top: 0px;
@@ -89,7 +91,7 @@
                 top: 0px;
                 right: -40px;
                 bottom: 0px;
-                width: @navbar-fixed-side-submenu-width-md;
+                width: $navbar-fixed-side-submenu-width-md;
             }
         }
 
@@ -101,7 +103,7 @@
 
         .nav-submenu {
             display: none;
-            background-color: @navbar-inverse-link-active-bg;
+            background-color: $navbar-inverse-link-active-bg;
 
             .nav.nav-pills {
                 > li {
@@ -133,54 +135,54 @@
                 margin-left: 5px;
 
                 > a {
-                    color: @navbar-inverse-link-color;
-                    background: @navbar-inverse-bg;
-                    border-color: @navbar-inverse-border;
+                    color: $navbar-inverse-link-color;
+                    background: $navbar-inverse-bg;
+                    border-color: $navbar-inverse-border;
                     padding: 10px 5px;
                 }
 
                 > a:hover {
-                    color: @navbar-inverse-link-hover-color;
-                    background: @navbar-inverse-link-hover-bg;
-                    border-color: @navbar-inverse-border;
+                    color: $navbar-inverse-link-hover-color;
+                    background: $navbar-inverse-link-hover-bg;
+                    border-color: $navbar-inverse-border;
                 }
                 > a:active {
-                    color: @navbar-inverse-link-active-color;
-                    background: @navbar-inverse-link-active-bg;
-                    border-color: @navbar-inverse-border;
+                    color: $navbar-inverse-link-active-color;
+                    background: $navbar-inverse-link-active-bg;
+                    border-color: $navbar-inverse-border;
                 }
 
                 &.active {
                     > a {
-                        color: @navbar-inverse-link-active-color;
-                        background: @navbar-inverse-link-active-bg;
+                        color: $navbar-inverse-link-active-color;
+                        background: $navbar-inverse-link-active-bg;
                     }
 
                     > a:hover {
-                        color: @navbar-inverse-link-active-color;
-                        background: @navbar-inverse-link-active-bg;
+                        color: $navbar-inverse-link-active-color;
+                        background: $navbar-inverse-link-active-bg;
                     }
                     > a:active {
-                        color: @navbar-inverse-link-active-color;
-                        background: @navbar-inverse-link-active-bg;
+                        color: $navbar-inverse-link-active-color;
+                        background: $navbar-inverse-link-active-bg;
                     }
                 }
             }
 
             li.active {
-                background-color: @navbar-inverse-bg;
+                background-color: $navbar-inverse-bg;
             }
         }
 
         a {
-            color: @navbar-inverse-link-color;
+            color: $navbar-inverse-link-color;
 
             &:hover {
-                color: @navbar-inverse-link-hover-color;
+                color: $navbar-inverse-link-hover-color;
             }
 
             &:active {
-                color: @navbar-inverse-link-active-color;
+                color: $navbar-inverse-link-active-color;
             }
         }
 
@@ -195,9 +197,9 @@
                 display: inherit;
             }
 
-            @media (max-width: @screen-xs-max) {
+            @media (max-width: $screen-xs-max) {
                 .nav-main {
-                    margin-left: @navbar-fixed-side-submenu-width-xs;
+                    margin-left: $navbar-fixed-side-submenu-width-xs;
 
                     a {
                         border-top-left-radius: 0px;
@@ -215,23 +217,23 @@
                     }
                 }
             }
-            @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+            @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
                 .nav-main {
-                    margin-right: @navbar-fixed-side-submenu-width-sm;
+                    margin-right: $navbar-fixed-side-submenu-width-sm;
                 }
             }
-            @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+            @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
                 .nav-main {
-                    margin-right: @navbar-fixed-side-submenu-width-md;
+                    margin-right: $navbar-fixed-side-submenu-width-md;
                 }
             }
-            @media (min-width: @screen-lg-min) {
+            @media (min-width: $screen-lg-min) {
                 .nav-main {
-                    margin-right: @navbar-fixed-side-submenu-width-lg;
+                    margin-right: $navbar-fixed-side-submenu-width-lg;
                 }
             }
 
-            @media (min-width: @screen-sm-min) {
+            @media (min-width: $screen-sm-min) {
                 .nav-main {
                     li {
                         &.active {
