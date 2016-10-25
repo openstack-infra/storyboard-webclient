@@ -35,7 +35,10 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                 template: '<div ui-view></div>'
             })
             .state('sb.story.list', {
-                url: '/list',
+                url: '/list?q&status&tags&project_group_id&project_id&assignee_id',
+                params: {
+                    'status': 'active'
+                },
                 templateUrl: 'app/stories/template/list.html',
                 controller: 'StoryListController'
             })
