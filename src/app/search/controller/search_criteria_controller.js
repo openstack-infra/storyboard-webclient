@@ -21,7 +21,7 @@
  * may be property filters (title = foo) or resource filters (story_id = 22).
  */
 angular.module('sb.search').controller('SearchCriteriaController',
-    function ($log, $q, $scope, Criteria) {
+    function ($log, $q, $scope, $location, $injector, Criteria) {
         'use strict';
 
         /**
@@ -55,6 +55,18 @@ angular.module('sb.search').controller('SearchCriteriaController',
             $scope.init();
         });
 
+        $scope.rewriteQueryString = function() {
+            var params = {};
+            angular.forEach(resourceTypes, function(resourceName) {
+                var resource = $injector.get(resourceName);
+                angular.forEach($scope.criteria, function() {
+                    var criteriaMap = resource.criteriaMap($scope.criteria);
+                    angular.extend(params, criteriaMap);
+                });
+            });
+            $location.search(params);
+        };
+
         /**
          * When a criteria is added, make sure we remove all previous criteria
          * that have the same type.
@@ -72,6 +84,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
                     $scope.criteria.splice(i, 1);
                 }
             }
+            $scope.rewriteQueryString();
         };
 
         /**
@@ -82,6 +95,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
             if (idx > -1) {
                 $scope.criteria.splice(idx, 1);
             }
+            $scope.rewriteQueryString();
         };
 
         /**
