@@ -472,9 +472,8 @@
             </div>
             <!-- Review link should go here once implemented in the API -->
         </div>
-        <div class="row button-row" ng-show="showDetail">
-            <div class="col-xs-1"></div>
-            <div class="col-xs-10">
+        <div class="padded-row" ng-show="showDetail">
+            <div class="col-xs-10 col-xs-offset-1">
                 <project-typeahead
                         auto-focus="false"
                         ng-model="task.project_id"
@@ -504,7 +503,7 @@
                 </button>
             </div>
         </div>
-        <div class="row"ng-show="showDetail">
+        <div class="padded-row" ng-show="showDetail">
             <div class="col-xs-10 col-xs-offset-1 task-notes"
                  ng-show="isLoggedIn">
                 <button class="btn btn-primary btn-xs pull-right"
