@@ -19,8 +19,7 @@
         <div class="col-xs-12">
             <h1>StoryBoard</h1>
 
-            <p class="lead">A task tracking system for issues in interrelated
-               projects.</p>
+            <p class="lead">The cross-project task-tracker!</p>
 
         </div>
     </div>
