@@ -356,7 +356,7 @@
             <div as-sortable-item-handle>
                 <span ng-if="!lane.worklist.editing">
                     <a ng-class="{'kanban-lane-title': !!lane.worklist.title}"
-                       href="/#!/worklist/{{lane.worklist.id}}">
+                       href="#!/worklist/{{lane.worklist.id}}">
                         {{ lane.worklist.title }}
                     </a>
                     <a href ng-click="editWorklist(lane.worklist)">
@@ -389,7 +389,7 @@
              ng-if="!lane.worklist.archived"
              ng-class="{'kanban-lane-automatic': lane.worklist.automatic}">
             <a class="kanban-lane-title"
-               href="/#!/worklist/{{lane.worklist.id}}">
+               href="#!/worklist/{{lane.worklist.id}}">
                 {{ lane.worklist.title }}
             </a>
             <div ng-include src="'app/boards/template/board_contents/kanban_lane_contents.html'"
