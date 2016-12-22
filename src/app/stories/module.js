@@ -27,6 +27,9 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
         // URL Defaults.
         $urlRouterProvider.when('/story', '/story/list');
 
+        var queryParams = 'q&status&tags&project_group_id&'
+            + 'project_id&assignee_id';
+
         // Set our page routes.
         $stateProvider
             .state('sb.story', {
@@ -35,7 +38,10 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                 template: '<div ui-view></div>'
             })
             .state('sb.story.list', {
-                url: '/list',
+                url: '/list?' + queryParams,
+                params: {
+                    'status': 'active'
+                },
                 templateUrl: 'app/stories/template/list.html',
                 controller: 'StoryListController'
             })
