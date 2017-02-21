@@ -26,7 +26,7 @@ angular.module('sb.search',
         // Set our page routes.
         $stateProvider
             .state('sb.search', {
-                url: '/search?q',
+                url: '/search',
                 templateUrl: 'app/search/template/index.html',
                 controller: 'SearchController'
             });
