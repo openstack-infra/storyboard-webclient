@@ -398,20 +398,6 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt open
-         *
-         * Opens your default web browser to the specified URL. This is mostly
-         * used when running server, so that the developer doesn't have to know
-         * what URL/port the dev box is running on.
-         */
-        open: {
-            server: {
-                url: 'http://localhost:9000'
-            }
-
-        },
-
-        /**
          * grunt watch
          *
          * This task is run with grunt server, in order to automatically update
@@ -608,7 +594,6 @@ module.exports = function (grunt) {
         'clean',
         'compile',
         'package',
-        'open',
         'configureProxies:dist',
         'connect:dist'
     ]);
@@ -623,7 +608,6 @@ module.exports = function (grunt) {
         'compile',
         'configureProxies:livereload',
         'connect:livereload',
-        'open',
         'watch'
     ]);
 
