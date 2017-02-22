@@ -623,7 +623,6 @@ module.exports = function (grunt) {
         'compile',
         'configureProxies:livereload',
         'connect:livereload',
-        'open',
         'watch'
     ]);
 
