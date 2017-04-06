@@ -18,7 +18,7 @@
  * This controller provides initialization logic for the generic search view.
  */
 angular.module('sb.search').controller('SearchController',
-    function ($log, $q, $scope, Criteria, $location) {
+    function ($log, $q, $scope, Criteria, $location, SearchHelper) {
         'use strict';
 
         /**
@@ -40,10 +40,6 @@ angular.module('sb.search').controller('SearchController',
          * If a 'q' exists in the state params, go ahead and add it.
          */
         var params = $location.search();
-        if (params.hasOwnProperty('q') && !!params.q) {
-            $scope.defaultCriteria.push(
-                Criteria.create('Text', params.q)
-            );
-        }
+        SearchHelper.parseParameters(params, $scope.defaultCriteria)
     }
 );

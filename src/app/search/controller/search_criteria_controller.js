@@ -80,9 +80,9 @@ angular.module('sb.search').controller('SearchCriteriaController',
                     continue;
                 }
 
-                if (item.type === cItem.type) {
-                    $scope.criteria.splice(i, 1);
-                }
+                //if (item.type === cItem.type && item.type != "Tags") {
+                //    $scope.criteria.splice(i, 1);
+                //}
             }
             $scope.rewriteQueryString();
         };
@@ -92,9 +92,9 @@ angular.module('sb.search').controller('SearchCriteriaController',
          */
         $scope.removeCriteria = function (item) {
             var idx = $scope.criteria.indexOf(item);
-            if (idx > -1) {
-                $scope.criteria.splice(idx, 1);
-            }
+            //if (idx > -1) {
+            //    $scope.criteria.splice(idx, 1);
+            //}
             $scope.rewriteQueryString();
         };
 
