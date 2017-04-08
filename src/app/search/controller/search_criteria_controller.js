@@ -80,7 +80,7 @@ angular.module('sb.search').controller('SearchCriteriaController',
                     continue;
                 }
 
-                if (item.type === cItem.type) {
+                if (item.type === cItem.type && item.type !== 'Tags') {
                     $scope.criteria.splice(i, 1);
                 }
             }
