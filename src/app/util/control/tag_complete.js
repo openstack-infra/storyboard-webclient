@@ -232,7 +232,7 @@ angular.module('sb.util').directive('tagComplete',
                     var selectedTags = $scope.tagCompleteTags || [];
 
                     if (selectedTags.length > 0 && !$scope.newTagName) {
-                        selectedTags.pop();
+                        $scope.tagRemoveCallback(selectedTags.pop());
                         return true;
                     }
                 };
