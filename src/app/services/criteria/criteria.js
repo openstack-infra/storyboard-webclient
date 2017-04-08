@@ -183,7 +183,15 @@ angular.module('sb.services').service('Criteria',
 
                     criteria.forEach(function (item) {
                         if (parameterMap.hasOwnProperty(item.type)) {
-                            params[parameterMap[item.type]] = item.value;
+                            if (parameterMap[item.type] === 'tags') {
+                                if (!('tags' in params)) {
+                                    params['tags'] = [item.value];
+                                } else {
+                                    params['tags'].push(item.value);
+                                }
+                            } else {
+                                params[parameterMap[item.type]] = item.value;
+                            }
                         }
                     });
                     return params;
