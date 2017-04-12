@@ -40,7 +40,7 @@
                                    required
                                    ng-pattern="PROJECT_NAME_REGEX"
                                    maxlength="100"
-                                   ng-minlength="5"
+                                   ng-minlength="3"
                                    placeholder="Project Name">
                             <span class="form-control-feedback"
                                   ng-show="projectForm.name.$invalid">
@@ -64,7 +64,7 @@
                                     contain two or more sequential separators.
                                 </span>
                                 <span ng-show="projectForm.name.$error.minlength">
-                                    A project name must have at least 5 characters.
+                                    A project name must have at least 3 characters.
                                 </span>
                             </div>
                         </div>

@@ -76,7 +76,7 @@
                                    ng-model="projectGroup.name"
                                    required
                                    maxlength="100"
-                                   ng-minlength="5"
+                                   ng-minlength="3"
                                    ng-disabled="isSaving"
                                    placeholder="URL Stub for the project group">
                             </input>
@@ -86,7 +86,7 @@
                                     A project group URL is required.
                                 </span>
                                 <span ng-show="projectGroupForm.name.$error.minlength">
-                                    A project group URL must have at least 5 characters.
+                                    A project group URL must have at least 3 characters.
                                 </span>
                             </div>
 
