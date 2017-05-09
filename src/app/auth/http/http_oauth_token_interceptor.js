@@ -19,7 +19,7 @@
  * and reissued when needed.
  */
 angular.module('sb.auth').factory('httpOAuthTokenInterceptor',
-    function (AccessToken, $injector, $q, $log) {
+    function (AccessToken, $injector, $q, $log, $window) {
 
         'use strict';
 
@@ -90,6 +90,7 @@ angular.module('sb.auth').factory('httpOAuthTokenInterceptor',
                 },
                 function () {
                     AccessToken.clear();
+                    $window.location.reload();
                 }
             ).finally(function () {
                 // Inject the token, whether or not it exists, back into the
