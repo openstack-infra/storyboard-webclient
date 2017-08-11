@@ -20,7 +20,8 @@
  * rather than a browse (exclusive) approach.
  */
 angular.module('sb.projects').controller('ProjectListController',
-    function ($scope, $modal, isSuperuser, SubscriptionList, CurrentUser) {
+    function ($scope, $modal, isSuperuser, SubscriptionList, CurrentUser,
+              $location, SearchHelper) {
         'use strict';
 
         // inject superuser flag to properly adjust UI.
@@ -31,6 +32,9 @@ angular.module('sb.projects').controller('ProjectListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        var params = $location.search();
+        SearchHelper.parseParameters(params, $scope.defaultCriteria);
 
         /**
          * Launches the add-project modal.

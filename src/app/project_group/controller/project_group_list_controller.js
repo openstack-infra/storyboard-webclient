@@ -18,7 +18,8 @@
  * A Project
  */
 angular.module('sb.project_group').controller('ProjectGroupListController',
-    function ($scope, $modal, SubscriptionList, CurrentUser, $state) {
+    function ($scope, $modal, SubscriptionList, CurrentUser, $state,
+              $location, SearchHelper) {
         'use strict';
 
         // search results must be of type "ProjectGroup"
@@ -26,6 +27,9 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
 
         // Projects have no default criteria
         $scope.defaultCriteria = [];
+
+        var params = $location.search();
+        SearchHelper.parseParameters(params, $scope.defaultCriteria);
 
         /**
          * Create a new project-group.
