@@ -150,11 +150,21 @@
     text-align: left;
     border-radius: @border-radius-base;
     border: 1px solid #bbb;
+
     & user-typeahead > .form-group {
         margin-bottom: 0px;
         margin-top: 0px;
         > .form-control-static {
             padding: 0px;
+        }
+    }
+
+    & .title > a {
+        cursor: inherit;
+
+        &:hover {
+            color: @link-color;
+            text-decoration: none;
         }
     }
 }
@@ -188,7 +198,7 @@
 .kanban-card-readonly {
     .kanban-card;
 
-    cursor: inherit;
+    cursor: default;
 }
 
 
