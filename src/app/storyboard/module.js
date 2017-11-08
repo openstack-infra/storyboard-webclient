@@ -63,13 +63,6 @@ angular.module('storyboard',
                     preferences: PreferenceResolver.resolvePreferences
                 }
             });
-
-        // Set up syntax highlighting for the markdown parser
-        marked.setOptions({
-            highlight: function (code) {
-                return hljs.highlightAuto(code).value;
-            }
-        });
     })
     .run(function ($log, $rootScope, $document) {
         'use strict';
