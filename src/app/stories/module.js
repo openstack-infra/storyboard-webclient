@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2017 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -94,6 +95,23 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                         }, function() {
                             return [];
                         });
+                    }
+                }
+            })
+            .state('sb.story.new', {
+                url: '/new?title&description&project_id&private&force_private',
+                templateUrl: 'app/stories/template/new_page.html',
+                controller: 'StoryNewController',
+                resolve: {
+                    currentUser: function (CurrentUser, Session) {
+                        var user = Session.resolveSessionState()
+                            .then(function() {
+                                if (Session.isLoggedIn()) {
+                                    return CurrentUser.resolve();
+                                }
+                                return {};
+                            });
+                        return user;
                     }
                 }
             });
