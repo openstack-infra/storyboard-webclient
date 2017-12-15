@@ -13,10 +13,6 @@ echo "Installing build dependencies"
 npm prune
 npm install
 
-echo "Installing compile dependencies"
-bower prune
-bower install
-
 echo "Launching Virtual Frame Buffer"
 $XVFB :${VDISPLAY} -screen 0 ${DIMENSIONS} -ac +extension GLX +render -noreset 2>&1 > /dev/null &
 
