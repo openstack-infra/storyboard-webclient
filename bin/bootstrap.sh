@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 # This script bootstraps the current workspace with a locally compiled
-# node/grunt/bower javascript toolchain. This is done because recent NodeJS
+# node/grunt javascript toolchain. This is done because recent NodeJS
 # releases (v0.10+) are not available for the images we use for builds
 # (CentOS, Ubuntu 12.04 precise), and because we only need node to generate our
 # static assets.
