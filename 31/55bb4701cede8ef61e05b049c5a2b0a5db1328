@@ -1,0 +1,9 @@
+Code-Review+2: Monty Taylor <mordred@inaugust.com>
+Code-Review+2: Adam Coldrick <adam.coldrick@codethink.co.uk>
+Workflow+1: Monty Taylor <mordred@inaugust.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 15 Dec 2017 19:21:50 +0000
+Reviewed-on: https://review.openstack.org/528223
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
