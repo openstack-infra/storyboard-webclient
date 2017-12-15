@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         test: './test',
         output: './dist',
         report: './reports',
-        bower: './bower_components'
+        node_modules: './node_modules'
     };
 
     var proxies = {
@@ -151,10 +151,10 @@ module.exports = function (grunt) {
                         mainPath,
                         dir.theme + '/custom/',
                         dir.theme + '/storyboard/',
-                        dir.bower + '/bootstrap/less/',
-                        dir.bower + '/font-awesome/less/',
-                        dir.bower + '/highlightjs/styles/',
-                        dir.bower + '/ng-sortable/dist/'
+                        dir.node_modules + '/bootstrap/less/',
+                        dir.node_modules + '/font-awesome/less/',
+                        dir.node_modules + '/highlight.js/styles/',
+                        dir.node_modules + '/ng-sortable/dist/'
                     ];
                 },
                 cleancss: true,
@@ -252,7 +252,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: dir.bower + '/font-awesome',
+                        cwd: dir.node_modules + '/font-awesome',
                         dest: dir.output,
                         src: [
                             'fonts/*.*'
