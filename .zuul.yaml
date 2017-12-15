@@ -1,0 +1,33 @@
+- job:
+    name: nodejs-npm4-run-test-functional
+    parent: nodejs-npm
+    vars:
+      npm_command: test-functional
+      node_version: 4
+
+- job:
+    name: nodejs-npm4-run-test-integration
+    parent: nodejs-npm
+    vars:
+      npm_command: test-integration
+      node_version: 4
+
+- job:
+    name: nodejs-npm4-run-test-unit
+    parent: nodejs-npm
+    vars:
+      npm_command: test-unit
+      node_version: 4
+
+- project:
+    name: openstack-infra/storyboard-webclient
+    check:
+      jobs:
+        - nodejs-npm4-run-test-unit
+        - nodejs-npm4-run-test-functional
+        - nodejs-npm4-run-test-integration
+    gate:
+      jobs:
+        - nodejs-npm4-run-test-unit
+        - nodejs-npm4-run-test-functional
+        - nodejs-npm4-run-test-integration
