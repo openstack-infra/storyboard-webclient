@@ -35,7 +35,7 @@ module.exports = function (config) {
 
         files: [
             './dist/js/libs.js',
-            './bower_components/angular-mocks/angular-mocks.js',
+            './node_modules/angular-mocks/angular-mocks.js',
             './dist/js/storyboard.js',
             './dist/js/templates.js',
             './test/unit/custom_matchers.js',

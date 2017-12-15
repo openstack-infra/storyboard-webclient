@@ -19,8 +19,8 @@ This folder is included in the dependency resolution path for our LESS files, in
 * `./src/theme/main.less`
 * `./src/theme/custom/`
 * `./src/theme/storyboard/`
-* `./bower_components/bootstrap/less/`
-* `./bower_components/font-awesome/less/`
+* `./node_modules/bootstrap/less/`
+* `./node_modules/font-awesome/less/`
 
 This means that you can override any file directly imported into main.less by
 adding your own version of this file. You can also add your own file inclusions
