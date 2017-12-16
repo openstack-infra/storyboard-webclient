@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+
+    - name: Copy files from dist/ on node
+      synchronize:
+        src: '{{ zuul.project.src_dir }}/dist/'
+        dest: '{{ zuul.executor.log_root }}/html/'
+        mode: pull
+        copy_links: true
+        verify_host: true

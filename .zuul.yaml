@@ -25,6 +25,16 @@
       npm_command: test-unit
       node_version: 4
 
+- job:
+    name: storyboard-webclient-js-draft
+    parent: nodejs-npm
+    description: |
+        Run "draft" using nodejs.
+    post-run: playbooks/draft/post.yaml
+    vars:
+      npm_command: draft
+      node_version: 4
+
 - project:
     name: openstack-infra/storyboard-webclient
     check:
@@ -32,8 +42,10 @@
         - nodejs-npm4-run-test-unit
         - nodejs-npm4-run-test-functional
         - nodejs-npm4-run-test-integration
+        - storyboard-webclient-js-draft
     gate:
       jobs:
         - nodejs-npm4-run-test-unit
         - nodejs-npm4-run-test-functional
         - nodejs-npm4-run-test-integration
+        - storyboard-webclient-js-draft
