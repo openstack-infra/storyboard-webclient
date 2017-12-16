@@ -32,8 +32,15 @@
         - nodejs-npm4-run-test-unit
         - nodejs-npm4-run-test-functional
         - nodejs-npm4-run-test-integration
+        - build-javascript-content:
+            vars:
+              npm_command: draft
+
     gate:
       jobs:
         - nodejs-npm4-run-test-unit
         - nodejs-npm4-run-test-functional
         - nodejs-npm4-run-test-integration
+        - build-javascript-content:
+            vars:
+              npm_command: draft
