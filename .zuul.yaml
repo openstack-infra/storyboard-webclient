@@ -1,5 +1,5 @@
 - job:
-    name: nodejs-npm4-run-test-functional
+    name: storyboard-webclient-nodejs-npm4-run-test-functional
     parent: nodejs-npm-run-test
     description: |
       Run "test-functional" using nodejs.
@@ -8,7 +8,7 @@
       node_version: 4
 
 - job:
-    name: nodejs-npm4-run-test-integration
+    name: storyboard-webclient-nodejs-npm4-run-test-integration
     parent: nodejs-npm-run-test
     description: |
       Run "test-integration" using nodejs.
@@ -17,7 +17,7 @@
       node_version: 4
 
 - job:
-    name: nodejs-npm4-run-test-unit
+    name: storyboard-webclient-nodejs-npm4-run-test-unit
     parent: nodejs-npm-run-test
     description: |
       Run "test-unit" using nodejs.
@@ -29,18 +29,17 @@
     name: openstack-infra/storyboard-webclient
     check:
       jobs:
-        - nodejs-npm4-run-test-unit
-        - nodejs-npm4-run-test-functional
-        - nodejs-npm4-run-test-integration
+        - storyboard-webclient-nodejs-npm4-run-test-unit
+        - storyboard-webclient-nodejs-npm4-run-test-functional
+        - storyboard-webclient-nodejs-npm4-run-test-integration
         - build-javascript-content:
             vars:
               npm_command: draft
-
     gate:
       jobs:
-        - nodejs-npm4-run-test-unit
-        - nodejs-npm4-run-test-functional
-        - nodejs-npm4-run-test-integration
+        - storyboard-webclient-nodejs-npm4-run-test-unit
+        - storyboard-webclient-nodejs-npm4-run-test-functional
+        - storyboard-webclient-nodejs-npm4-run-test-integration
         - build-javascript-content:
             vars:
               npm_command: draft
