@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@uirouter/angularjs@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@uirouter/angularjs/-/angularjs-1.0.12.tgz#b2275b7e33e0024a485f96568a18d350539880f3"
+  dependencies:
+    "@uirouter/core" "5.0.13"
+
+"@uirouter/core@5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@uirouter/core/-/core-5.0.13.tgz#e1b31626c393cbdd82651755ff1ce3fc55163fd0"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -122,17 +132,9 @@ angular-scenario@1.5.8:
   version "0.12.0"
   resolved "https://github.com/angular-ui/bootstrap/archive/0.12.0.tar.gz#479e5c7d9ef75d6133f68143b96948f8e77136b2"
 
-angular-ui-router@0.2.13:
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/angular-ui-router/-/angular-ui-router-0.2.13.tgz#ab40c2f9fef9b8626ffdb29a793426c1fedd2f29"
-
-angular@1.5.8:
+angular@1.5.8, angular@>=1.0.6:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.5.8.tgz#925a5392b8c212d09572dc446db7e01264e094cb"
-
-angular@>=1.0.6:
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.7.tgz#0f89837dae1776b01ccb1fa2096db0d9373d9897"
 
 angularjs-viewhead@0.0.1:
   version "0.0.1"
