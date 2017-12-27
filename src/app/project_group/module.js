@@ -14,6 +14,8 @@
  * under the License.
  */
 
+import angular from 'angular'
+
 /**
  * The StoryBoard project group submodule handles most activity involving
  * searching for and reviewing project groups. Administration of project groups
