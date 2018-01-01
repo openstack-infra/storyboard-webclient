@@ -35,7 +35,10 @@ angular.module('sb.services').factory('Branch',
             'Branch',
             resource,
             'name',
-            {Text: 'q'}
+            {
+              Text: 'q',
+              Project: 'project_id'
+            }
         );
 
         return resource;
