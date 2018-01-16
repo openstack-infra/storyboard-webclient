@@ -28,7 +28,8 @@ angular.module('sb.services')
                     return $window.hljs.highlight(lang, code, true).value;
                 }
                 return ''; // Don't highlight if no language specified
-            }
+            },
+            linkify: true
         });
 
         return {
