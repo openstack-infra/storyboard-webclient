@@ -1,0 +1,9 @@
+Code-Review+2: Zara <thezarazia@gmail.com>
+Code-Review+1: Emmet Hikory <persia@shipstone.jp>
+Workflow+1: Zara <thezarazia@gmail.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 19 Jan 2018 04:57:35 +0000
+Reviewed-on: https://review.openstack.org/534461
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
