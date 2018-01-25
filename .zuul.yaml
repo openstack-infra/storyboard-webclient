@@ -26,7 +26,6 @@
       node_version: 4
 
 - project:
-    name: openstack-infra/storyboard-webclient
     check:
       jobs:
         - storyboard-webclient-nodejs-npm4-run-test-unit
