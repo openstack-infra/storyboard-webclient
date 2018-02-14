@@ -22,7 +22,7 @@
  * @author Michael Krotscheck
  */
 angular.module('sb.util').directive('activePath',
-    function ($location, $rootScope) {
+    function ($location, $rootScope, $transitions) {
         'use strict';
 
         return {
@@ -40,7 +40,12 @@ angular.module('sb.util').directive('activePath',
                 // binding will return a function that will disconnect
                 // that binding.
                 var disconnectBinding =
-                    $rootScope.$on('$stateChangeSuccess', setActivePath);
+                    $transitions.onSuccess({}, function setActivePath() {
+                    var path = $location.path();
+                    var isMatchedPath = path.match(activePath) !== null;
+
+                    element.toggleClass('active', isMatchedPath);
+                });
                 $scope.$on('$destroy', disconnectBinding);
 
                 // INIT

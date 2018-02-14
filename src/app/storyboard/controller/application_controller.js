@@ -19,7 +19,7 @@
  * sets global scope variable accordingly.
  */
 angular.module('storyboard').controller('ApplicationController',
-    function ($scope, $state, $rootScope) {
+    function ($scope, $state, $rootScope, $transitions) {
         'use strict';
 
         /**
@@ -46,7 +46,7 @@ angular.module('storyboard').controller('ApplicationController',
          * Listen to changes in the state machine to trigger our submenu
          * scan.
          */
-        $rootScope.$on('$stateChangeSuccess',
+        $transitions.onSuccess({},
             function () {
                 $scope.hasSubmenu = hasSubmenu($state.$current);
             });
