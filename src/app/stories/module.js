@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2017 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -21,7 +22,7 @@
 angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
     'ui.bootstrap'])
     .config(function ($stateProvider, $urlRouterProvider, PreferenceProvider,
-                      TimelineEventTypes) {
+                      TimelineEventTypes, SessionResolver) {
         'use strict';
 
         // URL Defaults.
@@ -29,6 +30,9 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
 
         var queryParams = 'q&status&tags&project_group_id&'
             + 'project_id&assignee_id';
+
+        var creationParams = 'title&description&project_id&'
+            + 'private&force_private&tags&team_id&user_id';
 
         // Set our page routes.
         $stateProvider
@@ -95,6 +99,15 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
                             return [];
                         });
                     }
+                }
+            })
+            .state('sb.story.new', {
+                url: '/new?' + creationParams,
+                templateUrl: 'app/stories/template/new_page.html',
+                controller: 'StoryNewController',
+                resolve: {
+                    isLoggedIn: SessionResolver.requireLoggedIn,
+                    currentUser: SessionResolver.requireCurrentUser
                 }
             });
 
