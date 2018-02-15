@@ -38,6 +38,7 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
             $scope.modalInstance = $modal.open(
                 {
                     templateUrl: 'app/project_group/template/new.html',
+                    backdrop: 'static',
                     controller: 'ProjectGroupNewController'
                 });
 

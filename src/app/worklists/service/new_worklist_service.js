@@ -28,6 +28,7 @@ angular.module('sb.worklist').factory('NewWorklistService',
                         {
                             size: 'lg',
                             templateUrl: 'app/worklists/template/new.html',
+                            backdrop: 'static',
                             controller: 'AddWorklistController',
                             resolve: {
                                 params: function () {

@@ -33,6 +33,7 @@ angular.module('sb.auth')
                     {
                         templateUrl: 'app/auth/template' +
                             '/modal/login_required.html',
+                        backdrop: 'static',
                         controller: 'LoginRequiredModalController'
                     }
                 );

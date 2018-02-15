@@ -90,6 +90,7 @@ angular.module('storyboard').controller('HeaderController',
             $scope.modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/projects/template/new.html',
+                backdrop: 'static',
                 controller: 'ProjectNewController'
             });
         };
@@ -101,6 +102,7 @@ angular.module('storyboard').controller('HeaderController',
             $scope.modalInstance = $modal.open(
                 {
                     templateUrl: 'app/project_group/template/new.html',
+                    backdrop: 'static',
                     controller: 'ProjectGroupNewController'
                 });
 

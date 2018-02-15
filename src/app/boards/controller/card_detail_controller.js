@@ -247,6 +247,7 @@ angular.module('sb.board').controller('CardDetailController',
         $scope.newDueDate = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/due_dates/template/new.html',
+                backdrop: 'static',
                 controller: 'DueDateNewController',
                 resolve: {
                     board: function() {

@@ -28,6 +28,7 @@ angular.module('sb.board').factory('NewBoardService',
                         {
                             size: 'lg',
                             templateUrl: 'app/boards/template/new.html',
+                            backdrop: 'static',
                             controller: 'AddBoardController',
                             resolve: {
                                 params: function () {

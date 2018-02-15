@@ -35,6 +35,7 @@ angular.module('sb.profile').controller('ProfileTokensController',
         $scope.issueToken = function () {
             $modal.open({
                 templateUrl: 'app/profile/template/token_new.html',
+                backdrop: 'static',
                 controller: 'ProfileTokenNewController',
                 resolve: {
                     user: function (CurrentUser) {
