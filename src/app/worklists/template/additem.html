@@ -102,7 +102,7 @@
                                     <i class="fa fa-sb-story text-muted"></i>&emsp;{{item.title}}
                                 </span>
                                 <span ng-switch-when="Task">
-                                    <i class="fa fa-tasks text-muted"></i>&emsp;{{item.title}}
+                                    <i class="fa fa-sb-task text-muted"></i>&emsp;{{item.title}}
                                 </span>
                                 <button type="button" class="close" title="Remove"
                                         ng-click="removeItem(item)">
@@ -169,7 +169,7 @@
                     ng-click="selectTask(task, item.tasks, $event)"
                     ng-repeat="task in item.tasks">
                     <td class="col-xs-11">
-                        <i class="fa fa-tasks text-muted"></i>&emsp;
+                        <i class="fa fa-sb-task text-muted"></i>&emsp;
                         {{task.title}}
                     </td>
                     <td class="col-xs-1 text-right">
@@ -194,7 +194,7 @@
                     ng-show="showInvalid"
                     ng-click="$event.stopPropagation()">
                     <td colspan="2">
-                        <i class="fa fa-tasks text-muted"></i>&emsp;
+                        <i class="fa fa-sb-task text-muted"></i>&emsp;
                         {{task.title}}
                         <div class="text-muted">
                             <small>{{task.invalid}}</small>
@@ -211,7 +211,7 @@
 
 <script type="text/ng-template" id="./inline/task_search_result.html">
     <td class="col-xs-11">
-        <i class="fa fa-tasks text-muted"></i>&emsp;
+        <i class="fa fa-sb-task text-muted"></i>&emsp;
         {{item.title}}
     </td>
     <td class="col-xs-1 text-right">
