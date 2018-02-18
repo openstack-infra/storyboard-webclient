@@ -228,7 +228,7 @@
             <h4>
                 <span class="label label-warning">
                     {{tag}}
-                    <i class="fa fa-remove" ng-show="isLoggedIn"
+                    <i class="fa fa-times" ng-show="isLoggedIn"
                        ng-click="removeTag(tag)"></i>
                 </span>
             </h4>
@@ -387,7 +387,7 @@
                 <button class="btn btn-primary btn-xs pull-right"
                         ng-show="!task.editing && task.link && isLoggedIn"
                         ng-click="editNotes(task)">
-                    <i class="fa fa-pencil"></i> Edit
+                    <i class="fa fa-pencil-alt"></i> Edit
                 </button>
                 <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
                 <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
@@ -429,7 +429,7 @@
                 <div class="padded-row pull-right" ng-show="!task.editing && !task.link">
                     <button class="btn btn-primary btn-xs"
                             ng-click="editNotes(task)">
-                        <i class="fa fa-pencil"></i> Add notes
+                        <i class="fa fa-pencil-alt"></i> Add notes
                     </button>
                 </div>
             </div>

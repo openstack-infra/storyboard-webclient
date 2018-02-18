@@ -64,7 +64,7 @@
                         <small>
                             <a ng-click="toggleEditMode()"
                                ng-show="permissions.editBoard">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-pencil-alt"></i>
                             </a>
                         </small>
                     </h1>
@@ -105,7 +105,7 @@
                        <td class="col-xs-1 text-right">
                            <a href ng-click="editDueDate(dueDate)"
                                    ng-if="dueDate.editable">
-                               <i class="fa fa-pencil"></i>
+                               <i class="fa fa-pencil-alt"></i>
                            </a>
                        </td>
                        <td class="col-xs-1 text-right">
@@ -360,7 +360,7 @@
                         {{ lane.worklist.title }}
                     </a>
                     <a href ng-click="editWorklist(lane.worklist)">
-                        <i class="fa fa-pencil"></i>
+                        <i class="fa fa-pencil-alt"></i>
                     </a>
                     <button type="button" class="close" title="Remove"
                             ng-click="removeLane(lane)">
