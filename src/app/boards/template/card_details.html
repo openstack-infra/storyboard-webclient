@@ -45,7 +45,7 @@
                         {{card.task.title}}
                         <small ng-show="permissions.moveCards || permissions.editBoard">
                             <a href ng-click="toggleEditTitle()">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-pencil-alt"></i>
                             </a>
                         </small>
                     </span>
@@ -151,7 +151,7 @@
                  ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
                 <div class="row">
                     <div class="col-xs-1">
-                        <i class="fa fa-clock-o"></i>
+                        <i class="fa fa-clock"></i>
                     </div>
                     <div class="col-xs-11" ng-show="!editingDueDate">
                         <span ng-show="validDueDate(card.resolved_due_date)">
@@ -275,7 +275,7 @@
                         </a>
                         <small>
                             <a href ng-click="toggleEditTitle()">
-                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-pencil-alt"></i>
                             </a>
                         </small>
                     </span>
@@ -375,7 +375,7 @@
                  ng-click="toggleEditDueDate(); toggleDueDateDropdown()">
                 <div class="row">
                     <div class="col-xs-1">
-                        <i class="fa fa-clock-o"></i>
+                        <i class="fa fa-clock"></i>
                     </div>
                     <div class="col-xs-11" ng-show="!editingDueDate">
                         <span ng-show="validDueDate(card.resolved_due_date)">

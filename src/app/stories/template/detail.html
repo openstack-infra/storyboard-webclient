@@ -71,7 +71,7 @@
 
         <small ng-show="isLoggedIn">
             <a href="" ng-click="toggleEditMode()" >
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </a>
             <subscribe resource="story"
                     resource-id="story.id">
@@ -88,7 +88,7 @@
             None
         </em>
         <span ng-show="story.creator_id && !creator.$resolved">
-            <i class="fa fa-refresh fa-spin"></i>
+            <i class="fa fa-sync fa-spin"></i>
         </span>
         <span ng-show="creator.full_name">
             {{creator.full_name}}
@@ -356,7 +356,7 @@
             <h4>
                 <span class="label label-warning">
                     {{tag}}
-                    <i class="fa fa-remove" ng-show="isLoggedIn"
+                    <i class="fa fa-times" ng-show="isLoggedIn"
                        ng-click="removeTag(tag)"></i>
                 </span>
             </h4>
@@ -530,7 +530,7 @@
                 <button class="btn btn-primary btn-xs pull-right"
                         ng-show="!task.editing && task.link && isLoggedIn"
                         ng-click="editNotes(task)">
-                    <i class="fa fa-pencil"></i> Edit
+                    <i class="fa fa-pencil-alt"></i> Edit
                 </button>
                 <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
                 <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
@@ -572,7 +572,7 @@
                 <div class="padded-row pull-right" ng-show="!task.editing && !task.link">
                     <button class="btn btn-primary btn-xs"
                             ng-click="editNotes(task)">
-                        <i class="fa fa-pencil"></i> Add notes
+                        <i class="fa fa-pencil-alt"></i> Add notes
                     </button>
                 </div>
             </div>
@@ -772,7 +772,7 @@
             <h4>Events Timeline and Comments</h4>
         </div>
         <div class="discussion-overlay text-center" ng-show="isSearching">
-            <i class="fa fa-lg fa-refresh fa-spin text-muted"></i>
+            <i class="fa fa-lg fa-sync fa-spin text-muted"></i>
         </div>
         <div class="discussion" ng-class="{'discussion-faded': isSearching}">
             <div class="alert alert-warning"

@@ -4,7 +4,7 @@
     <p class="form-control-static">
         <i class="fa fa-sb-user text-muted"
            ng-if="!user || user.$resolved"></i>
-        <i class="fa fa-spin fa-refresh text-muted"
+        <i class="fa fa-spin fa-sync text-muted"
            ng-if="user && !user.$resolved"></i>
         &nbsp;
 
@@ -16,11 +16,11 @@
            ng-click="toggleForm()"
            ng-if="!showForm && enabled">
             <span ng-if="user">
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </span>
             <em ng-if="!user" class="text-muted">
                 {{emptyPrompt}}
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </em>
         </a>
 
@@ -57,6 +57,6 @@
 
     <span class="form-control-feedback text-muted">
         <i class="fa fa-search" ng-if="!loadingUsers"></i>
-        <i class="fa fa-spin fa-refresh" ng-if="loadingUsers"></i>
+        <i class="fa fa-spin fa-sync" ng-if="loadingUsers"></i>
     </span>
 </div>
