@@ -71,7 +71,7 @@
 
         <small ng-show="isLoggedIn">
             <a href="" ng-click="toggleEditMode()" >
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </a>
             <subscribe resource="story"
                     resource-id="story.id">
@@ -530,7 +530,7 @@
                 <button class="btn btn-primary btn-xs pull-right"
                         ng-show="!task.editing && task.link && isLoggedIn"
                         ng-click="editNotes(task)">
-                    <i class="fa fa-pencil"></i> Edit
+                    <i class="fa fa-pencil-alt"></i> Edit
                 </button>
                 <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
                 <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
@@ -572,7 +572,7 @@
                 <div class="padded-row pull-right" ng-show="!task.editing && !task.link">
                     <button class="btn btn-primary btn-xs"
                             ng-click="editNotes(task)">
-                        <i class="fa fa-pencil"></i> Add notes
+                        <i class="fa fa-pencil-alt"></i> Add notes
                     </button>
                 </div>
             </div>
