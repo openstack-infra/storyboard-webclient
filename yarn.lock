@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@fortawesome/fontawesome-free-webfonts@^1.0.3":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-webfonts/-/fontawesome-free-webfonts-1.0.4.tgz#bac5d89755bf3bc2d2b4deee47d92febf641bb1f"
+
 "@uirouter/angularjs@^1.0.12":
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/@uirouter/angularjs/-/angularjs-1.0.12.tgz#b2275b7e33e0024a485f96568a18d350539880f3"
@@ -92,6 +96,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular-bootstrap@0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/angular-bootstrap/-/angular-bootstrap-0.12.2.tgz#de9900a7db087a7e9da47304a9c2f77f9c069827"
+
 "angular-cache@https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz":
   version "3.2.5"
   resolved "https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz#72685f274de4bfe054bd6200980c6f4ce3cd0bb7"
@@ -127,10 +135,6 @@ angular-sanitize@1.5.8:
 angular-scenario@1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular-scenario/-/angular-scenario-1.5.8.tgz#d32af0ac6c2bcccf9500a9ed49d59b17a1ee4b1b"
-
-"angular-ui-bootstrap@https://github.com/angular-ui/bootstrap/archive/0.12.0.tar.gz":
-  version "0.12.0"
-  resolved "https://github.com/angular-ui/bootstrap/archive/0.12.0.tar.gz#479e5c7d9ef75d6133f68143b96948f8e77136b2"
 
 angular@1.5.8, angular@>=1.0.6:
   version "1.5.8"
@@ -1817,10 +1821,6 @@ finished@1.2.2:
 first-chunk-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/first-chunk-stream/-/first-chunk-stream-1.0.0.tgz#59bfb50cd905f60d7c394cd3d9acaab4e6ad934e"
-
-font-awesome@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.5.0.tgz#1e9d7ccf7d63bdbe57000e18d5188cb2557e70f8"
 
 for-in@^1.0.1:
   version "1.0.2"
