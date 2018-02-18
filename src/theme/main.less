@@ -20,10 +20,16 @@
  * Note that this is the only LESS file that is compiled - if you want a
  * a specific stylesheet to be included, it must be linked here.
  */
+
+
 // Library inclusions
 @import './bootstrap.less';
 @import './base/bootstrap/navbar.less';
-@import './font-awesome.less';
+@import './fontawesome.less';
+
+@fa-font-path: '../fonts';
+@import './fa-solid.less';
+@import './fa-regular.less';
 
 // HighlightJS theme
 @import (less) './default.css';

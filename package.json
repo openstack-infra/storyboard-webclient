@@ -63,8 +63,10 @@
     "selenium-standalone": "2.43.1-2.9.0-1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free-webfonts": "^1.0.3",
     "@uirouter/angularjs": "^1.0.12",
     "angular": "1.5.8",
+    "angular-bootstrap": "0.12.2",
     "angular-cache": "https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz",
     "angular-elastic": "https://github.com/monospaced/angular-elastic/archive/v2.4.2.tar.gz",
     "angular-local-storage": "0.1.5",
@@ -73,10 +75,8 @@
     "angular-resource": "1.5.8",
     "angular-sanitize": "1.5.8",
     "angular-scenario": "1.5.8",
-    "angular-bootstrap": "0.12.2",
     "angularjs-viewhead": "0.0.1",
     "bootstrap": "3.3.7",
-    "font-awesome": "4.5.0",
     "gifsicle": "1.0.0",
     "highlight.js": "9.1.0",
     "markdown-it": "8.4.0",
