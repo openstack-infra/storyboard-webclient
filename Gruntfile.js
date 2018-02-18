@@ -46,7 +46,8 @@ module.exports = function (grunt) {
         test: './test',
         output: './dist',
         report: './reports',
-        node_modules: './node_modules'
+        node_modules: './node_modules',
+        fontawesome: './node_modules/@fortawesome/fontawesome-free-webfonts'
     };
 
     var proxies = {
@@ -152,9 +153,9 @@ module.exports = function (grunt) {
                         dir.theme + '/custom/',
                         dir.theme + '/storyboard/',
                         dir.node_modules + '/bootstrap/less/',
-                        dir.node_modules + '/font-awesome/less/',
                         dir.node_modules + '/highlight.js/styles/',
-                        dir.node_modules + '/ng-sortable/dist/'
+                        dir.node_modules + '/ng-sortable/dist/',
+                        dir.fontawesome + '/less/'
                     ];
                 },
                 cleancss: true,
@@ -252,10 +253,10 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: dir.node_modules + '/font-awesome',
-                        dest: dir.output,
+                        cwd: dir.fontawesome + '/webfonts/',
+                        dest: dir.output + '/fonts',
                         src: [
-                            'fonts/*.*'
+                            '*.*'
                         ]
                     },
                     {
