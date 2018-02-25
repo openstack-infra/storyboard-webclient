@@ -136,35 +136,26 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt recess
+         * grunt sass
          *
-         * Compiles our .less CSS files into real CSS, linting as it goes. We
-         * do this manually during our build process so that we can inject
-         * our own variables into bootstrap and/or other CSS frameworks.
-         *
-         * Note: We're using LessCSS here because SASS requires ruby-compass,
-         * and cannot be easily installed with npm.
+         * Compiles our .scss files into real CSS, and produces a source map
+         * to aid debugging.
          */
-        less: {
+        sass: {
             options: {
-                paths: function(mainPath) {
-                    return [
-                        mainPath,
-                        dir.theme + '/custom/',
-                        dir.theme + '/storyboard/',
-                        dir.node_modules + '/bootstrap/less/',
-                        dir.node_modules + '/highlightjs/styles/',
-                        dir.node_modules + '/ng-sortable/dist/',
-                        dir.fontawesome + '/less/'
-                    ];
-                },
-                cleancss: true,
-                strictMath: true,
-                strictUnits: true
+                includePaths: [
+                    dir.theme + '/custom/',
+                    dir.theme + '/storyboard/',
+                    dir.node_modules + '/bootstrap-sass/assets/stylesheets/',
+                    dir.node_modules + '/highlightjs/styles',
+                    dir.node_modules + '/ng-sortable/dist/',
+                    dir.fontawesome + '/scss/'
+                ],
+                sourceMap: true
             },
             theme: {
                 files: {
-                    'dist/styles/main.css': dir.theme + '/main.less'
+                    'dist/styles/main.css': dir.theme + '/main.scss'
                 }
             }
         },
@@ -439,11 +430,11 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['concat']
             },
-            less: {
+            sass: {
                 files: [
-                    dir.theme + '/**/*.less'
+                    dir.theme + '/**/*.scss'
                 ],
-                tasks: ['less:theme']
+                tasks: ['sass:theme']
             },
             copy: {
                 files: [
@@ -571,7 +562,7 @@ module.exports = function (grunt) {
         'template',
         'useminPrepare',
         'concat',
-        'less',
+        'sass',
         'imagemin',
         'html2js',
         'copy:dist',

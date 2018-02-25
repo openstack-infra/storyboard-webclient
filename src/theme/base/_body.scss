@@ -18,46 +18,46 @@
  */
 
 body {
-    margin-top: @navbar-height;
+    margin-top: $navbar-height;
     margin-bottom: 20px;
 }
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: $screen-xs-max) {
     body {
-        margin-right: @navbar-fixed-side-width-xs;
+        margin-right: $navbar-fixed-side-width-xs;
 
         &.submenu {
-            margin-right: (@navbar-fixed-side-width-xs + @navbar-fixed-side-submenu-width-xs);
+            margin-right: ($navbar-fixed-side-width-xs + $navbar-fixed-side-submenu-width-xs);
         }
     }
 }
 
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     body {
-        margin-left: @navbar-fixed-side-width-sm;
+        margin-left: $navbar-fixed-side-width-sm;
 
         &.submenu {
-            margin-left: (@navbar-fixed-side-width-sm + @navbar-fixed-side-submenu-width-sm);
+            margin-left: ($navbar-fixed-side-width-sm + $navbar-fixed-side-submenu-width-sm);
         }
     }
 }
 
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     body {
-        margin-left: @navbar-fixed-side-width-md;
+        margin-left: $navbar-fixed-side-width-md;
 
         &.submenu {
-            margin-left: (@navbar-fixed-side-width-md + @navbar-fixed-side-submenu-width-md);
+            margin-left: ($navbar-fixed-side-width-md + $navbar-fixed-side-submenu-width-md);
         }
     }
 }
 
-@media (min-width: @screen-lg-min) {
+@media (min-width: $screen-lg-min) {
     body {
-        margin-left: @navbar-fixed-side-width-lg;
+        margin-left: $navbar-fixed-side-width-lg;
 
         &.submenu {
-            margin-left: (@navbar-fixed-side-width-lg + @navbar-fixed-side-submenu-width-lg);
+            margin-left: ($navbar-fixed-side-width-lg + $navbar-fixed-side-submenu-width-lg);
         }
     }
 }
