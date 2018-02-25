@@ -13,22 +13,19 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
- * Styles specific to the overall application.
+ * CSS Overrides specifically for when we're logged in.
  */
+.logged-in {
 
-ul[typeahead-popup] {
-    z-index: 2000;
+    // An editable field, only accessible when you're logged in
+    .editable {
+        cursor: pointer;
 
-    a.header-criteria-item {
-        white-space: nowrap;
-        max-width: 300px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        &:hover {
+            background-color: $gray-lighter;
+        }
     }
 
-    .active a .text-muted {
-        color: @dropdown-link-active-color;
-    }
 }
-
