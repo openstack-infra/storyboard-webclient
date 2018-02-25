@@ -37,22 +37,20 @@
 
 // Icons
 
-.icon-openstack() {
+@mixin icon-openstack() {
 	&:before {
 		content:"\e001";
 	}
-	
 }
 .icon_openstack{
- 	.icon-openstack();
+ 	@include icon-openstack();
 }
 
-.icon-storyboard() {
+@mixin icon-storyboard() {
 	&:before {
 		content:"\e002";
 	}
-	
 }
 .icon_storyboard{
- 	.icon-storyboard();
+ 	@include icon-storyboard();
 }

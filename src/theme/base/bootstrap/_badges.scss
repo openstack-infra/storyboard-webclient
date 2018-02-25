@@ -2,19 +2,19 @@
 
 .badge {
     &.badge-primary {
-        background-color: @brand-primary;
+        background-color: $brand-primary;
     }
 
     &.badge-info {
-        background-color: @brand-info;
+        background-color: $brand-info;
     }
 
     &.badge-danger {
-        background-color: @brand-danger;
+        background-color: $brand-danger;
     }
 
     &.badge-warning {
-        background-color: @brand-warning;
+        background-color: $brand-warning;
     }
 
     &.badge-default {
@@ -22,7 +22,7 @@
     }
 
     &.badge-success {
-        background-color: @brand-success;
+        background-color: $brand-success;
     }
 
 }
