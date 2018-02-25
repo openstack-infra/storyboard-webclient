@@ -37,7 +37,7 @@
 }
 
 .padded-row {
-    .row;
+    @extend .row;
     padding-bottom : 10px;
 }
 

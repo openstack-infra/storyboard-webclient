@@ -1,6 +1,6 @@
 // A table style that only draws an outside border.
 table.table.table-outlined {
-    border: 1px solid @table-border-color
+    border: 1px solid $table-border-color
 }
 
 // A table that takes the table-condensed style one step further.
@@ -11,7 +11,7 @@ table.table.table-supercondensed {
         > tr {
             > th,
             > td {
-                padding: (@table-condensed-cell-padding / 2);
+                padding: ($table-condensed-cell-padding / 2);
             }
         }
     }
@@ -45,7 +45,7 @@ table.table.table-clean {
 
 .table-striped {
     > tbody > tr:nth-of-type(even) {
-        background-color: @white;
+        background-color: $white;
     }
 }
 
@@ -73,8 +73,8 @@ tr.selectable:hover {
 }
 
 tr.selected-row {
-    background-color: @brand-primary !important;
-    color: @navbar-default-color;
+    background-color: $brand-primary !important;
+    color: $navbar-default-color;
 }
 
 .subtable {

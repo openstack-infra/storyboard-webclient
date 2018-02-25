@@ -1,0 +1,83 @@
+// ============================== Custom Variables =============================
+$white: #FFFFFF;
+$black: #000000;
+
+// ============================== Bootstrap Overrides ==========================
+// Brand colors
+// -------------------------
+$brand-primary: #C43422;
+
+// Typography
+// -------------------------
+$font-family-title: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$headings-font-family: $font-family-title;
+
+// Error messages
+// --------------
+$error-container-margin-horizontal: 10px;
+$error-container-margin-vertical: 10px;
+$error-container-max-width: 400px;
+
+// Navbar
+// -------------------------
+$navbar-height:                    50px;
+$navbar-collapse-max-height:       340px;
+
+$navbar-default-color:             $white;
+$navbar-default-bg:                $brand-primary;
+$navbar-default-border:            darken($navbar-default-bg, 6.5%);
+
+// Navbar links
+$navbar-default-link-color:                $navbar-default-color;
+$navbar-default-link-hover-color:          darken($navbar-default-color, 10%);
+$navbar-default-link-hover-bg:             transparent;
+$navbar-default-link-active-color:         darken($navbar-default-color, 6.5%);
+$navbar-default-link-active-bg:            darken($navbar-default-bg, 6.5%);
+$navbar-default-link-disabled-color:       #ccc;
+$navbar-default-link-disabled-bg:          transparent;
+
+// Navbar brand label
+$navbar-default-brand-color:               $navbar-default-link-color;
+$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%);
+$navbar-default-brand-hover-bg:            transparent;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           #ddd;
+$navbar-default-toggle-icon-bar-bg:        #888;
+$navbar-default-toggle-border-color:       #ddd;
+
+// Inverted navbar
+// Reset inverted navbar basics
+$navbar-inverse-bg:                         #222;
+$navbar-inverse-border:                     darken($navbar-inverse-bg, 10%);
+
+// Inverted navbar links
+// $navbar-inverse-link-color:                 $gray-light;
+$navbar-inverse-link-hover-color:           #fff;
+$navbar-inverse-link-hover-bg:              transparent;
+$navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color;
+$navbar-inverse-link-active-bg:             lighten($navbar-inverse-bg, 20%);
+$navbar-inverse-link-disabled-color:        #444;
+$navbar-inverse-link-disabled-bg:           transparent;
+
+// Inverted navbar brand label
+$navbar-inverse-brand-hover-color:          #fff;
+$navbar-inverse-brand-hover-bg:             transparent;
+
+// Inverted navbar toggle
+$navbar-inverse-toggle-hover-bg:            #333;
+$navbar-inverse-toggle-icon-bar-bg:         #fff;
+$navbar-inverse-toggle-border-color:        #333;
+
+// Sizes for the side navbar at different container sizes.
+$navbar-fixed-side-width-xs: 50px;
+$navbar-fixed-side-width-sm: 50px;
+$navbar-fixed-side-width-md: 90px;
+$navbar-fixed-side-width-lg: 90px;
+
+// Sizes for the side navbar submenu at different container sizes.
+$navbar-fixed-side-submenu-width-xs: 40px;
+$navbar-fixed-side-submenu-width-sm: 40px;
+$navbar-fixed-side-submenu-width-md: 40px;
+$navbar-fixed-side-submenu-width-lg: 40px;
