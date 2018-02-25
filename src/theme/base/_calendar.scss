@@ -20,18 +20,18 @@
     margin: -5px;
     padding: 5px;
     &:hover {
-        background-color: lighten(@brand-primary, 50%);
+        background-color: lighten($brand-primary, 50%);
         cursor: pointer;
     }
 }
 
 .today {
-    background-color: lighten(@brand-primary, 40%);
+    background-color: lighten($brand-primary, 40%);
 }
 
 .day-selected, .day-selected:hover {
-    background-color: @brand-primary;
-    color: @navbar-default-color;
+    background-color: $brand-primary;
+    color: $navbar-default-color;
 }
 
 calendar .table-borderless td {
@@ -44,11 +44,11 @@ calendar .table-borderless td {
 }
 
 calendar .clickable-cell {
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
 
     &:hover {
-        background-color: lighten(@brand-primary, 50%);
-        color: darken(@brand-primary, 10%) !important;
+        background-color: lighten($brand-primary, 50%);
+        color: darken($brand-primary, 10%) !important;
         cursor: pointer;
     }
 }
