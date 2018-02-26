@@ -30,11 +30,8 @@ angular.module('sb.projects').controller('ProjectListController',
         // search results must be of type "project"
         $scope.resourceTypes = ['Project'];
 
-        // Projects have no default criteria
-        $scope.defaultCriteria = [];
-
         var params = $location.search();
-        SearchHelper.parseParameters(params, $scope.defaultCriteria);
+        $scope.defaultCriteria = SearchHelper.parseParameters(params);
 
         /**
          * Launches the add-project modal.

@@ -19,13 +19,16 @@
  * A service providing helper functions for search views.
  */
 angular.module('sb.search').factory('SearchHelper',
-    function(User, Project, ProjectGroup, Story, Task, Criteria, $filter) {
+    function(User, Project, ProjectGroup, Story, Task, Criteria,
+             $filter, $q) {
         'use strict';
 
         /**
          * Create search criteria based on some given parameters.
          */
-        function parseParameters(params, criteria) {
+        function parseParameters(params) {
+            var criteria = [];
+            var promises = [];
             if (params.q) {
                 criteria.push(
                     Criteria.create('Text', params.q)
@@ -57,8 +60,10 @@ angular.module('sb.search').factory('SearchHelper',
             }
             if (params.assignee_id || params.creator_id) {
                 var id = params.assignee_id || params.creator_id;
-                User.get({'id': id}).$promise
-                    .then(function(result) {
+                var userPromise = User.get({'id': id}).$promise;
+                promises.push(userPromise);
+
+                userPromise.then(function(result) {
                         criteria.push(
                             Criteria.create('User',
                                             params.assignee_id,
@@ -68,8 +73,11 @@ angular.module('sb.search').factory('SearchHelper',
                 );
             }
             if (params.project_id) {
-                Project.get({'id': params.project_id}).$promise
-                    .then(function(result) {
+                var projectParams = {'id': params.project_id};
+                var projectPromise = Project.get(projectParams).$promise;
+                promises.push(projectPromise);
+
+                projectPromise.then(function(result) {
                         criteria.push(
                             Criteria.create('Project',
                                             params.project_id,
@@ -79,8 +87,11 @@ angular.module('sb.search').factory('SearchHelper',
                 );
             }
             if (params.project_group_id) {
-                ProjectGroup.get({'id': params.project_group_id}).$promise
-                    .then(function(result) {
+                var groupParams = {'id': params.project_group_id};
+                var groupPromise = ProjectGroup.get(groupParams).$promise;
+                promises.push(groupPromise);
+
+                groupPromise.then(function(result) {
                         criteria.push(
                             Criteria.create('ProjectGroup',
                                             params.project_group_id,
@@ -90,8 +101,11 @@ angular.module('sb.search').factory('SearchHelper',
                 );
             }
             if (params.story_id) {
-                Story.get({'id': params.story_id}).$promise
-                    .then(function(result) {
+                var storyParams = {'id': params.story_id};
+                var storyPromise = Story.get(storyParams).$promise;
+                promises.push(storyPromise);
+
+                storyPromise.then(function(result) {
                         criteria.push(
                             Criteria.create('Story',
                                             params.story_id,
@@ -101,8 +115,11 @@ angular.module('sb.search').factory('SearchHelper',
                 );
             }
             if (params.task_id) {
-                Task.get({'id': params.task_id}).$promise
-                    .then(function(result) {
+                var taskParams = {'id': params.task_id};
+                var taskPromise = Task.get(taskParams).$promise;
+                promises.push(taskPromise);
+
+                taskPromise.then(function(result) {
                         criteria.push(
                             Criteria.create('Task',
                                             params.task_id,
@@ -111,6 +128,13 @@ angular.module('sb.search').factory('SearchHelper',
                     }
                 );
             }
+
+            var deferred = $q.defer();
+            $q.all(promises).then(function() {
+                deferred.resolve(criteria);
+            });
+
+            return deferred.promise;
         }
 
         return {
