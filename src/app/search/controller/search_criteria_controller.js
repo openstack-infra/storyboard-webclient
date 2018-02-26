@@ -46,7 +46,9 @@ angular.module('sb.search').controller('SearchCriteriaController',
          */
         $scope.init = function (types, defaultCriteria) {
             resourceTypes = types || $scope.resourceTypes || resourceTypes;
-            $scope.criteria = defaultCriteria || [];
+            defaultCriteria.then(function(criteria) {
+                $scope.criteria = criteria;
+            })
             $scope.searchForCriteria =
                 Criteria.buildCriteriaSearch(resourceTypes, 5);
         };
