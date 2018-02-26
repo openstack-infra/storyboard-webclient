@@ -182,6 +182,7 @@ angular.module('sb.search').directive('searchResults',
                 $scope.$watchCollection(
                     $parse(args.searchCriteria),
                     function (results) {
+                        console.log('watched:', results)
                         criteria = results;
                         updateResults();
                     });
