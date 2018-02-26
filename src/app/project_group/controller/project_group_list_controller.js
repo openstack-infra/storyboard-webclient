@@ -25,11 +25,8 @@ angular.module('sb.project_group').controller('ProjectGroupListController',
         // search results must be of type "ProjectGroup"
         $scope.resourceTypes = ['ProjectGroup'];
 
-        // Projects have no default criteria
-        $scope.defaultCriteria = [];
-
         var params = $location.search();
-        SearchHelper.parseParameters(params, $scope.defaultCriteria);
+        $scope.defaultCriteria = SearchHelper.parseParameters(params);
 
         /**
          * Create a new project-group.

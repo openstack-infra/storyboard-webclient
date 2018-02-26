@@ -27,9 +27,7 @@ angular.module('sb.story').controller('StoryListController',
         $scope.resourceTypes = ['Story'];
 
         // Search result criteria default must be "active"
-        $scope.defaultCriteria = [];
-
-        SearchHelper.parseParameters($stateParams, $scope.defaultCriteria);
+        $scope.defaultCriteria = SearchHelper.parseParameters($stateParams);
 
         /**
          * Creates a new story.
