@@ -111,7 +111,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         };
 
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal(id)
+            NewStoryService.showNewStoryModal($scope.project.id)
                 .then(function (story) {
                     // On success, go to the story detail
                     $state.go('sb.story.detail', {storyId: story.id});

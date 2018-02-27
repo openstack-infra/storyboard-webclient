@@ -34,15 +34,16 @@ angular.module('sb.projects').controller('ProjectDetailController',
 
         // Parse the ID
         var id = $stateParams.hasOwnProperty('id') ?
-            parseInt($stateParams.id, 10) :
-            null;
+            $stateParams.id : null;
 
-        /**
-         * The project we're manipulating right now.
-         *
-         * @type Project
-         */
-        $scope.project = loadProject();
+        if (!isNaN(id)) {
+            id = parseInt(id, 10);
+        }
+
+        if (id === null) {
+            $state.go('sb.index');
+            return;
+        }
 
         /**
          * UI flag for when we're initially loading the view.
@@ -110,6 +111,13 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 handleServiceError
             );
         }
+
+        /**
+         * The project we're manipulating right now.
+         *
+         * @type Project
+         */
+        $scope.project = loadProject();
 
         /**
          * Toggles the form back.
