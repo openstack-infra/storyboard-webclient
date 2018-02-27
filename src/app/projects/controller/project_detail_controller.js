@@ -42,7 +42,7 @@ angular.module('sb.projects').controller('ProjectDetailController',
          *
          * @type Project
          */
-        $scope.project = {};
+        $scope.project = loadProject();
 
         /**
          * UI flag for when we're initially loading the view.
@@ -101,14 +101,11 @@ angular.module('sb.projects').controller('ProjectDetailController',
          * Load the project
          */
         function loadProject() {
-            Project.get(
+            return Project.get(
                 {'id': id},
                 function (result) {
-                    // We've got a result, assign it to the view and unset our
-                    // loading flag.
-                    $scope.project = result;
-
                     handleServiceSuccess();
+                    return result;
                 },
                 handleServiceError
             );
@@ -159,6 +156,4 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 handleServiceError
             );
         };
-
-        loadProject();
     });

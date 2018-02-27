@@ -22,18 +22,6 @@ angular.module('sb.projects').controller('ProjectStoryListController',
               Preference, SubscriptionList, CurrentUser) {
         'use strict';
 
-        // Parse the ID. Since we're in a nested state, we don't really need
-        // to sanity check here, but in case of a future refactor we'll
-        // go ahead and do so anyway.
-        var id = $stateParams.hasOwnProperty('id') ?
-            parseInt($stateParams.id, 10) :
-            null;
-
-        if (id === null) {
-            $state.go('sb.index');
-            return;
-        }
-
         var pageSize = Preference.get('project_detail_page_size');
 
         // Variables and methods available to the template...
@@ -65,7 +53,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
             // Execute the story query.
             Story.browse({
-                    project_id: id,
+                    project_id: $scope.project.id,
                     status: $scope.filter || null,
                     offset: $scope.searchOffset,
                     limit: pageSize,
@@ -133,7 +121,9 @@ angular.module('sb.projects').controller('ProjectStoryListController',
 
         // Initialize the view with a default search.
         resetScope();
-        $scope.search();
+        $scope.project.$promise.then(function() {
+            $scope.search();
+        });
 
         // GET list of story subscriptions
         var cuPromise = CurrentUser.resolve();
