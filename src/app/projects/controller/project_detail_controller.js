@@ -34,8 +34,16 @@ angular.module('sb.projects').controller('ProjectDetailController',
 
         // Parse the ID
         var id = $stateParams.hasOwnProperty('id') ?
-            parseInt($stateParams.id, 10) :
-            null;
+            $stateParams.id : null;
+
+        if (!isNaN(id)) {
+            id = parseInt(id, 10);
+        }
+
+        if (id === null) {
+            $state.go('sb.index');
+            return;
+        }
 
         /**
          * UI flag for when we're initially loading the view.
