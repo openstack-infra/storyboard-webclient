@@ -153,7 +153,7 @@ module.exports = function (grunt) {
                         dir.theme + '/storyboard/',
                         dir.node_modules + '/bootstrap/less/',
                         dir.node_modules + '/font-awesome/less/',
-                        dir.node_modules + '/highlight.js/styles/',
+                        dir.node_modules + '/highlightjs/styles/',
                         dir.node_modules + '/ng-sortable/dist/'
                     ];
                 },

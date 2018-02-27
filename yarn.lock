@@ -92,6 +92,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular-bootstrap@0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/angular-bootstrap/-/angular-bootstrap-0.12.2.tgz#de9900a7db087a7e9da47304a9c2f77f9c069827"
+
 "angular-cache@https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz":
   version "3.2.5"
   resolved "https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz#72685f274de4bfe054bd6200980c6f4ce3cd0bb7"
@@ -127,10 +131,6 @@ angular-sanitize@1.5.8:
 angular-scenario@1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular-scenario/-/angular-scenario-1.5.8.tgz#d32af0ac6c2bcccf9500a9ed49d59b17a1ee4b1b"
-
-"angular-ui-bootstrap@https://github.com/angular-ui/bootstrap/archive/0.12.0.tar.gz":
-  version "0.12.0"
-  resolved "https://github.com/angular-ui/bootstrap/archive/0.12.0.tar.gz#479e5c7d9ef75d6133f68143b96948f8e77136b2"
 
 angular@1.5.8, angular@>=1.0.6:
   version "1.5.8"
@@ -2459,9 +2459,9 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
-highlight.js@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.1.0.tgz#eb94c125f52bbd25dc893551b45c37c5093f1c5c"
+highlightjs@9.10.0:
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/highlightjs/-/highlightjs-9.10.0.tgz#fca9b78ddaa3b1abca89d6c3ee105ad270a80190"
 
 hoek@0.9.x:
   version "0.9.1"
