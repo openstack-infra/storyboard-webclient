@@ -1,262 +1,156 @@
 /**
  * A side-locked navbar.
  */
-.navbar {
+nav.sidebar {
+  color: $sidebar-color;
+  background-color: $sidebar-bg;
+  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+  width: $sidebar-width-lg;
+  height: calc(100vh - 50px);
+  position: fixed;
+  top: $navbar-height;
+  left: $sidebar-left-lg;
+  padding: $sidebar-padding-lg;
+  font-size: $sidebar-font-size;
+  overflow-y: scroll;
 
-    .pull-right {
-        margin-right: 5px;
+  p {
+    margin-bottom: 0px;
+    margin-top: $sidebar-item-spacing;
+    
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+
+  .fa-2x{
+    font-size: 3rem;
+  }
+
+  hr {
+    width: $sidebar-divider-width;
+    border-color: $sidebar-divider-color;
+    border-width: 2px;
+    margin: $sidebar-divider-margin auto;
+  }
+
+  a {
+    color: $sidebar-color;
+    position: relative;
+    padding: $sidebar-item-padding-lg;
+    margin-bottom: 5px;
+    width: 100%;
+    display: block;
+    transition: color 100ms ease-in-out;
+    border-radius: $sidebar-item-border-radius;
+    
+    p {
+      color: $sidebar-link-color;
     }
 
-    &.navbar-fixed-side {
-
-        // Add this class if you want to add an offset for the header.
-        &.navbar-fixed-side-header-offset {
-            top: $navbar-height;
-        }
-        // Add this class if you want to add an offset for the footer.
-        &.navbar-fixed-side-footer-offset {
-            bottom: $navbar-height;
-        }
-
-        @media (max-width: $screen-xs-max) {
-            width: $navbar-fixed-side-width-xs;
-
-            &.navbar-fixed-side-has-submenu {
-                width: ($navbar-fixed-side-width-xs + $navbar-fixed-side-submenu-width-xs);
-            }
-
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-
-            .nav-submenu {
-                position: absolute;
-                top: 0px;
-                left: -40px;
-                bottom: 0px;
-                width: $navbar-fixed-side-submenu-width-md;
-            }
-        }
-        @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-            width: $navbar-fixed-side-width-sm;
-
-            &.navbar-fixed-side-has-submenu {
-                width: ($navbar-fixed-side-width-sm + $navbar-fixed-side-submenu-width-sm);
-            }
-
-            top: 0px;
-            left: 0px;
-            bottom: 0px;
-
-            .nav-submenu {
-                position: absolute;
-                top: 0px;
-                right: -40px;
-                bottom: 0px;
-                width: $navbar-fixed-side-submenu-width-md;
-            }
-        }
-        @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-            width: $navbar-fixed-side-width-md;
-            &.navbar-fixed-side-has-submenu {
-                width: ($navbar-fixed-side-width-md + $navbar-fixed-side-submenu-width-md);
-            }
-
-            top: 0px;
-            left: 0px;
-            bottom: 0px;
-
-            .nav-submenu {
-                position: absolute;
-                top: 0px;
-                right: -40px;
-                bottom: 0px;
-                width: $navbar-fixed-side-submenu-width-md;
-            }
-        }
-        @media (min-width: $screen-lg-min) {
-            width: $navbar-fixed-side-width-lg;
-            &.navbar-fixed-side-has-submenu {
-                width: ($navbar-fixed-side-width-lg + $navbar-fixed-side-submenu-width-lg);
-            }
-
-            top: 0px;
-            left: 0px;
-            bottom: 0px;
-
-            .nav-submenu {
-                position: absolute;
-                top: 0px;
-                right: -40px;
-                bottom: 0px;
-                width: $navbar-fixed-side-submenu-width-md;
-            }
-        }
-
-        .nav-main {
-            padding: 5px 0px 5px 0px;
-            position: relative;
-            min-height: 100%;
-        }
-
-        .nav-submenu {
-            display: none;
-            background-color: $navbar-inverse-link-active-bg;
-
-            .nav.nav-pills {
-                > li {
-                    margin-right: 0px;
-                    margin-left: 0px;
-
-                    > a {
-                        border-radius: 0px;
-                        background: none;
-
-                        &:hover {
-                            background: none;
-                        }
-                    }
-                }
-            }
-        }
-
-        overflow: auto;
-        border-radius: 0px;
-        position: fixed;
-        margin: 0px;
-
-        &.navbar-inverse .nav {
-
-            > li {
-
-                margin-right: 5px;
-                margin-left: 5px;
-
-                > a {
-                    color: $navbar-inverse-link-color;
-                    background: $navbar-inverse-bg;
-                    border-color: $navbar-inverse-border;
-                    padding: 10px 5px;
-                }
-
-                > a:hover {
-                    color: $navbar-inverse-link-hover-color;
-                    background: $navbar-inverse-link-hover-bg;
-                    border-color: $navbar-inverse-border;
-                }
-                > a:active {
-                    color: $navbar-inverse-link-active-color;
-                    background: $navbar-inverse-link-active-bg;
-                    border-color: $navbar-inverse-border;
-                }
-
-                &.active {
-                    > a {
-                        color: $navbar-inverse-link-active-color;
-                        background: $navbar-inverse-link-active-bg;
-                    }
-
-                    > a:hover {
-                        color: $navbar-inverse-link-active-color;
-                        background: $navbar-inverse-link-active-bg;
-                    }
-                    > a:active {
-                        color: $navbar-inverse-link-active-color;
-                        background: $navbar-inverse-link-active-bg;
-                    }
-                }
-            }
-
-            li.active {
-                background-color: $navbar-inverse-bg;
-            }
-        }
-
-        a {
-            color: $navbar-inverse-link-color;
-
-            &:hover {
-                color: $navbar-inverse-link-hover-color;
-            }
-
-            &:active {
-                color: $navbar-inverse-link-active-color;
-            }
-        }
-
-        .nav-bottom {
-            position: absolute;
-            bottom: 0px;
-        }
-
-        &.navbar-fixed-side-has-submenu {
-
-            .nav-submenu {
-                display: inherit;
-            }
-
-            @media (max-width: $screen-xs-max) {
-                .nav-main {
-                    margin-left: $navbar-fixed-side-submenu-width-xs;
-
-                    a {
-                        border-top-left-radius: 0px;
-                        border-bottom-left-radius: 0px;
-                    }
-
-                    li {
-                        &.active {
-                            margin-left: 0px;
-
-                            a {
-                                padding-left: 10px;
-                            }
-                        }
-                    }
-                }
-            }
-            @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-                .nav-main {
-                    margin-right: $navbar-fixed-side-submenu-width-sm;
-                }
-            }
-            @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-                .nav-main {
-                    margin-right: $navbar-fixed-side-submenu-width-md;
-                }
-            }
-            @media (min-width: $screen-lg-min) {
-                .nav-main {
-                    margin-right: $navbar-fixed-side-submenu-width-lg;
-                }
-            }
-
-            @media (min-width: $screen-sm-min) {
-                .nav-main {
-                    li {
-                        &.active {
-                            margin-right: 0px;
-
-                            a {
-                                padding-right: 10px;
-                            }
-                        }
-                    }
-                    a {
-                        border-top-right-radius: 0px;
-                        border-bottom-right-radius: 0px;
-                    }
-                }
-            }
-        }
+    &.active {
+      z-index: 1000;
+      background-color: $sidebar-link-color;
+      box-shadow: 0 0px 10px rgba(0, 0, 0, 0.75);
     }
+
+    &:hover, &.active {
+      color: $sidebar-link-hover-color;
+      text-decoration: none;
+
+      p {
+        color: $sidebar-link-hover-color;
+      }
+    }
+
+    &:hover {
+      background-color: $sidebar-link-hover-bg;
+    }
+  }
+
+  &.has-submenu {
+    box-shadow: none;
+  }
 }
 
-// Stacked pills
-.nav-stacked {
-    > li {
-        + li {
-            margin-top: 5px;
-        }
+nav.has-submenu > nav.submenu {
+  position: fixed;
+  height: 100vh;
+  width: $sidebar-submenu-width-lg;
+  top: $navbar-height;
+  left: $sidebar-width-lg;
+  background-color: $sidebar-submenu-bg;
+  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+  padding-top: $sidebar-submenu-top-offset;
+
+  a {
+    display: block;
+    color: $sidebar-submenu-color;
+    width: 100%;
+
+    &:hover, &.active {
+      color: $sidebar-submenu-hover-color;
+      text-decoration: none;
+      background-color: $sidebar-submenu-hover-bg;
+      border-radius: $sidebar-submenu-item-border-radius;
+      box-shadow: none;
     }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  nav.sidebar {
+    width: $sidebar-width-xs;
+    left: $sidebar-left-xs;
+    padding: $sidebar-padding-xs;
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+
+    a {
+      padding: $sidebar-item-padding-xs;
+    }
+
+    &.has-submenu {
+      width: $sidebar-width-xs;
+      box-shadow: none;
+    }
+  }
+
+  nav.has-submenu > nav.submenu {
+    left: calc(100% - #{$sidebar-width-xs} -
+               #{$sidebar-submenu-width-xs});
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+  }
+}
+
+@media (max-width: $screen-sm-max) and (min-width: $screen-sm-min) {
+  nav.sidebar {
+    width: $sidebar-width-sm;
+    left: $sidebar-left-sm;
+    padding: $sidebar-padding-sm;
+
+    a {
+      padding: $sidebar-item-padding-sm;
+    }
+  }
+  nav.has-submenu > nav.submenu {
+    width: $sidebar-submenu-width-sm;
+    left: $sidebar-width-sm;
+  }
+}
+
+@media (max-width: $screen-md-max) and (min-width: $screen-md-min) {
+  nav.sidebar {
+    width: $sidebar-width-md;
+    left: $sidebar-left-md;
+    padding: $sidebar-padding-md;
+
+    a {
+      padding: $sidebar-item-padding-md;
+    }
+  }
+
+  nav.has-submenu > nav.submenu {
+    width: $sidebar-submenu-width-md;
+    left: $sidebar-width-md;
+  }
 }
