@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+  ~ Copyright (c) 2018 Adam Coldrick
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -14,96 +14,67 @@
   ~ under the License.
   -->
 
-<nav class="navbar navbar-inverse navbar-fixed-side
-        navbar-fixed-side-header-offset"
-     role="navigation"
-     ng-class="{'navbar-fixed-side-has-submenu': hasSubmenu}">
-    <div class="nav-main">
-        <ul class="nav nav-pills nav-stacked text-center">
-            <li active-path="^\/search.*">
-                <a href="#!/search">
-                    <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-search fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Search</small>
-                </a>
-            </li>
-            <li class="nav-divider"></li>
-            <li active-path="^\/(dashboard\/.*)?$" ng-if="isLoggedIn">
-                <a href="#!/">
-                    <i class="fa fa-tachometer-alt fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-tachometer-alt fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Dashboard</small>
-                </a>
-            </li>
-            <li active-path="^\/page\/about$" ng-if="!isLoggedIn">
-                <a href="#!/page/about">
-                    <i class="fa fa-question-circle fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-question-circle fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">About</small>
-                </a>
-            </li>
-            <li active-path="^\/board\/*">
-                <a href="#!/board/list">
-                    <i class="fa fa-sb-board fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-board fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Worklists & Boards</small>
-                </a>
-            </li>
-            <li active-path="^\/project_group\/*">
-                <a href="#!/project_group">
-                    <i class="fa fa-sb-project-group fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-project-group fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Project Groups</small>
-                </a>
-            </li>
-            <li active-path="^\/project[^_]\/*">
-                <a href="#!/project">
-                    <i class="fa fa-sb-project fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-project fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Projects</small>
-                </a>
-            </li>
-            <li active-path="^\/story.*">
-                <a href="#!/story">
-                    <i class="fa fa-sb-story fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-story fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Stories</small>
-                </a>
-            </li>
-            <li class="nav-divider" ng-if="isLoggedIn"></li>
-            <li active-path="^\/profile.*" ng-if="isLoggedIn">
-                <a href="#!/profile">
-                    <i class="fa fa-sb-profile fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-profile fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Profile</small>
-                </a>
-            </li>
-            <li active-path="^\/admin.*" permission="is_superuser">
-                <a href="#!/admin">
-                    <i class="fa fa-sb-admin fa-lg visible-sm visible-xs"></i>
-                    <i class="fa fa-sb-admin fa-3x visible-lg visible-md"></i>
-                    <small class="visible-lg visible-md">Admin</small>
-                </a>
-            </li>
-            <li class="nav-divider visible-xs"></li>
-        </ul>
-        <ul class="list-unstyled nav-stacked">
-            <li active-path="^\/page\/about.*$" ng-if="isLoggedIn">
-                <a href="#!/page/about">
-                    <i class="fa fa-question-circle visible-xs text-center"></i>
-                    <small class="hidden-xs">About</small>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.apache.org/licenses/LICENSE-2.0"
-                   target="_blank">
-                    <i class="fa fa-exclamation-circle visible-xs text-center"></i>
-                    <small class="hidden-xs">License</small>
-                </a>
-            </li>
-        </ul>
-    <div ui-view="submenu"
-         class="nav-submenu">
-    </div>
-    </div>
+<nav class="sidebar text-center" role="navigation"
+     ng-class="{'has-submenu': hasSubmenu}">
+  <a href="#!/search" active-path="^\/search.*">
+    <i class="fa fa-search fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Search</p>
+  </a>
+
+  <hr>
+
+  <a href="#!/" active-path="^\/(dashboard\/.*)?$" ng-if="isLoggedIn">
+    <i class="fa fa-tachometer-alt fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-tachometer-alt fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Dashboard</p>
+  </a>
+  <a href="#!/page/about" active-path="^\/page\/about$" ng-if="!isLoggedIn">
+    <i class="fa fa-question-circle fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-question-circle fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">About</p>
+  </a>
+  <a href="#!/board/list" active-path="^\/board\/*">
+    <i class="fa fa-sb-board fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-board fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Worklists & Boards</p>
+  </a>
+  <a href="#!/project_group" active-path="^\/project_group\/*">
+    <i class="fa fa-sb-project-group fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-project-group fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Project Groups</p>
+  </a>
+  <a href="#!/project" active-path="^\/project[^_]\/*">
+    <i class="fa fa-sb-project fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-project fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Projects</p>
+  </a>
+  <a href="#!/story" active-path="^\/story.*">
+    <i class="fa fa-sb-story fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-story fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Stories</p>
+  </a>
+
+  <hr>
+
+  <a href="#!/profile" active-path="^\/profile.*" ng-if="isLoggedIn">
+    <i class="fa fa-sb-profile fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-profile fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Profile</p>
+  </a>
+  <a href="#!/admin" active-path="^\/admin.*" permission="is_superuser">
+    <i class="fa fa-sb-admin fa-2x visible-lg visible-md"></i>
+    <i class="fa fa-sb-admin fa-lg visible-sm visible-xs"></i>
+    <p class="visible-lg visible-md">Admin</p>
+  </a>
+  <a href="#!/page/about" active-path="^\/page\/about$" ng-if="isLoggedIn">
+    <i class="fa fa-question-circle visible-xs"></i>
+    <p class="hidden-xs">About</p>
+  </a>
+  <a href="http://www.apache.org/licenses/LICENSE-2.0"
+     target="_blank">
+    <i class="fa fa-exclamation-circle visible-xs"></i>
+    <p class="hidden-xs">License</p>
+  </a>
+  <nav ui-view="submenu" class="submenu text-center"></nav>
 </nav>
