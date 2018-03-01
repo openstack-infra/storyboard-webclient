@@ -21,19 +21,70 @@ $navbar-border-radius:             $border-radius-base;
 $navbar-padding-horizontal:        floor(($grid-gutter-width / 2));
 $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2);
 
-// Inverted navbar
-// Reset inverted navbar basics
-$navbar-inverse-color:                      $gray-light;
-$navbar-inverse-bg:                         #222;
-$navbar-inverse-border:                     darken($navbar-inverse-bg, 10%);
+// Sidebar
+// -------
 
-// Inverted navbar links
-$navbar-inverse-link-color:                 $gray-light;
+$sidebar-font-size: 1.2rem;
 
-// Inverted navbar brand label
-$navbar-inverse-brand-color:                $navbar-inverse-link-color;
+// Sidebar colors
+$sidebar-bg:                         #333;
+$sidebar-color:                      #aaa;
+$sidebar-link-color:                 $white;
+$sidebar-link-hover-color:           #333;
+$sidebar-link-hover-bg:              #bbb;
+$sidebar-link-active-color:          $sidebar-link-hover-color;
+$sidebar-link-active-bg:             $white;
+$sidebar-link-disabled-color:        #444;
+$sidebar-link-disabled-bg:           transparent;
+
+// Sizes for the side navbar at different container sizes.
+$sidebar-width-xs: 50px;
+$sidebar-width-sm: 70px;
+$sidebar-width-md: 100px;
+$sidebar-width-lg: 100px;
+
+// Position of topleft corner for the sidebar
+// top will be $navbar-height
+$sidebar-left-xs: calc(100% - #{$sidebar-width-xs});
+$sidebar-left-sm: 0;
+$sidebar-left-md: 0;
+$sidebar-left-lg: 0;
+
+// Padding for the main sidebar menu
+$sidebar-padding-xs: 5px;
+$sidebar-padding-sm: 5px;
+$sidebar-padding-md: 10px;
+$sidebar-padding-lg: 10px;
+
+// Sidebar items
+$sidebar-divider-margin: 5px;
+$sidebar-divider-width: 80%;
+$sidebar-item-border-radius: 5px;
+$sidebar-item-spacing: 0.4em;
+
+$sidebar-item-padding-xs: 15px 5px;
+$sidebar-item-padding-sm: 15px 5px;
+$sidebar-item-padding-md: 10px;
+$sidebar-item-padding-lg: 10px;
+
+// Sidebar submenu
+// ---------------
+$sidebar-submenu-color: #ddd;
+$sidebar-submenu-bg: #555;
+$sidebar-submenu-hover-color: $white;
+$sidebar-submenu-hover-bg: #777;
+
+$sidebar-submenu-item-border-radius: 0px;
+$sidebar-submenu-top-offset: 20px;
+
+// Sizes for the side navbar submenu at different container sizes.
+$sidebar-submenu-width-xs: 40px;
+$sidebar-submenu-width-sm: 40px;
+$sidebar-submenu-width-md: 40px;
+$sidebar-submenu-width-lg: 40px;
 
 // Form Controls
+// -------------
 $input-height-h1:             (ceil($font-size-h1 * $line-height-large) + ($padding-base-vertical * 2));
 $input-height-h2:             (ceil($font-size-h2 * $line-height-large) + ($padding-base-vertical * 2));
 $input-height-h3:             (ceil($font-size-h3 * $line-height-base) + ($padding-base-vertical * 2));
@@ -42,6 +93,6 @@ $input-height-h5:             (ceil($font-size-h5 * $line-height-base) + ($paddi
 $input-height-h6:             (ceil($font-size-h6 * $line-height-base) + ($padding-base-vertical * 2));
 
 // == Container sizes
-$container-tablet:             ((720px + $grid-gutter-width - $navbar-fixed-side-width-sm));
-$container-desktop:            ((940px + $grid-gutter-width - $navbar-fixed-side-width-md));
-$container-large-desktop:      ((1140px + $grid-gutter-width - $navbar-fixed-side-width-lg));
+$container-tablet:             ((720px + $grid-gutter-width - $sidebar-width-sm));
+$container-desktop:            ((940px + $grid-gutter-width - $sidebar-width-md));
+$container-large-desktop:      ((1140px + $grid-gutter-width - $sidebar-width-lg));
