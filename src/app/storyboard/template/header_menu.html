@@ -105,6 +105,25 @@
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
+                    <li class="disabled">
+                        <a class="#!/profile">
+                            <i class="fa fa-sb-user"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!/profile/preferences">
+                            <i class="fa fa-cog"></i>
+                            Preferences
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!/profile/tokens">
+                            <i class="fa fa-key"></i>
+                            Authentication Tokens
+                        </a>
+                    </li>
+                    <li class="divider"></li>
                     <li>
                         <a href="#!/auth/deauthorize">
                             <i class="fa fa-sign-out-alt"></i>
@@ -220,6 +239,12 @@
                     </a>
                 </li>
                 <li class="divider"></li>
+                <li>
+                    <a href="#!/profile">
+                        <i class="fa fa-sb-user"></i>
+                        Profile
+                    </a>
+                </li>
                 <li><a href="#!/auth/deauthorize"
                        ng-click="showMobileMenu = false">
                     <i class="fa fa-sign-out-alt"></i>
