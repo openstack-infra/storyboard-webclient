@@ -55,13 +55,8 @@
     <p class="visible-lg visible-md">Stories</p>
   </a>
 
-  <hr>
+  <hr ng-if="isLoggedIn">
 
-  <a href="#!/profile" active-path="^\/profile.*" ng-if="isLoggedIn">
-    <i class="fa fa-sb-profile fa-2x visible-lg visible-md"></i>
-    <i class="fa fa-sb-profile fa-lg visible-sm visible-xs"></i>
-    <p class="visible-lg visible-md">Profile</p>
-  </a>
   <a href="#!/admin" active-path="^\/admin.*" permission="is_superuser">
     <i class="fa fa-sb-admin fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-admin fa-lg visible-sm visible-xs"></i>
@@ -70,11 +65,6 @@
   <a href="#!/page/about" active-path="^\/page\/about$" ng-if="isLoggedIn">
     <i class="fa fa-question-circle visible-xs"></i>
     <p class="hidden-xs">About</p>
-  </a>
-  <a href="http://www.apache.org/licenses/LICENSE-2.0"
-     target="_blank">
-    <i class="fa fa-exclamation-circle visible-xs"></i>
-    <p class="hidden-xs">License</p>
   </a>
   <nav ui-view="submenu" class="submenu text-center"></nav>
 </nav>
