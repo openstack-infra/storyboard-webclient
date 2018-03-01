@@ -41,9 +41,6 @@ angular.module('sb.profile',
                     currentUser: SessionResolver.requireCurrentUser
                 },
                 views: {
-                    'submenu@': {
-                        templateUrl: 'app/profile/template/profile_submenu.html'
-                    },
                     '@': {
                         template: '<div ui-view></div>'
                     }
