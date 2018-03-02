@@ -42,6 +42,7 @@
     margin: 0px 10px;
     float: none;
     display: inline-block !important;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 /* Lane style */
@@ -56,6 +57,7 @@
     display: inline-block;
     vertical-align: top;
     white-space: normal;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .kanban-lane-automatic {
