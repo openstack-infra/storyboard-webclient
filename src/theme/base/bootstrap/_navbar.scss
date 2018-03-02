@@ -1,4 +1,12 @@
 /**
+ * Header navbar.
+ */
+nav.navbar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+}
+
+/**
  * A side-locked navbar.
  */
 nav.sidebar {
@@ -48,7 +56,7 @@ nav.sidebar {
     }
 
     &.active {
-      z-index: 1000;
+      z-index: 500;
       background-color: $sidebar-link-color;
       box-shadow: 0 0px 10px rgba(0, 0, 0, 0.75);
     }
