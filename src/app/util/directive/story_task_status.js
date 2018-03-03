@@ -37,6 +37,18 @@ angular.module('sb.util').directive('storyTaskStatus',
 
                     $scope.status_texts = statuses;
                 });
+
+                $scope.orderStatus = function(item) {
+                    var order = [
+                        'todo',
+                        'inprogress',
+                        'review',
+                        'invalid',
+                        'merged'
+                    ];
+
+                    return order.indexOf(item.key);
+                };
             }
         };
     });
