@@ -21,82 +21,72 @@
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <table class="table table-striped">
-                <thead>
-                <th colspan="2">My Boards</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="board in boards">
-                    <td>
-                        <p>
-                            <a href="#!/board/{{board.id}}">
-                                {{board.title}}
-                            </a>
-                        </p>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-board fa-lg text-muted"></i>&emsp;
+                    My Boards
+                </h3>
+                <div class="card-row" ng-repeat="board in boards">
+                    <a href="#!/board/{{board.id}}">
+                        {{board.title}}
+                    </a>
+                    <p>
                         <small ng-repeat="lane in board.lanes"
-                               ng-if="!lane.worklist.archived">
-                        <span class="badge"
-                              ng-class="{'badge-primary': lane.worklist.items.length > 0}">
-                            {{lane.worklist.items.length}}
-                        </span> {{lane.worklist.title}}
-                        &nbsp;
+                                ng-if="!lane.worklist.archived">
+                            <span class="badge"
+                                    ng-class="{'badge-primary': lane.worklist.items.length > 0}">
+                                {{lane.worklist.items.length}}
+                            </span> {{lane.worklist.title}}
+                            &nbsp;
                         </small>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="boards.length == 0">
-                <td colspan="3" class="text-center text-muted">
+                    </p>
+                </div>
+                <p ng-show="boards.length == 0"
+                   class="card-row text-center text-muted">
                     <em>
                         You don't currently have any boards.
                     </em>
-                </td>
-                </tbody>
-                <tbody ng-show="loadingBoards">
-                <td colspan="3" class="text-center">
-                    <i class="fa fa-refresh fa-spin fa-lg"></i>
-                </td>
-                </tbody>
-            </table>
+                </p>
+                <p ng-show="loadingBoards"
+                   class="card-row text-center">
+                   <i class="fa fa-spinner fa-spin fa-lg"></i>
+                </p>
+            </div>
         </div>
         <div class="col-sm-6">
-            <table class="table table-striped">
-                <thead>
-                <th colspan="2">My Worklists</th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="worklist in worklists">
-                    <td>
-                        <subscribe class="pull-right"
-                                   resource="worklist"
-                                   resource-id="worklist.id"
-                                   subscriptions="worklistSubscriptions">
-                        </subscribe>
-                        <p>
-                            <a href="#!/worklist/{{worklist.id}}">
-                                {{worklist.title}}
-                            </a>
-                        </p>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-worklist fa-lg text-muted"></i>&emsp;
+                    My Worklists
+                </h3>
+                <div class="card-row" ng-repeat="worklist in worklists">
+                    <subscribe class="pull-right"
+                                resource="worklist"
+                                resource-id="worklist.id"
+                                subscriptions="worklistSubscriptions">
+                    </subscribe>
+                    <a href="#!/worklist/{{worklist.id}}">
+                        {{worklist.title}}
+                    </a>
+                    <p>
                         <small>
-                        <span class="badge"
-                              ng-class="{'badge-primary': worklist.items.length > 0}">
-                            {{worklist.items.length}}
-                        </span> Items
+                            <span class="badge"
+                                ng-class="{'badge-primary': worklist.items.length > 0}">
+                                {{worklist.items.length}}
+                            </span> Items
                         </small>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="worklists.length == 0">
-                <td colspan="3" class="text-center text-muted">
+                    </p>
+                </div>
+                <p ng-show="worklists.length == 0"
+                    class="card-row text-center text-muted">
                     <em>
                         You don't currently have any worklists.
                     </em>
-                </td>
-                </tbody>
-                <tbody ng-show="loadingWorklists">
-                <td colspan="3" class="text-center">
-                    <i class="fa fa-refresh fa-spin fa-lg"></i>
-                </td>
-                </tbody>
-            </table>
+                </p>
+                <p ng-show="loadingBoards"
+                    class="card-row text-center">
+                    <i class="fa fa-spinner fa-spin fa-lg"></i>
+                </p>
+            </div>
         </div>
     </div>

@@ -19,165 +19,124 @@
         <div class="col-xs-12">
             <view-title>Subscriptions</view-title>
             <h1>
-                <i class="fa fa-star" ng-if="!saving"></i>
+                <i class="fa fa-star text-muted"></i>&emsp;
                 Subscriptions
             </h1>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <div class="panel panel-default">
-            <table class="table table-striped">
-                <thead>
-                <th colspan="2">
-                    <i class="fa fa-sb-story fa-lg"></i>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-story fa-lg text-muted"></i>&emsp;
                     Stories
-                </th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="story in stories">
-                    <td class="col-sm-2">
-                        <story-status-label story="story"/>
-                    </td>
-                    <td>
-                        <subscribe class="pull-right"
-                                   resource="story"
-                                   resource-id="story.id"
-                                   subscriptions="storySubscriptions">
+                </h3>
+                <div class="card-row" ng-repeat="story in stories">
+                    <span class="pull-right">
+                        <story-status-label story="story"></story-status-label>
+                        &emsp;
+                        <subscribe resource="story"
+                                    resource-id="story.id"
+                                    subscriptions="storySubscriptions">
                         </subscribe>
-                        <p>
-                            <a href="#!/story/{{story.id}}">
-                                {{story.title}}
-                            </a>
-                        </p>
-                        <story-task-status story="story"/>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="stories.length == 0">
-                <td colspan="3" class="text-center text-muted">
+                    </span>
+                    <a href="#!/story/{{story.id}}">
+                        {{story.title}}
+                    </a>
+                    <p>
+                        <story-task-status story="story"></story-task-status>
+                    </p>
+                </div>
+                <p ng-show="stories.length == 0"
+                    class="card-row text-center text-muted">
                     <em>
                         You are not currently subscribed to any stories.
                     </em>
-                </td>
-                </tbody>
-            </table>
+                </p>
             </div>
         </div>
         <div class="col-sm-6">
-            <hr class="visible-xs"/>
-            <div class= "panel panel-default">
-            <table class="table table-striped">
-                <thead>
-                <th>
-                    <i class="fa fa-sb-project fa-lg"></i>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-project fa-lg text-muted"></i>&emsp;
                     Projects
-                </th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="project in projects">
-                    <td>
-                        <subscribe class="pull-right"
-                                   resource="project"
-                                   resource-id="project.id"
-                                   subscriptions="projectSubscriptions">
-                        </subscribe>
-                        <p>
-                            <a href="#!/project/{{project.id}}">
-                                {{project.name}}
-                            </a>
-                        </p>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="projects.length == 0">
-                <td colspan="3" class="text-center text-muted">
+                </h3>
+                <div class="card-row" ng-repeat="project in projects">
+                    <subscribe class="pull-right"
+                                resource="project"
+                                resource-id="project.id"
+                                subscriptions="projectSubscriptions">
+                    </subscribe>
+                    <p>
+                        <a href="#!/project/{{project.id}}">
+                            {{project.name}}
+                        </a>
+                    </p>
+                </div>
+                <p ng-show="projects.length == 0"
+                    class="card-row text-center text-muted">
                     <em>
                         You are not currently subscribed to any projects.
                     </em>
-                </td>
-                </tbody>
-            </table>
+                </p>
             </div>
         </div>
         <div class="col-sm-6">
-            <hr class="visible-xs"/>
-            <div class="panel panel-default">
-            <table class="table table-striped">
-                <thead>
-                <th>
-                    <i class="fa fa-sb-project-group fa-lg"></i>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-project-group fa-lg text-muted"></i>&emsp;
                     Project Groups
-                </th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="projectGroup in projectGroups">
-                    <td>
-                        <subscribe class="pull-right"
-                                   resource="project_group"
-                                   resource-id="projectGroup.id"
-                                   subscriptions="projectGroupSubscriptions">
-                        </subscribe>
-                        <p>
-                            <a href="#!/project_group/{{projectGroup.id}}">
-                                {{projectGroup.name}}
-                            </a>
-                        </p>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="projectGroups.length == 0">
-                <td colspan="3" class="text-center text-muted">
+                </h3>
+                <div class="card-row" ng-repeat="projectGroup in projectGroups">
+                    <subscribe class="pull-right"
+                                resource="project_group"
+                                resource-id="projectGroup.id"
+                                subscriptions="projectGroupSubscriptions">
+                    </subscribe>
+                    <p>
+                        <a href="#!/project_group/{{projectGroup.id}}">
+                            {{projectGroup.name}}
+                        </a>
+                    </p>
+                </div>
+                <p ng-show="projectGroups.length == 0"
+                    class="card-row text-center text-muted">
                     <em>
                         You are not currently subscribed to any project groups.
                     </em>
-                </td>
-                </tbody>
-            </table>
+                </p>
             </div>
         </div>
         <div class="col-sm-6">
-            <hr class="visible-xs"/>
-            <div class="panel panel-default">
-            <table class="table table-striped">
-                <thead>
-                <th>
-                    <i class="fa fa-sb-task fa-lg"></i>
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-worklist fa-lg text-muted"></i>&emsp;
                     Worklists
-                </th>
-                </thead>
-                <tbody>
-                <tr ng-repeat="worklist in worklists">
-                    <td>
-                        <subscribe class="pull-right"
-                                   resource="worklist"
-                                   resource-id="worklist.id"
-                                   subscriptions="worklistSubscriptions">
-                        </subscribe>
-                        <p>
-                            <a href="#!/worklist/{{worklist.id}}">
-                                {{worklist.title}}
-                            </a>
-                        </p>
+                </h3>
+                <div class="card-row" ng-repeat="worklist in worklists">
+                    <subscribe class="pull-right"
+                                resource="worklist"
+                                resource-id="worklist.id"
+                                subscriptions="worklistSubscriptions">
+                    </subscribe>
+                    <a href="#!/worklist/{{worklist.id}}">
+                        {{ worklist.title }}
+                    </a>
+                    <p>
                         <small>
-                        <span class="badge"
-                              ng-class="{'badge-primary': worklist.items.length > 0}">
-                            {{worklist.items.length}}
-                        </span> Items
+                            <span class="badge"
+                                    ng-class="{'badge-primary': worklist.items.length > 0}">
+                                {{ worklist.items.length }}
+                            </span> Items
                         </small>
-                    </td>
-                </tr>
-                </tbody>
-                <tbody ng-show="worklists.length == 0">
-                <tr>
-                    <td colspan="3" class="text-center text-muted">
-                        <em>
-                            You are not currently subscribed to any worklists.
-                        </em>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </p>
+                </div>
+                <p ng-show="worklists.length == 0"
+                    class="card-row text-center text-muted">
+                    <em>
+                        You are not currently subscribed to any worklists.
+                    </em>
+                </p>
             </div>
         </div>
     </div>

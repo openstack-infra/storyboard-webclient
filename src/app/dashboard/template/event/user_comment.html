@@ -7,7 +7,7 @@
         {{ author.full_name }} left a comment: <span class="pull-right"time-moment eventdate="created_at"></span>
     </p>
 
-    <p>
-        <em>{{evt.event_info.comment_content || 'The author left a blank comment.'}}
-        </em></p>
+    <div class="indented text-muted">
+        <insert-markdown content="evt.event_info.comment_content"></insert-markdown>
+    </div>
 </div>
