@@ -370,7 +370,7 @@ angular.module('sb.board').controller('BoardDetailController',
 
         $scope.isDue = function(card) {
             if (card.item_type === 'task') {
-                if (card.task.status === 'merged') {
+                if (card.task.status === 'resolved') {
                     return false;
                 }
             }
@@ -392,7 +392,7 @@ angular.module('sb.board').controller('BoardDetailController',
 
         $scope.isLate = function(card) {
             if (card.item_type === 'task') {
-                if (card.task.status === 'merged') {
+                if (card.task.status === 'resolved') {
                     return false;
                 }
             }

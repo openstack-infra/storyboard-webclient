@@ -36,7 +36,7 @@ angular.module('sb.util').directive('taskStatusDropdown',
             switch (status) {
                 case 'invalid':
                     return 'default';
-                case 'merged':
+                case 'resolved':
                     return 'success';
                 case 'inprogress':
                     return 'info';
