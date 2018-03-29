@@ -95,7 +95,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
          * Update the page size preference and re-search.
          */
         $scope.updatePageSize = function (value) {
-            Preference.set('page_size', value).then(
+            Preference.set('project_detail_page_size', value).then(
                 function () {
                     pageSize = value;
                     $scope.search();
