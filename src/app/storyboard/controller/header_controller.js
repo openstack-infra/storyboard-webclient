@@ -47,7 +47,11 @@ angular.module('storyboard').controller('HeaderController',
          * Create a new story.
          */
         $scope.newStory = function () {
-            NewStoryService.showNewStoryModal()
+            var projectId = null;
+            if ($state.current.name === 'sb.project.detail') {
+                projectId = $state.params.id;
+            }
+            NewStoryService.showNewStoryModal(projectId)
                 .then(function (story) {
                     // On success, go to the story detail.
                     $scope.showMobileNewMenu = false;
