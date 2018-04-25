@@ -22,6 +22,7 @@ angular.module('sb.services')
         'use strict';
 
         var md = $window.markdownit({
+            breaks: true,
             html: true,
             highlight: function(code, lang) {
                 if (lang && $window.hljs.getLanguage(lang)) {
