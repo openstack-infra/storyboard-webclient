@@ -30,6 +30,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-connect-proxy": "^0.2.0",
     "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compress": "^1.4.3",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-copy": "^0.6.0",
@@ -65,6 +66,7 @@
   "dependencies": {
     "@uirouter/angularjs": "^1.0.12",
     "angular": "1.5.8",
+    "angular-bootstrap": "0.12.2",
     "angular-cache": "https://github.com/jmdobry/angular-cache/archive/3.2.5.tar.gz",
     "angular-elastic": "https://github.com/monospaced/angular-elastic/archive/v2.4.2.tar.gz",
     "angular-local-storage": "0.1.5",
@@ -73,7 +75,6 @@
     "angular-resource": "1.5.8",
     "angular-sanitize": "1.5.8",
     "angular-scenario": "1.5.8",
-    "angular-bootstrap": "0.12.2",
     "angularjs-viewhead": "0.0.1",
     "bootstrap": "3.3.7",
     "font-awesome": "4.5.0",

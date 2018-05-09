@@ -397,6 +397,25 @@ module.exports = function (grunt) {
             }
         },
 
+
+        /**
+         * grunt compress
+         *
+         * Create a tarball containing the build output.
+         */
+        compress: {
+          main: {
+            options: {
+              archive: 'storyboard-output.tgz',
+              mode: 'tgz'
+            },
+            files: [
+              {expand: true, cwd: dir.output, src: ['**/*'], dest: ''}
+            ]
+          }
+        },
+
+
         /**
          * grunt watch
          *
@@ -564,7 +583,8 @@ module.exports = function (grunt) {
     grunt.registerTask('package', [
         'uglify',
         'cssmin',
-        'htmlmin'
+        'htmlmin',
+        'compress'
     ]);
 
     /**
