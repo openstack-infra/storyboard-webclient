@@ -429,7 +429,7 @@
 <!-- Template for a table of tasks -->
 <script type="text/ng-template" id="/inline/task_table.html">
         <table class="table table-striped table-supercondensed">
-            <tr ng-repeat="task in projects[name].branches[branchName].tasks | orderBy: '-status'"
+            <tr ng-repeat="task in projects[name].branches[branchName].tasks | orderBy: 'id'"
                 ng-include src="'/inline/task_list_item.html'">
             </tr>
             <tr ng-show="isLoggedIn && !projects[name].branches[branchName].showAddTask">
