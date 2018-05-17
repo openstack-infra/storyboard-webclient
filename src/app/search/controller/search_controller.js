@@ -26,7 +26,8 @@ angular.module('sb.search').controller('SearchController',
          *
          * @type {Array}
          */
-        $scope.defaultCriteria = [];
+        var params = $location.search();
+        $scope.defaultCriteria = SearchHelper.parseParameters(params);
 
         /**
          * List of resource types which this view will be searching on.
@@ -35,11 +36,5 @@ angular.module('sb.search').controller('SearchController',
          */
         $scope.resourceTypes = ['TaskStatus', 'Story', 'Project', 'User',
             'Task', 'ProjectGroup', 'Board', 'Worklist'];
-
-        /**
-         * If a 'q' exists in the state params, go ahead and add it.
-         */
-        var params = $location.search();
-        SearchHelper.parseParameters(params, $scope.defaultCriteria);
     }
 );
