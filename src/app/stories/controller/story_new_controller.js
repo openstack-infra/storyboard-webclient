@@ -48,21 +48,29 @@ angular.module('sb.story').controller('StoryNewController',
         });
 
         // Convert the user_id and team_id parameters to arrays if needed
-        if (!!$stateParams.team_id
-            && $stateParams.team_id.constructor !== Array) {
-            $stateParams.team_id = [$stateParams.team_id];
+        var teamIds = [];
+        if (!!$stateParams.team_id) {
+            if ($stateParams.team_id.constructor !== Array) {
+                teamIds.push($stateParams.team_id);
+            } else {
+                teamIds.push.apply(teamIds, $stateParams.team_id);
+            }
         }
-        if (!!$stateParams.user_id
-            && $stateParams.user_id.constructor !== Array) {
-            $stateParams.user_id = [$stateParams.user_id];
+        var userIds = [];
+        if (!!$stateParams.user_id) {
+            if ($stateParams.user_id.constructor !== Array) {
+                userIds.push($stateParams.user_id);
+            } else {
+                userIds.push.apply(userIds, $stateParams.user_id);
+            }
         }
         // Populate the story's permission lists as requested
-        angular.forEach($stateParams.team_id, function(team_id) {
+        angular.forEach(teamIds, function(team_id) {
             Team.get({team_id: team_id}).$promise.then(function(team) {
                 story.teams.push(team);
             });
         });
-        angular.forEach($stateParams.user_id, function(user_id) {
+        angular.forEach(userIds, function(user_id) {
             User.get({id: user_id}).$promise.then(function(user) {
                 story.users.push(user);
             });
