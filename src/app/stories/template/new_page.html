@@ -259,7 +259,7 @@
     <div ng-repeat="name in projectNames | orderBy">
         <h4>
             <i class="fa fa-sb-project text-muted"></i>
-            <a href="#!/project/{{ projects[name].id }}">{{ name }}</a>
+            <a href="#!/project/{{ name }}">{{ name }}</a>
         </h4>
         <div ng-repeat="branchName in projects[name].branchNames">
             <div class="row" ng-if="branchName != 'master'">
