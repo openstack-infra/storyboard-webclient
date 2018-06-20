@@ -2567,9 +2567,9 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
-highlight.js@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.1.0.tgz#eb94c125f52bbd25dc893551b45c37c5093f1c5c"
+highlightjs@9.10.0:
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/highlightjs/-/highlightjs-9.10.0.tgz#fca9b78ddaa3b1abca89d6c3ee105ad270a80190"
 
 hoek@0.9.x:
   version "0.9.1"
