@@ -38,13 +38,6 @@ angular.module('sb.projects').controller('ProjectDetailController',
             null;
 
         /**
-         * The project we're manipulating right now.
-         *
-         * @type Project
-         */
-        $scope.project = {};
-
-        /**
          * UI flag for when we're initially loading the view.
          *
          * @type {boolean}
@@ -101,18 +94,22 @@ angular.module('sb.projects').controller('ProjectDetailController',
          * Load the project
          */
         function loadProject() {
-            Project.get(
+            return Project.get(
                 {'id': id},
                 function (result) {
-                    // We've got a result, assign it to the view and unset our
-                    // loading flag.
-                    $scope.project = result;
-
                     handleServiceSuccess();
+                    return result;
                 },
                 handleServiceError
             );
         }
+
+        /**
+         * The project we're manipulating right now.
+         *
+         * @type Project
+         */
+        $scope.project = loadProject();
 
         /**
          * Toggles the form back.
@@ -159,6 +156,4 @@ angular.module('sb.projects').controller('ProjectDetailController',
                 handleServiceError
             );
         };
-
-        loadProject();
     });
