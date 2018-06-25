@@ -131,6 +131,157 @@ angular.module('sb.search').directive('searchResults',
                     }
                 }
 
+                $scope.stories_sort_field= 'Sort Feild'
+                
+                $scope.sort_stories_by_feild= function(selected){
+                    //var ch=selected;
+                    // console.log(selected.toString());
+                    $scope.stories_sort_field=selected.toString();
+                    var res=$scope.searchResults;
+                    // console.log(res[0].status.toString());
+                    // console.log(JSON.stringify(res,null,4));
+                    switch(selected) {
+                        case 'Title':
+                            res.sort(function compare(a,b){
+                                if (a.title < b.title)
+                                return -1;
+                            if (a.title > b.title)
+                                return 1;
+                            return 0;
+                            });
+                            break;
+                        case 'Tags':
+                            res.sort(function compare(a,b){
+                                if (a.tags < b.tags)
+                                    return -1;
+                                if (a.tags > b.tags)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Creator':
+                            res.sort(function compare(a,b){
+                                if (a.creator_id < b.creator_id)
+                                     return -1;
+                                if (a.creator_id > b.creator_id)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a,b){
+                                if (a.status < b.status)
+                                    return -1;
+                                if (a.status > b.status)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Updated':
+                            res.sort(function compare(a,b){
+                                if (a.updated_at < b.updated_at)
+                                    return -1;
+                                if (a.updated_at > b.updated_at)
+                                    return 1;
+                            return 0;
+                            });
+                            break;
+                        // default:
+                        //     res.sort(function compare(a,b){
+                        //         if (a.created_at < b.created_at)
+                        //         return -1;
+                        //     if (a.created_at > b.created_at)
+                        //         return 1;
+                        //     return 0;
+                        //     });
+                    }
+                }
+
+
+                $scope.tasks_sort_field= 'Sort Feild'
+                
+                $scope.sort_tasks_by_feild= function(selected){
+                    console.log(selected.toString());
+                    $scope.tasks_sort_field=selected.toString();
+                    var res=$scope.searchResults;
+                    // console.log(res[0].status.toString());
+                    console.log(JSON.stringify(res,null,4));
+                    switch(selected) {
+                        case 'Story':
+                            res.sort(function compare(a,b){
+                                if (a.story_id < b.story_id)
+                                    return -1;
+                                if (a.story_id > b.story_id)
+                                    return 1;
+                            return 0;
+                            });
+                            break;
+                        case 'Assignee':
+                            res.sort(function compare(a,b){
+                                if (a.assignee_id < b.assignee_id)
+                                return -1;
+                            if (a.assignee_id > b.assignee_id)
+                                return 1;
+                            return 0;
+                            });
+                            break;
+                        case 'Creator':
+                            res.sort(function compare(a,b){
+                                if (a.creator_id < b.creator_id)
+                                    return -1;
+                                if (a.creator_id > b.creator_id)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a,b){
+                                if (a.status < b.status)
+                                    return -1;
+                                if (a.status > b.status)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Title':
+                            res.sort(function compare(a,b){
+                                if (a.title < b.title)
+                                    return -1;
+                                if (a.title > b.title)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Project':
+                            res.sort(function compare(a,b){
+                                if (a.project_id < b.project_id)
+                                    return -1;
+                                if (a.project_id > b.project_id)
+                                    return 1;
+                                return 0;
+                            });
+                            break;
+                        case 'Created at':
+                            res.sort(function compare(a,b){
+                                if (a.created_at < b.created_at)
+                                    return -1;
+                                if (a.created_at > b.created_at)
+                                    return 1;
+                            return 0;
+                            });
+                            break;
+                        case 'Updated Since':
+                            res.sort(function compare(a,b){
+                                if (a.updated_at < b.updated_at)
+                                    return -1;
+                                if (a.updated_at > b.updated_at)
+                                    return 1;
+                            return 0;
+                            });
+                            break;
+                        }
+                    }
+                
                 /**
                  * Update the page size preference and re-search.
                  */
