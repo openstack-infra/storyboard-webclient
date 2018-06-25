@@ -132,6 +132,138 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
+                 * Allowing sorting stories in search results by certain fields.
+                 */
+                $scope.stories_sort_field = 'Sort Field';
+                $scope.sort_stories_by_field = function(selected){
+                    $scope.stories_sort_field = selected.toString();
+                    var res = $scope.searchResults;
+                    switch(selected) {
+                        case 'Title':
+                            res.sort(function compare(a, b){
+                                if (a.title < b.title){
+                                    return -1;
+                                }
+                                if (a.title > b.title){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Tags':
+                            res.sort(function compare(a, b){
+                                if (a.tags < b.tags){
+                                    return -1;
+                                }
+                                if (a.tags > b.tags){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a, b){
+                                if (a.status < b.status){
+                                    return -1;
+                                }
+                                if (a.status > b.status){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Updated':
+                            res.sort(function compare(a, b){
+                                if (a.updated_at < b.updated_at){
+                                    return -1;
+                                }
+                                if (a.updated_at > b.updated_at){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                    }
+                };
+
+                /**
+                 * Allowing sorting tasks in search results by certain fields.
+                 */
+                $scope.tasks_sort_field = 'Sort Field';
+                $scope.sort_tasks_by_field = function(selected){
+                    $scope.tasks_sort_field = selected.toString();
+                    var res = $scope.searchResults;
+                    switch(selected) {
+                        case 'Story':
+                            res.sort(function compare(a, b){
+                                if (a.story_id < b.story_id){
+                                    return -1;
+                                }
+                                if (a.story_id > b.story_id){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a, b){
+                                if (a.status < b.status){
+                                    return -1;
+                                }
+                                if (a.status > b.status){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Title':
+                            res.sort(function compare(a, b){
+                                if (a.title < b.title){
+                                    return -1;
+                                }
+                                if (a.title > b.title){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Project':
+                            res.sort(function compare(a, b){
+                                if (a.project_id < b.project_id){
+                                    return -1;
+                                }
+                                if (a.project_id > b.project_id){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Created at':
+                            res.sort(function compare(a, b){
+                                if (a.created_at < b.created_at){
+                                    return -1;
+                                }
+                                if (a.created_at > b.created_at){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Updated Since':
+                            res.sort(function compare(a, b){
+                                if (a.updated_at < b.updated_at){
+                                    return -1;
+                                }
+                                if (a.updated_at > b.updated_at){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                    }
+                };
+
+                /**
                  * Update the page size preference and re-search.
                  */
                 $scope.updatePageSize = function (value) {
