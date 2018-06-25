@@ -39,6 +39,8 @@ angular.module('sb.search').directive('searchResults',
                 $scope.isSearching = false;
                 $scope.searchResults = [];
 
+                $scope.tasks_sort_field = 'Created at';
+                $scope.stories_sort_field = 'Last Updated';
                 /**
                  * The field to sort on.
                  *
@@ -71,6 +73,8 @@ angular.module('sb.search').directive('searchResults',
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                     $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.searchResults = results;
+                    $scope.sort_tasks_by_field($scope.tasks_sort_field);
+                    $scope.sort_stories_by_field($scope.stories_sort_field);
                     $scope.isSearching = false;
                 }
 
@@ -130,6 +134,125 @@ angular.module('sb.search').directive('searchResults',
                             handleErrorResult);
                     }
                 }
+
+                /**
+                 * Sorting stories in search results by certain fields.
+                 */
+                $scope.sort_stories_by_field = function(selected){
+                    $scope.stories_sort_field = selected.toString();
+                    var res = $scope.searchResults;
+                    switch(selected) {
+                        case 'Title':
+                            res.sort(function compare(a, b){
+                                if (a.title < b.title){
+                                    return -1;
+                                }
+                                if (a.title > b.title){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Tags':
+                            res.sort(function compare(a, b){
+                                if (a.tags < b.tags){
+                                    return -1;
+                                }
+                                if (a.tags > b.tags){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a, b){
+                                if (a.status < b.status){
+                                    return -1;
+                                }
+                                if (a.status > b.status){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Last Updated':
+                            res.sort(function compare(a, b){
+                                if (a.updated_at > b.updated_at){
+                                    return -1;
+                                }
+                                if (a.updated_at < b.updated_at){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                    }
+                };
+
+                /**
+                 * Sorting tasks in search results by certain fields.
+                 */
+                $scope.sort_tasks_by_field = function(selected){
+                    $scope.tasks_sort_field = selected.toString();
+                    var res = $scope.searchResults;
+                    switch(selected) {
+                        case 'Story':
+                            res.sort(function compare(a, b){
+                                if (a.story_id < b.story_id){
+                                    return -1;
+                                }
+                                if (a.story_id > b.story_id){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Status':
+                            res.sort(function compare(a, b){
+                                if (a.status < b.status){
+                                    return -1;
+                                }
+                                if (a.status > b.status){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Title':
+                            res.sort(function compare(a, b){
+                                if (a.title < b.title){
+                                    return -1;
+                                }
+                                if (a.title > b.title){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Project':
+                            res.sort(function compare(a, b){
+                                if (a.project_id < b.project_id){
+                                    return -1;
+                                }
+                                if (a.project_id > b.project_id){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Created at':
+                            res.sort(function compare(a, b){
+                                if (a.created_at > b.created_at){
+                                    return -1;
+                                }
+                                if (a.created_at < b.created_at){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                    }
+                };
 
                 /**
                  * Update the page size preference and re-search.
