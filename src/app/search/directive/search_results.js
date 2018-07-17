@@ -20,7 +20,7 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, Preference, User) {
         'use strict';
 
         return {
@@ -38,7 +38,11 @@ angular.module('sb.search').directive('searchResults',
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
+                $scope.users_ids = [];
+                $scope.users = [];
 
+                $scope.tasks_sort_field = 'Created at';
+                $scope.stories_sort_field = 'Last Updated';
                 /**
                  * The field to sort on.
                  *
@@ -61,6 +65,30 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
+                 * Set tasks Creators' names in the array
+                 */
+                function setTasksCreators(creatorName, creatorId) {
+                    $scope.users[creatorId] =
+                    creatorName;
+                }
+
+                /**
+                 * Get tasks creators' names
+                 */
+                function getTasksCreators(searchResults) {
+                    searchResults.forEach(element => {
+                        if(element.status) {
+                            if(!$scope.users_ids.includes(element.creator_id)) {
+                                $scope.users_ids.push(element.creator_id);
+                                User.get({id:element.creator_id}).$promise.
+                                then(creator => (setTasksCreators(creator.full_name , element.creator_id)));
+                            }
+
+                        }
+                    });
+                }
+
+                /**
                  * Handle search result.
                  *
                  * @param results
@@ -71,6 +99,9 @@ angular.module('sb.search').directive('searchResults',
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                     $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.searchResults = results;
+                    getTasksCreators(results);
+                    $scope.sort_tasks_by_field($scope.tasks_sort_field);
+                    $scope.sort_stories_by_field($scope.stories_sort_field);
                     $scope.isSearching = false;
                 }
 
@@ -132,9 +163,8 @@ angular.module('sb.search').directive('searchResults',
                 }
 
                 /**
-                 * Allowing sorting stories in search results by certain fields.
+                 * Sorting stories in search results by certain fields.
                  */
-                $scope.stories_sort_field = 'Sort Field';
                 $scope.sort_stories_by_field = function(selected){
                     $scope.stories_sort_field = selected.toString();
                     var res = $scope.searchResults;
@@ -172,12 +202,12 @@ angular.module('sb.search').directive('searchResults',
                                 return 0;
                             });
                             break;
-                        case 'Updated':
+                        case 'Last Updated':
                             res.sort(function compare(a, b){
-                                if (a.updated_at < b.updated_at){
+                                if (a.updated_at > b.updated_at){
                                     return -1;
                                 }
-                                if (a.updated_at > b.updated_at){
+                                if (a.updated_at < b.updated_at){
                                     return 1;
                                 }
                                 return 0;
@@ -187,9 +217,8 @@ angular.module('sb.search').directive('searchResults',
                 };
 
                 /**
-                 * Allowing sorting tasks in search results by certain fields.
+                 * Sorting tasks in search results by certain fields.
                  */
-                $scope.tasks_sort_field = 'Sort Field';
                 $scope.sort_tasks_by_field = function(selected){
                     $scope.tasks_sort_field = selected.toString();
                     var res = $scope.searchResults;
@@ -238,23 +267,24 @@ angular.module('sb.search').directive('searchResults',
                                 return 0;
                             });
                             break;
-                        case 'Created at':
+                        case 'Creator':
                             res.sort(function compare(a, b){
-                                if (a.created_at < b.created_at){
+                                if ($scope.users[a.creator_id] <
+                                    $scope.users[b.creator_id]){
                                     return -1;
                                 }
-                                if (a.created_at > b.created_at){
+                                if ($scope.users[a.creator_id] >
+                                    $scope.users[b.creator_id]){
                                     return 1;
                                 }
                                 return 0;
                             });
-                            break;
-                        case 'Updated Since':
+                        case 'Created at':
                             res.sort(function compare(a, b){
-                                if (a.updated_at < b.updated_at){
+                                if (a.created_at > b.created_at){
                                     return -1;
                                 }
-                                if (a.updated_at > b.updated_at){
+                                if (a.created_at < b.created_at){
                                     return 1;
                                 }
                                 return 0;
