@@ -20,7 +20,7 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, Preference, User) {
         'use strict';
 
         return {
@@ -38,6 +38,8 @@ angular.module('sb.search').directive('searchResults',
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
+                $scope.users_ids = [];
+                $scope.users = [];
 
                 /**
                  * The field to sort on.
@@ -71,7 +73,24 @@ angular.module('sb.search').directive('searchResults',
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                     $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.searchResults = results;
+                    getTasksCreators(results);
                     $scope.isSearching = false;
+                }
+
+                /**
+                 * Get tasks Users names
+                 */
+                function getTasksCreators(searchResults) {
+                    for (var element in searchResults) {
+                        if(element.status) {
+                            if(!$scope.users_ids.includes(element.creator_id)) {
+                                $scope.users_ids.push(element.creator_id);
+                                User.get({id:element.creator_id}).$promise.then(function(user) {
+                                    $scope.users[element.creator_id] = user.full_name;                                   
+                                });
+                            }
+                        }
+                    }
                 }
 
                 /**
@@ -233,6 +252,17 @@ angular.module('sb.search').directive('searchResults',
                                     return -1;
                                 }
                                 if (a.project_id > b.project_id){
+                                    return 1;
+                                }
+                                return 0;
+                            });
+                            break;
+                        case 'Creator':
+                            res.sort(function compare(a, b){
+                                if ($scope.users[a.creator_id] < $scope.users[b.creator_id]){
+                                    return -1;
+                                }
+                                if ($scope.users[a.creator_id] > $scope.users[b.creator_id]){
                                     return 1;
                                 }
                                 return 0;
