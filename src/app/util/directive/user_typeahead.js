@@ -144,7 +144,7 @@ angular.module('sb.util').directive('userTypeahead',
                  */
                 $scope.formatUserName = function (model) {
                     if (!!model) {
-                        return model.full_name;
+                        return model.full_name + ' <' + model.email + '>';
                     }
                     return '';
                 };
