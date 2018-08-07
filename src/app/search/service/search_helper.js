@@ -67,7 +67,8 @@ angular.module('sb.search').factory('SearchHelper',
                         criteria.push(
                             Criteria.create('User',
                                             params.assignee_id,
-                                            result.full_name)
+                                            result.full_name + '<'
+					    + result.email + '>')
                         );
                     }
                 );
