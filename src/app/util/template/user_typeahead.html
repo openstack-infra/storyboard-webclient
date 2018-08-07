@@ -8,7 +8,8 @@
            ng-if="user && !user.$resolved"></i>
         &nbsp;
 
-        <span ng-if="user && enabled">{{user.full_name}}</span>
+        <span ng-if="user && enabled">{{user.full_name}}
+	  &lt;{{user.email}}&gt; </span>
 
         &nbsp;
         <a href=""
