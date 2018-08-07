@@ -22,7 +22,7 @@ angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, $modal, NewStoryService,
               Session, SessionState, CurrentUser, Criteria, Notification,
               Priority, Project, Story, ProjectGroup, NewWorklistService,
-              NewBoardService, SessionModalService) {
+              NewBoardService, SessionModalService, Severity) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -172,11 +172,23 @@ angular.module('storyboard').controller('HeaderController',
             searchString = searchString || '';
 
             var searches = [];
+            var headerGET = false;
+
+            Notification.intercept(function(message) {
+                if (message.type === 'http' &&
+                    message.severity === Severity.ERROR &&
+                    message.message === 404 &&
+                    headerGET
+                ) {
+                    return true;
+                }
+            });
 
             if (searchString.match(/^[0-9]+$/)) {
                 var getProjectGroupDeferred = $q.defer();
                 var getProjectDeferred = $q.defer();
                 var getStoryDeferred = $q.defer();
+                headerGET = true;
 
                 ProjectGroup.get({id: searchString},
                     function (result) {
@@ -214,6 +226,7 @@ angular.module('storyboard').controller('HeaderController',
                 searches.push(Story.criteriaResolver(searchString, 5));
             }
             $q.all(searches).then(function (searchResults) {
+                headerGET = false;
                 var criteria = [
                     Criteria.create('Text', searchString)
                 ];
