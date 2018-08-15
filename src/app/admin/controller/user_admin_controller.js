@@ -42,6 +42,7 @@ angular.module('sb.admin').controller('UserAdminController',
             $modal.open(
                 {
                     templateUrl: 'app/admin/template/user_new.html',
+                    backdrop: 'static',
                     controller: 'UserNewController'
                 }).result.then(function () {
                     // On success, reload the page.

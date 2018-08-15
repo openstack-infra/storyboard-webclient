@@ -41,6 +41,7 @@ angular.module('sb.admin').controller('TeamAdminController',
         $scope.addTeam = function () {
             $modal.open({
                 templateUrl: 'app/admin/template/team_new.html',
+                backdrop: 'static',
                 controller: 'TeamNewController'
             }).result.then(function () {
                 // On success, reload the page.

@@ -40,6 +40,7 @@ angular.module('sb.projects').controller('ProjectListController',
             $scope.modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/projects/template/new.html',
+                backdrop: 'static',
                 controller: 'ProjectNewController'
             });
         };

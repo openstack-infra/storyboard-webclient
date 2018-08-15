@@ -106,6 +106,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
             var modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/worklists/template/additem.html',
+                backdrop: 'static',
                 controller: 'WorklistAddItemController',
                 resolve: {
                     worklist: function() {
@@ -150,6 +151,7 @@ angular.module('sb.worklist').controller('WorklistDetailController',
         $scope.remove = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/worklists/template/delete.html',
+                backdrop: 'static',
                 controller: 'WorklistDeleteController',
                 resolve: {
                     worklist: function() {

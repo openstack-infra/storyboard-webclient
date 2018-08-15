@@ -21,6 +21,7 @@ angular.module('sb.auth').run(
         function handle_403() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/auth/template/modal/superuser_required.html',
+                backdrop: 'static',
                 controller: function($modalInstance, $scope) {
                     $scope.close = function () {
                         $modalInstance.dismiss('cancel');

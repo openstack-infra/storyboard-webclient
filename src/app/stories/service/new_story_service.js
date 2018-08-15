@@ -28,6 +28,7 @@ angular.module('sb.story').factory('NewStoryService',
                         {
                             size: 'lg',
                             templateUrl: 'app/stories/template/new.html',
+                            backdrop: 'static',
                             controller: 'StoryModalController',
                             resolve: {
                                 params: function () {

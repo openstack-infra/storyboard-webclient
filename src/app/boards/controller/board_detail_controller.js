@@ -56,6 +56,7 @@ angular.module('sb.board').controller('BoardDetailController',
             var modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/worklists/template/additem.html',
+                backdrop: 'static',
                 controller: 'WorklistAddItemController',
                 resolve: {
                     worklist: function() {
@@ -155,6 +156,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.remove = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/boards/template/archive.html',
+                backdrop: 'static',
                 controller: 'BoardArchiveController',
                 resolve: {
                     board: function() {
@@ -173,6 +175,7 @@ angular.module('sb.board').controller('BoardDetailController',
             var modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/worklists/template/new.html',
+                backdrop: 'static',
                 controller: 'AddWorklistController',
                 resolve: {
                     params: function() {
@@ -201,6 +204,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.removeLane = function (lane) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/worklists/template/delete.html',
+                backdrop: 'static',
                 controller: 'WorklistDeleteController',
                 resolve: {
                     worklist: function() {
@@ -249,6 +253,7 @@ angular.module('sb.board').controller('BoardDetailController',
             var modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/worklists/template/new.html',
+                backdrop: 'static',
                 controller: 'WorklistEditController',
                 resolve: {
                     worklist: function() {
@@ -317,6 +322,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.newDueDate = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/due_dates/template/new.html',
+                backdrop: 'static',
                 controller: 'DueDateNewController',
                 resolve: {
                     board: function() {
@@ -333,6 +339,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.editDueDate = function(dueDate) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/due_dates/template/new.html',
+                backdrop: 'static',
                 controller: 'DueDateEditController',
                 resolve: {
                     board: function() {
@@ -352,6 +359,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.removeDueDate = function(dueDate) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/due_dates/template/remove_from_board.html',
+                backdrop: 'static',
                 controller: 'DueDateRemoveController',
                 resolve: {
                     board: function() {
@@ -410,6 +418,7 @@ angular.module('sb.board').controller('BoardDetailController',
         $scope.showCardDetail = function(card, lane) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/boards/template/card_details.html',
+                backdrop: 'static',
                 controller: 'CardDetailController',
                 resolve: {
                     card: function() {

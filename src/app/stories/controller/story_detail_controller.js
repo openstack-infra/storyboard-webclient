@@ -140,6 +140,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.showWorklistsModal = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/worklists.html',
+                backdrop: 'static',
                 controller: 'StoryWorklistsController',
                 resolve: {
                     worklists: function () {
@@ -367,6 +368,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.remove = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/delete.html',
+                backdrop: 'static',
                 controller: 'StoryDeleteController',
                 resolve: {
                     story: function () {
@@ -382,6 +384,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.updateFilter = function () {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/update_filter.html',
+                backdrop: 'static',
                 controller: 'TimelineFilterController'
             });
 
@@ -503,6 +506,7 @@ angular.module('sb.story').controller('StoryDetailController',
             var modalInstance = $modal.open({
                 size: 'lg',
                 templateUrl: 'app/stories/template/comments/history.html',
+                backdrop: 'static',
                 controller: 'CommentHistoryController',
                 resolve: {
                     history: function() {
@@ -711,6 +715,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.showAddWorklist = function(task) {
             $modal.open({
                 templateUrl: 'app/stories/template/add_task_to_worklist.html',
+                backdrop: 'static',
                 controller: 'StoryTaskAddWorklistController',
                 resolve: {
                     task: function() {
@@ -726,6 +731,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.removeTask = function (task, projectName, branchName) {
             var modalInstance = $modal.open({
                 templateUrl: 'app/stories/template/delete_task.html',
+                backdrop: 'static',
                 controller: 'StoryTaskDeleteController',
                 resolve: {
                     task: function () {
