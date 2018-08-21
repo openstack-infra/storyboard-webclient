@@ -24,40 +24,40 @@ body {
 
 @media (max-width: $screen-xs-max) {
     body {
-        margin-right: $navbar-fixed-side-width-xs;
+        margin-right: $sidebar-width-xs;
 
         &.submenu {
-            margin-right: ($navbar-fixed-side-width-xs + $navbar-fixed-side-submenu-width-xs);
+            margin-right: ($sidebar-width-xs + $sidebar-submenu-width-xs);
         }
     }
 }
 
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     body {
-        margin-left: $navbar-fixed-side-width-sm;
+        margin-left: $sidebar-width-sm;
 
         &.submenu {
-            margin-left: ($navbar-fixed-side-width-sm + $navbar-fixed-side-submenu-width-sm);
+            margin-left: ($sidebar-width-sm + $sidebar-submenu-width-sm);
         }
     }
 }
 
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     body {
-        margin-left: $navbar-fixed-side-width-md;
+        margin-left: $sidebar-width-md;
 
         &.submenu {
-            margin-left: ($navbar-fixed-side-width-md + $navbar-fixed-side-submenu-width-md);
+            margin-left: ($sidebar-width-md + $sidebar-submenu-width-md);
         }
     }
 }
 
 @media (min-width: $screen-lg-min) {
     body {
-        margin-left: $navbar-fixed-side-width-lg;
+        margin-left: $sidebar-width-lg;
 
         &.submenu {
-            margin-left: ($navbar-fixed-side-width-lg + $navbar-fixed-side-submenu-width-lg);
+            margin-left: ($sidebar-width-lg + $sidebar-submenu-width-lg);
         }
     }
 }
