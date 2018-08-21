@@ -68,12 +68,14 @@
             <hr class="visible-xs"/>
             <h4>Contributing</h4>
 
-            <p>StoryBoard is open source! If you would like to contribute to
+            <p>
+                StoryBoard is open source! If you would like to contribute to
                 the development of StoryBoard, you must follow the steps in the
                 <a href=" http://docs.openstack.org/infra/manual/developers.html"
                   target="_blank">
-                Developer's Guide
-            </a></p>
+                    Developer's Guide
+                </a>
+            </p>
 
             <p>Note that all bugs with StoryBoard's API should be filed in 
                 <a href="https://storyboard.openstack.org/#!/project/456"
@@ -87,6 +89,13 @@
                target="_blank">
                   Project README
             </a></p>
+
+            <p>
+                <a href="http://www.apache.org/licenses/LICENSE-2.0"
+                   target="_blank">
+                    Project license
+                </a>
+            </p>
 
 
             <hr/>
