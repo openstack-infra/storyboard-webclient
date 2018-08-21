@@ -1,0 +1,10 @@
+Code-Review+2: Kendall Nelson <kennelson11@gmail.com>
+Code-Review+1: daixianmeng <daixianmeng@yovole.com>
+Code-Review+2: Monty Taylor <mordred@inaugust.com>
+Workflow+1: Monty Taylor <mordred@inaugust.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Tue, 21 Aug 2018 21:24:29 +0000
+Reviewed-on: https://review.openstack.org/549210
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
