@@ -1,0 +1,9 @@
+Code-Review+2: Kendall Nelson <kennelson11@gmail.com>
+Code-Review+2: Adam Coldrick <adam.coldrick@codethink.co.uk>
+Workflow+1: Adam Coldrick <adam.coldrick@codethink.co.uk>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Tue, 21 Aug 2018 22:50:53 +0000
+Reviewed-on: https://review.openstack.org/594550
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
