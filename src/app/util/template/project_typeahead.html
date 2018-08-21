@@ -4,7 +4,7 @@
     <p class="form-control-static">
         <i class="fa fa-sb-project text-muted"
            ng-if="!project || project.$resolved"></i>
-        <i class="fa fa-spin fa-refresh text-muted"
+        <i class="fa fa-spin fa-sync text-muted"
            ng-if="project && !project.$resolved"></i>
         &nbsp;
 
@@ -16,11 +16,11 @@
            ng-click="toggleForm()"
            ng-if="!showForm && enabled">
             <span ng-if="project">
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </span>
             <em ng-if="!project" class="text-muted">
                 {{emptyPrompt}}
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil-alt"></i>
             </em>
         </a>
 
@@ -51,6 +51,6 @@
 
     <span class="form-control-feedback text-muted">
         <i class="fa fa-search" ng-if="!loadingProjects"></i>
-        <i class="fa fa-spin fa-refresh" ng-if="loadingProjects"></i>
+        <i class="fa fa-spin fa-sync" ng-if="loadingProjects"></i>
     </span>
 </div>
