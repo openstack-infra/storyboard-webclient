@@ -44,7 +44,7 @@ angular.module('sb.project_group',
                 controller: 'ProjectGroupListController'
             })
             .state('sb.project_group.detail', {
-                url: '/{id:[0-9]+}',
+                url: '/{id:any}',
                 templateUrl: 'app/project_group/template/detail.html',
                 controller: 'ProjectGroupDetailController',
                 resolve: {
