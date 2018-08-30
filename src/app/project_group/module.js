@@ -58,21 +58,6 @@ angular.module('sb.project_group',
                                 deferred.reject(error);
                             });
                         return deferred.promise;
-                    }
-                }
-            })
-            .state('sb.project_group.edit', {
-                url: '/{id:[0-9]+}/edit',
-                templateUrl: 'app/project_group/template/edit.html',
-                controller: 'ProjectGroupEditController',
-                resolve: {
-                    projectGroup: function ($stateParams, ProjectGroup) {
-                        return ProjectGroup.get({id: $stateParams.id}).$promise;
-                    },
-                    projects: function ($stateParams, ProjectGroupItem) {
-                        return ProjectGroupItem.browse(
-                            {projectGroupId: $stateParams.id}
-                        ).$promise;
                     },
                     isSuperuser: PermissionResolver
                         .requirePermission('is_superuser', true)
