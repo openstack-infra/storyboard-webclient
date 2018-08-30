@@ -6,7 +6,7 @@
                 <i class="fa fa-sb-project-group"></i>
                 {{projectGroup.title}}
                 <small>
-                    <a href="#!/project_group/{{projectGroup.id}}/edit" permission="is_superuser">
+                    <a href="" ng-click="toggleEdit()" permission="is_superuser">
                         <i class="fa fa-pencil-alt"></i>
                     </a>
                     <subscribe resource="project_group"
@@ -18,7 +18,8 @@
             </h1>
         </div>
     </div>
-    <div class="row">
+    <div ng-include src="'/inline/project_group_edit.html'" ng-if="editMode"></div>
+    <div class="row" ng-if="!editMode">
         <div class="col-xs-2 text-center text-muted">
             <span class="hidden-xs">
                 <i class="fa fa-3x fa-sb-project"></i>
@@ -57,7 +58,7 @@
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="!editMode">
         <div class="col-xs-12">
             <hr/>
         </div>
@@ -129,3 +130,159 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="/inline/project_group_edit.html">
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal"
+                  role="form"
+                  name="projectGroupForm"
+                  ng-class="{'has-error': projectGroupForm.title.$invalid}">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">
+                        Title:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="title"
+                               name="title"
+                               type="text"
+                               class="form-control"
+                               ng-model="projectGroup.title"
+                               required
+                               ng-disabled="isSaving"
+                               maxlength="255"
+                               ng-minlength="3"
+                               ng-pattern="PROJECT_NAME_REGEX"
+                               placeholder="Project Group Title">
+                        </input>
+                        <div class="help-block text-danger"
+                            ng-show="projectGroupForm.title.$invalid">
+                            <span ng-show="projectGroupForm.title.$error.required">
+                            A project group title is required.
+                            </span>
+                            <span ng-show="projectGroupForm.title.$error.pattern">
+                                A project group title must begin with a letter, and may only
+                                contain letters, numbers, forward slashes, periods, and
+                                dashes. It should not start or end with a separator and
+                                must not contain two or more sequential separators.
+                            </span>
+                            <span ng-show="projectGroupForm.title.$error.minlength">
+                                A project group title must have at least 3 characters.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">
+                        URL:
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="name"
+                               name="name"
+                               type="text"
+                               class="form-control"
+                               ng-model="projectGroup.name"
+                               required
+                               ng-disabled="isSaving"
+                               maxlength="100"
+                               ng-minlength="3"
+                               placeholder="URL Stub for the project group">
+                        </input>
+                        <div class="help-block text-danger"
+                            ng-show="projectGroupForm.name.$invalid">
+                            <span ng-show="projectGroupForm.name.$error.required">
+                                A project group URL is required.
+                            </span>
+                            <span ng-show="projectGroupForm.name.$error.minlength">
+                                A project group URL must have at least 3 characters.
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 text-right">
+            <label class="control-label">
+                Projects:
+            </label>
+        </div>
+        <div class="col-sm-10">
+            <form role="form" name="projectsForm">
+                <table class="table table-striped table-outlined">
+                    <tbody>
+                    <tr ng-repeat="(index, project) in projects"
+                        ng-include
+                        src="'/inline/project_row.html'">
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-2">
+            <button type="button"
+                    class="btn btn-default"
+                    ng-disabled="isSaving"
+                    ng-click="addProject()">
+                &plus;
+                Add another project
+            </button>
+        </div>
+        <div class="col-xs-6 text-right">
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="save()"
+                    ng-disabled="!projectGroupForm.$valid || !projectsForm.$valid || !checkValidProjects() || isSaving">
+                Save
+            </button>
+            <a href=""
+               ng-click="toggleEdit()"
+               ng-disabled="isSaving"
+               class="btn btn-default">
+                Cancel
+            </a>
+        </div>
+    </div>
+</script>
+
+<!-- Template for story metadata -->
+<script type="text/ng-template" id="/inline/project_row.html">
+    <td class="col-xs-11">
+        <div class="has-feedback has-feedback-no-label">
+            <input id="project"
+                   type="text"
+                   placeholder="Select a Project"
+                   autocomplete="off"
+                   required
+                   ng-model="project"
+                   typeahead-wait-ms="200"
+                   typeahead-editable="false"
+                   typeahead="project as project.name for project
+                   in searchProjects($viewValue)"
+                   typeahead-loading="loadingProjects"
+                   typeahead-input-formatter="formatProjectName($model)"
+                   typeahead-on-select="selectNewProject(index, $model)"
+                   class="form-control input-sm"
+                   ng-disabled="isSaving"
+                    />
+            <span class="form-control-feedback text-muted
+            form-control-feedback-sm">
+                <i class="fa fa-sync fa-spin" ng-show="loadingProjects"></i>
+                <i class="fa fa-search" ng-hide="loadingProjects"></i>
+            </span>
+        </div>
+    </td>
+    <th class="col-xs-1"
+        ng-show="projects.length > 1">
+        <button type="button" class="close"
+                ng-click="removeProject(index)">
+            &times;
+        </button>
+    </th>
+</script>
