@@ -1,8 +1,8 @@
-<div class="discussion-comment" ng-if="display_events_story_created">
-    <p class="discussion-comment-icon-primary">
+<div class="timeline-event" ng-if="display_events_story_created">
+    <p class="timeline-icon-primary">
         <i class="fa fa-sb-story"></i>
     </p>
-    <p class="discussion-event-important">
+    <p class="timeline-event-title">
         <span>{{ event.author.full_name }} created this story on </span>
         <span time-moment eventdate="event.created_at" no-time-ago="true"></span>
     </p>

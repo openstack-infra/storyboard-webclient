@@ -22,3 +22,157 @@
 .indented {
   padding: 0px 15px;
 }
+
+.header {
+  display: flex;
+  font-size: 2em;
+  flex-basis: 100%;
+  padding: 30px 20px;
+  align-items: center;
+
+  h3 {
+    margin: 0px;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .metadata {
+    font-size: 0.5em;
+    flex: 1 1 auto;
+
+    p {
+      color: #444;
+      text-align: right;
+    }
+  }
+
+  .fa-cubes, .fa-cube, .fa-book, .fa-search {
+    color: #666;
+  }
+}
+
+.flex {
+  flex: 1 1 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-small {
+  @extend .flex;
+  flex-basis: 20%;
+}
+
+.flex-large {
+  @extend .flex;
+  flex-basis: 100%;
+}
+
+.flex-row {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+
+  &:nth-of-type(even) {
+    background-color: $white;
+  }
+
+  &:last-of-type {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .form-control-static {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 0;
+  }
+}
+
+.text-small {
+  font-size: 0.8em;
+}
+
+
+
+// TODO: move this
+
+.timeline {
+  position: relative;
+  padding: 40px;
+  width: 100%;
+  
+  &:before {
+    position: absolute;
+    content: " ";
+    width: 4px;
+    height: calc(100% - 190px);
+    left: 59px;
+    top: 130px;
+    background-color: #ddd;
+    z-index: -1;
+  }
+  
+  p {
+    display: inline-block;
+  }
+
+  .timeline-event {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+
+    .timeline-icon-primary {
+      flex: 0 1 40px;
+      margin: 0px;
+      background-color: $brand-primary;
+      color: $white;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 36px;
+      border-radius: 50px;
+      border: 3px solid #ddd;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+    }
+      
+    .timeline-icon-end {
+      flex: 0 1 20px;
+      margin: 0px 0px 0px 10px;
+      background-color: $white;
+      color: $white;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50px;
+      border: 3px solid #ddd;
+    }
+
+    .timeline-event-title {
+      flex: 1 0 calc(100% - 120px);
+      padding: 5px 10px;
+      margin: 0px 0px 0px 50px;
+      line-height: 30px;
+      background-color: #eee;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+      position: relative;
+    }
+
+    .timeline-event-body {
+      flex: 1 0 calc(100% - 200px);
+      background-color: #fff;
+      margin-left: 91px;
+      padding: 5px 20px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+      
+      p {
+        display: block;
+        margin: 0.5em 0;
+      }
+    }
+  }
+}
