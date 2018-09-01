@@ -1,0 +1,45 @@
+
+a.tag {
+  font-size: 1.125em;
+  display: inline-block;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50px;
+  background-color: #f0ad4e;
+  margin: 5px 10px;
+  color: $white;
+  
+  &:hover {
+    background-color: darken(#f0ad4e, 10%);
+    text-decoration: none;
+    border-bottom: none;
+  }
+  
+  .fa-times {
+    color: #333;
+    padding: 5px;
+    border-radius: 20px;
+    text-align: center;
+    min-width: 1.7em;
+    background-color: $white;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #333;
+      color: $white;
+    }
+  }
+}
+
+a.tag-outline {
+  @extend a.tag;
+  background-color: #fff;
+  color: #666;
+  border: 1px #666 solid;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+    border-bottom: 1px #666 solid;
+  }
+}
