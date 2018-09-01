@@ -16,275 +16,268 @@
   -->
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="alert alert-danger" ng-show="story.private">
-                <i class="fa fa-eye-slash"></i>
-                <strong>This story is private</strong>.
-                Edit this story to change the privacy settings.
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-danger" ng-show="story.private">
+        <i class="fa fa-eye-slash"></i>
+        <strong>This story is private</strong>.
+        Edit this story to change the privacy settings.
+      </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="hidden-xs hidden-sm col-sm-3 pull-right"
-                 ng-show="worklists.length > 0 && !showEditForm">
-                <div ng-include src="'/inline/worklists.html'"></div>
-            </div>
-            <div ng-include
-                 src="'/inline/story_detail.html'"
-                 ng-hide="showEditForm">
-            </div>
-            <div ng-include
-                 src="'/inline/story_detail_form.html'"
-                 ng-show="showEditForm">
-            </div>
-            <hr class="visible-sm" />
-            <div class="col-xs-12 visible-sm"
-                 ng-show="worklists.length > 0 && !showEditForm">
-                <div ng-include src="'/inline/worklists.html'"></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <hr/>
-            <div ng-include src="'/inline/task_list.html'"></div>
-            <hr/>
-            <div ng-include src="'/inline/tags.html'"></div>
-            <hr/>
-            <div ng-include src="'/inline/discussion.html'"></div>
-        </div>
-    </div>
+  </div>
+  <div ng-include
+       src="'/inline/story_detail.html'"
+       ng-if="!showEditForm">
+  </div>
+  <div ng-include
+       src="'/inline/story_detail_form.html'"
+       ng-if="showEditForm">
+  </div>
+  <div ng-include src="'/inline/story_cards.html'"></div>
+  <div ng-include src="'/inline/discussion.html'"></div>
 </div>
 
 
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/story_detail.html">
-    <h1>
-        <span ng-show="story.title" view-title>
-            {{story.title}}
-        </span>
-        <em ng-hide="story.title" class="text-muted">
-            No title
-        </em>
-
-        <small ng-show="isLoggedIn">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="header">
+        <i class="fa fa-book fa-2x"></i> 
+        <h3>
+          {{ story.title ? story.title : 'Untitled Story' }}
+          &nbsp;
+          <small ng-show="isLoggedIn">
             <a href="" ng-click="toggleEditMode()" >
-                <i class="fa fa-pencil-alt"></i>
+              <i class="fa fa-pencil-alt"></i>
             </a>
             <subscribe resource="story"
-                    resource-id="story.id">
+                       resource-id="story.id">
             </subscribe>
             <button type="button"
                     class="btn btn-link"
                     ng-click="remove()" permission="is_superuser">
-                Remove this story
+              Remove this story
             </button>
-        </small>
-    </h1>
-    <p><strong>Author:</strong>
-        <em ng-show="!story.creator_id" class="text-muted">
-            None
-        </em>
-        <span ng-show="story.creator_id && !creator.$resolved">
-            <i class="fa fa-sync fa-spin"></i>
+          </small>
+        </h3>
+        <span class="metadata metadata-heading">
+          <p><strong>Author</strong></p>
+          <p><strong>Last Updated</strong></p>
         </span>
-        <span ng-show="creator.full_name">
-            {{creator.full_name}}
+        <span class="metadata">
+          <p>
+            <em ng-if="!story.creator_id" class="text-muted">
+                None
+            </em>
+            <span ng-if="story.creator_id && !creator.$resolved">
+                <i class="fa fa-sync fa-spin"></i>
+            </span>
+            <span ng-if="creator.full_name">
+                {{ creator.full_name }}
+            </span>
+          </p>
+          <p>
+            <span time-moment eventdate="story.created_at"  ng-if="!story.updated_at"></span>
+            <span time-moment eventdate="story.updated_at" ng-if="story.updated_at"></span>
+            <em ng-hide="story.updated_at || story.created_at" class="text-muted">
+                Never
+            </em>
+          </p>
         </span>
-        <br/>
-        <strong>Last updated:</strong>
-        <span time-moment eventdate="story.created_at"  ng-if="!story.updated_at"></span>
-        <span time-moment eventdate="story.updated_at" ng-if="story.updated_at"></span>
-        <em ng-hide="story.updated_at || story.created_at" class="text-muted">
-            Never
-        </em>
-    </p>
-    <p>
-        <insert-markdown ng-show="story.description"
-                         content="story.description">
-        </insert-markdown>
-        <em ng-hide="story.description" class="text-muted">
-            No description provided
-        </em>
-    </p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <insert-markdown ng-if="story.description"
+                       content="story.description">
+      </insert-markdown>
+      <p class="text-muted" ng-if="!story.description">
+        <em>No description provided</em>
+      </p>
+    </div>
+  </div>
 </script>
 
 
 <!-- Template for the header and description -->
 <script type="text/ng-template" id="/inline/story_detail_form.html">
-    <hr>
-    <form name="storyForm" role="form" class="form-horizontal">
+  <div class="row">
+    <div class="col-xs-12">
+      <hr>
+      <form name="storyForm" role="form" class="form-horizontal">
         <div class="form-group has-feedback"
              ng-class="{'has-error': storyForm.title.$invalid,
                         'has-success': !storyForm.title.$invalid}">
-            <label for="title" class="col-sm-2 control-label">
-                Title
-            </label>
-            <div class="col-sm-10">
-                <input id="title"
-                       name="title"
-                       type="text"
-                       class="form-control"
-                       ng-model="story.title"
-                       required
-                       focus
-                       maxlength="100"
-                       placeholder="Story title"
-                       ng-disabled="isUpdating">
-                <span class="form-control-feedback"
-                      ng-show="storyForm.title.$invalid">
-                    <i class="fa fa-times fa-lg"></i>
-                </span>
-                <span class="form-control-feedback"
-                      ng-show="!storyForm.title.$invalid">
-                    <i class="fa fa-check fa-lg"></i>
-                </span>
+          <label for="title" class="col-sm-2 control-label">
+            Title
+          </label>
+          <div class="col-sm-10">
+            <input id="title"
+                   name="title"
+                   type="text"
+                   class="form-control"
+                   ng-model="story.title"
+                   required
+                   focus
+                   maxlength="100"
+                   placeholder="Story title"
+                   ng-disabled="isUpdating">
+            <span class="form-control-feedback"
+                  ng-show="storyForm.title.$invalid">
+              <i class="fa fa-times fa-lg"></i>
+            </span>
+            <span class="form-control-feedback"
+                  ng-show="!storyForm.title.$invalid">
+              <i class="fa fa-check fa-lg"></i>
+            </span>
 
-                <div class="help-block text-danger"
-                     ng-show="storyForm.title.$invalid">
-                     <span ng-show="storyForm.title.$error.required">
-                         A story title is required.
-                     </span>
-                </div>
+            <div class="help-block text-danger"
+                 ng-show="storyForm.title.$invalid">
+              <span ng-show="storyForm.title.$error.required">
+                A story title is required.
+              </span>
             </div>
+          </div>
         </div>
         <hr ng-show="preview">
         <div class="form-group" ng-show="preview">
-            <div class="col-sm-offset-1 col-sm-10">
-                <insert-markdown content="story.description">
-                </insert-markdown>
-            </div>
+          <div class="col-sm-offset-1 col-sm-10">
+            <insert-markdown content="story.description">
+            </insert-markdown>
+          </div>
         </div>
         <hr ng-show="preview">
         <div class="form-group">
-            <label for="description"
-                   class="col-sm-2 control-label">
-                Description
-            </label>
-            <div class="col-sm-10">
-                <textarea id="description"
-                          class="form-control"
-                          ng-model="story.description"
-                          msd-elastic
-                          placeholder="Enter a story description here."
-                          ng-disabled="isUpdating">
-                </textarea>
-            </div>
+          <label for="description"
+                 class="col-sm-2 control-label">
+            Description
+          </label>
+          <div class="col-sm-10">
+            <textarea id="description"
+                      class="form-control"
+                      ng-model="story.description"
+                      msd-elastic
+                      placeholder="Enter a story description here."
+                      ng-disabled="isUpdating">
+            </textarea>
+          </div>
         </div>
         <div class="form-group">
-            <label for="private" class="col-sm-2 control-label">
-                Private
-            </label>
-            <div class="col-sm-10 checkbox">
-                <input id="private"
-                       type="checkbox"
-                       class="modal-checkbox"
-                       ng-model="story.private"
-                       ng-disabled="isUpdating"
-                        />
-            </div>
+          <label for="private" class="col-sm-2 control-label">
+            Private
+          </label>
+          <div class="col-sm-10 checkbox">
+            <input id="private"
+                   type="checkbox"
+                   class="modal-checkbox"
+                   ng-model="story.private"
+                   ng-disabled="isUpdating"
+                    />
+          </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-md-offset-3"
-                 ng-show="story.private">
-                <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Teams and Users that can see this story</th>
-                        <th class="text-right">
-                            <small>
-                                <a href
-                                   ng-click="showAddUser = !showAddUser">
-                                    <i class="fa fa-plus" ng-if="!showAddUser"></i>
-                                    <i class="fa fa-minus" ng-if="showAddUser"></i>
-                                    Add Team or User
-                                </a>
-                            </small>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="team in story.teams">
-                        <td colspan="2">
-                            <i class="fa fa-sb-team"></i>
-                            {{ team.name }}
-                            <a class="close"
-                               ng-click="removeTeam(team)"
-                               ng-show="story.teams.length > 1 || story.users.length > 0">
-                                &times;
-                            </a>
-                        </td>
-                    </tr>
-                    <tr ng-repeat="user in story.users">
-                        <td colspan="2">
-                            <i class="fa fa-sb-user"></i>
-                            {{user.full_name}}
-                            <a class="close"
-                               ng-click="removeUser(user)"
-                               ng-show="story.users.length > 1 || story.teams.length > 0">
-                                &times;
-                            </a>
-                        </td>
-                    </tr>
-                    <tr ng-show="showAddUser">
-                        <td colspan="2">
-                            <input id="user"
-                                   type="text"
-                                   autocomplete="off"
-                                   placeholder="Click to add a team or user"
-                                   ng-model="asyncUser"
-                                   typeahead-wait-ms="200"
-                                   typeahead-editable="false"
-                                   typeahead="actor as actor.name for actor in
-                                              searchActors($viewValue, story.users, story.teams)"
-                                   typeahead-loading="loadingUsers"
-                                   typeahead-on-select="addActor($model)"
-                                   typeahead-template-url="/inline/actor-typeahead-item.html"
-                                   class="form-control input-sm"
-                                    />
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+          <div class="col-md-6 col-md-offset-3"
+               ng-show="story.private">
+            <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Teams and Users that can see this story</th>
+                <th class="text-right">
+                  <small>
+                    <a href
+                       ng-click="showAddUser = !showAddUser">
+                      <i class="fa fa-plus" ng-if="!showAddUser"></i>
+                      <i class="fa fa-minus" ng-if="showAddUser"></i>
+                      Add Team or User
+                    </a>
+                  </small>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="team in story.teams">
+                <td colspan="2">
+                  <i class="fa fa-sb-team"></i>
+                  {{ team.name }}
+                  <a class="close"
+                     ng-click="removeTeam(team)"
+                     ng-show="story.teams.length > 1 || story.users.length > 0">
+                      &times;
+                  </a>
+                </td>
+              </tr>
+              <tr ng-repeat="user in story.users">
+                <td colspan="2">
+                  <i class="fa fa-sb-user"></i>
+                  {{ user.full_name }}
+                  <a class="close"
+                     ng-click="removeUser(user)"
+                     ng-show="story.users.length > 1 || story.teams.length > 0">
+                    &times;
+                  </a>
+                </td>
+              </tr>
+              <tr ng-show="showAddUser">
+                <td colspan="2">
+                  <input id="user"
+                         type="text"
+                         autocomplete="off"
+                         placeholder="Click to add a team or user"
+                         ng-model="asyncUser"
+                         typeahead-wait-ms="200"
+                         typeahead-editable="false"
+                         typeahead="actor as actor.name for actor in
+                                    searchActors($viewValue, story.users, story.teams)"
+                         typeahead-loading="loadingUsers"
+                         typeahead-on-select="addActor($model)"
+                         typeahead-template-url="/inline/actor-typeahead-item.html"
+                         class="form-control input-sm"
+                          />
+                </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
-            <div class="clearfix">
-                <div class="pull-right">
-                    <div class="btn" ng-show="isUpdating">
-                        <i class="fa fa-spinner fa-lg fa-spin"></i>
-                    </div>
-                    <button type="button"
-                            class="btn btn-primary"
-                            ng-click="update()"
-                            ng-disabled="!storyForm.$valid">
-                        Save
-                    </button>
-                    <button type="button"
-                            class="btn btn-default"
-                            ng-click="cancel()">
-                        Cancel
-                    </button>
-                </div>
-                <button type="button"
-                        class="btn btn-link"
-                        ng-click="remove()" permission="is_superuser">
-                    Remove this story
-                </button>
-                <button type="button"
-                        class="btn btn-primary"
-                        ng-click="preview = !preview">
-                    Toggle Preview
-                </button>
-                <a class="btn btn-link" target="_blank"
-	                href="http://daringfireball.net/projects/markdown/basics">
-                        Markdown formatting is supported.
-                </a>
+          <div class="clearfix">
+            <div class="pull-right">
+              <div class="btn" ng-show="isUpdating">
+                <i class="fa fa-spinner fa-lg fa-spin"></i>
+              </div>
+              <button type="button"
+                      class="btn btn-primary"
+                      ng-click="update()"
+                      ng-disabled="!storyForm.$valid">
+                Save
+              </button>
+              <button type="button"
+                      class="btn btn-default"
+                      ng-click="cancel()">
+                Cancel
+              </button>
             </div>
+            <button type="button"
+                    class="btn btn-link"
+                    ng-click="remove()" permission="is_superuser">
+              Remove this story
+            </button>
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="preview = !preview">
+              Toggle Preview
+            </button>
+            <a class="btn btn-link" target="_blank"
+               href="http://daringfireball.net/projects/markdown/basics">
+              Markdown formatting is supported.
+            </a>
+          </div>
         </div>
-    </form>
+      </form>
+    </div>
+  </div>
 </script>
 
 
@@ -293,6 +286,102 @@
         <i ng-class="'fa fa-sb-' + match.model.type"></i>&nbsp;
         <span ng-bind-html="match.model.name | typeaheadHighlight:query"></span>
     </a>
+</script>
+
+
+<!-- Template for the cards for tasks, tags, and worklists -->
+<script type="text/ng-template" id="/inline/story_cards.html">
+  <div class="row">
+    <section id="tasks" class="col-sm-8">
+      <div ng-include src="'/inline/story_tasks.html'"></div>
+    </section>
+    <div class="col-sm-4">
+      <section id="tags" class="row">
+        <div ng-include src="'/inline/story_tags.html'"></div>
+      </section>
+      <section id="worklists" class="row">
+        <div ng-include src="'/inline/story_worklists.html'"></div>
+      </section>
+    </div>
+  </div>
+</script>
+
+
+<!-- Template for the list of tasks in the story, arranged by project -->
+<script type="text/ng-template" id="/inline/story_tasks.html">
+  <div class="card">
+    <h3>Tasks</h3>
+    <div class="card-row" ng-repeat="name in projectNames | orderBy">
+      <h4>
+        <i class="fa fa-cube"></i> 
+        <a href="#!/project/{{ name }}">{{ name }}</a>
+      </h4>
+      <div ng-repeat="branchName in projects[name].branchNames">
+        <div class="flex-row"
+             ng-repeat="task in projects[name].branches[branchName].tasks | orderBy: 'id'">
+          <div class="flex-small">
+            <strong>{{ task.id }}</strong>
+          </div>
+          <div class="flex">
+            <p>{{ task.title }}</p>
+          </div>
+          <div class="flex">
+            <user-typeahead
+                    ng-model="task.assignee_id"
+                    enabled="isLoggedIn"
+                    on-change="updateTask(task, 'assignee_id', task.assignee_id)"
+                    empty-prompt="Click to assign."
+                    empty-disabled-prompt="Not assigned."
+                    as-inline="true"
+                    />
+          </div>
+          <div class="flex-small">
+            <task-status-dropdown
+                    editable="{{ isLoggedIn }}"
+                    on-change="updateTask(task, 'status', status)"
+                    status="{{ task.status }}"
+                    />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!-- Template for the task list -->
+<script type="text/ng-template" id="/inline/task_list.html">
+    <h3>Tasks</h3>
+    <div ng-repeat="name in projectNames | orderBy">
+        <h4>
+            <i class="fa fa-sb-project text-muted"></i>
+            <a href="#!/project/{{ name }}">{{ name }}</a>
+        </h4>
+        <div ng-repeat="branchName in projects[name].branchNames">
+            <div class="row" ng-if="branchName != 'master'">
+                <div class="col-xs-3">
+                    <strong>
+                        &emsp;&emsp;{{ branchName }}
+                    </strong>
+                </div>
+            </div>
+            <div class="row" ng-if="branchName == 'master'">
+                <div class="col-xs-12" ng-include src="'/inline/task_table.html'"></div>
+            </div>
+            <div class="row" ng-if="branchName != 'master'">
+                <div class="col-xs-11 col-xs-offset-1"
+                     ng-include src="'/inline/task_table.html'">
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div ng-show="newTask.show" ng-include src="'/inline/new_task.html'"></div>
+    <button class="btn btn-default"
+            ng-show="isLoggedIn && !newTask.show"
+            ng-click="newTask.show = !newTask.show">
+        <i class="fa fa-plus-circle"></i>
+        Affects other project
+    </button>
+        
 </script>
 
 
@@ -387,42 +476,6 @@
                 <i class="fa fa-plus"></i>
             </span>
         </h4>
-</script>
-
-<!-- Template for the task list -->
-<script type="text/ng-template" id="/inline/task_list.html">
-    <h3>Tasks</h3>
-    <div ng-repeat="name in projectNames | orderBy">
-        <h4>
-            <i class="fa fa-sb-project text-muted"></i>
-            <a href="#!/project/{{ name }}">{{ name }}</a>
-        </h4>
-        <div ng-repeat="branchName in projects[name].branchNames">
-            <div class="row" ng-if="branchName != 'master'">
-                <div class="col-xs-3">
-                    <strong>
-                        &emsp;&emsp;{{ branchName }}
-                    </strong>
-                </div>
-            </div>
-            <div class="row" ng-if="branchName == 'master'">
-                <div class="col-xs-12" ng-include src="'/inline/task_table.html'"></div>
-            </div>
-            <div class="row" ng-if="branchName != 'master'">
-                <div class="col-xs-11 col-xs-offset-1"
-                     ng-include src="'/inline/task_table.html'">
-                </div> 
-            </div>
-        </div>
-    </div>
-    <div ng-show="newTask.show" ng-include src="'/inline/new_task.html'"></div>
-    <button class="btn btn-default"
-            ng-show="isLoggedIn && !newTask.show"
-            ng-click="newTask.show = !newTask.show">
-        <i class="fa fa-plus-circle"></i>
-        Affects other project
-    </button>
-        
 </script>
 
 

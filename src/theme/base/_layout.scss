@@ -22,3 +22,73 @@
 .indented {
   padding: 0px 15px;
 }
+
+.header {
+  display: flex;
+  font-size: 2em;
+  flex-basis: 100%;
+  padding: 30px 20px;
+  align-items: center;
+
+  h3 {
+    margin: 0px;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .metadata {
+    font-size: 0.5em;
+    flex: 1 1 auto;
+
+    p {
+      color: #444;
+      text-align: right;
+    }
+  }
+
+  .fa-cubes, .fa-cube, .fa-book, .fa-search {
+    color: #666;
+  }
+}
+
+.flex {
+  flex: 1 1 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-small {
+  @extend .flex;
+  flex-basis: 20%;
+}
+
+.flex-large {
+  @extend .flex;
+  flex-basis: 100%;
+}
+
+.flex-row {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+
+  &:nth-of-type(even) {
+    background-color: $white;
+  }
+
+  &:last-of-type {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .form-control-static {
+    padding-top: 0;
+    padding-bottom: 0;
+    min-height: 0;
+  }
+}
+
+.text-small {
+  font-size: 0.85em;
+}
