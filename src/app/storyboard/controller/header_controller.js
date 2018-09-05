@@ -22,7 +22,7 @@ angular.module('storyboard').controller('HeaderController',
     function ($q, $scope, $rootScope, $state, $modal, NewStoryService,
               Session, SessionState, CurrentUser, Criteria, Notification,
               Priority, Project, Story, ProjectGroup, NewWorklistService,
-              NewBoardService, SessionModalService, Severity) {
+              NewBoardService, SessionModalService, Severity, Task) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -157,6 +157,9 @@ angular.module('storyboard').controller('HeaderController',
                 case 'Story':
                     $state.go('sb.story.detail', {storyId: criteria.value});
                     break;
+                case 'Task':
+                    $state.go('sb.task', {taskId: criteria.value});
+                    break;
             }
 
             $scope.searchString = '';
@@ -190,6 +193,7 @@ angular.module('storyboard').controller('HeaderController',
                 var getProjectGroupDeferred = $q.defer();
                 var getProjectDeferred = $q.defer();
                 var getStoryDeferred = $q.defer();
+                var getTaskDeferred = $q.defer();
                 headerGET = true;
 
                 ProjectGroup.get({id: searchString},
@@ -216,11 +220,20 @@ angular.module('storyboard').controller('HeaderController',
                     }, function () {
                         getStoryDeferred.resolve(null);
                     });
+                Task.get({id: searchString},
+                    function (result) {
+                        getTaskDeferred.resolve(Criteria.create(
+                            'Task', result.id, result.title
+                        ));
+                    }, function () {
+                        getTaskDeferred.resolve(null);
+                    });
 
                 // If the search string is entirely numeric, do a GET.
                 searches.push(getProjectGroupDeferred.promise);
                 searches.push(getProjectDeferred.promise);
                 searches.push(getStoryDeferred.promise);
+                searches.push(getTaskDeferred.promise);
 
             } else {
                 searches.push(ProjectGroup.criteriaResolver(searchString, 5));
