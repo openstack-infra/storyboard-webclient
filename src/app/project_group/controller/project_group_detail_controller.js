@@ -20,7 +20,8 @@
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
     function ($scope, $stateParams, projectGroup, Story, Project,
-              Preference, SubscriptionList, CurrentUser, Subscription) {
+              Preference, SubscriptionList, CurrentUser, Subscription,
+              $q, ProjectGroupItem, ArrayUtil, $log) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -42,6 +43,12 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
          */
         $scope.projects = [];
         $scope.isSearchingProjects = false;
+
+        $scope.editMode = false;
+
+        $scope.toggleEdit = function() {
+            $scope.editMode = !$scope.editMode;
+        };
 
         /**
          * List the projects in this Project Group
@@ -202,6 +209,194 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                         }
                     );
             }
+        };
+
+
+        /**
+         * UI flag, are we saving?
+         *
+         * @type {boolean}
+         */
+        $scope.isSaving = false;
+
+        /**
+         * Project typeahead search method.
+         */
+        $scope.searchProjects = function (value) {
+            var deferred = $q.defer();
+            Project.browse({name: value, limit: 10},
+                function (results) {
+                    // Dedupe the results.
+                    var idxList = [];
+                    for (var i = 0; i < $scope.projects.length; i++) {
+                        var project = $scope.projects[i];
+                        if (!!project) {
+                            idxList.push(project.id);
+                        }
+                    }
+
+                    for (var j = results.length - 1; j >= 0; j--) {
+                        var resultId = results[j].id;
+                        if (idxList.indexOf(resultId) > -1) {
+                            results.splice(j, 1);
+                        }
+                    }
+
+                    deferred.resolve(results);
+                },
+                function (error) {
+                    $log.error(error);
+                    deferred.resolve([]);
+                });
+            return deferred.promise;
+        };
+
+        /**
+         * Formats the project name.
+         */
+        $scope.formatProjectName = function (model) {
+            if (!!model) {
+                return model.name;
+            }
+            return '';
+        };
+
+        /**
+         * Remove a project from the list
+         */
+        $scope.removeProject = function (index) {
+            $scope.projects.splice(index, 1);
+        };
+
+        /**
+         * Save the project and the associated groups
+         */
+        $scope.save = function () {
+            $scope.isSaving = true;
+
+            ProjectGroupItem.browse({projectGroupId: $scope.projectGroup.id},
+                function(results) {
+                    var loadedIds = [];
+                    results.forEach(function (project) {
+                        loadedIds.push(project.id);
+                    });
+                    var promises = [];
+
+                    // Get the desired ID's.
+                    var desiredIds = [];
+                    $scope.projects.forEach(function (project) {
+                        desiredIds.push(project.id);
+                    });
+
+                    // Intersect loaded vs. current to get a list of project
+                    // reference to delete.
+                    var idsToDelete = ArrayUtil.difference(
+                        loadedIds, desiredIds);
+                    idsToDelete.forEach(function (id) {
+
+                        // Get a deferred promise...
+                        var removeProjectDeferred = $q.defer();
+
+                        // Construct the item.
+                        var item = new ProjectGroupItem({
+                            id: id,
+                            projectGroupId: projectGroup.id
+                        });
+
+                        // Delete the item.
+                        item.$delete(function (result) {
+                                removeProjectDeferred.resolve(result);
+                            },
+                            function (error) {
+                                removeProjectDeferred.reject(error);
+                            }
+                        );
+
+                        promises.push(removeProjectDeferred.promise);
+                    });
+
+                    // Intersect current vs. loaded to get a list of project
+                    // reference to add.
+                    var idsToAdd = ArrayUtil.difference(desiredIds, loadedIds);
+                    idsToAdd.forEach(function (id) {
+
+                        // Get a deferred promise...
+                        var addProjectDeferred = $q.defer();
+
+                        // Construct the item.
+                        var item = new ProjectGroupItem({
+                            id: id,
+                            projectGroupId: projectGroup.id
+                        });
+
+                        // Delete the item.
+                        item.$create(function (result) {
+                                addProjectDeferred.resolve(result);
+                            },
+                            function (error) {
+                                addProjectDeferred.reject(error);
+                            }
+                        );
+
+                        promises.push(addProjectDeferred.promise);
+                    });
+
+
+                    // Save the project group itself.
+                    var deferred = $q.defer();
+                    promises.push(deferred.promise);
+                    $scope.projectGroup.$update(function (success) {
+                        deferred.resolve(success);
+                    }, function (error) {
+                        $log.error(error);
+                        deferred.reject(error);
+                    });
+
+                    // Roll all the promises into one big happy promise.
+                    $q.all(promises).then(
+                        function () {
+                            $scope.editMode = false;
+                            $scope.isSaving = false;
+                        },
+                        function (error) {
+                            $log.error(error);
+                        }
+                    );
+                }
+            );
+        };
+
+        /**
+         * Add project.
+         */
+        $scope.addProject = function () {
+            $scope.projects.push({});
+        };
+
+        /**
+         * Insert item into the project list.
+         */
+        $scope.selectNewProject = function (index, model) {
+            // Put our model into the array
+            $scope.projects[index] = model;
+        };
+
+        /**
+         * Check that we have valid projects on the list
+         */
+        $scope.checkValidProjects = function () {
+            if ($scope.projects.length === 0) {
+                return false;
+            }
+
+            // check if projects contain a valid project_id
+            for (var i = 0; i < $scope.projects.length; i++) {
+                var project = $scope.projects[i];
+                if (!project.id) {
+                    return false;
+                }
+            }
+            return true;
         };
 
 
