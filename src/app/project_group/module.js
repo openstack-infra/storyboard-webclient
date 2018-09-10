@@ -58,9 +58,7 @@ angular.module('sb.project_group',
                                 deferred.reject(error);
                             });
                         return deferred.promise;
-                    },
-                    isSuperuser: PermissionResolver
-                        .requirePermission('is_superuser', true)
+                    }
                 }
         });
     });
