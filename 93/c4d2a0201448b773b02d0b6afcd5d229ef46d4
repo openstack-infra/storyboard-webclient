@@ -1,0 +1,10 @@
+Code-Review+2: Jens Harbott (frickler) <j.harbott@x-ion.de>
+Code-Review+1: Emmet Hikory <persia@shipstone.jp>
+Code-Review+2: Jeremy Stanley <fungi@yuggoth.org>
+Workflow+1: Jeremy Stanley <fungi@yuggoth.org>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Mon, 10 Sep 2018 12:38:33 +0000
+Reviewed-on: https://review.openstack.org/601222
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
