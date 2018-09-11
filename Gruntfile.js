@@ -84,7 +84,8 @@ module.exports = function (grunt) {
                         ]
                     }
                 ]
-            }
+            },
+            postbuild: [dir.output + '/js/storyboard-es6.js']
         },
 
         /**
@@ -131,7 +132,7 @@ module.exports = function (grunt) {
                     dir.source + '/app/**/module.js',
                     dir.source + '/app/**/*.js'
                 ],
-                dest: dir.output + '/js/storyboard.js'
+                dest: dir.output + '/js/storyboard-es6.js'
             }
         },
 
@@ -320,28 +321,6 @@ module.exports = function (grunt) {
         },
 
         /**
-         * grunt useminPrepare uglify
-         *
-         * Performs a minifcation on our concatenated javascript, making sure
-         * not to mangle angularjs' injector pattern.
-         */
-        uglify: {
-            options: {
-                mangle: false
-            },
-            dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: dir.output + '/js',
-                        src: '**/*.js',
-                        dest: dir.output + '/js'
-                    }
-                ]
-            }
-        },
-
-        /**
          * grunt useminPrepare usemin
          *
          * Completes the packaging task by renaming all modified asset
@@ -407,6 +386,27 @@ module.exports = function (grunt) {
           }
         },
 
+        /**
+         * grunt babel
+         *
+         * Transpiles all JS to ES5 and minifies the output.
+         */
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['@babel/preset-env'],
+                compact: true,
+                comments: false
+            },
+            dist: {
+                files: [
+                    {
+                        src: dir.output + '/js/storyboard-es6.js',
+                        dest: dir.output + '/js/storyboard.js'
+                    }
+                ]
+            }
+        },
 
         /**
          * grunt watch
@@ -429,6 +429,25 @@ module.exports = function (grunt) {
                     dir.source + '/app/**/*.js'
                 ],
                 tasks: ['concat']
+            },
+            babel: {
+                /**
+                 * Grunt has trouble watching new files if
+                 * the path starts with ./
+                 */
+                files: [
+                    'dist/js/storyboard-es6.js'
+                ],
+                options: {
+                    event: ['added', 'changed']
+                },
+                tasks: ['babel']
+            },
+            clean_postbuild: {
+                files: [
+                    'dist/js/storyboard.js'
+                ],
+                tasks: ['clean:postbuild']
             },
             sass: {
                 files: [
@@ -562,6 +581,7 @@ module.exports = function (grunt) {
         'template',
         'useminPrepare',
         'concat',
+        'babel',
         'sass',
         'imagemin',
         'html2js',
@@ -573,7 +593,6 @@ module.exports = function (grunt) {
      * Package built code into a release package.
      */
     grunt.registerTask('package', [
-        'uglify',
         'cssmin',
         'htmlmin',
         'compress'
@@ -584,7 +603,8 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('build', [
         'compile',
-        'package'
+        'package',
+        'clean:postbuild'
     ]);
 
 
@@ -603,7 +623,7 @@ module.exports = function (grunt) {
      * files.
      */
     grunt.registerTask('serve:dist', [
-        'clean',
+        'clean:dist',
         'compile',
         'package',
         'configureProxies:dist',
@@ -616,7 +636,7 @@ module.exports = function (grunt) {
      * the code when a change is detected.
      */
     grunt.registerTask('serve', [
-        'clean',
+        'clean:dist',
         'compile',
         'configureProxies:livereload',
         'connect:livereload',
@@ -630,7 +650,7 @@ module.exports = function (grunt) {
      * tests will be run.
      */
     grunt.registerTask('test:integration', [
-        'clean',
+        'clean:dist',
         'compile',
         'configureProxies:test',
         'connect:test',
@@ -645,7 +665,7 @@ module.exports = function (grunt) {
      * protractor.conf.js
      */
     grunt.registerTask('test:functional', [
-        'clean',
+        'clean:dist',
         'compile',
         'connect:test',
         'protractor'
