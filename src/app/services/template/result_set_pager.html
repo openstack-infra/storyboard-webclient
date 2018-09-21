@@ -39,7 +39,7 @@
     </div>
     <ul class="dropdown-menu dropdown-menu-right" role="menu">
         <li class="dropdown-header"># of results</li>
-        <li ng-repeat="size in [10,25,50,100]"
+        <li ng-repeat="size in [10,25,50,100,1000]"
             ng-class="{'active': size == limit}">
             <a ng-click="pageSize({'type':listType, 'pageSize':size})">{{size}}</a>
         </li>
