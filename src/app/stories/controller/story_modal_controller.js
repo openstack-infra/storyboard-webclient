@@ -35,8 +35,7 @@ angular.module('sb.story').controller('StoryModalController',
         });
 
         $scope.tasks = [new Task({
-            title: '',
-            project_id: params.projectId || null
+            title: ''
         })];
 
         // Preload the project
@@ -45,6 +44,10 @@ angular.module('sb.story').controller('StoryModalController',
                 id: params.projectId
             }, function (project) {
                 $scope.asyncProject = project;
+                $scope.tasks = [new Task({
+                    title: '',
+                    project_id: project.id
+                })];
             });
         }
 
