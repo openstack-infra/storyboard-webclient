@@ -21,7 +21,7 @@
     "task",
     "project management"
   ],
-  "author": "OpenStack <openstack-dev@lists.openstack.org>",
+  "author": "OpenStack <openstack-discuss@lists.openstack.org>",
   "license": "Apache-2.0",
   "devDependencies": {
     "connect-livereload": "0.4.0",
