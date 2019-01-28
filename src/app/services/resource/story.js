@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+ * Copyright (c) 2019 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -49,6 +50,11 @@ angular.module('sb.services').factory('Story',
         resource.TagsController = $resource(
                 storyboardApiBase + '/stories/:id/tags', {id: '@id'},
                 tags_signature);
+
+        var attachmentEndpoint = '/stories/:id/attachments/:attachmentId';
+        resource.AttachmentsController = $resource(
+                storyboardApiBase + attachmentEndpoint
+        );
 
         ResourceFactory.applySearch(
             'Story',
