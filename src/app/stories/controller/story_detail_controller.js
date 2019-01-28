@@ -824,4 +824,12 @@ angular.module('sb.story').controller('StoryDetailController',
         };
 
         $scope.newTag = {};
+
+        // Attachments
+        $scope.attachments = [];
+        Story.AttachmentsController.query({'id': story.id},
+            function (results) {
+                $scope.attachments = results;
+            }
+        );
     });
