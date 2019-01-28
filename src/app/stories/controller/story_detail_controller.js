@@ -24,7 +24,8 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments, Tags, worklists, Team) {
+              enableEditableComments, enableAttachments, Tags, worklists,
+              Team) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -849,4 +850,15 @@ angular.module('sb.story').controller('StoryDetailController',
         };
 
         $scope.newTag = {};
+
+        // Attachments
+        $scope.attachments = [];
+        $scope.enableAttachments = enableAttachments;
+        if (enableAttachments) {
+            Story.AttachmentsController.query({'id': story.id},
+                function (results) {
+                    $scope.attachments = results;
+                }
+            );
+        }
     });

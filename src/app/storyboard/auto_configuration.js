@@ -46,6 +46,7 @@ angular.element(document)
 
         function loadConfig(config) {
             var defaults = {
+                enableAttachments: false,
                 enableEditableComments: false,
                 enableNotifications: false
             };

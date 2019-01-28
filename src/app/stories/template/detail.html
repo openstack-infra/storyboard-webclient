@@ -54,6 +54,8 @@
             <hr/>
             <div ng-include src="'/inline/tags.html'"></div>
             <hr/>
+            <div ng-include src="'/inline/attachments.html'" ng-if="enableAttachments"></div>
+            <hr ng-if="enableAttachments" />
             <div ng-include src="'/inline/discussion.html'"></div>
         </div>
     </div>
@@ -386,6 +388,22 @@
             ng-show="!showAddTag && isLoggedIn">
         <i class="fa fa-plus-circle"></i>&nbsp;Add Tag
     </button>
+</script>
+
+<!-- Template for the attachments list -->
+<script type="text/ng-template" id="/inline/attachments.html">
+    <h3>Attachments</h3>
+
+    <ul class="list-inline" ng-if="attachments.length > 0">
+        <li ng-repeat="attachment in attachments">
+            <i class="fa fa-paperclip"></i>&nbsp;
+            <a ng-href="{{ attachment.link }}">{{ attachment.name }}</a>
+            &nbsp;&nbsp;
+        </li>
+    </ul>
+    <p class="text-muted" ng-if="attachments.length == 0">
+        <em>This story has no attachments yet.</em>
+    </p>
 </script>
 
 <!-- Template for the task list -->
