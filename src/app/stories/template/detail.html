@@ -349,9 +349,9 @@
 
 <!-- Template for the tags list and controls -->
 <script type="text/ng-template" id="/inline/tags.html">
-    <strong>Tags</strong>
+    <h3>Tags</h3>
 
-    <ul class="list-inline">
+    <ul class="list-inline" ng-if="story.tags.length > 0">
         <li ng-repeat="tag in story.tags">
             <h4>
                 <span class="label label-warning">
@@ -361,32 +361,26 @@
                 </span>
             </h4>
         </li>
-        </ul>
-        <br>
-        <span class="input-group" ng-show="showAddTag">
-           <input type="text" class="form-control" ng-model="newTag.name"
-             typeahead="tag as tag.name for tag in searchTags($viewValue)"
-             typeahead-on-select="updateViewValue($model.name);"/>
+    </ul>
+    <p class="text-muted" ng-if="story.tags.length == 0 && !isLoggedIn">
+        <em>This story has no tags yet.</em>
+    </p>
+    <span class="input-group" ng-show="showAddTag">
+       <input type="text" class="form-control" ng-model="newTag.name"
+         typeahead="tag as tag.name for tag in searchTags($viewValue)"
+         typeahead-on-select="updateViewValue($model.name);"/>
 
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="button"
-                        ng-click="addTag(newTag.name)">Add</button>
-                <button class="btn btn-default" type="button"
-                        ng-click="toggleAddTag()">Cancel</button>
-            </span>
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button"
+                    ng-click="addTag(newTag.name)">Add</button>
+            <button class="btn btn-default" type="button"
+                    ng-click="toggleAddTag()">Cancel</button>
         </span>
-        <h4>
-            <span class="label label-default" ng-click="toggleAddTag()"
-                  ng-show="!showAddTag && isLoggedIn">
-                Add
-                <i class="fa fa-plus"></i>
-            </span>
-            <span class="label label-default" ng-click="showLoginRequiredModal()"
-                  ng-show="!isLoggedIn">
-                Add
-                <i class="fa fa-plus"></i>
-            </span>
-        </h4>
+    </span>
+    <button class="btn btn-default" ng-click="toggleAddTag()"
+            ng-show="!showAddTag && isLoggedIn">
+        <i class="fa fa-plus-circle"></i>&nbsp;Add Tag
+    </button>
 </script>
 
 <!-- Template for the task list -->
