@@ -1,12 +1,11 @@
 /*
- * Copyright (c) 2016 Codethink Ltd.
  * Copyright (c) 2019 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
  *
- *         http://www.apache.org/licenses/LICENSE-2.0
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -15,39 +14,24 @@
  * under the License.
  */
 
-
 /**
- *  Story view styles
+ * A directive to make ng-model work on file input elements.
  */
+angular.module('sb.util').directive('fileInput', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ngModel) {
+      elem.on('change', function(evt) {
+        var fileList = elem[0].files;
+        var files = [];
 
-/* "Related Worklists" table style */
-.position-label {
-  margin-left: 5px;
-}
-
-/* File upload styling */
-.file-input-wrapper {
-  display: flex;
-
-  .file-input-hidden {
-    flex-basis: 0;
-  }
-
-  label {
-    flex: 1 0 auto;
-    text-align: left;
-    color: #777;
-
-    &:first-of-type {
-      border-radius: 4px 0px 0px 4px;
+        var k = 0;
+        while (k < fileList.length) {
+          files.push(fileList[k]);
+          k++;
+        }
+        ngModel.$setViewValue(files);
+      });
     }
-  }
-
-  .btn {
-    border-radius: 0px;
-
-    &:last-child {
-      border-radius: 0px 4px 4px 0px;
-    } 
-  }
-}
+  };
+});

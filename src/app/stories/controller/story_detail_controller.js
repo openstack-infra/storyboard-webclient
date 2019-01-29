@@ -826,10 +826,19 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.newTag = {};
 
         // Attachments
+        $scope.showAddAttachment = false;
         $scope.attachments = [];
         Story.AttachmentsController.query({'id': story.id},
             function (results) {
                 $scope.attachments = results;
             }
         );
+
+        $scope.toggleAddAttachment = function() {
+            $scope.showAddAttachment = !$scope.showAddAttachment;
+        };
+
+        $scope.uploadAttachments = function(files) {
+            console.log(files[0].name)
+        };
     });
