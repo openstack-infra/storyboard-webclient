@@ -826,10 +826,23 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.newTag = {};
 
         // Attachments
+        $scope.showAddAttachment = false;
         $scope.attachments = [];
+        $scope.files = [];
         Story.AttachmentsController.query({'id': story.id},
             function (results) {
                 $scope.attachments = results;
             }
         );
+
+        $scope.toggleAddAttachment = function() {
+            $scope.showAddAttachment = !$scope.showAddAttachment;
+        };
+
+        $scope.handleFileSelection = function(evt) {
+            $scope.fileNames = evt.target.files.map(function(file) {
+                return file.name;
+            });
+            $scope.files = evt.target.files;
+        };
     });
