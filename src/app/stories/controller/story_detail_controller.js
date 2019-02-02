@@ -639,6 +639,7 @@ angular.module('sb.story').controller('StoryDetailController',
                     mapTaskToProject(savedTask);
                 }
                 $scope.loadEvents();
+                task.title = "";
             });
         };
 

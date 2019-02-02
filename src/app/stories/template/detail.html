@@ -1,6 +1,7 @@
 <!--
   ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
   ~ Copyright (c) 2016 Codethink Ltd.
+  ~ Copyright (c) 2019 Adam Coldrick
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -597,24 +598,19 @@
                     </a>
                     &nbsp;
                 </div>
-                <input-inline
-                        auto-focus="true"
-                        ng-model="projects[name].branches[branchName].newTask.title"
-                        enabled="isLoggedIn"
-                        on-change="updateTaskInline()"
-                        empty-prompt="Click to assign."
-                        empty-disabled-prompt="Not assigned."
-                        maxlength="255"
-                        as-inline="false"
-                        placeholder="Enter task name"
-                        />
+                <input type="text"
+                       class="form-control"
+                       focus="true"
+                       ng-model="projects[name].branches[branchName].newTask.title"
+                       maxlength="255"
+                       placeholder="Enter task name"
+                       />
             </div>
             <div class="col-xs-3">
                 <user-typeahead
                         auto-focus="false"
                         ng-model="projects[name].branches[branchName].newTask.assignee_id"
                         enabled="isLoggedIn"
-                        on-change="updateTaskInline()"
                         empty-prompt="Click to assign."
                         empty-disabled-prompt="Not assigned."
                         as-inline="false"
