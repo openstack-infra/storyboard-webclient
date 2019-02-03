@@ -25,7 +25,7 @@ angular.module('sb.story').controller('StoryDetailController',
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
               enableEditableComments, enableAttachments, Tags, worklists,
-              Team) {
+              Team, $http, Upload) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -852,6 +852,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.newTag = {};
 
         // Attachments
+        $scope.showAddAttachment = false;
         $scope.attachments = [];
         $scope.enableAttachments = enableAttachments;
         if (enableAttachments) {
@@ -861,4 +862,34 @@ angular.module('sb.story').controller('StoryDetailController',
                 }
             );
         }
+
+        $scope.toggleAddAttachment = function() {
+            $scope.showAddAttachment = !$scope.showAddAttachment;
+        };
+
+        function saveAttachment(file, objectUrl) {
+            return function() {
+                var metadata = new Story.AttachmentsController({
+                    name: file.name,
+                    link: objectUrl
+                });
+                metadata.$save({'id': story.id}, function(result) {
+                    $scope.attachments.push(result);
+                    $scope.toggleAddAttachment();
+                });
+            };
+        }
+        $scope.uploadAttachments = function(files) {
+            var infoUrl = '/stories/' + story.id + '/attachments/upload_url';
+            $http.get(storyboardApiBase + infoUrl).then(
+                function (response) {
+                    var url = response.data;
+                    var auth = response.headers('x-auth-token');
+                    var type = response.headers('x-storage-type');
+                    angular.forEach(files, function(file) {
+                        Upload.upload(file, url, auth, type, saveAttachment);
+                    });
+                }
+            );
+        };
     });

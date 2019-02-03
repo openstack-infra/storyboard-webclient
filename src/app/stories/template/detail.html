@@ -401,9 +401,18 @@
             &nbsp;&nbsp;
         </li>
     </ul>
-    <p class="text-muted" ng-if="attachments.length == 0">
+    <p class="text-muted" ng-if="attachments.length == 0 && !isLoggedIn">
         <em>This story has no attachments yet.</em>
     </p>
+    <button class="btn btn-default" ng-click="toggleAddAttachment()"
+            ng-if="!showAddAttachment && isLoggedIn">
+        <i class="fa fa-plus-circle"></i>&nbsp;Add Attachment
+    </button>
+    <file-selector ng-if="showAddAttachment"
+                   on-cancel="toggleAddAttachment()"
+                   on-save="uploadAttachments(files)"
+                   save-text="Upload">
+    </file-selector>
 </script>
 
 <!-- Template for the task list -->
