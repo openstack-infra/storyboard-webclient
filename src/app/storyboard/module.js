@@ -28,7 +28,7 @@ angular.module('storyboard',
         'sb.admin', 'sb.subscription', 'sb.project_group', 'sb.worklist',
         'sb.board', 'sb.due_date', 'sb.task', 'ui.router', 'ui.bootstrap',
         'monospaced.elastic', 'angularMoment', 'angular-data.DSCacheFactory',
-        'viewhead', 'ngSanitize', 'as.sortable'])
+        'viewhead', 'ngSanitize', 'as.sortable', 'angular-uuid'])
     .constant('angularMomentConfig', {
         preprocess: 'utc',
         timezone: 'UTC'
