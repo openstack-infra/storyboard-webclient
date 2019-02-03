@@ -145,6 +145,11 @@ angular-scenario@1.5.8:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular-scenario/-/angular-scenario-1.5.8.tgz#d32af0ac6c2bcccf9500a9ed49d59b17a1ee4b1b"
 
+angular-uuid@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/angular-uuid/-/angular-uuid-0.0.4.tgz#87a860ca1d36ae389f7ec60fd04366edc0e3584d"
+  integrity sha1-h6hgyh02rjiffsYP0ENm7cDjWE0=
+
 angular@1.5.8, angular@>=1.0.6:
   version "1.5.8"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.5.8.tgz#925a5392b8c212d09572dc446db7e01264e094cb"
