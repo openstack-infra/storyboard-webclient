@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 Codethink Ltd.
+ * Copyright (c) 2019 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -21,5 +22,32 @@
 
 /* "Related Worklists" table style */
 .position-label {
-    margin-left: 5px;
+  margin-left: 5px;
+}
+
+/* File upload styling */
+.file-input-wrapper {
+  display: flex;
+
+  .file-input-hidden {
+    flex-basis: 0;
+  }
+
+  label {
+    flex: 1 0 auto;
+    text-align: left;
+    color: #777;
+
+    &:first-of-type {
+      border-radius: 4px 0px 0px 4px;
+    }
+  }
+
+  .btn {
+    border-radius: 0px;
+
+    &:last-child {
+      border-radius: 0px 4px 4px 0px;
+    }
+  }
 }
