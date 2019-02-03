@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (c) 2019 Adam Coldrick
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="file-input-wrapper">
+  <input type="file"
+         class="file-input-hidden"
+         id="attachment-selector"
+         multiple
+         file-input
+         ng-model="files">
+  <label class="btn btn-default" for="attachment-selector">
+    {{ files.length > 0 ? selectedFiles() : "Choose files..." }}
+  </label>
+  <button class="btn btn-primary" ng-click="onSave({files: files})">{{ saveText }}</button>
+  <button class="btn btn-default" ng-click="onCancel()">Cancel</button>
+</div>
