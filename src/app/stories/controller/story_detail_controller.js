@@ -24,7 +24,8 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments, Tags, worklists, Team) {
+              enableEditableComments, Tags, worklists, Team, $http,
+              Upload) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -826,10 +827,41 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.newTag = {};
 
         // Attachments
+        $scope.showAddAttachment = false;
         $scope.attachments = [];
         Story.AttachmentsController.query({'id': story.id},
             function (results) {
                 $scope.attachments = results;
             }
         );
+
+        $scope.toggleAddAttachment = function() {
+            $scope.showAddAttachment = !$scope.showAddAttachment;
+        };
+
+        function saveAttachment(file, objectUrl) {
+            return function() {
+                var metadata = new Story.AttachmentsController({
+                    name: file.name,
+                    link: objectUrl
+                });
+                metadata.$save({'id': story.id}, function(result) {
+                    $scope.attachments.push(result);
+                    $scope.toggleAddAttachment();
+                });
+            }
+        }
+        $scope.uploadAttachments = function(files) {
+            var url = '/stories/' + story.id + '/attachments/upload_url'
+            $http.get(storyboardApiBase + url).then(
+                function (response) {
+                    var url = response.data;
+                    var auth = response.headers('x-auth-token');
+                    var type = response.headers('x-storage-type');
+                    angular.forEach(files, function(file) {
+                        Upload.upload(file, url, auth, type, saveAttachment);
+                    });
+                }
+            );
+        };
     });
