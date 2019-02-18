@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2015-2016 Codethink Limited
+ * Copyright (c) 2019 Adam Coldrick
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -22,6 +23,8 @@ angular.module('sb.board').controller('BoardDetailController',
               BoardHelper, DueDate, $document, User, $q, moment) {
         'use strict';
 
+        $scope.board = new Board();
+
         /**
          * Load the board. If onlyContents is true then assume $scope.board
          * is a board and reload its contents.
@@ -35,6 +38,7 @@ angular.module('sb.board').controller('BoardDetailController',
                 };
             });
             Board.get(params, function(board) {
+                var offsets = BoardHelper.recordLaneScrollbars($scope.board);
                 $scope.board = board;
                 $scope.owners = [];
                 $scope.users = [];
@@ -44,6 +48,7 @@ angular.module('sb.board').controller('BoardDetailController',
                 angular.forEach(board.users, function(id) {
                     $scope.users.push(User.get({id: id}));
                 });
+                BoardHelper.scrollLanes(board, offsets);
             });
         }
 
