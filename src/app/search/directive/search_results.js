@@ -44,7 +44,7 @@ angular.module('sb.search').directive('searchResults',
                  *
                  * @type {string}
                  */
-                $scope.sortField = 'id';
+                $scope.sortField = 'updated_at';
 
                 /**
                  * The direction to sort on.
