@@ -18,7 +18,7 @@
         <button type="button" class="close" aria-hidden="true"
                 ng-click="close()">&times;</button>
         <h3 class="panel-title pull-left">
-            Card #{{card.id}} - 
+            Card <span ng-If="card.id">#{{card.id}}</span> - 
             <span ng-if="card.item_type === 'task'">
                 {{card.task.title}}
             </span>
