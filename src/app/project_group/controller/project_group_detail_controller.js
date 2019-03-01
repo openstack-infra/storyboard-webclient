@@ -92,22 +92,23 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         /**
          * Filter the stories.
          */
-        $scope.showActive = true;
-        $scope.showMerged = false;
-        $scope.showInvalid = false;
+        $scope.selectedStatus = {};
+        $scope.selectedStatus.showActive = true;
+        $scope.selectedStatus.showMerged = false;
+        $scope.selectedStatus.showInvalid = false;
 
         /**
          * Reload the stories in this view based on user selected filters.
          */
-        $scope.filterStories = function () {
+        $scope.filterStories = function () {    
             var status = [];
-            if ($scope.showActive) {
+            if ($scope.selectedStatus.showActive) {
                 status.push('active');
             }
-            if ($scope.showMerged) {
+            if ($scope.selectedStatus.showMerged) {
                 status.push('merged');
             }
-            if ($scope.showInvalid) {
+            if ($scope.selectedStatus.showInvalid) {
                 status.push('invalid');
             }
 
@@ -120,7 +121,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
             Story.browse({
                     project_group_id: projectGroup.id,
                     sort_field: 'id',
-                    sort_dir: 'desc',
+                    sort_dir: 'asc',
                     status: status,
                     offset: $scope.storySearchOffset,
                     limit: storyPageSize
