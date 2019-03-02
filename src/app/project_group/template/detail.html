@@ -75,19 +75,19 @@
                 <br/>
                 <div class="checkbox label label-info">
                     <input type="checkbox"
-                           ng-model="showActive"
+                           ng-model="selectedStatus.showActive"
                            ng-change="filterStories()"/>
                     Active
                 </div>
                 <div class="checkbox label label-success">
                     <input type="checkbox"
-                           ng-model="showMerged"
+                           ng-model="selectedStatus.showMerged"
                            ng-change="filterStories()"/>
                     Merged
                 </div>
                 <div class="checkbox label label-default">
                     <input type="checkbox"
-                           ng-model="showInvalid"
+                           ng-model="selectedStatus.showInvalid"
                            ng-change="filterStories()"/>
                     Invalid
                 </div>
