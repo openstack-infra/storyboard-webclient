@@ -38,7 +38,11 @@
     </div>
     <div ng-include
          src="'/inline/board_detail.html'"
-         ng-hide="showEditForm">
+         ng-hide="showEditForm || isLoading">
+    </div>
+    <div ng-If="isLoading"
+        class="text-center">
+        <i class="fa fa-spinner fa-lg fa-spin fa-3x"></i>
     </div>
     <hr ng-show="showEditForm">
     <div ng-include
@@ -46,9 +50,9 @@
          ng-show="showEditForm">
     </div>
     <hr>
-    <div ng-show="permissions.editBoard"
+    <div ng-show="permissions.editBoard && !isLoading"
          ng-include src="'/inline/kanban_lanes.html'"></div>
-    <div ng-show="!permissions.editBoard"
+    <div ng-show="!permissions.editBoard && !isLoading"
          ng-include src="'/inline/kanban_lanes_static.html'"></div>
 </div>
 
