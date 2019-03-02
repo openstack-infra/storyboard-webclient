@@ -40,6 +40,10 @@
          src="'/inline/board_detail.html'"
          ng-hide="showEditForm">
     </div>
+    <div ng-If="isLoading" 
+        class="text-center">
+        <i class="fa fa-spinner fa-lg fa-spin fa-5x"></i>
+    </div>
     <hr ng-show="showEditForm">
     <div ng-include
          src="'/inline/edit_board.html'"
