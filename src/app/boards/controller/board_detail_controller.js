@@ -26,6 +26,7 @@ angular.module('sb.board').controller('BoardDetailController',
          * Load the board. If onlyContents is true then assume $scope.board
          * is a board and reload its contents.
          */
+        $scope.isLoading = true;
         function loadBoard() {
             var params = {id: $stateParams.boardID};
             Board.Permissions.get(params, function(perms) {
@@ -44,6 +45,7 @@ angular.module('sb.board').controller('BoardDetailController',
                 angular.forEach(board.users, function(id) {
                     $scope.users.push(User.get({id: id}));
                 });
+                $scope.isLoading = false;
             });
         }
 
