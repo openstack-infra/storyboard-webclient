@@ -156,16 +156,22 @@
                                                         </li>
                                                     </ul>
                                                 </span>
-                                                <div tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
-                                                     tag-complete-tags="criteria"
-                                                     tag-complete-label-field="title"
-                                                     tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
-                                                     tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
-                                                     tag-complete-loading="loadingCriteria = isLoading"
-                                                     tag-complete-on-select="setCriterion(criterion, tag)"
-                                                     tag-remove-callback="removeTag(criterion)"
-                                                     max-tags="1"
-                                                     placeholder="Click to select a filter.">
+                                                <div class="form-group has-feedback has-feedback-no-label">
+                                                    <div tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
+                                                        tag-complete-tags="criteria"
+                                                        tag-complete-label-field="title"
+                                                        tag-complete-option-template-url="'app/search/template/typeahead_criteria_item.html'"
+                                                        tag-complete-tag-template-url="'app/search/template/criteria_tag_item.html'"
+                                                        tag-complete-loading="loadingCriteria = isLoading"
+                                                        tag-complete-on-select="setCriterion(criterion, tag)"
+                                                        tag-remove-callback="removeTag(criterion)"
+                                                        max-tags="1"
+                                                        placeholder="Click to select a filter.">
+                                                    </div>
+                                                        <span class="form-control-feedback text-muted">
+                                                            <i class="fa fa-sync fa-spin"
+                                                               ng-show="loadingCriteria"></i>
+                                                        </span>
                                                 </div>
                                             </span>
                                             <span ng-hide="newFilter.filter_criteria.indexOf(criterion)
