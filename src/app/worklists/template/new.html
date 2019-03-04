@@ -156,6 +156,7 @@
                                                         </li>
                                                     </ul>
                                                 </span>
+                                                <div class="form-group has-feedback has-feedback-no-label">
                                                 <div tag-complete="criteria as criteria.title for criteria in searchForCriteria($viewValue)"
                                                      tag-complete-tags="criteria"
                                                      tag-complete-label-field="title"
@@ -166,6 +167,11 @@
                                                      tag-remove-callback="removeTag(criterion)"
                                                      max-tags="1"
                                                      placeholder="Click to select a filter.">
+                                                </div>
+                                                        <span class="form-control-feedback text-muted">
+                                                            <i class="fa fa-sync fa-spin"
+                                                               ng-show="loadingCriteria"></i>
+                                                        </span>
                                                 </div>
                                             </span>
                                             <span ng-hide="newFilter.filter_criteria.indexOf(criterion)
