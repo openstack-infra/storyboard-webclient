@@ -1,0 +1,9 @@
+Code-Review+2: Jeremy Stanley <fungi@yuggoth.org>
+Code-Review+2: Kendall Nelson <kennelson11@gmail.com>
+Workflow+1: Kendall Nelson <kennelson11@gmail.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 06 Mar 2019 02:14:40 +0000
+Reviewed-on: https://review.openstack.org/634557
+Project: openstack-infra/storyboard-webclient
+Branch: refs/heads/master
