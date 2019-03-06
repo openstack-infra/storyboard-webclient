@@ -41,8 +41,9 @@
     padding-bottom : 10px;
 }
 
-input-inline, project-typeahead, user-typeahead, task-status-dropdown {
+.task-title input, input-inline, project-typeahead, user-typeahead, task-status-dropdown {
     display: inline-block;
+    width: auto;
 
     & .form-group {
         margin-bottom: 0;

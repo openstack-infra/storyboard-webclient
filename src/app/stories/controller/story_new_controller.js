@@ -305,6 +305,7 @@ angular.module('sb.story').controller('StoryNewController',
                 });
             }
             $scope.tasks.push(savedTask);
+            task.title = '';
         };
 
         /**
