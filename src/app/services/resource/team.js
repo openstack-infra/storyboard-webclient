@@ -36,7 +36,7 @@ angular.module('sb.services').factory('Team',
             }
         );
 
-        var usersSignature = {
+        var subresourceSignature = {
             'create': {
                 method: 'PUT'
             },
@@ -55,7 +55,12 @@ angular.module('sb.services').factory('Team',
         resource.UsersController = $resource(
             storyboardApiBase + '/teams/:team_id/users',
             {team_id: '@team_id'},
-            usersSignature);
+            subresourceSignature);
+
+        resource.ProjectsController = $resource(
+            storyboardApiBase + '/teams/:team_id/projects',
+            {team_id: '@team_id'},
+            subresourceSignature);
 
         return resource;
     });
