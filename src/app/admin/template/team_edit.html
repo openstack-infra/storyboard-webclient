@@ -1,6 +1,6 @@
 <!--
   ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
-  ~ Copyright (c) 2016 Codethink Ltd
+  ~ Copyright (c) 2016, 2019 Codethink Ltd
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
   ~ not use this file except in compliance with the License. You may obtain
@@ -19,126 +19,225 @@
     <div class="row">
         <div class="col-xs-12">
             <h1 ng-show="!editing">
-                <i class="fa fa-sb-team"></i> {{team.name}}
+                <i class="fa fa-sb-team text-muted"></i>&emsp;
+                <span view-title>{{ team.name }}</span>
                 <small>
-                    <a ng-click="toggleEdit()">
+                    <a href ng-click="toggleEdit()">
                         <i class="fa fa-pencil-alt"></i>
                     </a>
                 </small>
             </h1>
-            <form name="teamForm" role="form" ng-show="editing">
+            <hr ng-if="editing">
+            <form name="teamForm" role="form" class="form-horizontal" ng-show="editing">
                 <div class="form-group has-feedback"
                      ng-class="{'has-error': teamForm.name.$invalid,
                                 'has-success': !teamForm.name.$invalid}">
-                    <div class="input-group">
-                        <div class="clearfix feedback-wrapper">
-                            <input id="name"
-                                   name="name"
-                                   type="text"
-                                   class="form-control context-edit h1"
-                                   ng-model="team.name"
-                                   autocomplete="off"
-                                   required
-                                   autofocus
-                                   ng-disabled="isUpdating"
-                                   ng-pattern="PROJECT_NAME_REGEX"
-                                   ng-minlength="3"
-                                   maxlength="255"
-                                   placeholder="Team Name" />
-                            <span class="form-control-feedback"
-                                  ng-show="teamForm.name.$invalid">
-                                <i class="fa fa-times fa-lg"></i>
+                    <label for="name" class="col-sm-2 control-label">
+                        Name
+                    </label>
+
+                    <div class="col-sm-10">
+                        <input id="name"
+                                name="name"
+                                type="text"
+                                class="form-control"
+                                ng-model="team.name"
+                                autofocus
+                                required
+                                ng-disabled="isSaving"
+                                ng-pattern="PROJECT_NAME_REGEX"
+                                ng-minlength="3"
+                                maxlength="255"
+                                placeholder="The team name.">
+                        <span class="form-control-feedback"
+                                ng-show="teamForm.name.$invalid">
+                            <i class="fa fa-times fa-lg"></i>
+                        </span>
+                        <span class="form-control-feedback"
+                                ng-show="!teamForm.name.$invalid">
+                            <i class="fa fa-check fa-lg"></i>
+                        </span>
+                        <div class="help-block text-danger"
+                                ng-show="teamForm.name.$invalid">
+                            <span ng-show="teamForm.name.$error.required">
+                                A team name is required.
                             </span>
-                            <span class="form-control-feedback"
-                                  ng-show="!teamForm.name.$invalid">
-                                <i class="fa fa-check fa-lg"></i>
+                            <span ng-show="teamForm.name.$error.pattern">
+                                A team name must begin with a letter, and may only
+                                contain letters, numbers, forward slashes, periods, and
+                                dashes. It should not start or end with a separator and
+                                must not contain two or more sequential separators.
+                            </span>
+                            <span ng-show="teamForm.name.$error.minlength">
+                                A team name must have at least 3 characters.
                             </span>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="security"
+                            class="col-sm-2 control-label">
+                        Security Team
+                    </label>
 
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn-lg h1"
-                                    type="button"
-                                    ng-click="save()"
-                                    ng-disabled="!teamForm.$valid || isUpdating">
-                                <i class="fa fa-check"></i>
-                                <span class="hidden-xs">Save</span>
-                            </button>
-                            <button class="btn btn-danger btn-lg h1"
-                                    type="button"
-                                    ng-click="toggleEdit()"
-                                    ng-disabled="isUpdating">
-                                <i class="fa fa-times"></i>
-                                <span class="hidden-xs">Cancel</span>
-                            </button>
-                        </span>
+                    <div class="col-sm-10 checkbox">
+                        <input id="security"
+                                type="checkbox"
+                                class="modal-checkbox"
+                                ng-model="team.security"
+                                ng-disabled="isSaving"
+                                />
                     </div>
-                    <div class="help-block text-danger"
-                         ng-show="teamForm.name.$invalid">
-                        <span ng-show="teamForm.name.$error.required">
-                            A team name is required.
-                        </span>
-                        <span ng-show="teamForm.name.$error.pattern">
-                            A team name must begin with a letter, and may only
-                            contain letters, numbers, forward slashes, periods, and
-                            dashes. It should not start or end with a separator and
-                            must not contain two or more sequential separators.
-                        </span>
-                        <span ng-show="teamForm.name.$error.minlength">
-                            A team name must have at least 3 characters.
-                        </span>
-                    </div>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary"
+                            type="button"
+                            ng-click="save()"
+                            ng-disabled="!teamForm.$valid || isUpdating">
+                        <i class="fa fa-check"></i>
+                        <span class="hidden-xs">Save</span>
+                    </button>
+                    <button class="btn btn-default"
+                            type="button"
+                            ng-click="toggleEdit()"
+                            ng-disabled="isUpdating">
+                        <i class="fa fa-times"></i>
+                        <span class="hidden-xs">Cancel</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+    <div class="row" ng-if="!editing">
+        <div class="col-xs-12" ng-if="team.security">
+            <h3>
+                <i class="fa fa-lock text-muted"></i>&emsp;
+                Security Team
+            </h3>
+            <p class="text-muted">
+                This team will automatically be granted permissions to
+                view and edit security stories affecting any of their
+                related projects.
+            </p>
+        </div>
+        <div class="col-xs-12" ng-if="!team.security">
+            <p class="text-muted">
+                This team has no special permissions.
+            </p>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Team Members</th>
-                    <th class="text-right">
-                        <a href ng-click="toggleAddMember()">
-                            <i class="fa fa-plus" ng-show="!adding"></i>
-                            <i class="fa fa-minus" ng-show="adding"></i>
-                            Add member
-                        </a>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="member in members">
-                    <td colspan="2">
-                        {{member.full_name}}
-                        <a href class="close"
-                           ng-click="removeUser(member)">
-                            &times;
-                        </a>
-                    </td>
-                </tr>
-                <tr ng-if="!adding && members.length < 1">
-                    <td colspan="2">This team has no members yet.</td>
-                </tr>
-                <tr ng-show="adding">
-                    <td colspan="2">
+        <div class="col-sm-6">
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-user fa-lg text-muted"></i>&emsp;
+                    Team Members
+                </h3>
+                <div class="card-row" ng-repeat="member in members">
+                    <a href class="close"
+                        ng-click="removeUser(member)">
+                        &times;
+                    </a>
+                    <a href="#!/admin/user/{{ member.id }}">
+                        {{ member.full_name }}
+                    </a>
+                    <p class="text-muted">
+                        {{ member.email }}
+                    </p>
+                </div>
+                <p ng-show="!adding && members.length == 0"
+                    class="card-row text-center text-muted">
+                    <em>
+                        This team has no members yet.
+                    </em>
+                </p>
+                <p class="card-row text-center">
+                    <button class="btn btn-link" type="button"
+                            ng-click="toggleAddMember()"
+                            ng-if="!adding">
+                        <i class="fa fa-plus"></i>
+                        Add member
+                    </button>
+                    <span class="input-group" ng-if="adding">
                         <input id="user"
                                type="text"
                                autocomplete="off"
-                               placeholder="Click to add a user"
+                               placeholder="Start typing to add a user"
                                ng-model="asyncUser"
                                typeahead-wait-ms="200"
                                typeahead-editable="false"
                                typeahead="user as user.full_name for user in
-                                          searchUsers($viewValue)"
+                                       searchUsers($viewValue)"
                                typeahead-loading="loadingUsers"
                                typeahead-input-formatter="formatUserName($model)"
                                typeahead-on-select="addUser($model)"
-                               class="form-control input-sm"
+                               class="form-control"
                                 />
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"
+                                    ng-click="toggleAddMember()">
+                                Cancel
+                            </button>
+                        </span>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <h3>
+                    <i class="fa fa-sb-project fa-lg text-muted"></i>&emsp;
+                    Related Projects
+                </h3>
+                <div class="card-row" ng-repeat="project in projects">
+                    <a href class="close"
+                        ng-click="removeProject(project)">
+                        &times;
+                    </a>
+                    <a href="#!/project/{{ project.name }}">
+                        {{ project.name }}
+                    </a>
+                    <p class="text-muted">
+                        {{ project.description }}
+                    </p>
+                </div>
+                <p ng-show="!adding && projects.length == 0"
+                    class="card-row text-center text-muted">
+                    <em>
+                        This team isn't related to any projects yet.
+                    </em>
+                </p>
+                <p class="card-row text-center">
+                    <button class="btn btn-link" type="button"
+                            ng-click="toggleAddProject()"
+                            ng-if="!addingProject">
+                        <i class="fa fa-plus"></i>
+                        Add project
+                    </button>
+                    <span class="input-group" ng-if="addingProject">
+                        <input id="user"
+                               type="text"
+                               autocomplete="off"
+                               placeholder="Start typing to add a project"
+                               ng-model="asyncUser"
+                               typeahead-wait-ms="200"
+                               typeahead-editable="false"
+                               typeahead="project as project.name for project in
+                                          searchProjects($viewValue)"
+                               typeahead-loading="loadingProjects"
+                               typeahead-input-formatter="formatProjectName($model)"
+                               typeahead-on-select="addProject($model)"
+                               class="form-control"
+                                />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"
+                                    ng-click="toggleAddProject()">
+                                Cancel
+                            </button>
+                        </span>
+                    </span>
+                </p>
+            </div>
         </div>
     </div>
 </div>

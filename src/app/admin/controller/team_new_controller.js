@@ -18,7 +18,7 @@
  * New Team modal controller.
  */
 angular.module('sb.admin').controller('TeamNewController',
-    function ($log, $scope, $modalInstance, Team, User, $q) {
+    function ($log, $scope, $modalInstance, Team, User, Project, $q) {
         'use strict';
 
         /**
@@ -41,6 +41,13 @@ angular.module('sb.admin').controller('TeamNewController',
          * @type {[User]}
          */
         $scope.members = [];
+
+        /**
+         * The projects related to the new team.
+         *
+         * @type {[Project]}
+         */
+        $scope.projects = [];
 
         /**
          * Saves the team
@@ -78,7 +85,7 @@ angular.module('sb.admin').controller('TeamNewController',
          * Toggle the "Add Member" text box.
          */
         $scope.toggleAddMember = function() {
-            $scope.adding = !$scope.adding;
+            $scope.addingMember = !$scope.addingMember;
         };
 
         /**
@@ -110,6 +117,42 @@ angular.module('sb.admin').controller('TeamNewController',
                     var results = [];
                     angular.forEach(searchResults, function(result) {
                         if (memberIds.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        $scope.toggleAddProject = function() {
+            $scope.addingProject = !$scope.addingProject;
+        };
+
+        $scope.addProject = function(model) {
+            $scope.projects.push(model);
+        };
+
+        $scope.removeProject = function(project) {
+            var idx = $scope.projects.indexOf(project);
+            $scope.projects.splice(idx, 1);
+        };
+
+        /**
+         * Project typeahead search method.
+         */
+        $scope.searchProjects = function(value) {
+            var projectIds = $scope.projects.map(function(project) {
+                return project.id;
+            });
+            var deferred = $q.defer();
+
+            Project.browse({name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (projectIds.indexOf(result.id) === -1) {
                             results.push(result);
                         }
                     });

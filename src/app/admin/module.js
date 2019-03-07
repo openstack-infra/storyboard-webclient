@@ -76,6 +76,11 @@ angular.module('sb.admin', [ 'sb.services', 'sb.templates', 'sb.util',
                         return Team.UsersController.get({
                             team_id: $stateParams.id
                         }).$promise;
+                    },
+                    projects: function($stateParams, Team) {
+                        return Team.ProjectsController.get({
+                            team_id: $stateParams.id
+                        }).$promise;
                     }
                 }
             });

@@ -71,6 +71,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="security"
+                               class="col-sm-3 control-label">
+                            Security Team
+                        </label>
+
+                        <div class="col-sm-9 checkbox">
+                            <input id="security"
+                                   type="checkbox"
+                                   class="modal-checkbox"
+                                   ng-model="team.security"
+                                   ng-disabled="isSaving"
+                                    />
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -82,8 +97,8 @@
                         <th>Team Members</th>
                         <th class="text-right">
                             <a href ng-click="toggleAddMember()">
-                                <i class="fa fa-plus" ng-show="!adding"></i>
-                                <i class="fa fa-minus" ng-show="adding"></i>
+                                <i class="fa fa-plus" ng-show="!addingMember"></i>
+                                <i class="fa fa-minus" ng-show="addingMember"></i>
                                 Add member
                             </a>
                         </th>
@@ -99,10 +114,10 @@
                             </a>
                         </td>
                     </tr>
-                    <tr ng-if="!adding && members.length < 1">
+                    <tr ng-if="!addingMember && members.length < 1">
                         <td colspan="2">This team has no members yet.</td>
                     </tr>
-                    <tr ng-show="adding">
+                    <tr ng-show="addingMember">
                         <td colspan="2">
                             <input id="user"
                                    type="text"
@@ -116,6 +131,56 @@
                                    typeahead-loading="loadingUsers"
                                    typeahead-input-formatter="formatUserName($model)"
                                    typeahead-on-select="addUser($model)"
+                                   class="form-control input-sm"
+                                    />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Related Projects</th>
+                        <th class="text-right">
+                            <a href ng-click="toggleAddProject()">
+                                <i class="fa fa-plus" ng-show="!addingProject"></i>
+                                <i class="fa fa-minus" ng-show="addingProject"></i>
+                                Add project
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="project in projects">
+                        <td colspan="2">
+                            {{ project.name }}
+                            <a href class="close"
+                               ng-click="removeProject(project)">
+                                &times;
+                            </a>
+                        </td>
+                    </tr>
+                    <tr ng-if="!addingProject && projects.length < 1">
+                        <td colspan="2">This team has no related projects yet.</td>
+                    </tr>
+                    <tr ng-show="addingProject">
+                        <td colspan="2">
+                            <input id="user"
+                                   type="text"
+                                   autocomplete="off"
+                                   placeholder="Start typing to add a project"
+                                   ng-model="asyncUser"
+                                   typeahead-wait-ms="200"
+                                   typeahead-editable="false"
+                                   typeahead="project as project.name for project in
+                                              searchProjects($viewValue)"
+                                   typeahead-loading="loadingProjects"
+                                   typeahead-input-formatter="formatProjectName($model)"
+                                   typeahead-on-select="addProject($model)"
                                    class="form-control input-sm"
                                     />
                         </td>

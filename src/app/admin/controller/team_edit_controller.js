@@ -18,28 +18,36 @@
  * Edit/view team controller
  */
 angular.module('sb.admin').controller('TeamEditController',
-    function($scope, team, members, $state, Team, User, $q) {
+    function($scope, team, members, projects, $state, Team, User, Project,
+             DSCacheFactory, storyboardApiBase, $q) {
         'use strict';
 
         $scope.team = team;
         $scope.members = members;
+        $scope.projects = projects;
         $scope.editing = false;
         $scope.isUpdating = false;
 
         $scope.save = function() {
             $scope.isUpdating = true;
-            $scope.team.$update(function() {
+            $scope.team.$update(function(updated) {
+                DSCacheFactory.get('defaultCache').put(
+                    storyboardApiBase + '/teams/' + $scope.team.id,
+                    updated);
                 $scope.isUpdating = false;
                 $scope.editing = false;
             });
         };
 
         var oldName = $scope.team.name;
+        var oldSecurity = $scope.team.security;
         $scope.toggleEdit = function() {
             if (!$scope.editing) {
                 oldName = $scope.team.name;
+                oldSecurity = $scope.team.security;
             } else if ($scope.editing) {
                 $scope.team.name = oldName;
+                $scope.team.security = oldSecurity;
             }
             $scope.editing = !$scope.editing;
         };
@@ -53,6 +61,10 @@ angular.module('sb.admin').controller('TeamEditController',
             Team.UsersController.create({
                 team_id: $scope.team.id,
                 user_id: model.id
+            }, function() {
+                DSCacheFactory.get('defaultCache').remove(
+                    storyboardApiBase + '/teams/' +
+                    $scope.team.id + '/users');
             });
         };
 
@@ -62,6 +74,10 @@ angular.module('sb.admin').controller('TeamEditController',
             Team.UsersController.delete({
                 team_id: $scope.team.id,
                 user_id: user.id
+            }, function() {
+                DSCacheFactory.get('defaultCache').remove(
+                    storyboardApiBase + '/teams/' +
+                    $scope.team.id + '/users');
             });
         };
 
@@ -79,6 +95,58 @@ angular.module('sb.admin').controller('TeamEditController',
                     var results = [];
                     angular.forEach(searchResults, function(result) {
                         if (memberIds.indexOf(result.id) === -1) {
+                            results.push(result);
+                        }
+                    });
+                    deferred.resolve(results);
+                }
+            );
+            return deferred.promise;
+        };
+
+        $scope.toggleAddProject = function() {
+            $scope.addingProject = !$scope.addingProject;
+        };
+
+        $scope.addProject = function(model) {
+            $scope.projects.push(model);
+            Team.ProjectsController.create({
+                team_id: $scope.team.id,
+                project_id: model.id
+            }, function() {
+                DSCacheFactory.get('defaultCache').remove(
+                    storyboardApiBase + '/teams/' +
+                    $scope.team.id + '/projects');
+            });
+        };
+
+        $scope.removeProject = function(project) {
+            var idx = $scope.projects.indexOf(project);
+            $scope.projects.splice(idx, 1);
+            Team.ProjectsController.delete({
+                team_id: $scope.team.id,
+                project_id: project.id
+            }, function() {
+                DSCacheFactory.get('defaultCache').remove(
+                    storyboardApiBase + '/teams/' +
+                    $scope.team.id + '/projects');
+            });
+        };
+
+        /**
+         * Project typeahead search method.
+         */
+        $scope.searchProjects = function(value) {
+            var projectIds = $scope.projects.map(function(project) {
+                return project.id;
+            });
+            var deferred = $q.defer();
+
+            Project.browse({name: value, limit: 10},
+                function(searchResults) {
+                    var results = [];
+                    angular.forEach(searchResults, function(result) {
+                        if (projectIds.indexOf(result.id) === -1) {
                             results.push(result);
                         }
                     });
