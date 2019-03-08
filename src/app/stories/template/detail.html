@@ -17,12 +17,19 @@
   -->
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" ng-show="story.private && !showEditForm">
         <div class="col-xs-12">
-            <div class="alert alert-danger" ng-show="story.private">
-                <i class="fa fa-eye-slash"></i>
-                <strong>This story is private</strong>.
-                Edit this story to change the privacy settings.
+            <div class="alert alert-danger">
+                <p>
+                    <i class="fa fa-eye-slash"></i>&emsp;
+                    <strong>This story is private</strong>.
+                    Edit this story to change the privacy settings.
+                </p>
+                <p ng-show="story.security">
+                    <i class="fa fa-lock"></i>&emsp;
+                    <strong>This story is security-related</strong>.
+                    Security Teams related to any affected projects will be automatically added to the story.
+                </p>
             </div>
         </div>
     </div>
@@ -183,6 +190,20 @@
                        type="checkbox"
                        class="modal-checkbox"
                        ng-model="story.private"
+                       ng-disabled="isUpdating || privacyLocked"
+                        />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="security" class="col-sm-2 control-label">
+                Security
+            </label>
+            <div class="col-sm-10 checkbox">
+                <input id="security"
+                       type="checkbox"
+                       class="modal-checkbox"
+                       ng-model="story.security"
+                       ng-change="updateSecurity(false)"
                        ng-disabled="isUpdating"
                         />
             </div>

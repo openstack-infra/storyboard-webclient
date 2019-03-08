@@ -39,10 +39,54 @@ angular.module('sb.story').controller('StoryNewController',
               Task, Team, User, $q, storyboardApiBase, currentUser) {
         'use strict';
 
+        /**
+         * Handle any change to whether or not the story is security-related
+         */
+        $scope.updateSecurity = function(forcePrivate, update) {
+            if ($scope.story.security) {
+                if (forcePrivate) {
+                    $scope.story.private = true;
+                    $scope.privacyLocked = true;
+                }
+
+                // Add security teams for affected projects
+                var projects = $scope.tasks.map(function(task) {
+                    return task.project_id;
+                })
+                angular.forEach(projects, function(project_id) {
+                    Team.browse({project_id: project_id}, function(teams) {
+                        var teamIds = $scope.story.teams.map(function(team) {
+                            return team.id;
+                        });
+                        teams = teams.filter(function(team) {
+                            return ((teamIds.indexOf(team.id) === -1)
+                                    && team.security);
+                        });
+                        angular.forEach(teams, function(team) {
+                            $scope.story.teams.push(team);
+                            if (update) {
+                                Story.TeamsController.create({
+                                    story_id: $scope.story.id,
+                                    team_id: team.id
+                                });
+                            }
+                        });
+                    });
+                });
+            } else {
+                if (forcePrivate) {
+                    $scope.privacyLocked = false;
+                }
+            }
+        };
+
         var story = new Story({
             title: $stateParams.title,
             description: $stateParams.description,
-            private: !!$stateParams.private || !!$stateParams.force_private,
+            private: (!!$stateParams.private ||
+                      !!$stateParams.force_private ||
+                      !!$stateParams.security),
+            security: !!$stateParams.security,
             users: [currentUser],
             teams: []
         });
@@ -99,6 +143,7 @@ angular.module('sb.story').controller('StoryNewController',
         $scope.projectNames = [];
         $scope.projects = {};
         $scope.tasks = [];
+        $scope.updateSecurity(true, false);
 
         /**
          * UI flag for when we're initially loading the view.
@@ -248,7 +293,8 @@ angular.module('sb.story').controller('StoryNewController',
         $scope.newTask = new Task({
             project_id: $stateParams.project_id,
             show: true,
-            status: 'todo'
+            status: 'todo',
+            title: $stateParams.title
         });
 
         function mapTaskToProject(task) {
@@ -305,6 +351,7 @@ angular.module('sb.story').controller('StoryNewController',
                 });
             }
             $scope.tasks.push(savedTask);
+            $scope.updateSecurity(true, false);
             task.title = '';
         };
 
@@ -358,6 +405,7 @@ angular.module('sb.story').controller('StoryNewController',
 
                 cleanBranchAndProject(projectName, branchName);
                 mapTaskToProject(task);
+                $scope.updateSecurity(true, false);
             }
         };
 

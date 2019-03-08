@@ -131,13 +131,26 @@
     </div>
     <div class="form-group" ng-if="!forcePrivate">
       <label for="private" class="col-sm-2 control-label">
-        Private or Security Vulnerability
+        Private
       </label>
       <div class="col-sm-10 checkbox">
         <input id="private"
                type="checkbox"
                class="modal-checkbox"
                ng-model="story.private"
+               ng-disabled="isUpdating || privacyLocked"
+              />
+      </div>
+    </div>
+    <div class="form-group" ng-if="!forcePrivate">
+      <label for="security" class="col-sm-2 control-label">
+        Vulnerability/Security-related
+      </label>
+      <div class="col-sm-10 checkbox">
+        <input id="security"
+               type="checkbox"
+               class="modal-checkbox"
+               ng-model="story.security"
                ng-disabled="isUpdating"
               />
       </div>
@@ -148,8 +161,7 @@
         <table class="table table-striped">
         <thead>
           <tr>
-            <th>Teams and Users that can see this story. If it is a security vulnerability,
-	     add the associated teams, e.g. vmt, $project coresec, etc.</th>
+            <th>Teams and Users that can see this story.</th>
             <th class="text-right">
               <small>
                 <a href
