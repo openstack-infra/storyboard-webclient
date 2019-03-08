@@ -43,7 +43,6 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
          */
         $scope.projects = [];
         $scope.isSearchingProjects = false;
-
         $scope.editMode = false;
 
         $scope.toggleEdit = function() {
@@ -71,6 +70,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projectSearchLimit =
                         parseInt(headers('X-Limit')) || 0;
                     $scope.projects = result;
+                    $scope.activeStoryCount();
                     $scope.isSearchingProjects = false;
                 },
                 function (error) {
@@ -81,7 +81,21 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 }
             );
         };
-
+        $scope.activeStoryCount = function(){
+            if ($scope.projects.length !== 0) {
+                for (var i = $scope.projects.length -1; i>=0; i--) {
+                    var project = $scope.projects[i];
+                    project["active_story_count"] = 0;
+                    Story.browse({project_id: project.id,status: 'active'},
+                        function (r, h) {
+                            project["active_story_count"] = parseInt(h('X-Total')) || r.length;
+                        }
+                    );
+                    $scope.projects[i] = project;
+                }
+            }
+            // console.log($scope.projects);
+        };
         /**
          * The list of stories in this project group
          *
@@ -287,7 +301,6 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projects.forEach(function (project) {
                         desiredIds.push(project.id);
                     });
-
                     // Intersect loaded vs. current to get a list of project
                     // reference to delete.
                     var idsToDelete = ArrayUtil.difference(
@@ -399,10 +412,11 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
             return true;
         };
 
+    
 
         $scope.listProjects();
         $scope.filterStories();
-
+        
         //GET subscriptions
         var cuPromise = CurrentUser.resolve();
 
