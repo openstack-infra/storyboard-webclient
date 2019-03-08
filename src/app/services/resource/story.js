@@ -46,9 +46,34 @@ angular.module('sb.services').factory('Story',
             }
         };
 
+        var actorSignature = {
+            'create': {
+                method: 'PUT'
+            },
+            'get': {
+                method: 'GET',
+                isArray: true
+            },
+            'delete': {
+                method: 'DELETE',
+                transformRequest: function() {
+                    return '';
+                }
+            }
+        };
+
         resource.TagsController = $resource(
                 storyboardApiBase + '/stories/:id/tags', {id: '@id'},
                 tags_signature);
+
+        resource.UsersController = $resource(
+            storyboardApiBase + '/stories/:story_id/users',
+            {story_id: '@story_id'},
+            actorSignature);
+        resource.TeamsController = $resource(
+            storyboardApiBase + '/stories/:story_id/teams',
+            {story_id: '@story_id'},
+            actorSignature);
 
         ResourceFactory.applySearch(
             'Story',
