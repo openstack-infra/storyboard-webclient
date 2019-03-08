@@ -32,7 +32,7 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
             + 'project_id&assignee_id';
 
         var creationParams = 'title&description&project_id&'
-            + 'private&force_private&tags&team_id&user_id';
+            + 'private&force_private&security&tags&team_id&user_id';
 
         // Set our page routes.
         $stateProvider

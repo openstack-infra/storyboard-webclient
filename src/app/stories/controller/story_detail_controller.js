@@ -24,7 +24,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments, Tags, worklists, Team) {
+              enableEditableComments, Tags, worklists, Team, StoryHelper) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -362,6 +362,16 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.showEditForm = false;
         };
 
+        $scope.privacyLocked = false;
+
+        /**
+         * Handle any change to whether or not the story is security-related
+         */
+        $scope.updateSecurity = function(forcePrivate, update) {
+            $scope.privacyLocked = StoryHelper.updateSecurity(
+                forcePrivate, update, $scope.story, $scope.tasks);
+        };
+
         /**
          * Delete method.
          */
@@ -637,6 +647,7 @@ angular.module('sb.story').controller('StoryDetailController',
                     branch.tasks.push(savedTask);
                 } else {
                     mapTaskToProject(savedTask);
+                    $scope.updateSecurity(false, true);
                 }
                 $scope.loadEvents();
                 task.title = '';
@@ -698,6 +709,7 @@ angular.module('sb.story').controller('StoryDetailController',
 
                         cleanBranchAndProject(projectName, branchName);
                         mapTaskToProject(updated);
+                        $scope.updateSecurity(false, true);
                     }
                 });
             }

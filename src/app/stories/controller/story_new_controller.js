@@ -28,6 +28,7 @@
  *                  (i.e. private with the option to change privacy hidden).
  * - private: If truthy, the story will begin set to private.
  *            Unlike force_private, this allows the user to change to public.
+ * - security: If truthy, the story will begin set as security-related.
  * - tags: Tags to set on the story. Can be given multiple times.
  * - team_id: A team ID to grant permissions for this story to. Can be
  *            given multiple times.
@@ -36,13 +37,25 @@
  */
 angular.module('sb.story').controller('StoryNewController',
     function ($scope, $state, $stateParams, Story, Project, Branch, Tags,
-              Task, Team, User, $q, storyboardApiBase, currentUser) {
+              Task, Team, User, StoryHelper, $q, storyboardApiBase,
+              currentUser) {
         'use strict';
+
+        /**
+         * Handle any change to whether or not the story is security-related
+         */
+        $scope.updateSecurity = function(forcePrivate, update) {
+            $scope.privacyLocked = StoryHelper.updateSecurity(
+                forcePrivate, update, $scope.story, $scope.tasks);
+        };
 
         var story = new Story({
             title: $stateParams.title,
             description: $stateParams.description,
-            private: !!$stateParams.private || !!$stateParams.force_private,
+            private: (!!$stateParams.private ||
+                      !!$stateParams.force_private ||
+                      !!$stateParams.security),
+            security: !!$stateParams.security,
             users: [currentUser],
             teams: []
         });
@@ -99,6 +112,7 @@ angular.module('sb.story').controller('StoryNewController',
         $scope.projectNames = [];
         $scope.projects = {};
         $scope.tasks = [];
+        $scope.updateSecurity(true, false);
 
         /**
          * UI flag for when we're initially loading the view.
@@ -248,7 +262,8 @@ angular.module('sb.story').controller('StoryNewController',
         $scope.newTask = new Task({
             project_id: $stateParams.project_id,
             show: true,
-            status: 'todo'
+            status: 'todo',
+            title: $stateParams.title
         });
 
         function mapTaskToProject(task) {
@@ -286,6 +301,10 @@ angular.module('sb.story').controller('StoryNewController',
             });
         }
 
+        $scope.validTask = function(task) {
+            return !isNaN(task.project_id) && !!task.title;
+        }
+
         /**
          * Adds a task.
          */
@@ -305,6 +324,7 @@ angular.module('sb.story').controller('StoryNewController',
                 });
             }
             $scope.tasks.push(savedTask);
+            $scope.updateSecurity(true, false);
             task.title = '';
         };
 
@@ -358,6 +378,7 @@ angular.module('sb.story').controller('StoryNewController',
 
                 cleanBranchAndProject(projectName, branchName);
                 mapTaskToProject(task);
+                $scope.updateSecurity(true, false);
             }
         };
 

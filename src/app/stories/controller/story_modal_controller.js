@@ -19,7 +19,7 @@
  */
 angular.module('sb.story').controller('StoryModalController',
     function ($scope, $modalInstance, params, Project, Story, Task, User,
-              Team, $q, CurrentUser) {
+              Team, $q, CurrentUser, StoryHelper) {
         'use strict';
 
         var currentUser = CurrentUser.resolve();
@@ -37,6 +37,15 @@ angular.module('sb.story').controller('StoryModalController',
         $scope.tasks = [new Task({
             title: ''
         })];
+
+
+        /**
+         * Handle any change to whether or not the story is security-related
+         */
+        $scope.updateSecurity = function(forcePrivate, update) {
+            $scope.privacyLocked = StoryHelper.updateSecurity(
+                forcePrivate, update, $scope.story, $scope.tasks);
+        };
 
         // Preload the project
         if (params.projectId) {
@@ -129,6 +138,7 @@ angular.module('sb.story').controller('StoryModalController',
                 });
             }
             $scope.tasks.push(current_task);
+            $scope.updateSecurity(true, false);
         };
 
         /**
@@ -165,6 +175,7 @@ angular.module('sb.story').controller('StoryModalController',
          */
         $scope.selectNewProject = function (model, task) {
             task.project_id = model.id;
+            $scope.updateSecurity(true, false);
         };
 
         /**
