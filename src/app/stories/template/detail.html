@@ -391,6 +391,25 @@
 
 <!-- Template for the task list -->
 <script type="text/ng-template" id="/inline/task_list.html">
+    <div class="pull-right">
+    Sort by:
+        <span class="dropdown form-control-static" dropdown="">
+                <button class="btn btn-xs btn-default" dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+                    <li class="dropdown-header">{{tasks_sort_field.label}}</li>
+                </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li ng-click="changeOrder('Id')">
+                    <a>Id</a>
+                </li>
+                <li ng-click="changeOrder('Title')">
+                    <a>Title</a>
+                </li>
+                <li ng-click="changeOrder('Status')">
+                    <a>Status</a>
+                </li>
+            </ul>
+        </span>
+    </div>
     <h3>Tasks</h3>
     <div ng-repeat="name in projectNames | orderBy">
         <h4>
@@ -428,24 +447,24 @@
 
 <!-- Template for a table of tasks -->
 <script type="text/ng-template" id="/inline/task_table.html">
-        <table class="table table-striped table-supercondensed">
-            <tr ng-repeat="task in projects[name].branches[branchName].tasks | orderBy: 'id'"
-                ng-include src="'/inline/task_list_item.html'">
-            </tr>
-            <tr ng-show="isLoggedIn && !projects[name].branches[branchName].showAddTask">
-                <td class="text-center">
-                    <a href
-                       ng-click="projects[name].branches[branchName].showAddTask =
-                                 !projects[name].branches[branchName].showAddTask">
-                        <i class="fa fa-plus-circle"></i>
-                        Add task affecting this project
-                    </a>
-                </td>
-            </tr>
-            <tr ng-show="projects[name].branches[branchName].showAddTask"
-                ng-include src="'/inline/task_edit_form.html'">
-            </tr>
-        </table>
+    <table class="table table-striped table-supercondensed">
+        <tr ng-repeat="task in projects[name].branches[branchName].tasks | orderBy: tasks_sort_field.value"
+            ng-include src="'/inline/task_list_item.html'">
+        </tr>
+        <tr ng-show="isLoggedIn && !projects[name].branches[branchName].showAddTask">
+            <td class="text-center">
+                <a href
+                    ng-click="projects[name].branches[branchName].showAddTask =
+                        !projects[name].branches[branchName].showAddTask">
+                    <i class="fa fa-plus-circle"></i>
+                    Add task affecting this project
+                </a>
+            </td>
+        </tr>
+        <tr ng-show="projects[name].branches[branchName].showAddTask"
+            ng-include src="'/inline/task_edit_form.html'">
+        </tr>
+    </table>
 </script>
 
 <!-- Template for an item in the task list -->
