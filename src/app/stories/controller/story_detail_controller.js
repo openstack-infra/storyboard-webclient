@@ -60,6 +60,29 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.projects = {};
         $scope.tasks = tasks;
 
+        /**
+         * Allowing sorting tasks in search results by certain fields.
+         */
+        $scope.tasks_sort_field = {
+            label: 'Id',
+            value: 'id'
+        }
+        $scope.changeOrder = function(orderBy){
+            $scope.tasks_sort_field.label = orderBy.toString();
+            switch(orderBy) {
+                case 'Id':
+                    $scope.tasks_sort_field.value = 'id'
+                    break;
+                case 'Status':
+                    $scope.tasks_sort_field.value = 'status'
+                    break;
+                case 'Title':
+                    $scope.tasks_sort_field.value = 'title'
+                    break;
+            }
+        };
+
+
         function mapTaskToProject(task) {
             Project.get({id: task.project_id}).$promise.then(function(project) {
                 var idx = $scope.projectNames.indexOf(project.name);
