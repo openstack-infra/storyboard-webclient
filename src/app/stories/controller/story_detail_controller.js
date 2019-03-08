@@ -362,6 +362,49 @@ angular.module('sb.story').controller('StoryDetailController',
             $scope.showEditForm = false;
         };
 
+        $scope.privacyLocked = false;
+
+        /**
+         * Handle any change to whether or not the story is security-related
+         */
+        $scope.updateSecurity = function(forcePrivate, update) {
+            if ($scope.story.security) {
+                if (forcePrivate) {
+                    $scope.story.private = true;
+                    $scope.privacyLocked = true;
+                }
+
+                // Add security teams for affected projects
+                var projects = $scope.tasks.map(function(task) {
+                    return task.project_id;
+                })
+                angular.forEach(projects, function(project_id) {
+                    Team.browse({project_id: project_id}, function(teams) {
+                        var teamIds = $scope.story.teams.map(function(team) {
+                            return team.id;
+                        });
+                        teams = teams.filter(function(team) {
+                            return ((teamIds.indexOf(team.id) === -1)
+                                    && team.security);
+                        });
+                        angular.forEach(teams, function(team) {
+                            $scope.story.teams.push(team);
+                            if (update) {
+                                Story.TeamsController.create({
+                                    story_id: $scope.story.id,
+                                    team_id: team.id
+                                });
+                            }
+                        });
+                    });
+                });
+            } else {
+                if (forcePrivate) {
+                    $scope.privacyLocked = false;
+                }
+            }
+        };
+
         /**
          * Delete method.
          */
@@ -637,6 +680,7 @@ angular.module('sb.story').controller('StoryDetailController',
                     branch.tasks.push(savedTask);
                 } else {
                     mapTaskToProject(savedTask);
+                    $scope.updateSecurity(false, true);
                 }
                 $scope.loadEvents();
                 task.title = '';
@@ -698,6 +742,7 @@ angular.module('sb.story').controller('StoryDetailController',
 
                         cleanBranchAndProject(projectName, branchName);
                         mapTaskToProject(updated);
+                        $scope.updateSecurity(false, true);
                     }
                 });
             }
