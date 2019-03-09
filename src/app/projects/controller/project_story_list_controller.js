@@ -35,14 +35,19 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         $scope.isSearching = false;
         $scope.filter = 'active';
 
+        $scope.offsets = {
+            'active': 0,
+            'merged': 0,
+            'invalid': 0
+        };
         /**
          * Set the filter and refresh the search.
          */
         $scope.setFilter = function (state) {
             $scope.filter = state;
+            $scope.searchOffset = $scope.offsets[$scope.filter];
             $scope.search();
         };
-
         /**
          * The search method.
          */
@@ -95,6 +100,7 @@ angular.module('sb.projects').controller('ProjectStoryListController',
          * Next page of the results.
          */
         $scope.nextPage = function () {
+            $scope.offsets[$scope.filter] += pageSize;
             $scope.searchOffset += pageSize;
             $scope.search();
         };
@@ -103,6 +109,11 @@ angular.module('sb.projects').controller('ProjectStoryListController',
          * Previous page of the results.
          */
         $scope.previousPage = function () {
+            $scope.offsets[$scope.filter] -= pageSize;
+            if($scope.offsets[$scope.filter] < 0){
+                $scope.offsets[$scope.filter] = 0;
+            }
+
             $scope.searchOffset -= pageSize;
             if ($scope.searchOffset < 0) {
                 $scope.searchOffset = 0;
