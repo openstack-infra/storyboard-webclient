@@ -20,6 +20,11 @@
             </a>
         </strong>
         <br/>
+        <span ng-if="story.tags.length != 0" class="label label-warning ng-binding ng-scope" 
+              ng-repeat="tag in story.tags" style="margin-right:5px;">
+          {{tag}}
+        </span>
+
         <small class="text-muted"
                ng-show="expandRow">
                <insert-markdown content="story.description"></insert-markdown>
