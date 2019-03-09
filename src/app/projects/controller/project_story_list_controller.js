@@ -35,14 +35,25 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         $scope.isSearching = false;
         $scope.filter = 'active';
 
+        $scope.activeCurrOffset = 0;
+        $scope.mergedCurrOffset = 0;
+        $scope.invalidCurrOffset = 0;
         /**
          * Set the filter and refresh the search.
          */
         $scope.setFilter = function (state) {
             $scope.filter = state;
+            if($scope.filter === 'active'){
+                $scope.searchOffset = $scope.activeCurrOffset;
+            }
+            else if($scope.filter === 'merged'){
+                $scope.searchOffset = $scope.mergedCurrOffset;
+            }
+            else if($scope.filter === 'invalid'){
+                $scope.searchOffset = $scope.invalidCurrOffset;
+            }
             $scope.search();
         };
-
         /**
          * The search method.
          */
@@ -95,14 +106,44 @@ angular.module('sb.projects').controller('ProjectStoryListController',
          * Next page of the results.
          */
         $scope.nextPage = function () {
+            if($scope.filter === 'active'){
+                $scope.activeCurrOffset += pageSize;
+            }
+            else if($scope.filter === 'merged'){
+                $scope.mergedCurrOffset += pageSize;
+            }
+            else if($scope.filter === 'invalid'){
+                $scope.invalidCurrOffset += pageSize;
+            }
+
             $scope.searchOffset += pageSize;
             $scope.search();
+            // console.log($scope.searchhOffset);
         };
 
         /**
          * Previous page of the results.
          */
         $scope.previousPage = function () {
+            if($scope.filter === 'active'){
+                $scope.activeCurrOffset -= pageSize;
+                if($scope.activeCurrOffset < 0){
+                    $scope.activeCurrOffset = 0;
+                }
+            }
+            else if($scope.filter === 'merged'){
+                $scope.mergedCurrOffset -= pageSize;
+                if($scope.mergedCurrOffset < 0){
+                    $scope.mergedCurrOffset = 0;
+                }
+            }
+            else if($scope.filter === 'invalid'){
+                $scope.invalidCurrOffset -= pageSize;
+                if($scope.invalidCurrOffset < 0){
+                    $scope.invalidCurrOffset = 0;
+                }
+            }
+
             $scope.searchOffset -= pageSize;
             if ($scope.searchOffset < 0) {
                 $scope.searchOffset = 0;
