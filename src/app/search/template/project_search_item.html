@@ -2,6 +2,10 @@
     <a href="#!/project/{{project.name}}">
         {{project.name | truncate: 97}}
     </a>
+    <span ng-if="project.active_story_count!=NULL"> 
+        <span ng-if="project.active_story_count==1">({{project.active_story_count}} Active Story)</span>
+        <span ng-if="project.active_story_count>1">({{project.active_story_count}} Active Stories)</span>
+    </span>
     <br/>
     <span class="text-muted">
         {{project.description | truncate: 97}}

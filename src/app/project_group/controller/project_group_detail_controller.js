@@ -71,6 +71,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projectSearchLimit =
                         parseInt(headers('X-Limit')) || 0;
                     $scope.projects = result;
+                    $scope.activeStoryCount();
                     $scope.isSearchingProjects = false;
                 },
                 function (error) {
@@ -81,7 +82,21 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 }
             );
         };
-
+        $scope.activeStoryCount = function(){
+            if ($scope.projects.length !== 0) {
+                angular.forEach($scope.projects, function(project) {
+                    project.active_story_count = 0;
+                    Story.browse({
+                        project_id: project.id,
+                        status: 'active',
+                        limit: 0
+                    }, function(result, headers) {
+                        var count = parseInt(headers('X-Total'));
+                        project.active_story_count = count;
+                    });
+                });
+            }
+        };
         /**
          * The list of stories in this project group
          *
