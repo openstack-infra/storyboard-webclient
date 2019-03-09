@@ -18,6 +18,7 @@
  * From a feature standpoint this really just means viewing the group, member
  * projects, and any stories that belong under this project group.
  */
+ /*eslint-env es6*/
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
     function ($scope, $stateParams, projectGroup, Story, Project,
               Preference, SubscriptionList, CurrentUser, Subscription,
@@ -43,7 +44,6 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
          */
         $scope.projects = [];
         $scope.isSearchingProjects = false;
-
         $scope.editMode = false;
 
         $scope.toggleEdit = function() {
@@ -71,6 +71,7 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projectSearchLimit =
                         parseInt(headers('X-Limit')) || 0;
                     $scope.projects = result;
+                    $scope.activeStoryCount();
                     $scope.isSearchingProjects = false;
                 },
                 function (error) {
@@ -81,7 +82,35 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 }
             );
         };
-
+        $scope.activeStoryCount = function(){
+            if ($scope.projects.length !== 0) {
+                var loop = function loop(i, p) {
+                    p = p.then(function () {
+                        return new Promise(function (resolve) {
+                            return setTimeout(function () {
+                                // console.log(i);
+                                var project = $scope.projects[i];
+                                project.active_story_count = 0;
+                                $scope.ct = 0;
+                                Story.browse({
+                                    project_id: project.id,
+                                    status: 'active'
+                                }, function (r, h) {
+                                    $scope.ct = parseInt(h('X-Total'));
+                                    $scope.ct = $scope.ct || r.length;
+                                    project.active_story_count = $scope.ct;
+                                });
+                                resolve();
+                            }, Math.random() * 100);
+                        });
+                    });
+                };
+                var size = $scope.projects.length;
+                for (var j = 0, pr = Promise.resolve(); j < size; j++) {
+                    loop(j, pr);
+                }
+            }
+        };
         /**
          * The list of stories in this project group
          *
@@ -287,7 +316,6 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                     $scope.projects.forEach(function (project) {
                         desiredIds.push(project.id);
                     });
-
                     // Intersect loaded vs. current to get a list of project
                     // reference to delete.
                     var idsToDelete = ArrayUtil.difference(
@@ -399,10 +427,8 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
             return true;
         };
 
-
         $scope.listProjects();
         $scope.filterStories();
-
         //GET subscriptions
         var cuPromise = CurrentUser.resolve();
 
