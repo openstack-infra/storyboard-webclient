@@ -23,3 +23,20 @@
 .position-label {
     margin-left: 5px;
 }
+
+/* "Story Detail" tags link style */
+.tag-label-link {
+	text-decoration:none;
+	color:#ffffff;
+}
+.tag-label-link:hover{
+	text-decoration:none;
+	color:#ffffff;
+}
+.label .fa-times{
+	opacity:0.5;
+}
+.label .fa-times:hover{
+	cursor:pointer;
+	opacity:1;
+}
