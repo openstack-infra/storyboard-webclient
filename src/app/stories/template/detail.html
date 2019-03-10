@@ -355,11 +355,13 @@
     <ul class="list-inline" ng-if="story.tags.length > 0">
         <li ng-repeat="tag in story.tags">
             <h4>
-                <span class="label label-warning">
-                    {{tag}}
-                    <i class="fa fa-times" ng-show="isLoggedIn"
-                       ng-click="removeTag(tag)"></i>
-                </span>
+                <a href="#!/search?tags={{tag}}" target="_blank" style="text-decoration:none">
+                    <span class="label label-warning">
+                        {{tag}}
+                        <i class="fa fa-times" ng-show="isLoggedIn"
+                           ng-click="removeTag(tag)"></i>
+                    </span>
+                </a>
             </h4>
         </li>
     </ul>
