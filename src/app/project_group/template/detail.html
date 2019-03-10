@@ -15,7 +15,13 @@
                                ng-if="resolvedUser">
                     </subscribe>
                 </small>
-            </h1>
+            <button type="button"
+                    class="btn btn-link pull-right"
+                    ng-click="remove()" permission="is_superuser">
+                Delete This Group
+            </button>
+       </h1>
+            
         </div>
     </div>
     <div ng-include src="'/inline/project_group_edit.html'" ng-if="editMode"></div>

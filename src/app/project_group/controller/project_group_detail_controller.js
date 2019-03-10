@@ -19,7 +19,7 @@
  * projects, and any stories that belong under this project group.
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
-    function ($scope, $stateParams, projectGroup, Story, Project,
+    function ($scope, $stateParams, $modal, projectGroup, Story, Project,
               Preference, SubscriptionList, CurrentUser, Subscription,
               $q, ProjectGroupItem, ArrayUtil, $log) {
         'use strict';
@@ -259,6 +259,25 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 return model.name;
             }
             return '';
+        };
+
+        /**
+         * delete the project group
+         */
+        $scope.remove = function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/project_group/template/delete.html',
+                backdrop: 'static',
+                controller: 'ProjectGroupDeleteController',
+                resolve: {
+                    projectGroup: function () {
+                        return $scope.projectGroup;
+                    }
+                }
+            });
+
+            // Return the modal's promise.
+            return modalInstance.result;
         };
 
         /**

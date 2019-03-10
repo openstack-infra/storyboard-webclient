@@ -18,7 +18,7 @@
  * Controller for the project group delete modal popup.
  */
 angular.module('sb.project_group').controller('ProjectGroupDeleteController',
-    function ($scope, projectGroup, $modalInstance) {
+    function ($scope, projectGroup, $modalInstance, $state) {
         'use strict';
 
         $scope.projectGroup = projectGroup;
@@ -34,6 +34,7 @@ angular.module('sb.project_group').controller('ProjectGroupDeleteController',
             $scope.projectGroup.$delete(
                 function () {
                     $modalInstance.close('success');
+                    $state.go('sb.project_group.list');
                 }
             );
         };
