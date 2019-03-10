@@ -356,9 +356,12 @@
         <li ng-repeat="tag in story.tags">
             <h4>
                 <span class="label label-warning">
-                    {{tag}}
+                    <a href="#!/story/list?tags={{tag}}" target="_blank" class="tag-label-link">
+                        {{tag}}
+                    </a>
                     <i class="fa fa-times" ng-show="isLoggedIn"
-                       ng-click="removeTag(tag)"></i>
+                       ng-click="removeTag(tag)">
+                    </i>
                 </span>
             </h4>
         </li>
