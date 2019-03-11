@@ -93,6 +93,33 @@
         <!-- stories created block-->
         <div class="col-sm-6">
             <div class="card">
+                <div class="pull-right">
+                    <span class="dropdown form-control-static" dropdown="">
+                        <button class="btn btn-xs btn-default" dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+                            <li class="dropdown-header">Filter stories</li>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <input type="checkbox"
+                                        ng-model="showActive"
+                                        ng-change="filterStories()"/>
+                                Active
+                            </li>
+                            <li>
+                                <input type="checkbox"
+                                       ng-model="showMerged"
+                                       ng-change="filterStories()"/>
+                                Merged
+                            </li>
+                            <li>
+                                    <input type="checkbox"
+                                           ng-model="showInvalid"
+                                           ng-change="filterStories()"/>
+                                Invalid
+                            </li>
+                        </ul>
+                    </span>
+                </div>
                 <h3>Stories created by me</h3>
                 <div class="card-row" ng-repeat="story in createdStories">
                     <span class="pull-right">
@@ -113,7 +140,7 @@
                 <p ng-show="createdStories.length == 0"
                    class="card-row text-center text-muted">
                     <em>
-                        There are no active stories created by you.
+                        There are no stories created by you.
                     </em>
                 </p>
             </div>
