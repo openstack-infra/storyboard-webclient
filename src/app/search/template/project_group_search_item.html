@@ -1,5 +1,5 @@
 <td>
-    <a href="#!/project_group/{{projectGroup.name}}">
+    <a href="#!/project_group/{{projectGroup.name}}" rel="nofollow">
         {{projectGroup.title | truncate: 97}}
     </a>
 </td>
@@ -37,7 +37,7 @@
         <tbody ng-if="projectGroupItems.length > 0 && !collapsed">
         <tr ng-repeat="project in projectGroupItems">
             <td>
-                <a href="#!/project/{{project.name}}">
+                <a href="#!/project/{{project.name}}" rel="nofollow">
                     {{project.name}}
                 </a>
             </td>

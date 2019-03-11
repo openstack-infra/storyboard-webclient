@@ -86,7 +86,7 @@
                 <tr ng-repeat="user in users">
                     <td>
                         <i class="fa fa-sb-user text-muted"></i>
-                        <a href="#!/admin/user/{{user.id}}">
+                        <a href="#!/admin/user/{{user.id}}" rel="nofollow">
                             {{user.full_name}}
                         </a>
                     </td>
@@ -107,7 +107,7 @@
                         <span ng-if="!user.last_login">Never</span>
                     </td>
                     <td class="text-right">
-                        <a href="#!/admin/user/{{user.id}}">
+                        <a href="#!/admin/user/{{user.id}}" rel="nofollow">
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>

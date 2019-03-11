@@ -73,7 +73,7 @@
                 </h2>
                 <div class="text-muted">
                     Task in the story
-                    <a ng-click="close()" ng-href="#!/story/{{story.id}}">
+                    <a ng-click="close()" ng-href="#!/story/{{story.id}}" rel="nofollow">
                         "{{story.title}}"
                     </a>.
                 </div>
@@ -270,7 +270,7 @@
                 <h2>
                     <span ng-show="!editingTitle">
                         <i class="fa fa-sb-story"></i>
-                        <a ng-click="close()" ng-href="#!/story/{{story.id}}">
+                        <a ng-click="close()" ng-href="#!/story/{{story.id}}" rel="nofollow">
                             {{card.story.title}}
                         </a>
                         <small>

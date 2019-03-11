@@ -16,7 +16,7 @@
 
 <nav class="sidebar text-center" role="navigation"
      ng-class="{'has-submenu': hasSubmenu}">
-  <a href="#!/search" active-path="^\/search.*">
+  <a href="#!/search" active-path="^\/search.*" rel="nofollow">
     <i class="fa fa-search fa-2x visible-lg visible-md"></i>
     <i class="fa fa-search fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Search</p>
@@ -34,22 +34,22 @@
     <i class="fa fa-question-circle fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">About</p>
   </a>
-  <a href="#!/board/list" active-path="^\/board\/*">
+  <a href="#!/board/list" active-path="^\/board\/*" rel="nofollow">
     <i class="fa fa-sb-board fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-board fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Worklists & Boards</p>
   </a>
-  <a href="#!/project_group" active-path="^\/project_group\/*">
+  <a href="#!/project_group" active-path="^\/project_group\/*" rel="nofollow">
     <i class="fa fa-sb-project-group fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-project-group fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Project Groups</p>
   </a>
-  <a href="#!/project" active-path="^\/project[^_]\/*">
+  <a href="#!/project" active-path="^\/project[^_]\/*" rel="nofollow">
     <i class="fa fa-sb-project fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-project fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Projects</p>
   </a>
-  <a href="#!/story" active-path="^\/story.*">
+  <a href="#!/story" active-path="^\/story.*" rel="nofollow">
     <i class="fa fa-sb-story fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-story fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Stories</p>
@@ -57,7 +57,7 @@
 
   <hr ng-if="isLoggedIn">
 
-  <a href="#!/admin" active-path="^\/admin.*" permission="is_superuser">
+  <a href="#!/admin" active-path="^\/admin.*" permission="is_superuser" rel="nofollow">
     <i class="fa fa-sb-admin fa-2x visible-lg visible-md"></i>
     <i class="fa fa-sb-admin fa-lg visible-sm visible-xs"></i>
     <p class="visible-lg visible-md">Admin</p>

@@ -88,7 +88,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li ng-hide="isLoggedIn">
-                <a href="#!/auth/authorize">
+                <a href="#!/auth/authorize" rel="nofollow">
                     <i class="fa fa-sign-in-alt"></i>
                     Login
                 </a>
@@ -106,20 +106,20 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#!/profile/preferences">
+                        <a href="#!/profile/preferences" rel="nofollow">
                             <i class="fa fa-cog"></i>
                             Preferences
                         </a>
                     </li>
                     <li>
-                        <a href="#!/profile/tokens">
+                        <a href="#!/profile/tokens" rel="nofollow">
                             <i class="fa fa-key"></i>
                             Authentication Tokens
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#!/auth/deauthorize">
+                        <a href="#!/auth/deauthorize" rel="nofollow">
                             <i class="fa fa-sign-out-alt"></i>
                             Logout
                         </a>
@@ -165,7 +165,8 @@
             </button>
             <a href="#!/auth/authorize"
                class="btn btn-sm btn-primary navbar-btn pull-right"
-               ng-hide="isLoggedIn">
+               ng-hide="isLoggedIn"
+               rel="nofollow">
                 <i class="fa fa-sign-in-alt"></i>
             </a>
             <button type="button"
@@ -205,7 +206,8 @@
                 </li>
                 <li ng-show="currentUser.is_superuser">
                     <a href="#!/project/new"
-                       ng-click="showMobileNewMenu = false">
+                       ng-click="showMobileNewMenu = false"
+                       rel="nofollow">
                         Project
                     </a>
                 </li>
@@ -221,7 +223,8 @@
             <ul class="nav navbar-nav">
                 <li active-path="^\/profile\/preferences*">
                     <a href="#!/profile/preferences"
-                       ng-click="showMobileMenu = false">
+                       ng-click="showMobileMenu = false"
+                       rel="nofollow">
                         <i class="fa fa-user"></i>
                         <span ng-show="currentUser.$resolved">
                             {{currentUser.full_name}}
@@ -234,20 +237,21 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="#!/profile/preferences">
+                    <a href="#!/profile/preferences" rel="nofollow">
                         <i class="fa fa-cog"></i>
                         Preferences
                     </a>
                 </li>
                 <li>
-                    <a href="#!/profile/tokens">
+                    <a href="#!/profile/tokens" rel="nofollow">
                         <i class="fa fa-key"></i>
                         Authentication Tokens
                     </a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="#!/auth/deauthorize"
-                       ng-click="showMobileMenu = false">
+                       ng-click="showMobileMenu = false"
+                       rel="nofollow">
                     <i class="fa fa-sign-out-alt"></i>
                     Logout
                 </a></li>
