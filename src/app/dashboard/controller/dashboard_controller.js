@@ -69,9 +69,48 @@ angular.module('sb.dashboard').controller('DashboardController',
         };
 
         $scope.createdStories = Story.browse({
-            creator_id: currentUser.id,
-            status: 'active'
+            creator_id: currentUser.id
         });
+
+
+        /**
+         * Filter the stories.
+         */
+        $scope.showActive = true;
+        $scope.showMerged = true;
+        $scope.showInvalid = true;
+
+        /**
+         * Reload the stories in this view based on user selected filters.
+         */
+        $scope.filterStories = function () {
+            var status = [];
+            if ($scope.showActive) {
+                status.push('active');
+            }
+            if ($scope.showMerged) {
+                status.push('merged');
+            }
+            if ($scope.showInvalid) {
+                status.push('invalid');
+            }
+
+            if (status.length === 0) {
+                $scope.createdStories = [];
+                return;
+            }
+
+            Story.browse({
+                    sort_field: 'id',
+                    sort_dir: 'desc',
+                    status: status
+                },
+                function (result) {
+                    $scope.createdStories = result;
+                }
+            );
+        };
+
 
         function loadEvents() {
             // Load the user's subscription events.
