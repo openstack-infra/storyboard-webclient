@@ -69,8 +69,7 @@ angular.module('sb.dashboard').controller('DashboardController',
         };
 
         $scope.createdStories = Story.browse({
-            creator_id: currentUser.id,
-            status: 'active'
+            creator_id: currentUser.id
         });
 
         function loadEvents() {
