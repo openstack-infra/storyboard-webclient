@@ -22,8 +22,8 @@
  */
 
 angular.module('sb.auth').controller('AuthTokenController',
-    function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil,
-              LastLocation) {
+    function ($state, $log, OpenId, Session, $searchParams, UrlUtil,
+        LastLocation) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code

@@ -18,7 +18,7 @@
  * A service that keeps track of the last page we visited.
  */
 angular.module('sb.util').factory('LastLocation',
-    function ($rootScope, localStorageService, $state) {
+    function ($rootScope, localStorageService, $state, $transitions) {
         'use strict';
 
         /**
@@ -30,11 +30,11 @@ angular.module('sb.util').factory('LastLocation',
          * @param toState The destination state.
          * @param toParams The parameters for that destination state.
          */
-        function onStateChange(event, toState, toParams) {
-            if (toState.name.indexOf('sb.auth') === -1) {
+        function onStateChange(transition) {
+            if (transition.$to().name.indexOf('sb.auth') === -1) {
                 var data = {
-                    'name': toState.name,
-                    'params': toParams
+                    'name': transition.$to().name,
+                    'params': transition.params()
                 };
                 localStorageService.set('lastLocation',
                     angular.toJson(data));
@@ -43,9 +43,7 @@ angular.module('sb.util').factory('LastLocation',
 
         // Add the listener to the application, remove it when the scope is
         // destroyed.
-        $rootScope.$on('$destroy',
-            $rootScope.$on('$stateChangeStart', onStateChange)
-        );
+        $transitions.onStart({}, onStateChange);
 
         // The published API.
         return {
