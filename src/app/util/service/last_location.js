@@ -21,32 +21,6 @@ angular.module('sb.util').factory('LastLocation',
     function ($rootScope, localStorageService, $state) {
         'use strict';
 
-        /**
-         * onStateChange handler. Stores the next destination state, and its
-         * parameters, so we can keep revisit the history after bouncing out
-         * for authentication.
-         *
-         * @param event The state change event.
-         * @param toState The destination state.
-         * @param toParams The parameters for that destination state.
-         */
-        function onStateChange(event, toState, toParams) {
-            if (toState.name.indexOf('sb.auth') === -1) {
-                var data = {
-                    'name': toState.name,
-                    'params': toParams
-                };
-                localStorageService.set('lastLocation',
-                    angular.toJson(data));
-            }
-        }
-
-        // Add the listener to the application, remove it when the scope is
-        // destroyed.
-        $rootScope.$on('$destroy',
-            $rootScope.$on('$stateChangeStart', onStateChange)
-        );
-
         // The published API.
         return {
 
@@ -63,6 +37,24 @@ angular.module('sb.util').factory('LastLocation',
                 } else {
                     last = angular.fromJson(last);
                     $state.go(last.name, last.params);
+                }
+            },
+
+            /**
+             * onStateChange handler. Stores the next destination state, and its
+             * parameters, so we can keep revisit the history after bouncing out
+             * for authentication.
+             *
+             * @param transition The transition to record the state from.
+             */
+            onStateChange: function(transition) {
+                if (transition.$to().name.indexOf('sb.auth') === -1) {
+                    var data = {
+                        'name': transition.$to().name,
+                        'params': transition.params()
+                    };
+                    localStorageService.set('lastLocation',
+                        angular.toJson(data));
                 }
             }
         };
