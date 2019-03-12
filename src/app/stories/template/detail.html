@@ -366,18 +366,19 @@
     <p class="text-muted" ng-if="story.tags.length == 0 && !isLoggedIn">
         <em>This story has no tags yet.</em>
     </p>
-    <span class="input-group" ng-show="showAddTag">
-       <input type="text" class="form-control" ng-model="newTag.name"
-         typeahead="tag as tag.name for tag in searchTags($viewValue)"
-         typeahead-on-select="updateViewValue($model.name);"/>
-
+    <div class="col-xs-3 input-group" ng-show="showAddTag">
+       <input type="text" 
+              class="form-control"
+              ng-model="newTag.name"
+              typeahead="tag as tag.name for tag in searchTags($viewValue)"
+              typeahead-on-select="updateViewValue($model.name);"
+              ng-enter="addTag(newTag.name)"
+              focus/>
         <span class="input-group-btn">
-            <button class="btn btn-primary" type="button"
-                    ng-click="addTag(newTag.name)">Add</button>
             <button class="btn btn-default" type="button"
                     ng-click="toggleAddTag()">Cancel</button>
         </span>
-    </span>
+    </div>
     <button class="btn btn-default" ng-click="toggleAddTag()"
             ng-show="!showAddTag && isLoggedIn">
         <i class="fa fa-plus-circle"></i>&nbsp;Add Tag

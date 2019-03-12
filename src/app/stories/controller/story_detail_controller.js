@@ -784,6 +784,7 @@ angular.module('sb.story').controller('StoryDetailController',
         $scope.showAddTag = false;
 
         $scope.toggleAddTag = function() {
+            $scope.newTag.name = null;
             $scope.showAddTag = !$scope.showAddTag;
         };
 
@@ -794,11 +795,11 @@ angular.module('sb.story').controller('StoryDetailController',
                         DSCacheFactory.get('defaultCache').put(
                             storyboardApiBase + '/stories/' + story.id,
                             updatedStory);
-                        $scope.showAddTag = false;
                         $scope.story.tags.push(tag_name);
                         $scope.loadEvents();
                     },
                     handleServiceError);
+                $scope.newTag.name = null;
             }
         };
 
