@@ -19,10 +19,11 @@
  * and search box.
  */
 angular.module('storyboard').controller('HeaderController',
-    function ($q, $scope, $rootScope, $state, $modal, NewStoryService,
-              Session, SessionState, CurrentUser, Criteria, Notification,
-              Priority, Project, Story, ProjectGroup, NewWorklistService,
-              NewBoardService, SessionModalService, Severity, Task) {
+    function ($q, $scope, $rootScope, $state, $modal, $location,
+            NewStoryService, Session, SessionState, CurrentUser, Criteria,
+            Notification, Priority, Project, Story, ProjectGroup,
+            NewWorklistService, NewBoardService, SessionModalService, Severity,
+            Task, localStorageService) {
         'use strict';
 
         function resolveCurrentUser() {
@@ -37,7 +38,10 @@ angular.module('storyboard').controller('HeaderController',
         }
 
         resolveCurrentUser();
-
+        $scope.login = function () {
+            var currBrowserUrl = $location.absUrl();
+            localStorageService.set('curr_url', currBrowserUrl);
+        };
         /**
          * Load and maintain the current user.
          */

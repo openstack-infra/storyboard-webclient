@@ -19,10 +19,12 @@
  */
 
 angular.module('sb.auth').controller('LoginRequiredModalController',
-    function ($state, $scope, $modalInstance) {
+    function ($state, $scope, $modalInstance, $location, localStorageService) {
         'use strict';
 
         $scope.login = function () {
+            var currBrowserUrl = $location.absUrl();
+            localStorageService.set('curr_url', currBrowserUrl);
             $state.go('sb.auth.authorize');
             $modalInstance.dismiss('success');
         };
