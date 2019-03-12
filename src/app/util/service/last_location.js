@@ -30,23 +30,6 @@ angular.module('sb.util').factory('LastLocation',
          * @param toState The destination state.
          * @param toParams The parameters for that destination state.
          */
-        function onStateChange(event, toState, toParams) {
-            if (toState.name.indexOf('sb.auth') === -1) {
-                var data = {
-                    'name': toState.name,
-                    'params': toParams
-                };
-                localStorageService.set('lastLocation',
-                    angular.toJson(data));
-            }
-        }
-
-        // Add the listener to the application, remove it when the scope is
-        // destroyed.
-        $rootScope.$on('$destroy',
-            $rootScope.$on('$stateChangeStart', onStateChange)
-        );
-
         // The published API.
         return {
 
@@ -63,6 +46,16 @@ angular.module('sb.util').factory('LastLocation',
                 } else {
                     last = angular.fromJson(last);
                     $state.go(last.name, last.params);
+                }
+            },
+            onStateChange: function(transition) {
+                if (transition.$to().name.indexOf('sb.auth') === -1) {
+                    var data = {
+                        'name': transition.$to().name,
+                        'params': transition.params()
+                    };
+                    localStorageService.set('lastLocation',
+                        angular.toJson(data));
                 }
             }
         };
