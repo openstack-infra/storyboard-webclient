@@ -64,7 +64,8 @@ angular.module('storyboard',
                 }
             });
     })
-    .run(function ($log, $rootScope, $document) {
+    .run(function ($log, $rootScope, $document, $transitions,
+        LastLocation) {
         'use strict';
 
         var resolvingClassName = 'resolving';
@@ -73,28 +74,28 @@ angular.module('storyboard',
         // Apply a global class to the application when we're in the middle of
         // a state resolution, as well as a global scope variable that UI views
         // can switch on.
-        $rootScope.$on('$stateChangeStart', function () {
+        $transitions.onStart({}, function(transition){
             body.addClass(resolvingClassName);
             $rootScope.isResolving = true;
+            LastLocation.onStateChange(transition);
         });
-        $rootScope.$on('$stateChangeSuccess', function () {
+        $transitions.onSuccess({}, function(){
             body.removeClass(resolvingClassName);
             $rootScope.isResolving = false;
         });
-        $rootScope.$on('$stateChangeError', function () {
+        $transitions.onError({}, function(){
             body.removeClass(resolvingClassName);
             $rootScope.isResolving = false;
         });
     })
-    .run(function ($log, $rootScope, $state) {
+    .run(function ($log, $rootScope, $state, $transitions) {
         'use strict';
 
         // Listen to changes on the root scope. If it's an error in the state
         // changes (i.e. a 404) take the user back to the index.
-        $rootScope.$on('$stateChangeError',
-            function () {
-                $state.go('sb.index');
-            });
+        $transitions.onError({}, function(){
+            return false;
+        });
     })
     .run(function ($http, DSCacheFactory) {
         'use strict';
