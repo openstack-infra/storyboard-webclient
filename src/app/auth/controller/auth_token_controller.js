@@ -22,8 +22,8 @@
  */
 
 angular.module('sb.auth').controller('AuthTokenController',
-    function ($state, $log, OpenId, Session, $searchParams, $window, UrlUtil,
-              LastLocation) {
+    function ($state, $log, OpenId, Session, $searchParams, UrlUtil,
+        LastLocation) {
         'use strict';
 
         // First, check for the edge case where the API returns an error code
@@ -43,7 +43,7 @@ angular.module('sb.auth').controller('AuthTokenController',
             function (token) {
                 Session.updateSession(token)
                     .then(function () {
-                        LastLocation.go('sb.page.about', {});
+                        LastLocation.go('sb.page.about',{});
                     });
             },
             function (error) {
