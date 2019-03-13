@@ -5,7 +5,7 @@
       Run "test-functional" using nodejs.
     vars:
       npm_command: test-functional
-      node_version: 6
+      node_version: 8
 
 - job:
     name: storyboard-webclient-nodejs-npm6-run-test-integration
@@ -14,7 +14,7 @@
       Run "test-integration" using nodejs.
     vars:
       npm_command: test-integration
-      node_version: 6
+      node_version: 8
 
 - job:
     name: storyboard-webclient-nodejs-npm6-run-test-unit
@@ -23,14 +23,14 @@
       Run "test-unit" using nodejs.
     vars:
       npm_command: test-unit
-      node_version: 6
+      node_version: 8
 
 - project:
     check:
       jobs:
         - nodejs-npm-run-lint:
             vars:
-              node_version: 6
+              node_version: 8
         - storyboard-webclient-nodejs-npm6-run-test-unit
         - storyboard-webclient-nodejs-npm6-run-test-functional
         - storyboard-webclient-nodejs-npm6-run-test-integration
@@ -41,7 +41,7 @@
       jobs:
         - nodejs-npm-run-lint:
             vars:
-              node_version: 6
+              node_version: 8
         - storyboard-webclient-nodejs-npm6-run-test-unit
         - storyboard-webclient-nodejs-npm6-run-test-functional
         - storyboard-webclient-nodejs-npm6-run-test-integration
