@@ -14,41 +14,41 @@
  * under the License.
  */
 
-
-
 .day {
-    margin: -5px;
-    padding: 5px;
-    &:hover {
-        background-color: lighten($brand-primary, 50%);
-        cursor: pointer;
-    }
+  margin: -5px;
+  padding: 5px;
+
+  &:hover {
+    background-color: lighten($brand-primary, 50%);
+    cursor: pointer;
+  }
 }
 
 .today {
-    background-color: lighten($brand-primary, 40%);
+  background-color: lighten($brand-primary, 40%);
 }
 
-.day-selected, .day-selected:hover {
-    background-color: $brand-primary;
-    color: $navbar-default-color;
+.day-selected,
+.day-selected:hover {
+  background-color: $brand-primary;
+  color: $navbar-default-color;
 }
 
 calendar .table-borderless td {
-    border-top: none !important;
-    vertical-align: middle !important;
+  border-top: none !important;
+  vertical-align: middle !important;
 
-    &.separator {
-        width: 10px;
-    }
+  &.separator {
+    width: 10px;
+  }
 }
 
 calendar .clickable-cell {
-    border-radius: $border-radius-base;
+  border-radius: $border-radius-base;
 
-    &:hover {
-        background-color: lighten($brand-primary, 50%);
-        color: darken($brand-primary, 10%) !important;
-        cursor: pointer;
-    }
+  &:hover {
+    background-color: lighten($brand-primary, 50%);
+    color: darken($brand-primary, 10%) !important;
+    cursor: pointer;
+  }
 }

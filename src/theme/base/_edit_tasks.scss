@@ -1,60 +1,65 @@
 .expandable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .back-index {
-    z-index: 0;
+  z-index: 0;
 }
 
 .dynamic-assignee {
-    position: absolute;
-    left: 150px;
-    box-sizing: border-box;
+  position: absolute;
+  left: 150px;
+  box-sizing: border-box;
 }
 
 .task-title {
-    & > div {
-        vertical-align: top;
-        display: inline-block;
-        padding-top: 7px;
-        padding-bottom: 7px;
-    }
+  & > div {
+    vertical-align: top;
+    display: inline-block;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
 
-    & .title {
-        max-width: 75%;
-    }
+  & .title {
+    max-width: 75%;
+  }
 
-    & .form-control-static {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
+  & .form-control-static {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .task-notes {
-    padding-top : 10px;
-    border-radius: 5px;
-    box-shadow: -4px 0px 10px rgba(0,0,0,0.1);
+  padding-top: 10px;
+  border-radius: 5px;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .padded-row {
-    @extend .row;
-    padding-bottom : 10px;
+  @extend .row;
+
+  padding-bottom: 10px;
 }
 
-.task-title input, input-inline, project-typeahead, user-typeahead, task-status-dropdown {
-    display: inline-block;
-    width: auto;
+input-inline,
+project-typeahead,
+task-status-dropdown,
+user-typeahead,
+.task-title input {
+  display: inline-block;
+  width: auto;
 
-    & .form-group {
-        margin-bottom: 0;
-    }
+  & .form-group {
+    margin-bottom: 0;
+  }
 }
 
 .noselect {
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }

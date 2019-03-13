@@ -14,29 +14,31 @@
  * under the License.
  */
 
-
 /**
  *  Story view styles
  */
 
 /* "Related Worklists" table style */
 .position-label {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 /* "Story Detail" tags link style */
 .tag-label-link {
-    text-decoration:none;
-    color:#ffffff;
+  text-decoration: none;
+  color: #fff;
 }
-.tag-label-link:hover{
-    text-decoration:none;
-    color:#ffffff;
+
+.tag-label-link:hover {
+  text-decoration: none;
+  color: #fff;
 }
-.label .fa-times{
-    opacity:0.5;
+
+.label .fa-times {
+  opacity: 0.5;
 }
-.label .fa-times:hover{
-    cursor:pointer;
-    opacity:1;
+
+.label .fa-times:hover {
+  cursor: pointer;
+  opacity: 1;
 }

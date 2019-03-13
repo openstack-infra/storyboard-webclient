@@ -21,13 +21,13 @@
  * a specific stylesheet to be included, it must be linked here.
  */
 
-
 // Library inclusions
 @import 'bootstrap_overrides';
 @import 'bootstrap';
 @import './fontawesome.scss';
 
 $fa-font-path: '../fonts';
+
 @import './fa-solid.scss';
 @import './fa-regular.scss';
 

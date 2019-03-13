@@ -13,22 +13,22 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
  * Styles specific to the overall application.
  */
 
 ul[typeahead-popup] {
-    z-index: 2000;
+  z-index: 2000;
 
-    a.header-criteria-item {
-        white-space: nowrap;
-        max-width: 300px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  a.header-criteria-item {
+    white-space: nowrap;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-    .active a .text-muted {
-        color: $dropdown-link-active-color;
-    }
+  .active a .text-muted {
+    color: $dropdown-link-active-color;
+  }
 }
-

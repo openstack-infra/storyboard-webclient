@@ -13,52 +13,53 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
  * Styles specific to the overall application.
  */
 
 body {
-    background-color: $white;
-    margin-top: $navbar-height;
-    margin-bottom: 20px;
+  background-color: $white;
+  margin-top: $navbar-height;
+  margin-bottom: 20px;
 }
 
 @media (max-width: $screen-xs-max) {
-    body {
-        margin-right: $sidebar-width-xs;
+  body {
+    margin-right: $sidebar-width-xs;
 
-        &.submenu {
-            margin-right: ($sidebar-width-xs + $sidebar-submenu-width-xs);
-        }
+    &.submenu {
+      margin-right: ($sidebar-width-xs + $sidebar-submenu-width-xs);
     }
+  }
 }
 
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
-    body {
-        margin-left: $sidebar-width-sm;
+  body {
+    margin-left: $sidebar-width-sm;
 
-        &.submenu {
-            margin-left: ($sidebar-width-sm + $sidebar-submenu-width-sm);
-        }
+    &.submenu {
+      margin-left: ($sidebar-width-sm + $sidebar-submenu-width-sm);
     }
+  }
 }
 
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-    body {
-        margin-left: $sidebar-width-md;
+  body {
+    margin-left: $sidebar-width-md;
 
-        &.submenu {
-            margin-left: ($sidebar-width-md + $sidebar-submenu-width-md);
-        }
+    &.submenu {
+      margin-left: ($sidebar-width-md + $sidebar-submenu-width-md);
     }
+  }
 }
 
 @media (min-width: $screen-lg-min) {
-    body {
-        margin-left: $sidebar-width-lg;
+  body {
+    margin-left: $sidebar-width-lg;
 
-        &.submenu {
-            margin-left: ($sidebar-width-lg + $sidebar-submenu-width-lg);
-        }
+    &.submenu {
+      margin-left: ($sidebar-width-lg + $sidebar-submenu-width-lg);
     }
+  }
 }
