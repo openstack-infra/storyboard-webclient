@@ -12,7 +12,7 @@ nav.navbar {
 nav.sidebar {
   color: $sidebar-color;
   background-color: $sidebar-bg;
-  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.25) inset;
   width: $sidebar-width-lg;
   height: calc(100vh - 50px);
   position: fixed;
@@ -22,15 +22,15 @@ nav.sidebar {
   font-size: $sidebar-font-size;
 
   p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-top: $sidebar-item-spacing;
 
     &:first-child {
-      margin-top: 0px;
+      margin-top: 0;
     }
   }
 
-  .fa-2x{
+  .fa-2x {
     font-size: 3rem;
   }
 
@@ -51,17 +51,18 @@ nav.sidebar {
     transition: color 100ms ease-in-out;
     border-radius: $sidebar-item-border-radius;
 
-    p {
+    p { /* stylelint-disable-line no-descending-specificity */
       color: $sidebar-link-color;
     }
 
     &.active {
       z-index: 500;
       background-color: $sidebar-link-color;
-      box-shadow: 0 0px 10px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
     }
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
       color: $sidebar-link-hover-color;
       text-decoration: none;
 
@@ -87,7 +88,7 @@ nav.has-submenu > nav.submenu {
   top: $navbar-height;
   left: $sidebar-width-lg;
   background-color: $sidebar-submenu-bg;
-  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.25) inset;
   padding-top: $sidebar-submenu-top-offset;
 
   a {
@@ -95,7 +96,8 @@ nav.has-submenu > nav.submenu {
     color: $sidebar-submenu-color;
     width: 100%;
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
       color: $sidebar-submenu-hover-color;
       text-decoration: none;
       background-color: $sidebar-submenu-hover-bg;
@@ -110,7 +112,7 @@ nav.has-submenu > nav.submenu {
     width: $sidebar-width-xs;
     left: $sidebar-left-xs;
     padding: $sidebar-padding-xs;
-    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25) inset;
 
     a {
       padding: $sidebar-item-padding-xs;
@@ -123,9 +125,12 @@ nav.has-submenu > nav.submenu {
   }
 
   nav.has-submenu > nav.submenu {
-    left: calc(100% - #{$sidebar-width-xs} -
-               #{$sidebar-submenu-width-xs});
-    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.25) inset;
+    left:
+      calc(
+        100% - #{$sidebar-width-xs} -
+        #{$sidebar-submenu-width-xs}
+      );
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25) inset;
   }
 }
 
@@ -139,6 +144,7 @@ nav.has-submenu > nav.submenu {
       padding: $sidebar-item-padding-sm;
     }
   }
+
   nav.has-submenu > nav.submenu {
     width: $sidebar-submenu-width-sm;
     left: $sidebar-width-sm;
