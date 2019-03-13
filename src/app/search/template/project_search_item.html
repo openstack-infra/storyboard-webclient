@@ -2,17 +2,16 @@
     <a href="#!/project/{{project.name}}">
         {{project.name | truncate: 97}}
     </a>
-    <br/>
-    <span class="text-muted">
-        {{project.description | truncate: 97}}
-    </span>
-</td>
-<td>
     <small ng-show="isLoggedIn">
-        <subscribe class="pull-right"
+        <subscribe
                resource="project"
                resource-id="project.id"
                subscriptions="projectSubscriptions">
         </subscribe>
     </small>
+    <br/>
+    <span class="text-muted">
+        {{project.description | truncate: 97}}
+    </span>
 </td>
+<td></td>

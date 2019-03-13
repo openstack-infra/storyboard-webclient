@@ -2,6 +2,13 @@
     <a href="#!/project_group/{{projectGroup.name}}">
         {{projectGroup.title | truncate: 97}}
     </a>
+    <small ng-show="isLoggedIn">
+        <subscribe class="pull-left"
+               resource="project_group"
+               resource-id="projectGroup.id"
+               subscriptions="projectGroupSubscriptions">
+        </subscribe>
+    </small>
 </td>
 <td>
     <a href ng-click="collapsed = !collapsed"
@@ -50,12 +57,4 @@
         Hide {{projectGroupItems.length}} projects...
     </a>
 </td>
-<td>
-    <small ng-show="isLoggedIn">
-        <subscribe class="pull-right"
-               resource="project_group"
-               resource-id="projectGroup.id"
-               subscriptions="projectGroupSubscriptions">
-        </subscribe>
-    </small>
-</td>
+<td></td>

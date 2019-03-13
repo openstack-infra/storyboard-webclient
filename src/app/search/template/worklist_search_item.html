@@ -1,13 +1,13 @@
 <td>
-    <subscribe class="pull-right"
-               resource="worklist"
-               resource-id="worklist.id"
-               subscriptions="worklistSubscriptions">
-    </subscribe>
     <p>
         <a href="#!/worklist/{{worklist.id}}">
             {{worklist.title}}
         </a>
+        <subscribe
+                   resource="worklist"
+                   resource-id="worklist.id"
+                   subscriptions="worklistSubscriptions">
+        </subscribe>
     </p>
     <small>
         <span class="badge"
