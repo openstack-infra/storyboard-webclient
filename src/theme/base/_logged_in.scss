@@ -17,15 +17,14 @@
 /**
  * CSS Overrides specifically for when we're logged in.
  */
+
 .logged-in {
+  // An editable field, only accessible when you're logged in
+  .editable {
+    cursor: pointer;
 
-    // An editable field, only accessible when you're logged in
-    .editable {
-        cursor: pointer;
-
-        &:hover {
-            background-color: $gray-lighter;
-        }
+    &:hover {
+      background-color: $gray-lighter;
     }
-
+  }
 }

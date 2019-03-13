@@ -13,16 +13,21 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
+
 /**
  * Typography adjustments.
  */
 
-p, span, em, strong, small {
-    &.honor-carriage-return {
-        white-space: pre-wrap;
-    }
+em,
+p,
+small,
+span,
+strong {
+  &.honor-carriage-return {
+    white-space: pre-wrap;
+  }
 }
 
 h3 {
-    font-size: 1.25em;
+  font-size: 1.25em;
 }

@@ -14,312 +14,320 @@
  * under the License.
  */
 
-
 /**
  *  Board and worklist styles.
  */
 
 .form-control-inline {
-    width: auto;
-    display: inline;
+  width: auto;
+  display: inline;
 }
 
 /* Board style */
 
 .kanban-board {
-    overflow-x: scroll;
-    white-space: nowrap;
-    height: 100%;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+  overflow-x: scroll;
+  white-space: nowrap;
+  height: 100%;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .kanban-board.as-sortable-dragging {
-    overflow: visible;
-}
-
-.kanban-board > .as-sortable-placeholder {
-    margin: 0px 10px;
-    float: none;
-    display: inline-block !important;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  overflow: visible;
 }
 
 /* Lane style */
 
 .kanban-lane {
-    padding: 10px;
-    margin: 0px 10px;
-    background-color: #ddd;
-    border-radius: $border-radius-base;
-    border: 1px solid #bbb;
-    width: 240px;
-    display: inline-block;
-    vertical-align: top;
-    white-space: normal;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  margin: 0 10px;
+  background-color: #ddd;
+  border-radius: $border-radius-base;
+  border: 1px solid #bbb;
+  width: 240px;
+  display: inline-block;
+  vertical-align: top;
+  white-space: normal;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 .kanban-lane-automatic {
-    background-color: #aaa;
+  background-color: #aaa;
 }
 
 .kanban-lane-clickable {
-    @extend .kanban-lane;
+  @extend .kanban-lane;
 
-    text-align: center !important;
-    color: $link-color;
-    text-decoration: none;
+  text-align: center !important;
+  color: $link-color;
+  text-decoration: none;
 
-    &:hover,
-    &:focus {
-        background-color: #bbb;
-        color: $link-hover-color;
-        text-decoration: $link-hover-decoration;
-        cursor: pointer;
-    }
+  &:hover,
+  &:focus {
+    background-color: #bbb;
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+    cursor: pointer;
+  }
 }
 
 .kanban-lane-contents {
-    max-height: 65vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 5px 0px 5px 10px;
-    margin: 0px -0.1px 10px -10px;
-    display: inline-block;
-    max-width: 230px;
-    min-width: 230px;
-    min-height: 50px;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px 0 5px 10px;
+  margin: 0 -0.1px 10px -10px;
+  display: inline-block;
+  max-width: 230px;
+  min-width: 230px;
+  min-height: 50px;
 }
 
 .kanban-lane-contents-readonly {
-    @extend .kanban-lane-contents;
-    margin-bottom: 0px;
+  @extend .kanban-lane-contents;
+
+  margin-bottom: 0;
 }
 
 .kanban-lane-title {
-    color: #333;
-    font-weight: bold;
+  color: #333;
+  font-weight: bold;
 }
 
 .kanban-lane-contents.as-sortable-dragging {
-    overflow: visible;
+  overflow: visible;
 }
 
 .kanban-lane > .as-sortable-item-handle {
-    margin: -10px;
-    padding: 10px;
+  margin: -10px;
+  padding: 10px;
 }
 
 .btn-kanban-lane:hover {
-    background-color: #eee;
+  background-color: #eee;
 }
 
 .worklist {
-    @extend .kanban-lane;
-    width: 100%;
+  @extend .kanban-lane;
 
-    & .kanban-lane-contents {
-        max-height: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        margin: 0px;
-        padding: 0px;
-    }
+  width: 100%;
+
+  & .kanban-lane-contents {
+    max-height: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .worklist-criterion {
-    & span {
-        display: inline-block;
-    }
+  & span {
+    display: inline-block;
+  }
 
-    & div {
-        display: inline-block;
+  & div {
+    display: inline-block;
 
-        & input {
-            display: inline-block;
-        }
+    & input {
+      display: inline-block;
     }
+  }
 }
 
 /* Card style */
 
 .kanban-card {
-    word-wrap: break-word;
-    padding: 5px;
-    margin: 5px 0px;
-    background-color: #fff;
-    text-align: left;
-    border-radius: $border-radius-base;
-    border: 1px solid #bbb;
+  word-wrap: break-word;
+  padding: 5px;
+  margin: 5px 0;
+  background-color: #fff;
+  text-align: left;
+  border-radius: $border-radius-base;
+  border: 1px solid #bbb;
 
-    & user-typeahead > .form-group {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        > .form-control-static {
-            padding: 0px;
-        }
+  & user-typeahead > .form-group {
+    margin-bottom: 0;
+    margin-top: 0;
+
+    > .form-control-static {
+      padding: 0;
     }
+  }
 
-    & .title > a {
-        cursor: inherit;
+  & .title > a {
+    cursor: inherit;
 
-        &:hover {
-            color: $link-color;
-            text-decoration: none;
-        }
+    &:hover {
+      color: $link-color;
+      text-decoration: none;
     }
+  }
 }
 
 .kanban-card-due {
-    border-right: $border-radius-base solid #555;
-    & .target-date {
-        font-weight: bold;
-    }
+  border-right: $border-radius-base solid #555;
+
+  & .target-date {
+    font-weight: bold;
+  }
 }
 
 .kanban-card-late {
-    border-right: $border-radius-base solid #555;
-    & .target-date {
-        font-weight: bold;
-        color: $navbar-default-color;
-        background-color: $brand-primary;
-        border-radius: 10px;
-        margin: 0px;
+  border-right: $border-radius-base solid #555;
 
-        & .col-xs-1, & .col-xs-11 {
-            padding: 0px 5px;
-        }
+  & .target-date {
+    font-weight: bold;
+    color: $navbar-default-color;
+    background-color: $brand-primary;
+    border-radius: 10px;
+    margin: 0;
 
-        & .text-muted {
-            color: $navbar-default-color;
-        }
+    & .col-xs-1,
+    & .col-xs-11 {
+      padding: 0 5px;
     }
+
+    & .text-muted {
+      color: $navbar-default-color;
+    }
+  }
 }
 
 .kanban-card-readonly {
-    @extend .kanban-card;
+  @extend .kanban-card;
 
+  cursor: pointer;
+
+  & * {
     cursor: pointer;
-
-    & * {
-        cursor: pointer;
-    }
+  }
 }
-
 
 /* Worklist style */
 
 .hover-row {
-    width: 100vw;
-    &:hover {
-        cursor: pointer;
-        & a {
-            color: darken($brand-primary, 10%);
-            text-decoration: underline;
-        }
+  width: 100vw;
+
+  &:hover {
+    cursor: pointer;
+
+    & a { /* stylelint-disable-line no-descending-specificity */
+      color: darken($brand-primary, 10%);
+      text-decoration: underline;
     }
+  }
 }
 
 .new-item-search {
-    margin-left: 30px;
+  margin-left: 30px;
 }
-
 
 /* ng-sortable style */
 
 .as-sortable-dragging > .as-sortable-item {
-    width: inherit;
-    height: inherit;
+  width: inherit;
+  height: inherit;
 }
 
 .as-sortable-placeholder {
-    border: 1px dashed #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #999;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #999;
+}
+
+.kanban-board > .as-sortable-placeholder {
+  margin: 0 10px;
+  float: none;
+  display: inline-block !important;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 /* Card modal style */
 
 .card-modal h2 {
-    margin-top: 0px;
+  margin-top: 0;
 }
 
 .card-heading {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .card-detail {
-    margin-left: 15px;
-    margin-right: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 
-    & div.item-heading > label {
-        margin-left: -10px;
-    }
+  & label {
+    margin-bottom: 0;
+  }
 
-    & label {
-        margin-bottom: 0px;
-    }
-};
+  & div.item-heading > label {
+    margin-left: -10px;
+  }
+}
 
 /* TODO: declare this somewhere it can be overridden */
 $card-detail-item-hover: #f6f6f6;
 
 .card-detail-item {
-    border-radius: $border-radius-base;
-    padding: 10px 15px;
-    &:hover {
-        background-color: $card-detail-item-hover;
-        cursor: pointer;
-    }
+  border-radius: $border-radius-base;
+  padding: 10px 15px;
 
-    & p:last-child {
-        margin-bottom: 0px;
-    }
+  &:hover {
+    background-color: $card-detail-item-hover;
+    cursor: pointer;
+  }
 
-    & user-typeahead .form-group {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        & .form-control-static {
-            padding: 0px;
-        }
-    }
+  & p:last-child {
+    margin-bottom: 0;
+  }
 
-    &.editing {
-        background-color: $card-detail-item-hover;
-    }
+  & user-typeahead .form-group {
+    margin-bottom: 0;
+    margin-top: 0;
 
-    & .dropdown-menu {
-        margin-bottom: 30px;
+    & .form-control-static {
+      padding: 0;
     }
+  }
 
-    & .row {
-        margin-bottom: 5px;
+  &.editing {
+    background-color: $card-detail-item-hover;
+  }
 
-        &:last-child {
-            margin-bottom: 0px;
-        }
+  & .dropdown-menu {
+    margin-bottom: 30px;
+  }
+
+  & .row {
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 }
 
 .due-date-modal {
-    & .nav-tabs {
-        margin-bottom: 10px;
+  & .nav-tabs {
+    margin-bottom: 10px;
+  }
+
+  & .table-hover {
+    & tr:hover {
+      background-color: #efefef;
+      cursor: pointer;
     }
 
-    & .table-hover {
-        & tr:hover {
-            background-color: #efefef;
-            cursor: pointer;
-        }
-        & tr.selected {
-            background-color: $brand-primary;
-            color: $navbar-default-color;
-        }
+    & tr.selected {
+      background-color: $brand-primary;
+      color: $navbar-default-color;
     }
+  }
 }
 
 .alert-button {
-    padding-top: 10px;
+  padding-top: 10px;
 }
