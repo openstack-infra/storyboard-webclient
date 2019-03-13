@@ -1,0 +1,29 @@
+{
+// Deliberately disabled rules, these don't work too
+// well with AngularJS templates.
+  "id-class-value": false,
+  "doctype-html5": false,
+  "id-unique": false,
+  "spec-char-escape": false,
+  "doctype-first": false,
+  "head-script-disabled": false,
+
+// Default rule settings
+  "tagname-lowercase": true,
+  "attr-lowercase": true,
+  "attr-value-double-quotes": true,
+  "attr-value-not-empty": false,
+  "attr-no-duplication": true,
+  "tag-pair": true,
+  "empty-tag-not-self-closed": true,
+  "src-not-empty": true,
+  "title-require": true,
+  "alt-require": true,
+  "style-disabled": true,
+  "inline-style-disabled": false,
+  "inline-script-disabled": false,
+  "space-tab-mixed-disabled": "space",
+  "id-class-ad-disabled": false,
+  "href-abs-or-rel": false,
+  "attr-unsafe-chars": true
+}
