@@ -70,6 +70,17 @@ angular.module('sb.search').controller('SearchCriteriaController',
                     angular.extend(params, criteriaMap);
                 });
             });
+            var textCritera = '';
+            for (var i = $scope.criteria.length - 1; i >= 0; i--) {
+                var cItem = $scope.criteria[i];
+                if(cItem.type === 'Text') {
+                    textCritera = textCritera + '+' + cItem.value;
+                }    
+            }
+            if(textCritera.length > 1) {
+                params.q = textCritera;
+                params.title = textCritera;
+            }
             $location.search(params);
         };
 
@@ -86,7 +97,9 @@ angular.module('sb.search').controller('SearchCriteriaController',
                     continue;
                 }
 
-                if (item.type === cItem.type && item.type !== 'Tags') {
+                if (item.type === cItem.type && 
+                    item.type !== 'Tags' && 
+                    item.type !== 'Text') {
                     $scope.criteria.splice(i, 1);
                 }
             }
