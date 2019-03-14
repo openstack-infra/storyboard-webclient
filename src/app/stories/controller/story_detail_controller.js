@@ -36,7 +36,7 @@ angular.module('sb.story').controller('StoryDetailController',
         // is 50px high.
         $anchorScroll.yOffset = 50;
         $scope.filterMode = 'advanced';
-
+        $scope.currentUser = currentUser;
         /**
          * The story, resolved in the state.
          *

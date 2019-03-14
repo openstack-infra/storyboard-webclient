@@ -493,14 +493,24 @@
                 </div>
             </div>
             <div class="col-xs-3">
-                <user-typeahead
-                        ng-model="task.assignee_id"
-                        enabled="isLoggedIn"
-                        on-change="updateTask(task, 'assignee_id', task.assignee_id)"
-                        empty-prompt="Click to assign."
-                        empty-disabled-prompt="Not assigned."
-                        as-inline="true"
-                        />
+                <div>
+                  <user-typeahead
+                          ng-model="task.assignee_id"
+                          enabled="isLoggedIn"
+                          on-change="updateTask(task, 'assignee_id', task.assignee_id)"
+                          empty-prompt="Click to assign."
+                          empty-disabled-prompt="Not assigned."
+                          as-inline="true"
+                          />
+                </div>
+                <div ng-if="isLoggedIn" class="task-self-assign-link">
+                  <a
+                    ng-if="task.assignee_id === null" 
+                    ng-click="updateTask(task, 'assignee_id', currentUser.id)"
+                    >
+                    Assign this task to yourself.
+                  </a>
+                </div>
             </div>
             <div class="col-xs-2">
                 <task-status-dropdown
