@@ -35,14 +35,20 @@ angular.module('sb.projects').controller('ProjectStoryListController',
         $scope.isSearching = false;
         $scope.filter = 'active';
 
+        $scope.offsets = {
+            'active': 0,
+            'merged': 0,
+            'invalid': 0
+        };
         /**
          * Set the filter and refresh the search.
          */
         $scope.setFilter = function (state) {
+            $scope.offsets[$scope.filter] = $scope.searchOffset;
             $scope.filter = state;
+            $scope.searchOffset = $scope.offsets[$scope.filter];
             $scope.search();
         };
-
         /**
          * The search method.
          */
