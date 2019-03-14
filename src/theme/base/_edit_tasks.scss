@@ -58,3 +58,11 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
+    
+.task-self-assign-link{
+    margin:2px auto;
+    & a{
+        text-align:center;
+        cursor:pointer;
+    }
+}
