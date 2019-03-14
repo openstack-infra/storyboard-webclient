@@ -51,12 +51,6 @@ angular.module('sb.util').directive('tagComplete',
                  */
                 $scope.$watch(function () {
                     return $scope.tagCompleteTags.length;
-                }, function(tags) {
-                    if (tags > 0) {
-                        $input[0].placeholder = '';
-                    } else {
-                        $input[0].placeholder = $scope.placeholder || '';
-                    }
                 });
 
                 /**
