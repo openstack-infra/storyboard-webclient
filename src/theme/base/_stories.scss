@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Codethink Ltd.
+ * Copyright (c) 2016, 2019 Codethink Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -41,4 +41,12 @@
 .label .fa-times:hover {
   cursor: pointer;
   opacity: 1;
+}
+
+.task-list {
+  margin-bottom: 30px;
+
+  & table {
+    margin-bottom: 0;
+  }
 }

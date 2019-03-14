@@ -91,6 +91,11 @@ angular.module('sb.story').controller('StoryDetailController',
                     $scope.projects[project.name] = project;
                     $scope.projects[project.name].branchNames = [];
                     $scope.projects[project.name].branches = {};
+                    $scope.projects[project.name].newTask = new Task({
+                        story_id: $scope.story.id,
+                        project_id: project.id,
+                        status: 'todo'
+                    });
                 }
                 Branch.get({id: task.branch_id}).$promise.then(
                     function(branch) {
@@ -650,7 +655,7 @@ angular.module('sb.story').controller('StoryDetailController',
         /**
          * Adds a task.
          */
-        $scope.createTask = function (task, branch) {
+        $scope.createTask = function (task, branch, clearFields) {
             // Make a copy to save, so that the next task retains the
             // old information (for easier continuous editing).
             var savingTask = new Task(angular.copy(task));
@@ -663,6 +668,9 @@ angular.module('sb.story').controller('StoryDetailController',
                 }
                 $scope.loadEvents();
                 task.title = '';
+                angular.forEach(clearFields, function(field) {
+                    delete task[field];
+                });
             });
         };
 
@@ -696,6 +704,14 @@ angular.module('sb.story').controller('StoryDetailController',
                 delete $scope.projects[projectName];
             }
         }
+
+        $scope.searchBranches = function(name, project_id) {
+            return Branch.browse({
+                name: name,
+                project_id: project_id,
+                limit: 10
+            }).$promise;
+        };
 
         /**
          * Updates the task list.
