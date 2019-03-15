@@ -40,6 +40,14 @@
                 <a href="#!/project/{{project.name}}">
                     {{project.name}}
                 </a>
+                <small ng-show="isLoggedIn">
+                    <subscribe class="pull-left"
+                           resource="project"
+                           resource-id="project.id"
+                           subscriptions="projectSubscriptions"
+                    >
+                    </subscribe>
+                </small>
             </td>
         </tr>
         </tbody>
