@@ -50,3 +50,9 @@
             vars:
               npm_command: draft
               node_version: 8
+    post:
+      jobs:
+        - publish-openstack-javascript-content
+    release:
+      jobs:
+        - publish-openstack-javascript-content
