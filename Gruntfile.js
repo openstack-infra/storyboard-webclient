@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         source: './src',
         theme: './src/theme',
         test: './test',
-        output: './dist',
+        output: './build',
         report: './reports',
         node_modules: './node_modules',
         fontawesome: './node_modules/@fortawesome/fontawesome-free-webfonts'
