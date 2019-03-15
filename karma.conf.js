@@ -34,10 +34,10 @@ module.exports = function (config) {
         ],
 
         files: [
-            './dist/js/libs.js',
+            './build/js/libs.js',
             './node_modules/angular-mocks/angular-mocks.js',
-            './dist/js/storyboard.js',
-            './dist/js/templates.js',
+            './build/js/storyboard.js',
+            './build/js/templates.js',
             './test/unit/custom_matchers.js',
             './test/unit/**/*.js'
         ],
@@ -54,7 +54,7 @@ module.exports = function (config) {
         browsers: [ 'Firefox' ],
 
         preprocessors: {
-            './dist/js/storyboard.js': ['coverage']
+            './build/js/storyboard.js': ['coverage']
         },
 
         coverageReporter: {
