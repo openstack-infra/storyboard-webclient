@@ -24,13 +24,30 @@ angular.element(document)
     .ready(function () {
         'use strict';
 
-        var initInjector = angular.injector(['ng']);
+        var initInjector = angular.injector(['ng', 'sb.services']);
         var $http = initInjector.get('$http');
         var $log = initInjector.get('$log');
+        var apiUrl = initInjector.get('storyboardApiBase');
+
+        function convertKey(key) {
+            return key.replace(/([_][a-z])/ig, function(match) {
+                return match.toUpperCase().replace('_', '');
+            });
+        }
 
         function initializeApplication(config) {
+            // Load everything we got into our module.
+            for (var key in config) {
+                $log.debug('Configuration: ' + key + ' -> ' + config[key]);
+                angular.module('storyboard').constant(key, config[key]);
+            }
+            angular.bootstrap(document, ['storyboard']);
+        }
+
+        function loadConfig(config) {
             var defaults = {
-                enableEditableComments: false
+                enableEditableComments: false,
+                enableNotifications: false
             };
 
             // Set default config values
@@ -40,22 +57,36 @@ angular.element(document)
                 }
             }
 
-            // Load everything we got into our module.
-            for (key in config) {
-                $log.debug('Configuration: ' + key + ' -> ' + config[key]);
-                angular.module('storyboard').constant(key, config[key]);
+            // Check for config in the /systeminfo endpoint of the backend
+            if (config.hasOwnProperty('storyboardApiBase')) {
+                apiUrl = config.storyboardApiBase;
             }
-            angular.bootstrap(document, ['storyboard']);
+            $log.info('Attempting to load enabled features from /systeminfo');
+            $http.get(apiUrl + '/systeminfo').then(
+                function (response) {
+                    if (response.data.hasOwnProperty('config')) {
+                        for (key in response.data.config) {
+                            var confKey = convertKey(key);
+                            config[confKey] = response.data.config[key];
+                        }
+                    }
+                    initializeApplication(config);
+                },
+                function () {
+                    $log.warn('Cannot load anything from /systeminfo');
+                    initializeApplication(config);
+                }
+            );
         }
 
         $log.info('Attempting to load parameters from ./config.json');
         $http.get('./config.json').then(
             function (response) {
-                initializeApplication(response.data);
+                loadConfig(response.data);
             },
             function () {
                 $log.warn('Cannot load ./config.json, using defaults.');
-                initializeApplication({});
+                loadConfig({});
             }
         );
     }
