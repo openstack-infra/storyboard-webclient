@@ -1,0 +1,259 @@
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+<!--
+  ~ Copyright (c) 2014 Hewlett-Packard Development Company, L.P.
+  ~ Copyright (c) 2016 Codethink Ltd.
+  ~ Copyright (c) 2017, 2019 Adam Coldrick
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may
+  ~ not use this file except in compliance with the License. You may obtain
+  ~ a copy of the License at
+  ~
+  ~         http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <button type="button" class="close" aria-hidden="true"
+              ng-click="close()">&times;</button>
+      <h3 class="panel-title">Edit Task {{ task.id }}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+              <div ng-include
+                   src="'/inline/task-detail-form.html'">
+              </div>
+          </div>
+        </div>
+        <hr/>
+        <br>
+        <div class="row">
+          <div class="col-xs-6 border-right">
+            <div ng-include src="'/inline/task-assign.html'"></div>
+          </div>
+          <div class="col-xs-6">
+            <div ng-include src="'/inline/task-status.html'"></div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-xs-12">
+            <div ng-include src="'/inline/change-project.html'"></div>
+          </div>
+        </div>
+        <hr/>
+        <div class="row">
+          <div class="col-xs-12">
+            <div ng-include src="'/inline/task-edit-notes.html'"></div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="clearfix">
+            <div class="pull-right">
+              <div class="btn" ng-show="isUpdating">
+                <i class="fa fa-spinner fa-lg fa-spin"></i>
+              </div>
+              <button type="button"
+                      class="btn btn-default"
+                      ng-click="close()"
+              >
+                Close
+              </button>
+            </div>
+            <div class="pull-left">
+              <button class="btn btn-default"
+                      ng-click="showAddWorklist(task)"
+                      ng-show="isLoggedIn">
+                Add to worklist
+              </button>
+              <button class="btn btn-default"
+                      ng-show="tasks.length > 1 && isLoggedIn"
+                      ng-click="removeTask(task, name, branchName); close()">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+           
+<!-- Template for the title -->
+<script type="text/ng-template" id="/inline/task-detail-form.html">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
+      Title
+    </label>
+    <div class="col-sm-10 task-title">
+      <input-inline
+              ng-model="task.title"
+              enabled="isLoggedIn"
+              on-change="updateTask(task, 'title', task.title)"
+              empty-prompt="Click to set title."
+              empty-disabled-prompt="No title."
+              maxlength="255"
+              as-inline="true"
+      />
+    </div>
+  </div>
+</script>
+
+<!-- Template for Assigning Task -->
+<script type="text/ng-template" id="/inline/task-assign.html">
+  <div class="form-group text-center">
+    <label class="control-label">
+      Assignee
+    </label>
+    <br />
+    <div>
+      <user-typeahead
+        ng-model="task.assignee_id"
+        enabled="isLoggedIn"
+        on-change="updateTask(task, 'assignee_id', task.assignee_id)"
+        empty-prompt="Click to assign."
+        empty-disabled-prompt="Not assigned."
+        as-inline="true"
+        />
+    </div>
+  </div>
+</script>
+
+<!-- Template for the Task Status -->
+<script type="text/ng-template" id="/inline/task-status.html">
+  <div class="form-group text-center">
+    <label class="control-label">
+      Status
+    </label>
+    <br />
+    <div>
+      <task-status-dropdown
+                  editable="{{isLoggedIn}}"
+                  on-change="updateTask(task, 'status', status)"
+                  status="{{ task.status }}"
+                  width="100"
+                  />
+    </div>
+  </div>
+</script>
+
+<!-- Template for the Task Change Project -->
+<script type="text/ng-template" id="/inline/change-project.html">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
+      Project
+    </label>
+    <div class="col-sm-10 title">
+      <project-typeahead
+            auto-focus="false"
+            ng-model="task.project_id"
+            ng-show="changingProject"
+            enabled="isLoggedIn"
+            on-change="updateTask(task, 'project_id', task.project_id, name, branchName);
+                       changingProject = false;"
+            empty-prompt="Click to set a project"
+            empty-disabled-prompt="No project set."
+            as-inline="false"
+            placeholder="Enter project name">
+      </project-typeahead>
+      <button class="btn btn-default"
+              ng-show="isLoggedIn"
+              ng-click="changingProject = !changingProject">
+          {{ changingProject ? 'Cancel' : 'Click here to update project' }}
+      </button>
+    </div>
+  </div>
+</script>
+
+
+<!-- Template for the Task notes -->
+<script type="text/ng-template" id="/inline/task-edit-notes.html">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
+      Notes
+    </label>
+      <div class="col-xs-10 task-notes"
+           ng-show="isLoggedIn">
+          <button class="btn btn-primary btn-xs pull-right"
+                  ng-show="!task.editing && task.link && isLoggedIn"
+                  ng-click="editNotes(task)">
+              <i class="fa fa-pencil-alt"></i> Edit
+          </button>
+          <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
+          <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
+          <form name="taskNotesForm" ng-show="task.editing">
+              <div class="form-group">
+                  <textarea placeholder="Enter task notes here"
+                            class="form-control context-edit"
+                            msd-elastic
+                            rows="3"
+                            ng-disabled="isUpdating"
+                            ng-model="task.tempNotes">
+                  </textarea>
+              </div>
+
+              <div class="clearfix">
+                  <button type="button"
+                          class="btn btn-default" ng-click="notesPreview = !notesPreview">
+                      Toggle Preview
+                  </button>
+                  <div class="pull-right">
+                      <div class="btn" ng-show="isUpdating">
+                          <i class="fa fa-spinner fa-lg fa-spin"></i>
+                      </div>
+                      <button type="button"
+                              class="btn btn-primary"
+                              ng-click="updateTask(task, 'link', task.tempNotes);
+                                        cancelEditNotes(task)"
+                              ng-disabled="!taskNotesForm.$valid">
+                          Save
+                      </button>
+                      <button type="button" ng-show="isLoggedIn"
+                              class="btn btn-default"
+                              ng-click="cancelEditNotes(task)">
+                          Cancel
+                      </button>
+                  </div>
+              </div>
+          </form>
+          <span class="pull-left" ng-show="!task.editing && !task.link"> No notes added.</span>
+          <div class="padded-row pull-right" ng-show="!task.editing && !task.link">
+              <button class="btn btn-primary btn-xs"
+                      ng-click="editNotes(task)">
+                  <i class="fa fa-pencil-alt"></i> Add notes
+              </button>
+          </div>
+      </div>
+      <div class="col-xs-10 task-notes"
+           ng-show="!isLoggedIn && task.link">
+          <insert-markdown content="task.link" ng-show="!task.editing"></insert-markdown>
+          <insert-markdown content="task.tempNotes" ng-show="task.editing && notesPreview"></insert-markdown>
+      </div>
+  </div>
+</script>

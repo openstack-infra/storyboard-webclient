@@ -788,6 +788,39 @@ angular.module('sb.story').controller('StoryDetailController',
             );
         };
 
+        $scope.editTaskModal = function (task, projectName, branchName) {
+            var modalInstance = $modal.open({
+                templateUrl: 'app/stories/template/edit_task_modal.html',
+                backdrop: 'static',
+                controller: 'StoryTaskEditModalController',
+                resolve: {
+                    task: function(){
+                        return task; },
+                    projectName: function(){
+                        return projectName; },
+                    branchName: function(){
+                        return branchName; },
+                    projectNames: function(){
+                        return $scope.projectNames; },
+                    tasks: function(){
+                        return $scope.tasks; },
+                    updateTask: function(){
+                        return $scope.updateTask; },
+                    editNotes: function(){
+                        return $scope.editNotes; },
+                    cancelEditNotes: function(){
+                        return $scope.cancelEditNotes; },
+                    showAddWorklist: function(){
+                        return $scope.showAddWorklist; },
+                    removeTask: function(){
+                        return $scope.removeTask; }
+                }
+            });
+            modalInstance.result.then(
+            function () {
+                //modal opened successfully.
+            });
+        };
         // ###################################################################
         // Tags Management
         // ###################################################################

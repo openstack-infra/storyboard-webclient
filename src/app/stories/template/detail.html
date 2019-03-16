@@ -509,6 +509,13 @@
                         status="{{ task.status }}"
                         />
             </div>
+            <div class="col-xs-2">
+              <button class="btn btn-default pull-right edit-task-button"
+                        ng-show="isLoggedIn"
+                        ng-click="editTaskModal(task, name, branchName)">
+                    Edit Task
+              </button>
+            </div>
             <!-- Review link should go here once implemented in the API -->
         </div>
         <div class="padded-row" ng-show="showDetail">
