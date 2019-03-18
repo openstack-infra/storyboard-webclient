@@ -187,7 +187,6 @@ angular.module('sb.services')
                                     deferred.resolve([]);
                                 }
                             );
-
                             return deferred.promise;
                         };
                 }

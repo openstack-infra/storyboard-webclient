@@ -22,6 +22,13 @@ angular.module('sb.services').service('Criteria',
     function ($q, $log, $injector, Preference) {
         'use strict';
 
+        function buildBrowseFromSearch(search){
+            var query = {
+                type: search.substr(0, search.indexOf(':')),
+                value: search.substr(search.indexOf(':') + 1)
+            };
+            return query;
+        }
         return {
 
             /**
@@ -65,7 +72,6 @@ angular.module('sb.services').service('Criteria',
                         'resource "' + resourceName + '"');
                     return {};
                 }
-
                 return resource.criteriaMap(criteria);
             },
 
@@ -180,8 +186,10 @@ angular.module('sb.services').service('Criteria',
             buildCriteriaMap: function (parameterMap) {
                 return function (criteria) {
                     var params = {};
-
+                    var isUserEmail = false;
+                    var deferred = $q.defer();
                     criteria.forEach(function (item) {
+
                         if (parameterMap.hasOwnProperty(item.type)) {
                             if (parameterMap[item.type] === 'tags') {
                                 if (!('tags' in params)) {
@@ -189,12 +197,42 @@ angular.module('sb.services').service('Criteria',
                                 } else {
                                     params.tags.push(item.value);
                                 }
-                            } else {
+                            }
+
+                            else if (item.type === 'Text'
+                                    && item.value.includes(':')) {
+                                //User converting search to browse
+                                var sub_browse =
+                                    buildBrowseFromSearch(item.value);
+
+                                if (item.value.includes('@')){
+                                    //using Email identifier
+                                    isUserEmail = true;
+                                    var user_data = $injector.get('User')
+                                        .browse({email: sub_browse.value});
+                                    user_data.$promise.then(function(data){
+                                        params[sub_browse.type] = data[0].id;
+                                        deferred.resolve(params);
+                                    });
+                                }
+                                else{
+                                    //using number identifier
+                                    params[sub_browse.type] = sub_browse.value;
+                                }
+
+                            }
+
+                            else {
                                 params[parameterMap[item.type]] = item.value;
                             }
                         }
                     });
-                    return params;
+                    //Checks if there is still a promise
+                    //to be resolved
+                    if (!isUserEmail){
+                        deferred.resolve(params);
+                    }
+                    return deferred.promise;
                 };
             }
         };
