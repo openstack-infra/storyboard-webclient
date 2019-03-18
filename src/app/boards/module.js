@@ -13,7 +13,6 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  */
-
 /**
  * The StoryBoard board submodule handles the creation and usage of
  * kanban-style boards.
@@ -23,7 +22,7 @@ angular.module('sb.board', ['ui.router', 'sb.services', 'sb.util',
     .config(function ($stateProvider, $urlRouterProvider) {
         'use strict';
 
-        // URL Defaults.
+        //URL Defaults.
         $urlRouterProvider.when('/board', '/board/list');
 
         // Set our page routes.

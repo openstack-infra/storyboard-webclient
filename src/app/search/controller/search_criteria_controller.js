@@ -62,15 +62,21 @@ angular.module('sb.search').controller('SearchCriteriaController',
         });
 
         $scope.rewriteQueryString = function() {
+
             var params = {};
             angular.forEach(resourceTypes, function(resourceName) {
+
                 var resource = $injector.get(resourceName);
                 angular.forEach($scope.criteria, function() {
-                    var criteriaMap = resource.criteriaMap($scope.criteria);
-                    angular.extend(params, criteriaMap);
+                    resource.criteriaMap($scope.criteria).then(function(data){
+                        var criteriaMap = data;
+                        angular.extend(params, criteriaMap);
+                        $location.search(params);
+                    });
+
                 });
             });
-            $location.search(params);
+
         };
 
         /**

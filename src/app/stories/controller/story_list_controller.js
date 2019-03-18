@@ -22,13 +22,10 @@ angular.module('sb.story').controller('StoryListController',
     function ($scope, $state, Criteria, NewStoryService, SubscriptionList,
               CurrentUser, $stateParams, SearchHelper) {
         'use strict';
-
         // search results must be of type "story"
         $scope.resourceTypes = ['Story'];
-
         // Search result criteria default must be "active"
         $scope.defaultCriteria = SearchHelper.parseParameters($stateParams);
-
         /**
          * Creates a new story.
          */

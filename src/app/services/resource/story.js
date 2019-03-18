@@ -60,7 +60,9 @@ angular.module('sb.services').factory('Story',
                 Tags: 'tags',
                 ProjectGroup: 'project_group_id',
                 Project: 'project_id',
-                User: 'assignee_id'
+                Assignee: 'assignee_id',
+                Creator: 'creator_id',
+                Subscriber: 'subscriber_id'
             }
         );
 

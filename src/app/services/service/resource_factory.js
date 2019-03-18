@@ -127,6 +127,7 @@ angular.module('sb.services')
                         typeResource.hasOwnProperty('criteriaResolver')) {
                         criteriaResolvers.push(typeResource.criteriaResolver);
                     }
+
                 }
 
                 /**
@@ -153,10 +154,13 @@ angular.module('sb.services')
                             var deferred = $q.defer();
 
                             // build the query parameters.
+                            if (searchString.includes(':')){
+                                searchString = searchString.substr(
+                                    searchString.indexOf(':') + 1);
+                            }
                             var queryParams = {};
                             queryParams[nameField] = searchString;
                             queryParams.limit = pageSize;
-
                             resource.browse(queryParams,
                                 function (result) {
                                     // Transform the results to criteria tags.
@@ -187,7 +191,6 @@ angular.module('sb.services')
                                     deferred.resolve([]);
                                 }
                             );
-
                             return deferred.promise;
                         };
                 }

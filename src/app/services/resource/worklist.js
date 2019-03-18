@@ -111,7 +111,8 @@ angular.module('sb.services').factory('Worklist',
                 Text: 'title',
                 Story: 'story_id',
                 Task: 'task_id',
-                User: 'creator_id'
+                Creator: 'creator_id',
+                Subscriber: 'subscriber_id'
             }
         );
 
