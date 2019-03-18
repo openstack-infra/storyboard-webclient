@@ -100,35 +100,38 @@ angular.module('sb.search').directive('searchResults',
                         return;
                     }
 
-                    var params = Criteria.mapCriteria(resourceName,
-                        $scope.validCriteria);
-                    var resource = $injector.get(resourceName);
+                    Criteria.mapCriteria(resourceName,
+                        $scope.validCriteria).then(function(data){
+                            var params = data;
+                            var resource = $injector.get(resourceName);
 
-                    if (!resource) {
-                        $log.error('Invalid resource name: ' +
-                        resourceName);
-                        return;
-                    }
+                            if (!resource) {
+                                $log.error('Invalid resource name: ' +
+                                resourceName);
+                                return;
+                            }
 
-                    // Apply paging.
-                    params.limit = pageSize;
-                    params.offset = $scope.searchOffset;
+                            // Apply paging.
+                            params.limit = pageSize;
+                            params.offset = $scope.searchOffset;
 
-                    // If we don't actually have search criteria, issue a
-                    // browse. Otherwise, issue a search.
-                    $scope.isSearching = true;
-                    if (!params.hasOwnProperty('q')) {
-                        params.sort_field = $scope.sortField;
-                        params.sort_dir = $scope.sortDirection;
+                            // If we don't actually have search criteria,
+                            // issue a browse. Otherwise, issue a search.
+                            $scope.isSearching = true;
+                            if (!params.hasOwnProperty('q')) {
+                                params.sort_field = $scope.sortField;
+                                params.sort_dir = $scope.sortDirection;
 
-                        resource.browse(params,
-                            handleSearchResult,
-                            handleErrorResult);
-                    } else {
-                        resource.search(params,
-                            handleSearchResult,
-                            handleErrorResult);
-                    }
+                                resource.browse(params,
+                                    handleSearchResult,
+                                    handleErrorResult);
+                            } else {
+                                resource.search(params,
+                                    handleSearchResult,
+                                    handleErrorResult);
+                            }
+                        });
+
                 }
 
                 /**
