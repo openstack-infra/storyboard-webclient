@@ -92,7 +92,9 @@
             <i class="fa fa-sync fa-spin"></i>
         </span>
         <span ng-show="creator.full_name">
+            <a href=" https://storyboard.openstack.org/#!/story/list?assignee_id={{story.creator_id}}">
             {{creator.full_name}}
+           </a>
         </span>
         <br/>
         <strong>Last updated:</strong>
@@ -493,14 +495,14 @@
                 </div>
             </div>
             <div class="col-xs-3">
-                <user-typeahead
+               <a href="https://storyboard.openstack.org/#!/story/list?assignee_id={{task.assignee_id}}"> <user-typeahead
                         ng-model="task.assignee_id"
                         enabled="isLoggedIn"
                         on-change="updateTask(task, 'assignee_id', task.assignee_id)"
                         empty-prompt="Click to assign."
                         empty-disabled-prompt="Not assigned."
                         as-inline="true"
-                        />
+                        /></a>
             </div>
             <div class="col-xs-2">
                 <task-status-dropdown
