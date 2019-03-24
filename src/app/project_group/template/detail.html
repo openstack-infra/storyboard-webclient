@@ -71,26 +71,35 @@
                 </span>
                 <i class="fa fa-2x fa-sb-story visible-xs"></i>
             </div>
-            <div class="col-xs-12 col-sm-6 col-sm-offset-2 col-md-offset-3">
+            <div class="list-group col-xs-14 col-sm-6 col-sm-offset-2 col-md-offset-5">
                 <br/>
                 <div class="checkbox label label-info">
                     <input type="checkbox"
-                           ng-model="showActive"
-                           ng-change="filterStories()"/>
+                    ng-model="filters.showActive"
+                    ng-change="filterStories()"
+                    class="ng-pristine ng-untouched ng-valid ng-not-empty"
+                    style="position: relative; float: left;">
                     Active
                 </div>
+                <br/>
                 <div class="checkbox label label-success">
                     <input type="checkbox"
-                           ng-model="showMerged"
-                           ng-change="filterStories()"/>
+                    ng-model="filters.showMerged"
+                    ng-change="filterStories()"
+                    class="ng-pristine ng-untouched ng-valid ng-empty"
+                    style="position: relative; float: left;">
                     Merged
                 </div>
+                <br/>
                 <div class="checkbox label label-default">
                     <input type="checkbox"
-                           ng-model="showInvalid"
-                           ng-change="filterStories()"/>
+                    ng-model="filters.showInvalid"
+                    ng-change="filterStories()"
+                    class="ng-pristine ng-untouched ng-valid ng-empty"
+                    style="position: relative; float: left;">
                     Invalid
                 </div>
+                <br/>
             </div>
             <div class="col-xs-12 text-center text-muted">
                 <br />

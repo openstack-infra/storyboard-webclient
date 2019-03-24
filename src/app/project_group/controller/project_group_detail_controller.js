@@ -19,9 +19,9 @@
  * projects, and any stories that belong under this project group.
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
-    function ($scope, $stateParams, projectGroup, Story, Project,
+    function ($scope, $rootScope, $stateParams, projectGroup, Story, Project,
               Preference, SubscriptionList, CurrentUser, Subscription,
-              $q, ProjectGroupItem, ArrayUtil, $log) {
+              $q, ProjectGroupItem, ArrayUtil, $log, localStorageService) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -92,24 +92,49 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         /**
          * Filter the stories.
          */
-        $scope.showActive = true;
-        $scope.showMerged = false;
-        $scope.showInvalid = false;
+        $scope.filters = {};
+        if (localStorageService.cookie.get('Active') != null)
+            $scope.filters.showActive = localStorageService.cookie.get('Active');
+        else
+            $scope.filters.showActive = true;
+
+        if (localStorageService.cookie.get('Merged') != null)
+            $scope.filters.showMerged = localStorageService.cookie.get('Merged');
+        else
+            $scope.filters.showMerged = false;
+
+        if (localStorageService.cookie.get('Invalid') != null)
+            $scope.filters.showInvalid = localStorageService.cookie.get('Invalid');
+        else
+            $scope.filters.showInvalid = false;
+
+        /**
+         * Reset filters to show Active Stories on changing end-point
+         */
+        $rootScope.$on('$locationChangeSuccess', function() {
+            localStorageService.cookie.remove('Active');
+            localStorageService.cookie.remove('Merged');
+            localStorageService.cookie.remove('Invalid');
+        });
 
         /**
          * Reload the stories in this view based on user selected filters.
          */
         $scope.filterStories = function () {
             var status = [];
-            if ($scope.showActive) {
+            if ($scope.filters.showActive){
                 status.push('active');
             }
-            if ($scope.showMerged) {
+            if ($scope.filters.showMerged){
                 status.push('merged');
             }
-            if ($scope.showInvalid) {
+            if ($scope.filters.showInvalid){
                 status.push('invalid');
             }
+
+            localStorageService.cookie.set('Active', $scope.filters.showActive);
+            localStorageService.cookie.set('Merged', $scope.filters.showMerged);
+            localStorageService.cookie.set('Invalid', $scope.filters.showInvalid);
 
             // If we're asking for nothing, just return a [];
             if (status.length === 0) {
