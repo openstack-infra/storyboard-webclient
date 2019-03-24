@@ -19,9 +19,9 @@
  * projects, and any stories that belong under this project group.
  */
 angular.module('sb.project_group').controller('ProjectGroupDetailController',
-    function ($scope, $stateParams, projectGroup, Story, Project,
+    function ($scope, $rootScope, $stateParams, projectGroup, Story, Project,
               Preference, SubscriptionList, CurrentUser, Subscription,
-              $q, ProjectGroupItem, ArrayUtil, $log) {
+              $q, ProjectGroupItem, ArrayUtil, $log, localStorageService) {
         'use strict';
 
         var projectPageSize = Preference.get(
@@ -92,25 +92,39 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         /**
          * Filter the stories.
          */
-        $scope.showActive = true;
-        $scope.showMerged = false;
-        $scope.showInvalid = false;
+        $scope.filters = {showActive:  localStorageService.get("Active"),
+                          showMerged:  localStorageService.get("Merged"),
+                          showInvalid: localStorageService.get("Invalid")};
+
+        /**
+         * Reset filters to show Active Stories on changing end-point
+         */
+
+        $rootScope.$on('$locationChangeSuccess', function() {
+            localStorageService.set("Active", true);
+            localStorageService.set("Merged", false);
+            localStorageService.set("Invalid", false);
+        });
 
         /**
          * Reload the stories in this view based on user selected filters.
          */
         $scope.filterStories = function () {
             var status = [];
-            if ($scope.showActive) {
+            if ($scope.filters.showActive){
                 status.push('active');
             }
-            if ($scope.showMerged) {
+            if ($scope.filters.showMerged){
                 status.push('merged');
             }
-            if ($scope.showInvalid) {
+            if ($scope.filters.showInvalid){
                 status.push('invalid');
             }
 
+            localStorageService.set("Active", $scope.filters.showActive);
+            localStorageService.set("Merged", $scope.filters.showMerged);
+            localStorageService.set("Invalid", $scope.filters.showInvalid);
+            
             // If we're asking for nothing, just return a [];
             if (status.length === 0) {
                 $scope.stories = [];
