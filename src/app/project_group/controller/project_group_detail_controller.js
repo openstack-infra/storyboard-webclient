@@ -99,15 +99,15 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
         /**
          * Reload the stories in this view based on user selected filters.
          */
-        $scope.filterStories = function () {
+        $scope.filterStories = function (A, M, I) {
             var status = [];
-            if ($scope.showActive) {
+            if (A){
                 status.push('active');
             }
-            if ($scope.showMerged) {
+            if (M){
                 status.push('merged');
             }
-            if ($scope.showInvalid) {
+            if (I){
                 status.push('invalid');
             }
 
@@ -145,6 +145,11 @@ angular.module('sb.project_group').controller('ProjectGroupDetailController',
                 }
             );
         };
+
+        /**
+         * Filter stories once initially to show Active stories
+         */
+        $scope.filterStories(true, false, false);
 
         /**
          * Next page of the results.
