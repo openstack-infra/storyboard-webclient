@@ -59,7 +59,7 @@ angular.module('sb.services').factory('Board',
                 Text: 'title',
                 Story: 'story_id',
                 Task: 'task_id',
-                User: 'creator_id'
+                Creator: 'creator_id'
             }
         );
 

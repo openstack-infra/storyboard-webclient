@@ -29,8 +29,22 @@
             &times;
         </a>
     </div>
-    <div class="tag tag-success" ng-switch-when="User">
-        <i class="fa fa-user"></i> {{tag.title}}
+    <div class="tag tag-success" ng-switch-when="Assignee">
+        <i class="fa fa-user-tag"></i> {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
+    <div class="tag tag-success" ng-switch-when="Subscriber">
+        <i class="fa fa-thumbtack"></i> {{tag.title}}
+        <a class="tag-remove"
+           ng-click="removeTag({tag:tag})">
+            &times;
+        </a>
+    </div>
+    <div class="tag tag-success" ng-switch-when="Creator">
+        <i class="fa fa-user-edit"></i> {{tag.title}}
         <a class="tag-remove"
            ng-click="removeTag({tag:tag})">
             &times;

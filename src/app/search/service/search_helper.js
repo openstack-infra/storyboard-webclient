@@ -58,15 +58,40 @@ angular.module('sb.search').factory('SearchHelper',
                     );
                 }
             }
-            if (params.assignee_id || params.creator_id) {
-                var id = params.assignee_id || params.creator_id;
-                var userPromise = User.get({'id': id}).$promise;
-                promises.push(userPromise);
+            if (params.assignee_id) {
+                var assignee = User.get({'id': params.assignee_id}).$promise;
+                promises.push(assignee);
 
-                userPromise.then(function(result) {
+                assignee.then(function(result) {
                         criteria.push(
-                            Criteria.create('User',
+                            Criteria.create('Assignee',
                                             params.assignee_id,
+                                            result.full_name)
+                        );
+                    }
+                );
+            }
+            if (params.subscriber_id) {
+                var sub = User.get({'id': params.subscriber_id}).$promise;
+                promises.push(sub);
+
+                sub.then(function(result) {
+                        criteria.push(
+                            Criteria.create('Subscriber',
+                                            params.subscriber_id,
+                                            result.full_name)
+                        );
+                    }
+                );
+            }
+            if (params.creator_id) {
+                var creator = User.get({'id': params.creator_id}).$promise;
+                promises.push(creator);
+
+                creator.then(function(result) {
+                        criteria.push(
+                            Criteria.create('Creator',
+                                            params.creator_id,
                                             result.full_name)
                         );
                     }

@@ -190,6 +190,7 @@ angular.module('sb.services').service('Criteria',
                     var deferred = $q.defer();
                     criteria.forEach(function (item) {
 
+
                         if (parameterMap.hasOwnProperty(item.type)) {
                             if (parameterMap[item.type] === 'tags') {
                                 if (!('tags' in params)) {
@@ -207,9 +208,11 @@ angular.module('sb.services').service('Criteria',
 
                                 if (item.value.includes('@')){
                                     //using Email identifier
+
                                     isUserEmail = true;
                                     var user_data = $injector.get('User')
                                         .browse({email: sub_browse.value});
+
                                     user_data.$promise.then(function(data){
                                         params[sub_browse.type] = data[0].id;
                                         deferred.resolve(params);
@@ -219,7 +222,6 @@ angular.module('sb.services').service('Criteria',
                                     //using number identifier
                                     params[sub_browse.type] = sub_browse.value;
                                 }
-
                             }
 
                             else {
