@@ -24,12 +24,11 @@ angular.module('sb.story', ['ui.router', 'sb.services', 'sb.util',
     .config(function ($stateProvider, $urlRouterProvider, PreferenceProvider,
                       TimelineEventTypes, SessionResolver) {
         'use strict';
-
         // URL Defaults.
         $urlRouterProvider.when('/story', '/story/list');
 
-        var queryParams = 'q&status&tags&project_group_id&'
-            + 'project_id&assignee_id';
+        var queryParams = 'q&tags&project_group_id&'
+            + 'project_id&assignee_id&creator_id&subscriber_id';
 
         var creationParams = 'title&description&project_id&'
             + 'private&force_private&tags&team_id&user_id';

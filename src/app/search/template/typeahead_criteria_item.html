@@ -30,8 +30,14 @@
         <i class="fa fa-sb-project-group text-muted">
         </i>&emsp;{{match.model.title}}
     </span>
-    <span ng-switch-when="User">
-        <i class="fa fa-sb-user text-muted"></i>&emsp;{{match.model.title}}
+    <span ng-switch-when="Assignee">
+        <i class="fa fa-user-tag text-muted"></i>&emsp;{{match.model.title}}
+    </span>
+    <span ng-switch-when="Subscriber">
+        <i class="fa fa-thumbtack text-muted"></i>&emsp;{{match.model.title}}
+    </span>
+    <span ng-switch-when="Creator">
+        <i class="fa fa-user-edit" text-muted"></i>&emsp;{{match.model.title}}
     </span>
     <span ng-switch-when="Task">
         <i class="fa fa-sb-task text-muted"></i>&emsp;{{match.model.title}}
