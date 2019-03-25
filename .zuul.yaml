@@ -52,4 +52,7 @@
               node_version: 8
     post:
       jobs:
-        - publish-openstack-javascript-content
+        - publish-openstack-javascript-content:
+            vars:
+              node_version: 8
+              create_tarball_directory: build
