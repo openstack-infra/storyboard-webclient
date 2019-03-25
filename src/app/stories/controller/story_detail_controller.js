@@ -24,7 +24,7 @@ angular.module('sb.story').controller('StoryDetailController',
               Story, Project, Branch, creator, tasks, Task, DSCacheFactory,
               User, $q, storyboardApiBase, SessionModalService, moment,
               $document, $anchorScroll, $timeout, $location, currentUser,
-              enableEditableComments, Tags, worklists, Team) {
+              enableEditableComments, Tags, worklists, Team, $filter) {
         'use strict';
 
         var pageSize = Preference.get('story_detail_page_size');
@@ -841,7 +841,11 @@ angular.module('sb.story').controller('StoryDetailController',
         };
 
         $scope.searchTags = function (value) {
-            return Tags.browse({name: value, limit: 10}).$promise;
+            return Tags.browse({name: value, limit: 10}).$promise.then(
+                function(list) {
+                    return $filter('orderBy')(list, 'popularity', true);
+                } 
+            );
         };
 
         $scope.updateViewValue = function (value) {
