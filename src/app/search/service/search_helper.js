@@ -58,15 +58,43 @@ angular.module('sb.search').factory('SearchHelper',
                     );
                 }
             }
-            if (params.assignee_id || params.creator_id) {
-                var id = params.assignee_id || params.creator_id;
-                var userPromise = User.get({'id': id}).$promise;
-                promises.push(userPromise);
+            if (params.assignee_id) {
+                var assigneeParams = {'id': params.assignee_id};
+                var assigneePromise = User.get(assigneeParams).$promise;
+                promises.push(assigneePromise);
 
-                userPromise.then(function(result) {
+                assigneePromise.then(function(result) {
                         criteria.push(
-                            Criteria.create('User',
+                            Criteria.create('Assignee',
                                             params.assignee_id,
+                                            result.full_name)
+                        );
+                    }
+                );
+            }
+            if (params.subscriber_id) {
+                var subscriberParams = {'id': params.subscriber_id};
+                var subscriberPromise = User.get(subscriberParams).$promise;
+                promises.push(subscriberPromise);
+
+                subscriberPromise.then(function(result) {
+                        criteria.push(
+                            Criteria.create('Subscriber',
+                                            params.subscriber_id,
+                                            result.full_name)
+                        );
+                    }
+                );
+            }
+            if (params.creator_id) {
+                var creatorParams = {'id': params.creator_id};
+                var creatorPromise = User.get(creatorParams).$promise;
+                promises.push(creatorPromise);
+
+                creatorPromise.then(function(result) {
+                        criteria.push(
+                            Criteria.create('Creator',
+                                            params.creator_id,
                                             result.full_name)
                         );
                     }
