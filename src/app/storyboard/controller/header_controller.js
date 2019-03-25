@@ -28,6 +28,7 @@ angular.module('storyboard').controller('HeaderController',
         function resolveCurrentUser() {
             CurrentUser.resolve().then(
                 function (user) {
+                    console.log(user);
                     $scope.currentUser = user;
                 },
                 function () {

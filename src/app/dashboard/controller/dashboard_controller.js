@@ -19,7 +19,7 @@
  */
 angular.module('sb.dashboard').controller('DashboardController',
     function ($q, $scope, currentUser, Story, SubscriptionList,
-            SubscriptionEvent, Task) {
+            SubscriptionEvent, Task, User) {
         'use strict';
 
         // Load the list of current assigned tasks.
@@ -125,5 +125,17 @@ angular.module('sb.dashboard').controller('DashboardController',
 
         $scope.storySubscriptions = SubscriptionList.subsList(
                 'story', currentUser);
+        
+        $scope.addNickname = function(event) {
+            // event.preventDefault();
+            console.log("I reached here");  
+            var newNickName = window.prompt("Enter a nick name");
+            $scope.isSaving = true;
+            currentUser["nick_name"]=newNickName;
+            User.update(currentUser, function () {
+                $scope.isSaving = false;
+                console.log("user ahem updated");
+            });
+        }
 
     });

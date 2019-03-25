@@ -36,9 +36,10 @@ angular.module('sb.services').factory('User',
                 method: 'PUT',
                 interceptor: {
                     response: function(response) {
+                        console.log(response);
                         var user = response.resource;
                         DSCacheFactory.get('defaultCache').put(
-                            storyboardApiBase + '/users/' + user.id,
+                            storyboardApiBase + '/user/' + user.id,
                             user);
                     }
                 }
