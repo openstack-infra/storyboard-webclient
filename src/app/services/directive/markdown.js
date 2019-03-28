@@ -33,6 +33,13 @@ angular.module('sb.services')
             linkify: true
         });
 
+        var mila = require('markdown-it-link-attributes');
+        md.use(mila, {
+            attrs: {
+                rel: 'nofollow'
+            }
+        });
+
         return {
             restrict: 'E',
             scope: {
