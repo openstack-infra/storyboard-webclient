@@ -82,6 +82,7 @@
     "gifsicle": "1.0.0",
     "highlightjs": "9.10.0",
     "markdown-it": "8.4.0",
+    "markdown-it-link-attributes": "^2.1.0",
     "moment-timezone": "0.5.4",
     "ng-sortable": "1.3.1"
   }
