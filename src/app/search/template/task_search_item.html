@@ -10,7 +10,15 @@
     <small class="text-muted"
            resolve-story="task.story_id">
         <a href="#!/story/{{story.id}}">
-            {{story.id}}: {{story.title}}</a>
+            {{story.id}}: {{story.title}}
+        </a>
+        <small ng-show="isLoggedIn">
+            <subscribe
+                   resource="story"
+                   resource-id="story.id"
+                   subscriptions="storySubscriptions">
+            </subscribe>
+        </small>
     </small>
 </td>
 <td>
@@ -19,13 +27,3 @@
             status="{{task.status}}"
             ></task-status-dropdown>
 </td>
-<td>
-    <small ng-show="isLoggedIn">
-        <subscribe class="pull-right"
-               resource="story"
-               resource-id="story.id"
-               subscriptions="storySubscriptions">
-        </subscribe>
-    </small>
-</td>
-
