@@ -1,14 +1,7 @@
-<td class="col-xs-7" style="word-break: break-word">
+<td  style="word-break: break-word">
     <a href="#!/story/{{story.id}}">
         {{story.id}}: {{story.title | truncate: 97}}
     </a>
-    <small ng-show="isLoggedIn">
-        <subscribe
-               resource="story"
-               resource-id="story.id"
-               subscriptions="storySubscriptions">
-        </subscribe>
-    </small>
     <br/>
     <span class="text-muted">
         {{story.description | truncate: 97}}
@@ -22,14 +15,19 @@
         </li>
     </ul>
 </td>
-<td class="col-sm-2 hidden-xs">
-    <span time-moment eventdate="story.created_at" short-date="true">
+<td ng-repeat="criteria in chosenCriteria">
+    <span ng-if="timeCriteria.includes(criteria)" time-moment eventdate="story[criteria]" short-date="true">
+    </span>
+    <span ng-if="!timeCriteria.includes(criteria)">
+        {{story[criteria]}}
     </span>
 </td>
-<td class="col-sm-2 hidden-xs">
-    <span time-moment eventdate="story.updated_at" short-date="true">
-    </span>
-</td>
-<td class="text-right col-xs-1">
-    <story-status-label story="story"/>
+<td class="text-right">
+    <small ng-show="isLoggedIn">
+        <subscribe class="pull-right"
+               resource="story"
+               resource-id="story.id"
+               subscriptions="storySubscriptions">
+        </subscribe>
+    </small>
 </td>
