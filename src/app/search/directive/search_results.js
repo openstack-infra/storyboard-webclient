@@ -20,7 +20,7 @@
  * @see ProjectListController
  */
 angular.module('sb.search').directive('searchResults',
-    function ($log, $parse, Criteria, $injector, Preference) {
+    function ($log, $parse, Criteria, $injector, Preference, User) {
         'use strict';
 
         return {
@@ -35,6 +35,43 @@ angular.module('sb.search').directive('searchResults',
                 var searchWithoutCriteria =
                     args.searchWithoutCriteria === 'true';
                 var criteria = [];
+
+                //Controls dropdown events
+                $scope.dropdownControl = function(choice){
+                    if (choice === 'open'){
+                        angular.element(document.querySelector('#query'))
+                                .addClass('open');
+                        return;
+                    }
+                    angular.element(document.querySelector('#query'))
+                            .removeClass('open');
+                };
+
+                //Controls which columns are chosen
+                $scope.columnControl = function(filter){
+                    if ($scope.chosenCriteria.includes(filter)){
+                        $scope.chosenCriteria.splice($scope.chosenCriteria
+                                .indexOf(filter), 1);
+                        return;
+                    }
+                    $scope.chosenCriteria.push(filter);
+                };
+
+                //Dropdown Options
+                $scope.queryFilters = {
+                    'created_at': 'Created At',
+                    'updated_at': 'Updated At',
+                    'status': 'Status',
+                    'id': 'Story ID',
+                    'description': 'Description',
+                    'private': 'Private',
+                    'creator_id': 'Creator'
+
+                };
+
+
+                $scope.chosenCriteria = ['created_at', 'updated_at', 'status'];
+                $scope.timeCriteria = ['created_at', 'updated_at'];
 
                 $scope.isSearching = false;
                 $scope.searchResults = [];
@@ -52,6 +89,17 @@ angular.module('sb.search').directive('searchResults',
                  * @type {string}
                  */
                 $scope.sortDirection = 'desc';
+
+                
+                function showFullName(story_object){
+                    story_object.forEach(function(story){
+                        story.creator_id = User.get({'id': story.creator_id})
+                                            .$promise.then(function(data){
+                                              story.creator_id = data.full_name
+                                            });
+                    });
+                };
+                
 
                 /**
                  * Handle error result.
@@ -71,6 +119,7 @@ angular.module('sb.search').directive('searchResults',
                     $scope.searchOffset = parseInt(headers('X-Offset')) || 0;
                     $scope.searchLimit = parseInt(headers('X-Limit')) || 0;
                     $scope.searchResults = results;
+                    showFullName($scope.searchResults)
                     $scope.isSearching = false;
                 }
 

@@ -65,6 +65,29 @@
                         on-page-size="updatePageSize(pageSize)"
                         ></result-set-pager>
             </div>
+            <div class="align-bottom">
+              Columns:
+              <span class="form-control-static" id="query">
+                  <button class="btn btn-xs btn-default" ng-click="dropdownControl('open')" dropdown-toggle>
+                      <i class="fas fa-sort-alpha-down"></i>
+                  </button>
+                      <div class = "dropdown-menu dropdown-menu-left" role="menu">
+                          <li ng-repeat="(type,value) in queryFilters">
+                              <input ng-click="columnControl(type)" type="checkbox"
+                                     ng-checked=chosenCriteria.includes(type)
+                                     class="form-check-input"/>
+                              <label class="form-check-label">{{value}}</label>
+                          </li>
+                          <div class="row text-center">
+                              <div class="col-xs-8">
+                                  <button class="btn btn-sm btn-primary" ng-click="dropdownControl('close')">
+                                      Close
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+              </span>
+            </div>
         </div>
     </div>
 
@@ -75,7 +98,7 @@
             <em>What would you like to search by?</em>
         </div>
     </div>
-
+    
     <div class="row" ng-if="criteria.length > 0">
         <div class="col-xs-12">
             <table class="table table-condensed table-striped">
@@ -92,40 +115,17 @@
                             </i>
                         </a>
                     </th>
-                    <th class="hidden-xs">
-                        <a href="" ng-click="toggleFilter('created_at')">
-                            Created
+                    <th ng-repeat="column in chosenCriteria">
+                        <a href="" ng-click="toggleFilter(column)">
+                            {{queryFilters[column]}}
                             <i class="fa fa-caret-down"
-                               ng-if="sortField == 'created_at' && sortDirection == 'desc'">
+                               ng-if="sortField == column && sortDirection == 'desc'">
                             </i>
                             <i class="fa fa-caret-up"
-                               ng-if="sortField == 'created_at' && sortDirection == 'asc'">
+                               ng-if="sortField == column && sortDirection == 'asc'">
                             </i>
                         </a>
                     </th>
-                    <th class="hidden-xs">
-                        <a href="" ng-click="toggleFilter('updated_at')">
-                            Updated
-                            <i class="fa fa-caret-down"
-                               ng-if="sortField == 'updated_at' && sortDirection == 'desc'">
-                            </i>
-                            <i class="fa fa-caret-up"
-                               ng-if="sortField == 'updated_at' && sortDirection == 'asc'">
-                            </i>
-                        </a>
-                    </th>
-                    <th class="text-right">
-                        <a href="" ng-click="toggleFilter('status')">
-                            Status
-                            <i class="fa fa-caret-down"
-                               ng-if="sortField == 'status' && sortDirection == 'desc'">
-                            </i>
-                            <i class="fa fa-caret-up"
-                               ng-if="sortField == 'status' && sortDirection == 'asc'">
-                            </i>
-                        </a>
-                    </th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody ng-if="searchResults.length != 0 && !isSearching">
