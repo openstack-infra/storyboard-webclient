@@ -36,6 +36,7 @@
         - storyboard-webclient-nodejs-npm8-run-test-integration
         - build-javascript-content:
             vars:
+              javascript_content_dir: build
               npm_command: draft
               node_version: 8
     gate:
@@ -48,6 +49,7 @@
         - storyboard-webclient-nodejs-npm8-run-test-integration
         - build-javascript-content:
             vars:
+              javascript_content_dir: build
               npm_command: draft
               node_version: 8
     post:
