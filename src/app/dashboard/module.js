@@ -19,9 +19,11 @@
  */
 angular.module('sb.dashboard',
     ['sb.services', 'sb.templates', 'sb.auth', 'ui.router', 'ui.bootstrap'])
-    .config(function ($stateProvider, SessionResolver) {
+    .config(function ($stateProvider, $urlRouterProvider, SessionResolver) {
         'use strict';
 
+        // $urlRouterProvider.when('/', '/dashboard');
+        $urlRouterProvider.when('/', '/dashboard/stories');
         // Set an initial home page.
         $stateProvider
             .state('sb.index', {
