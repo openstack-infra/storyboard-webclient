@@ -1,7 +1,0 @@
-<small ng-repeat="task_status in story.task_statuses | orderBy:orderStatus">
-<span class="badge"
-      ng-class="{'badge-primary': task_status.count > 0}">
-    {{task_status.count}}
-</span> {{status_texts[task_status.key]}}
-    &nbsp;
-</small>
